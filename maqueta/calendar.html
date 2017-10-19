@@ -6,19 +6,27 @@
     <title>CALENDAR-VIEW</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/calendar.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <main id="app" class="container">
         <article class="calendar-page">
-            <section class="today-view box">
-                <spam class="month-year">
-                    MAY 2017
-                </spam>
-                <spam class="day-name">
-                    MONDAY
-                </spam>
-            </section>
+            <header class="calendar-header box">
+                <section class="today-view">
+                    <spam class="month-year">
+                        MAY 2017
+                    </spam>
+                    <spam class="day-name">
+                        MONDAY
+                    </spam>
+                </section>
+                <nav class="menu">
+                    <a href="#"><img src="img/icon-today.png" class="icon-menu" /></a>
+                    <a href="#"><img src="img/icon-filter.png" class="icon-menu"/></a>
+                    <a href="./home.html" target="_self"><img src="img/icon-home.png" class="icon-menu"/></a>
+                </nav>
+            </header>
             <section class="week-view box">
                 <dl class="day-box">
                     <dt class="day-name">SUN</dt>
@@ -49,99 +57,77 @@
                     <dd class="day-number">29</dd>
                 </dl>
             </section>
-            <section class="day-view box">
-                <dl class="time-box">
-                    <div class="round">
-                        <input type="checkbox" id="checkbox" />
-                        <label for="checkbox"></label>
-                    </div>
-                    <dt class="time">10:00</dt>
-                    <dd class="appointment">Fisiotherapy Session</dd>
-                </dl>
-                <dl class="time-box">
-                    <div class="round">
-                        <input type="checkbox" id="checkbox" />
-                        <label for="checkbox"></label>
-                    </div>
-                    <dt class="time">11:00</dt>
-                    <dd class="appointment">Occupied</dd>
-                </dl>
-                <dl class="time-box">
-                    <div class="round">
-                        <input type="checkbox" id="checkbox" />
-                        <label for="checkbox"></label>
-                    </div>
-                    <dt class="time">12:00</dt>
-                    <dd class="appointment"></dd>
-                </dl>
-                <dl class="time-box">
-                    <div class="round">
-                        <input type="checkbox" id="checkbox" />
-                        <label for="checkbox"></label>
-                    </div>
-                    <dt class="time">13:00</dt>
-                    <dd class="appointment">Occupied</dd>
-                </dl>
-                <dl class="time-box">
-                    <div class="round">
-                        <input type="checkbox" id="checkbox" />
-                        <label for="checkbox"></label>
-                    </div>
-                    <dt class="time">15:00</dt>
-                    <dd class="appointment">Occupied</dd>
-                </dl>
-                <dl class="time-box">
-                    <div class="round">
-                        <input type="checkbox" id="checkbox" />
-                        <label for="checkbox"></label>
-                    </div>
-                    <dt class="time">16:00</dt>
-                    <dd class="appointment">Free</dd>
-                </dl>
-                <dl class="time-box">
-                    <div class="round">
-                        <input type="checkbox" id="checkbox" />
-                        <label for="checkbox"></label>
-                    </div>
-                    <dt class="time">17:00</dt>
-                    <dd class="appointment">Free</dd>
-                </dl>
-                <dl class="time-box">
-                    <div class="round">
-                        <input type="checkbox" id="checkbox" />
-                        <label for="checkbox"></label>
-                    </div>
-                    <dt class="time">18:00</dt>
-                    <dd class="appointment">Free</dd>
-                </dl>
-                <dl class="time-box">
-                    <div class="round">
-                        <input type="checkbox" id="checkbox" />
-                        <label for="checkbox"></label>
-                    </div>
-                    <dt class="time">19:00</dt>
-                    <dd class="appointment">Occupied</dd>
-                </dl>
-                <dl class="time-box">
-                    <div class="round">
-                        <input type="checkbox" id="checkbox" />
-                        <label for="checkbox"></label>
-                    </div>
-                    <dt class="time">20:00</dt>
-                    <dd class="appointment">Free</dd>
-                </dl>
-                <dl class="time-box">
-                    <div class="round">
-                        <input type="checkbox" id="checkbox" />
-                        <label for="checkbox"></label>
-                    </div>
-                    <dt class="time">21:00</dt>
-                    <dd class="appointment">Free</dd>
-                </dl>
-            </section>
-        </article>
+            <ul class="day-view box">
+                <li class="time-box session-unavailable">
+                    <span class="time">10:00</span>
+                    <span class="v-separator"></span>
+                    <input type="checkbox" id="box-10" checked disabled>
+                    <label for="box-10">Session Unavailable</label>
+                </li>
+                <li class="time-box">
+                    <span class="time">11:00</span>
+                    <span class="v-separator"></span>
+                    <input type="checkbox" id="box-11">
+                    <label for="box-11"></label>
+                </li>
+                <li class="time-box session-unavailable">
+                    <span class="time">12:00</span>
+                    <span class="v-separator"></span>
+                    <input type="checkbox" id="box-12" checked disabled>
+                    <label for="box-12">Session Unavailable</label>
+                </li>
+                <li class="time-box session-unavailable">
+                    <span class="time">13:00</span>
+                    <span class="v-separator"></span>
+                    <input type="checkbox" id="box-13" checked disabled>
+                    <label for="box-13">Session Unavailable</label>
+                </li>
+                <li class="time-box">
+                    <span class="time">15:00</span>
+                    <span class="v-separator"></span>
+                    <input type="checkbox" id="box-15">
+                    <label for="box-15"></label>
+                </li>
+                <li class="time-box session-unavailable">
+                    <span class="time">16:00</span>
+                    <span class="v-separator"></span>
+                    <input type="checkbox" id="box-16" checked disabled>
+                    <label for="box-16">Session Unavailable</label>
+                </li>
+                <li class="time-box session-unavailable">
+                    <span class="time">17:00</span>
+                    <span class="v-separator"></span>
+                    <input type="checkbox" id="box-17" checked disabled>
+                    <label for="box-17">Session Unavailable</label>
+                </li>
+                <li class="time-box">
+                    <span class="time">18:00</span>
+                    <span class="v-separator"></span>
+                    <input type="checkbox" id="box-18">
+                    <label for="box-18"></label>
+                </li>
+                <li class="time-box session-unavailable">
+                    <span class="time">19:00</span>
+                    <span class="v-separator"></span>
+                    <input type="checkbox" id="box-19" checked disabled>
+                    <label for="box-19">Session Unavailable</label>
+                </li>
+                <li class="time-box session-unavailable">
+                    <span class="time">20:00</span>
+                    <span class="v-separator"></span>
+                    <input type="checkbox" id="box-20" checked disabled>
+                    <label for="box-20">Session Unavailable</label>
+                </li>
+                <li class="time-box">
+                    <span class="time">21:00</span>
+                    <span class="v-separator"></span>
+                    <input type="checkbox" id="box-21">
+                    <label for="box-21"></label>
+                </li>
+            </ul>
         </article>
     </main>
+    <dialog class="modal"></dialog>
 </body>
 
 </html>
