@@ -24,17 +24,6 @@ body {
     box-sizing: border-box;
 }
 
-dialog {
-    visibility: hidden;
-    transform: scale(0.1);
-    transition: transform 200ms;
-}
-
-dialog.dialog-scale {
-    visibility: visible;
-    transform: scale(1);
-}
-
 .container {
     width: 100%;
     height: 100%;
@@ -146,7 +135,7 @@ dialog.dialog-scale {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    height: 80%;
+    /*height: 80%;*/
     flex-wrap: nowrap;
 }
 
@@ -156,6 +145,10 @@ dialog.dialog-scale {
     border-bottom: solid;
     border-color: #c5c4c4;
     flex: 0 0 auto;
+}
+
+.day-view li:last-child {
+    border-bottom: 0;
 }
 
 .time-box .time {
@@ -182,9 +175,6 @@ dialog.dialog-scale {
     color: #ddd;
 }
 
-
-
-/*Checkboxes styles*/
 
 .session-unavailable input[type="checkbox"]+label {
     color: #ddd;

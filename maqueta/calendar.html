@@ -6,6 +6,7 @@
     <title>CALENDAR-VIEW</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" href="css/dialog.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
 </head>
 
@@ -65,69 +66,77 @@
                     <label for="box-10">Session Unavailable</label>
                 </li>
                 <li class="time-box">
-                    <span class="time">11:00</span>
+                    <span class="time">11:30</span>
                     <span class="v-separator"></span>
                     <input type="checkbox" id="box-11">
                     <label for="box-11"></label>
                 </li>
                 <li class="time-box session-unavailable">
-                    <span class="time">12:00</span>
+                    <span class="time">13:00</span>
                     <span class="v-separator"></span>
                     <input type="checkbox" id="box-12" checked disabled>
                     <label for="box-12">Session Unavailable</label>
                 </li>
                 <li class="time-box session-unavailable">
-                    <span class="time">13:00</span>
+                    <span class="time">16:00</span>
                     <span class="v-separator"></span>
                     <input type="checkbox" id="box-13" checked disabled>
                     <label for="box-13">Session Unavailable</label>
                 </li>
                 <li class="time-box">
-                    <span class="time">15:00</span>
+                    <span class="time">17:30</span>
                     <span class="v-separator"></span>
                     <input type="checkbox" id="box-15">
                     <label for="box-15"></label>
                 </li>
                 <li class="time-box session-unavailable">
-                    <span class="time">16:00</span>
+                    <span class="time">19:00</span>
                     <span class="v-separator"></span>
                     <input type="checkbox" id="box-16" checked disabled>
                     <label for="box-16">Session Unavailable</label>
                 </li>
                 <li class="time-box session-unavailable">
-                    <span class="time">17:00</span>
+                    <span class="time">20:30</span>
                     <span class="v-separator"></span>
                     <input type="checkbox" id="box-17" checked disabled>
                     <label for="box-17">Session Unavailable</label>
                 </li>
-                <li class="time-box">
-                    <span class="time">18:00</span>
-                    <span class="v-separator"></span>
-                    <input type="checkbox" id="box-18">
-                    <label for="box-18"></label>
-                </li>
-                <li class="time-box session-unavailable">
-                    <span class="time">19:00</span>
-                    <span class="v-separator"></span>
-                    <input type="checkbox" id="box-19" checked disabled>
-                    <label for="box-19">Session Unavailable</label>
-                </li>
-                <li class="time-box session-unavailable">
-                    <span class="time">20:00</span>
-                    <span class="v-separator"></span>
-                    <input type="checkbox" id="box-20" checked disabled>
-                    <label for="box-20">Session Unavailable</label>
-                </li>
-                <li class="time-box">
-                    <span class="time">21:00</span>
-                    <span class="v-separator"></span>
-                    <input type="checkbox" id="box-21">
-                    <label for="box-21"></label>
-                </li>
             </ul>
         </article>
+            <dialog class="modal">
+        <div class="meeting-date">
+            <spam class="time">11:00</spam>
+            <spam class="date">20 SEPTEMBER</spam>
+        </div>
+        <div class="therapist-carrusel">
+            <spam class="therapist-carrusel-item">
+                <img class="therapist-img" src="img/therapist-1.jpg" />
+            </spam>
+        </div>
+        <div class="menu">
+            <button class="c-button accept">Accept</button>
+            <spam class="v-separator"></spam>
+            <button class="c-button cancel">Cancel</button>
+        </div>
+    </dialog>
     </main>
-    <dialog class="modal"></dialog>
 </body>
+<script type="text/javascript">
+  var transition;
+
+  $('input[type="checkbox"]').change(function (ev) {
+      if ($(this).is(':checked')) {
+        $('.modal')[0].showModal();
+        transition = setTimeout( () => $('.modal').addClass('dialog-scale'), 0.5);
+      }
+  });
+
+  $('.cancel, .accept').on('click', function () {
+    $('.modal')[0].close();
+    $('.modal').removeClass('dialog-scale');
+    clearTimeout(transition);
+  });
+
+</script>
 
 </html>

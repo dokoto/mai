@@ -6,6 +6,7 @@
     <title>HOME-VIEW</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/home.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -17,40 +18,43 @@
                     <spam class="day-name">MONDAY</spam>
                 </aside>
                 <section class="appointments">
-                    <dl class="appointment">
-                        <dt class="date">MONDAY 23 JANUARY</dt>
-                        <dd class="title">Osteopathy</dd>
-                    </dl>
-                    <dl class="appointment">
-                        <dt class="date">FRIDAY 1 FEBRUARY</dt>
-                        <dd class="title">Fisiotherapy Session</dd>
-                    </dl>
-                    <dl class="appointment">
-                        <dt class="date">MONDAY 4 FEBRUARY</dt>
-                        <dd class="title">M.A.I.</dd>
-                    </dl>
+                    <div class="appointment box">
+                        <spam class="date">MONDAY 23 JANUARY</spam>
+                        <spam class="title">Osteopathy</spam>
+                    </div>
+                    <div class="appointment box">
+                        <spam class="date">FRIDAY 1 FEBRUARY</spam>
+                        <spam class="title">Fisiotherapy Session</spam>
+                    </div>
+                    <div class="appointment box">
+                        <spam class="date">MONDAY 4 FEBRUARY</spam>
+                        <spam class="title">M.A.I.</spam>
+                    </div>
                 </section>
             </section>
-            <section class="menu-footer">
-                <section class="menu">
-                    <spam class="option pastel-orange">
-                        <a href="./calendar.html" target="_self">
+            <section class="menu">
+                <spam class="option pastel-orange">
+                    <a href="./calendar.html" target="_self">
                         <img src="img/icon-calendar.png" class="option-icon" />
                       </a>
-                    </spam>
-                    <spam class="option pastel-pink">
-                        <img src="img/icon-email.png" class="option-icon" />
-                    </spam>
-                    <spam class="option pastel-blue">
-                        <img src="img/icon-chat.png" class="option-icon" />
-                    </spam>
-                    <spam class="option pastel-yellow">
-                        <img src="img/icon-phone.png" class="option-icon" />
-                    </spam>
-                </section>
+                </spam>
+                <spam class="option pastel-pink">
+                    <img src="img/icon-email.png" class="option-icon" />
+                </spam>
+                <spam class="option pastel-blue">
+                    <img src="img/icon-chat.png" class="option-icon" />
+                </spam>
+                <spam class="option pastel-yellow">
+                    <img src="img/icon-phone.png" class="option-icon" />
+                </spam>
             </section>
         </article>
     </main>
 </body>
+<script type="text/javascript">
+$('.appointment').click((ev) => {
+    window.location.href = 'appointment.html';
+});
+</script>
 
 </html>

@@ -1,0 +1,84 @@
+dialog {
+    top: 35%;
+    visibility: hidden;
+    transform: scale(0.1);
+    transition: transform 200ms;
+}
+
+dialog.dialog-scale {
+    top: 35%;
+    width: 90%;
+    visibility: visible;
+    transform: scale(1);
+}
+
+dialog.undialog-scale {
+    visibility: hidden;
+    transform: scale(0.1);
+    transition: transform 200ms;
+}
+
+button.c-button:active {
+    font-weight: bold;
+}
+
+.modal {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.modal .therapist-img {
+    width: 200px;
+    border-radius: 100%;
+}
+
+.modal .meeting-date {
+    display: inline-flex;
+    flex-direction: column;
+    border-bottom: solid;
+    border-bottom-color: #ddd;
+    margin-bottom: 4%;
+    padding-bottom: 4%;
+}
+
+.modal .meeting-date .time {
+    color: crimson;
+    font-size: 5em;
+    font-weight: bold;
+    align-self: center;
+}
+
+.modal .meeting-date .date {
+    color: crimson;
+    font-size: 1.8em;
+    align-self: center;
+    font-weight: bold;
+}
+
+.modal .therapist-carrusel {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    border-bottom: solid;
+    border-bottom-color: #ddd;
+    margin-bottom: 4%;
+    padding-bottom: 4%;
+}
+
+.modal .menu {
+  display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.modal .c-button {
+font-size: 4em;
+}
+
+.modal .cancel {
+      margin-left: 4%;
+}
+
+.modal .accept {
+      margin-right: 4%;
+}
