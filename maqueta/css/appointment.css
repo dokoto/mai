@@ -57,7 +57,7 @@ body {
 
 .day-number {
     text-align: center;
-    font-size: 12em;
+    font-size: 5em;
     font-weight: bold;
     width: 100%;
     margin-top: 4%;
@@ -66,18 +66,18 @@ body {
 
 .day-name {
     text-align: center;
-    font-size: 3.0em;
+    font-size: 1.3em;
     width: 100%;
     margin-left: 4%;
 }
 
 .therapist-img-box {
-        text-align: center;
+    text-align: center;
 }
 
 .therapist-img {
-    width: 200px;
-    border-radius: 100%;
+        width: 100px;
+    border-radius: 50%;
 }
 
 .therapist-carrusel {
@@ -95,14 +95,14 @@ body {
 }
 
 .h-separator {
-    height: 2px;
-    margin: 10% 10%;
+        height: 2px;
+    margin: 4% 0%;
     background: #c5c4c4;
 }
 
 .therapist-name {
-        text-align: center;
-    font-size: 1.2em;
+    text-align: center;
+    font-size: 0.8em;
 }
 
 .date-detail {
@@ -112,35 +112,35 @@ body {
 }
 
 .date-detail .date {
-    font-size: 2em;
+    font-size: 1em;
     font-weight: bold;
     margin-top: 2%;
     margin-left: 2%;
 }
 
 .date-detail .therapy-description {
-    font-size: 3.5em;
+    font-size: 1.6em;
     margin-top: 1%;
     margin-left: 2%;
 }
 
 .date-detail .time-interval {
-    font-size: 3.5em;
+    font-size: 1.6em;
     color: #b1b0b0;
     margin-top: 2%;
     margin-left: 2%;
 }
 
 .location {
-        margin-bottom: 2%;
+    margin-bottom: 2%;
 }
 
 .location .address {
-        font-size: 2em;
+    font-size: 1em;
     margin-left: 2%;
 }
 
 .location .map {
-        height: 400px;
-        margin-top: 2%;
+    height: 200px;
+    margin-top: 2%;
 }

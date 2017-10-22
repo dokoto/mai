@@ -1,0 +1,148 @@
+{
+  "lastsessions" : [
+    { 
+      "id": "201711011000",
+      "user": "echopolvo@gmail.com",
+      "status": {
+        "canceled": false
+      },
+      "date": {
+        "year": "2017",
+        "month": "11",
+        "day": "01",
+        "time": "10:00"
+      },
+      "therapist": { 
+        "id": "T1",
+        "name": "Carmen Montoro",
+        "url": "/users/T1"
+      },
+      "type": {
+        "id": "S1",
+        "name": "Fisiotherapy"
+      },
+      "address": "Calle Pedo, 22 Madrid"
+    },
+    { 
+      "id": "201711011001",
+      "user": "echopolvo@gmail.com",
+      "status": {
+        "canceled": false
+      },
+      "date": {
+        "year": "2017",
+        "month": "11",
+        "day": "03",
+        "time": "17:30"
+      },
+      "therapist": { 
+        "id": "T1",
+        "name": "Carmen Montoro",
+        "url": "/users/T1"
+      },
+      "therapy": {
+        "id": "S3",
+        "name": "M.A.I."
+      },
+      "address": "Calle Pedo, 22 Madrid"
+    },
+    { 
+      "id": "201711011002",
+      "user": "echopolvo@gmail.com",
+      "status": {
+        "canceled": false
+      },
+      "date": {
+        "year": "2017",
+        "month": "11",
+        "day": "05",
+        "time": "20:30"
+      },
+      "therapist": { 
+        "id": "T1",
+        "name": "Carmen Montoro",
+        "url": "/users/T1"
+      },
+      "therapy": {
+        "id": "S2",
+        "name": "Osteopaty"
+      },
+      "address": "Calle Pedo, 22 Madrid"
+    },
+    { 
+      "id": "201711011003",
+      "user": "echopolvo@gmail.com",
+      "status": {
+        "canceled": true,
+        "by": {
+          "type": "THERAPIST",
+          "id": "T1",
+          "url": "/users/T1"
+        },
+        "reason": "Te folle un pez"
+      },
+      "date": {
+        "year": "2017",
+        "month": "11",
+        "day": "05",
+        "time": "20:30"
+      },
+      "therapist": { 
+        "id": "T1",
+        "name": "Carmen Montoro",
+        "url": "/users/T1"
+      },
+      "therapy": {
+        "id": "S2",
+        "name": "Osteopaty"
+      },
+      "address": "Calle Pedo, 22 Madrid"
+    }
+  ],
+  "userTypes": {
+    "THERAPIST": {
+      "id": "THERAPIST",
+      "name": "Therpist"
+    },
+    "CLIENT": {
+      "id": "CLIENT",
+      "name": "Client"
+    }
+  },
+  "users": [
+    {
+      "id": "T1",
+      "type": "THERAPIST",
+      "name": "Carmen Montoro",
+      "address": "C\\ Mierder, 22",
+      "phone": "623467982",
+      "email": "carmen@gmail.com",
+      "therapys": ["S1", "S2", "S3"]
+    },
+    {
+      "id": "C1",
+      "type": "CLIENT",
+      "name": "Hecho Polvo Marinez",
+      "address": "C\\ Jodido, 222",
+      "phone": "623237982",
+      "email": "hechopolvo@gmail.com"      
+    }
+  ],
+  "therapys": {
+    "S1": {
+      "id": "S1",
+      "name": "Fisiotherapy",
+      "description": "Fisiotherapy bla bla bla"
+    },
+    "S2": {
+      "id": "S2",
+      "name": "Fisiotherapy",
+      "description": "Fisiotherapy bla bla bla"
+    },
+    "S3": {
+      "id": "S3",
+      "name": "M.A.I.",
+      "description": "M.A.I. bla bla bla"
+    }
+  }
+}

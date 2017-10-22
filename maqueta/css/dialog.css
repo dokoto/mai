@@ -1,5 +1,6 @@
 dialog {
-    top: 35%;
+    border: solid 1px;
+    top: 30%;
     visibility: hidden;
     transform: scale(0.1);
     transition: transform 200ms;
@@ -28,8 +29,8 @@ button.c-button:active {
 }
 
 .modal .therapist-img {
-    width: 200px;
-    border-radius: 100%;
+    width: 100px;
+    border-radius: 50%;
 }
 
 .modal .meeting-date {
@@ -43,14 +44,14 @@ button.c-button:active {
 
 .modal .meeting-date .time {
     color: crimson;
-    font-size: 5em;
+    font-size: 2.5em;
     font-weight: bold;
     align-self: center;
 }
 
 .modal .meeting-date .date {
     color: crimson;
-    font-size: 1.8em;
+    font-size: 0.9em;
     align-self: center;
     font-weight: bold;
 }
@@ -59,7 +60,7 @@ button.c-button:active {
     display: inline-flex;
     flex-direction: row;
     justify-content: center;
-    border-bottom: solid;
+    border-bottom: solid 1px;
     border-bottom-color: #ddd;
     margin-bottom: 4%;
     padding-bottom: 4%;
@@ -72,7 +73,7 @@ button.c-button:active {
 }
 
 .modal .c-button {
-font-size: 4em;
+font-size: 1.8em;
 }
 
 .modal .cancel {
