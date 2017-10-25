@@ -9,7 +9,8 @@ export default new Router({
   mode: 'history',
   base: __dirname,
   routes: [
-    { name: 'home', path: '/', components: { container: Home } },
-    { name: 'calendar', path: '/calendar', components: { container: Calendar } }
+    { name: 'home', path: '/home/:userId', components: { container: Home } },
+    { name: 'calendar', path: '/calendar/:typeUser/:userId/:year/:month', components: { container: Calendar } },
+    /*{ name: 'appointment', path: 'appointment/:id', components: { container: Calendar } }*/
   ]
 })

@@ -10,35 +10,35 @@
 </template>
 
 <style>
-  .login-view {
-    background: aliceblue;
-    position: absolute;
-    height: 40%;
-    top: 20%;
-    left: 15%;
-    font-size: 3em;
-    padding: 4%;
-    border: solid;
-  }
-  .form-button {
-    font-size: 1em;
-    border: solid;
-  }
+.login-view {
+  background: aliceblue;
+  position: absolute;
+  height: 40%;
+  top: 20%;
+  left: 15%;
+  font-size: 3em;
+  padding: 4%;
+  border: solid;
+}
+.form-button {
+  font-size: 1em;
+  border: solid;
+}
 </style>
 
 <script>
 export default {
   data() {
     return {
-      user: 'User',
-      password: 'Password'
-    }
+      user: "User",
+      password: "Password"
+    };
   },
   methods: {
-    goNext: function (ev) {
+    goNext: function(ev) {
       console.log(ev);
-      this.$router.push('schedule');
+      this.$router.push("schedule");
     }
   }
-}
+};
 </script>
