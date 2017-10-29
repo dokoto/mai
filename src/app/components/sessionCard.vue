@@ -17,7 +17,7 @@ export default {
       return moment(
         `${this.sessionDate.year}-${this.sessionDate.month}-${this.sessionDate
           .day} ${this.sessionDate.time}`
-      ).format('dddd Do MMMM');
+      ).format('dddd D MMMM').toUpperCase();
     },
     timeBegin () {
       return moment(
