@@ -1,4 +1,5 @@
 {
+  "/lastsessions/:id": "/lastsessions?id=:id",
   "/sessions/:year/:month/:day": "/sessions?date.year=:year&date.month=:month&date.day=:day",
   "/users/:type": "/users?type=:type"
 }

@@ -12,14 +12,8 @@ const Conf = require('../.appconf.json');
 
 const rootPath = path.resolve(__dirname, '../');
 const jsSourcePath = path.join(__dirname, '../src');
-const imgPath = path.join(__dirname, '../static/img');
-const moviesPath = path.join(__dirname, '../static/mov');
-const fontsPath = path.join(__dirname, '../static/fonts');
 const buildPath = path.join(__dirname, '../bin/web');
 const sourcePath = path.join(__dirname, '../src');
-Conf.ENV.loc = Object.keys(ifs)
-  .map(x => ifs[x].filter(y => y.family === 'IPv4' && !y.internal)[0])
-  .filter(z => z)[0].address;
 
 function normalizeEnvVars(env_vars) {
   console.log('ENVIRONMENT VARS %s', JSON.stringify(env_vars));
@@ -33,23 +27,11 @@ module.exports = env => {
   normalizeEnvVars(env);
   const isProduction = env.target === 'prod';
   console.log(
-    `Compiling for ${ env.target === 'dev'
+    `Compiling for ${env.target === 'dev'
       ? JSON.stringify('development')
-      : JSON.stringify('production') }`
+      : JSON.stringify('production')}`
   );
-  let REST_API;
-
-  switch (env.env) {
-    case 'loc':
-      REST_API = `'http://${ Conf.ENV.loc }:${ Conf.HTTP_RESTFUL_PORT }'`;
-      break;
-    case 'dev':
-      REST_API = `'http://${ Conf.ENV.dev }:${ Conf.HTTP_RESTFUL_PORT }'`;
-      break;
-    case 'prod':
-      REST_API = `'http://${ Conf.ENV.prod }:${ Conf.HTTP_RESTFUL_PORT }'`;
-      break;
-  }
+  const REST_API = `'http://${Conf.ENV[env.env]}'`
 
   // Common plugins
   const plugins = [
@@ -83,12 +65,12 @@ module.exports = env => {
       PLATFORM: JSON.stringify(env.platform),
       VERSION: JSON.stringify(env.version),
       REST_API,
-      LANGUAJE: JSON.stringify(env.languaje),
+      LANGUAGE: JSON.stringify(env.language),
       'process.env': {
         NODE_ENV:
-          env.target === 'dev' ? JSON.stringify('development') : JSON.stringify('production'),
+        env.target === 'dev' ? JSON.stringify('development') : JSON.stringify('production'),
       },
-    }),
+    })
   ];
 
   // Common rules
@@ -99,22 +81,25 @@ module.exports = env => {
       use: ['babel-loader'],
     },
     {
-        test: /\.vue$/,
-        loaders: ['vue-loader']
+      test: /\.vue$/,
+      loader: 'vue-loader',
+      options: {
+        loaders: {
+          scss: 'vue-style-loader!css-loader!sass-loader', // <style lang="scss">
+          sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax' // <style lang="sass">
+        }
+      }
     },
     {
-      test: /\.(png|gif|jpg|svg)$/,
-      // include: imgPath,
+      test: /\.(png|gif|jpg|jpeg|svg)$/,
       use: 'url-loader?limit=20480&name=assets/[name]-[hash].[ext]',
     },
     {
       test: /.*\.(woff|woff2|eot|ttf)$/i,
-      // include: fontsPath,
       use: 'file-loader?hash=sha512&digest=hex&name=./assets/[hash].[ext]',
     },
     {
       test: /.*\.(webm|mp4|ogv)$/i,
-      // include: moviesPath,
       use: 'url-loader?limit=20480&name=assets/[name]-[hash].[ext]',
     },
   ];
@@ -149,12 +134,6 @@ module.exports = env => {
       new OfflinePlugin()
     );
 
-    // Production rules
-    rules.push({
-      test: /\.scss$/,
-      exclude: /node_modules/,
-      use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader?sourceMap'],
-    });
   } else {
     entries = [
       'webpack-dev-server/client?http://localhost:3000',
@@ -167,13 +146,6 @@ module.exports = env => {
       new webpack.NamedModulesPlugin(),
       new DashboardPlugin()
     );
-
-    // Development rules
-    rules.push({
-      test: /\.scss$/,
-      exclude: /node_modules/,
-      use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader?sourceMap'],
-    });
   }
 
   const webPackConf = {

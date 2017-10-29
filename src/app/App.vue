@@ -5,7 +5,8 @@
     </transition>
   </div>
 </template>
-<style>
+
+<style lang="scss">
 body,
 html {
   width: 100%;
