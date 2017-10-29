@@ -1,26 +1,37 @@
 <template>
-  <div id="home-container" class="home-view container bg" >
+  <div id="home-container" class="home-view container bg">
+    <DayCard />
     <SessionPool :sessions="sessions" v-if="sessions.length > 0" />
+    <HomeMenu />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import SessionPool from './components/sessionPool.vue';
+import { mapGetters } from "vuex";
+import SessionPool from "./components/sessionPool.vue";
+import HomeMenu from "./components/menu.vue";
+import DayCard from "../../app/components/dayCard.vue";
 
 export default {
-  components: {SessionPool},
+  components: { SessionPool, HomeMenu, DayCard },
   computed: mapGetters({
-    sessions: 'nextSessions'
+    sessions: "nextSessions"
   }),
-  created () {
-    this.$store.dispatch('getNextSessions', this.$route.params.userId)
+  created() {
+    this.$store.dispatch("getNextSessions", this.$route.params.userId);
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .home-view {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: flex-end;
+
   &.container {
     width: 100%;
     height: 100%;

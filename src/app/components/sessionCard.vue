@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../app/app.scss';
+@import '../app.scss';
 
 .sessionCard {
   display: inline-flex;

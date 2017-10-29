@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Card from "./sessionCard.vue";
+import Card from "../../../app/components/sessionCard.vue";
 export default {
   components: { Card },
   props: ["sessions"]
@@ -21,6 +21,7 @@ export default {
   width: 100%;
   display: inline-flex;
   flex-direction: column;
+  margin-bottom: 3%;
 }
 </style>
 
