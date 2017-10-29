@@ -1,28 +1,28 @@
 import services from './services';
-import { RECEIVE_LAST_SESSIONS } from './types';
+import { RECEIVE_NEXT_SESSIONS } from './types';
 
 const state = {
-  lastSessions: [],
+  nextSessions: [],
   currentDate: new Date(),
 };
 
 const getters = {
-  lastSessions: (currState) => {
-    return currState.lastSessions;
+  nextSessions: (currState) => {
+    return currState.nextSessions;
   },
 };
 
 const actions = {
-  getLastSessions({ commit }, userId) {
-    services.getLastSessions(userId).then((sessions) => {
-      commit(RECEIVE_LAST_SESSIONS, { sessions });
+  getNextSessions({ commit }, userId) {
+    services.getNextSessions(userId).then((sessions) => {
+      commit(RECEIVE_NEXT_SESSIONS, { sessions });
     });
   },
 };
 
 const mutations = {
-  [RECEIVE_LAST_SESSIONS](currState, { sessions }) {
-    currState.lastSessions = sessions;
+  [RECEIVE_NEXT_SESSIONS](currState, { sessions }) {
+    currState.nextSessions = sessions;
   },
 };
 

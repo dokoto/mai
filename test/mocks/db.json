@@ -1,8 +1,8 @@
 {
-  "lastsessions" : [
+  "nextsessions" : [
     { 
       "id": "201711011000",
-      "user": "echopolvo@gmail.com",
+      "userId": "C1",
       "status": {
         "canceled": false
       },
@@ -24,8 +24,8 @@
       "address": "Calle Pedo, 22 Madrid"
     },
     { 
-      "id": "201711011000",
-      "user": "echopolvo@gmail.com",
+      "id": "201711011001",
+      "userId": "C1",
       "status": {
         "canceled": false
       },
@@ -48,7 +48,7 @@
     },
     { 
       "id": "201711011002",
-      "user": "echopolvo2@gmail.com",
+      "userId": "C2",
       "status": {
         "canceled": false
       },
@@ -71,7 +71,7 @@
     },
     { 
       "id": "201711011003",
-      "user": "echopolvo3@gmail.com",
+      "userId": "C3",
       "status": {
         "canceled": true,
         "by": {
@@ -123,9 +123,25 @@
       "id": "C1",
       "type": "CLIENT",
       "name": "Hecho Polvo Marinez",
-      "address": "C\\ Jodido, 222",
+      "address": "C\\ Jodido que te cagas, 222",
       "phone": "623237982",
       "email": "hechopolvo@gmail.com"      
+    },
+    {
+      "id": "C2",
+      "type": "CLIENT",
+      "name": "Merder Carmelo Marinez",
+      "address": "C\\ Jodido, 222",
+      "phone": "6234537982",
+      "email": "hechopolvo.2@gmail.com"      
+    },
+    {
+      "id": "C3",
+      "type": "CLIENT",
+      "name": "Rokoni Persiana Marinez",
+      "address": "C\\ Para morir, 222",
+      "phone": "623223982",
+      "email": "hechopolvo.3@gmail.com"      
     }
   ],
   "therapys": {

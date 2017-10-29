@@ -102,6 +102,11 @@ module.exports = env => {
       test: /.*\.(webm|mp4|ogv)$/i,
       use: 'url-loader?limit=20480&name=assets/[name]-[hash].[ext]',
     },
+    {
+      test: /\.scss$/,
+      exclude: /node_modules/,
+      use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader?sourceMap'],
+    },
   ];
 
   let entries = [];

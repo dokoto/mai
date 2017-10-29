@@ -11,10 +11,10 @@ import SessionPool from './components/sessionPool.vue';
 export default {
   components: {SessionPool},
   computed: mapGetters({
-    sessions: 'lastSessions'
+    sessions: 'nextSessions'
   }),
   created () {
-    this.$store.dispatch('getLastSessions', this.$route.params.userId)
+    this.$store.dispatch('getNextSessions', this.$route.params.userId)
   }
 };
 </script>

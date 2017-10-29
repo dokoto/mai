@@ -1,5 +1,5 @@
 <template> 
-<div class="session box">
+<div class="sessionCard box" v-bind:id="id">
   <span class="date">{{ formatDateTime }}</span>
   <span class="name" v-bind:class="{ marginxl: !withTimeInterval }">{{ sessionTherapy.name }}</span>
   <span class="time-interval" v-if="withTimeInterval">{{ timeBegin }} &#8680; {{ timeEnd }}</span>
@@ -7,42 +7,38 @@
 </template>
 
 <script>
-import moment from "moment";
+import moment from 'moment';
 
 moment.locale(LANGUAGE);
 export default {
-  props: ["sessionDate", "sessionTherapy", "withTimeInterval"],
+  props: ['id', 'sessionDate', 'sessionTherapy', 'withTimeInterval'],
   computed: {
     formatDateTime() {
       return moment(
         `${this.sessionDate.year}-${this.sessionDate.month}-${this.sessionDate
           .day} ${this.sessionDate.time}`
-      ).format("dddd Do MMMM");
+      ).format('dddd Do MMMM');
     },
     timeBegin () {
       return moment(
         `${this.sessionDate.year}-${this.sessionDate.month}-${this.sessionDate
           .day} ${this.sessionDate.time}`
-      ).format("hh:mm A" );
+      ).format('hh:mm A' );
     },
     timeEnd () {
       return moment(
         `${this.sessionDate.year}-${this.sessionDate.month}-${this.sessionDate
           .day} ${this.sessionDate.time}`
-      ).add(45, 'm').format("hh:mm A");
+      ).add(45, 'm').format('hh:mm A');
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.box {
-  margin-right: 3%;
-  margin-left: 3%;
-  margin-top: 3%;
-  background-color: white;
-}
-.session {
+@import '../../../app/app.scss';
+
+.sessionCard {
   display: inline-flex;
   flex-direction: column;
   .date {
@@ -61,7 +57,7 @@ export default {
   }
   .time-interval {
     font-size: 1.6em;
-    color: #b1b0b0;
+    color: $colorGrey1;
     margin-left: 2%;
   }
 }

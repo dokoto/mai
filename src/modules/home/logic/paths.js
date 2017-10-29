@@ -1,2 +1,2 @@
-export const lastSessions = `${REST_API}/lastsessions`;
+export const nextSessions = `${REST_API}/nextsessions`;
 export const foo = '';
