@@ -1,26 +1,31 @@
+/*
+  MIRA ESTA:
+  https://webdesign.tutsplus.com/es/articles/css3-transitions-and-transforms-from-scratch--webdesign-4975
+*/
+
 <template>
   <section class="therapist-carrusel box">
-      <span class="therapist-carrusel-item">
-        <span class="therapist-img-box">
-          <img class="therapist-img" src="../../app/assets/img/therapist-1.jpg" />
-        </span>
-        <span class="h-separator"></span>
-        <span class="therapist-name">Maria del Bosque Martin Perez Castro</span>
+    <span class="therapist-carrusel-item">
+      <span class="therapist-img-box">
+        <img class="therapist-img" src="../../app/assets/img/therapist-1.jpg" />
       </span>
-      <span class="therapist-carrusel-item">
-        <span class="therapist-img-box">
-          <img class="therapist-img" src="../../app/assets/img/therapist-1.jpg" />
-        </span>
-        <span class="h-separator"></span>
-        <span class="therapist-name">Maria del Bosque Martin Perez Castro</span>
+      <span class="h-separator"></span>
+      <span class="therapist-name">Maria del Bosque Martin Perez Castro</span>
+    </span>
+    <span class="therapist-carrusel-item">
+      <span class="therapist-img-box">
+        <img class="therapist-img" src="../../app/assets/img/therapist-1.jpg" />
       </span>
-      <span class="therapist-carrusel-item">
-        <span class="therapist-img-box">
-          <img class="therapist-img" src="../../app/assets/img/therapist-1.jpg" />
-        </span>
-        <span class="h-separator"></span>
-        <span class="therapist-name">Maria del Bosque Martin Perez Castro</span>
+      <span class="h-separator"></span>
+      <span class="therapist-name">Maria del Bosque Martin Perez Castro</span>
+    </span>
+    <span class="therapist-carrusel-item">
+      <span class="therapist-img-box">
+        <img class="therapist-img" src="../../app/assets/img/therapist-1.jpg" />
       </span>
+      <span class="h-separator"></span>
+      <span class="therapist-name">Maria del Bosque Martin Perez Castro</span>
+    </span>
   </section>
 </template>
 
@@ -30,7 +35,9 @@ import "slick-carousel";
 export default {
   mounted() {
     $(".therapist-carrusel").slick({
-      dots: false
+      dots: false,
+      slidesToShow: 2,
+      slidesToScroll: 2
     });
   }
 };
@@ -39,6 +46,10 @@ export default {
 <style lang="scss">
 @import "node_modules/slick-carousel/slick/slick.scss";
 @import "../app.scss";
+
+.slick-slide img {
+  display: inline-flex;
+}
 
 .therapist-carrusel {
   display: inline-flex;
@@ -50,24 +61,11 @@ export default {
   padding: 2%;
 }
 
-.slick-slide {
-  display: inline-flex;
+.therapist-carrusel-item {
+  display: inline-flex !important;
   flex-direction: column;
-}
-
-.therapist-carrusel-XXX {
-  display: inline-flex;
-  flex-direction: row;
-  justify-content: center;
-  border-bottom: solid;
-  border-bottom-color: #ddd;
-  padding-bottom: 4%;
-  padding: 2%;
-}
-
-.therapist-carrusel-item-- {
-  display: inline-flex;
-  flex-direction: column;
+  width: auto !important;
+  margin-right: 10px;
 }
 .therapist-img-box {
   text-align: center;
