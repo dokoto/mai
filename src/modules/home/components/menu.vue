@@ -9,10 +9,10 @@
 
 <script>
 import HomeMenuItem from "./menuItem";
-import calendarIcon from '../assets/img/icon-calendar.png';
-import emailIcon from '../assets/img/icon-email.png';
-import chatIcon from '../assets/img/icon-chat.png';
-import phoneIcon from '../assets/img/icon-phone.png';
+import calendarIcon from '../../../app/assets/img/icon-calendar.png';
+import emailIcon from '../../../app/assets/img/icon-email.png';
+import chatIcon from '../../../app/assets/img/icon-chat.png';
+import phoneIcon from '../../../app/assets/img/icon-phone.png';
 
 export default {
   components: {HomeMenuItem},

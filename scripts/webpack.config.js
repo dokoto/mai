@@ -1,64 +1,69 @@
-const webpack = require('webpack');
-const path = require('path');
+const webpack = require("webpack");
+const path = require("path");
 
-const DashboardPlugin = require('webpack-dashboard/plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const OfflinePlugin = require('offline-plugin');
-const autoprefixer = require('autoprefixer');
-const ifs = require('os').networkInterfaces();
-const Conf = require('../.appconf.json');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const OfflinePlugin = require("offline-plugin");
+const autoprefixer = require("autoprefixer");
+const ifs = require("os").networkInterfaces();
+const Conf = require("../.appconf.json");
 
-const rootPath = path.resolve(__dirname, '../');
-const jsSourcePath = path.join(__dirname, '../src');
-const buildPath = path.join(__dirname, '../bin/web');
-const sourcePath = path.join(__dirname, '../src');
+const rootPath = path.resolve(__dirname, "../");
+const jsSourcePath = path.join(__dirname, "../src");
+const cssPath = path.join(__dirname, "../src/app");
+const imageAppPath = path.join(__dirname, "../src/app/assets/img");
+const buildPath = path.join(__dirname, "../bin/web");
+const sourcePath = path.join(__dirname, "../src");
 
 function normalizeEnvVars(env_vars) {
-  console.log('ENVIRONMENT VARS %s', JSON.stringify(env_vars));
+  console.log("ENVIRONMENT VARS %s", JSON.stringify(env_vars));
   for (const key in env_vars) {
-    env_vars[key] = env_vars[key].replace(/'|"/gi, '');
+    env_vars[key] = env_vars[key].replace(/'|"/gi, "");
   }
-  console.log('NORMALIZED ENVIRONMENT VARS %s', JSON.stringify(env_vars));
+  console.log("NORMALIZED ENVIRONMENT VARS %s", JSON.stringify(env_vars));
 }
 
 module.exports = env => {
   normalizeEnvVars(env);
-  const isProduction = env.target === 'prod';
+  const isProduction = env.target === "prod";
   console.log(
-    `Compiling for ${env.target === 'dev'
-      ? JSON.stringify('development')
-      : JSON.stringify('production')}`
+    `Compiling for ${env.target === "dev"
+      ? JSON.stringify("development")
+      : JSON.stringify("production")}`
   );
-  const REST_API = `'http://${Conf.ENV[env.env]}'`
+  const REST_API = `'http://${Conf.ENV[env.env]}'`;
 
   // Common plugins
   const plugins = [
-    new CleanWebpackPlugin([path.join(buildPath, '*.*')], { root: rootPath, verbose: true, dry: false }),
+    new CleanWebpackPlugin([path.join(buildPath, "*.*")], {
+      root: rootPath,
+      verbose: true,
+      dry: false
+    }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor-[hash].js',
+      name: "vendor",
+      filename: "vendor-[hash].js",
       minChunks(module) {
         const context = module.context;
-        return context && context.indexOf('node_modules') >= 0;
-      },
+        return context && context.indexOf("node_modules") >= 0;
+      }
     }),
     new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
-      template: path.join(jsSourcePath, 'index.html'),
+      template: path.join(jsSourcePath, "index.html"),
       path: buildPath,
-      filename: 'index.html',
+      filename: "index.html"
     }),
     new webpack.LoaderOptionsPlugin({
       options: {
         postcss: [
           autoprefixer({
-            browsers: ['last 3 version', 'ie >= 10'],
-          }),
+            browsers: ["last 3 version", "ie >= 10"]
+          })
         ],
-        context: sourcePath,
-      },
+        context: sourcePath
+      }
     }),
     new webpack.DefinePlugin({
       TARGET: JSON.stringify(env.target),
@@ -66,10 +71,17 @@ module.exports = env => {
       VERSION: JSON.stringify(env.version),
       REST_API,
       LANGUAGE: JSON.stringify(env.language),
-      'process.env': {
+      "process.env": {
         NODE_ENV:
-        env.target === 'dev' ? JSON.stringify('development') : JSON.stringify('production'),
-      },
+          env.target === "dev"
+            ? JSON.stringify("development")
+            : JSON.stringify("production")
+      }
+    }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery"
     })
   ];
 
@@ -78,45 +90,40 @@ module.exports = env => {
     {
       test: /\.js$/,
       exclude: /node_modules/,
-      use: ['babel-loader'],
+      use: ["babel-loader"]
     },
     {
       test: /\.vue$/,
-      loader: 'vue-loader',
+      loader: "vue-loader",
       options: {
         loaders: {
-          scss: 'vue-style-loader!css-loader!sass-loader', // <style lang="scss">
-          sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax' // <style lang="sass">
+          scss: "vue-style-loader!css-loader!sass-loader", // <style lang="scss">
+          sass: "vue-style-loader!css-loader!sass-loader?indentedSyntax" // <style lang="sass">
         }
       }
     },
     {
       test: /\.(png|gif|jpg|jpeg|svg)$/,
-      use: 'url-loader?limit=20480&name=assets/[name]-[hash].[ext]',
+      use: "url-loader?limit=20480&name=assets/[name]-[hash].[ext]"
     },
     {
       test: /.*\.(woff|woff2|eot|ttf)$/i,
-      use: 'file-loader?hash=sha512&digest=hex&name=./assets/[hash].[ext]',
+      use: "file-loader?hash=sha512&digest=hex&name=./assets/[hash].[ext]"
     },
     {
       test: /.*\.(webm|mp4|ogv)$/i,
-      use: 'url-loader?limit=20480&name=assets/[name]-[hash].[ext]',
-    },
-    {
-      test: /\.scss$/,
-      exclude: /node_modules/,
-      use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader?sourceMap'],
-    },
+      use: "url-loader?limit=20480&name=assets/[name]-[hash].[ext]"
+    }
   ];
 
   let entries = [];
   if (isProduction) {
-    entries = ['index.js'];
+    entries = ["index.js"];
     // Production plugins
     plugins.push(
       new webpack.LoaderOptionsPlugin({
         minimize: true,
-        debug: false,
+        debug: false
       }),
       new webpack.optimize.UglifyJsPlugin({
         compress: {
@@ -129,54 +136,69 @@ module.exports = env => {
           dead_code: true,
           evaluate: true,
           if_return: true,
-          join_vars: true,
+          join_vars: true
         },
         output: {
-          comments: false,
-        },
+          comments: false
+        }
       }),
-      new ExtractTextPlugin('style-[hash].css'),
+      new ExtractTextPlugin("style-[hash].css"),
       new OfflinePlugin()
     );
-
+      // Production rules
+      rules.push({
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader?sourceMap'],
+      });
   } else {
     entries = [
-      'webpack-dev-server/client?http://localhost:3000',
-      'webpack/hot/only-dev-server',
-      'index.js',
+      "webpack-dev-server/client?http://localhost:3000",
+      "webpack/hot/only-dev-server",
+      "index.js"
     ];
     // Development plugins
     plugins.push(
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NamedModulesPlugin(),
-      new DashboardPlugin()
+      new webpack.NamedModulesPlugin()
     );
+    rules.push({
+      test: /\.scss$/,
+      exclude: /node_modules/,
+      use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader?sourceMap'],
+    });
   }
 
   const webPackConf = {
-    devtool: isProduction ? false : 'source-map',
+    devtool: isProduction ? false : "source-map",
     context: jsSourcePath,
     entry: entries,
     output: {
       path: buildPath,
-      publicPath: isProduction ? './' : '/',
-      filename: 'app.js',
+      publicPath: isProduction ? "./" : "/",
+      filename: "app.js"
     },
     module: {
-      rules,
+      rules
     },
     resolve: {
-      extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.js', '.vue'],
-      modules: ['node_modules', jsSourcePath],
+      extensions: [
+        ".webpack-loader.js",
+        ".web-loader.js",
+        ".loader.js",
+        ".js",
+        ".vue"
+      ],
+      modules: ["node_modules", jsSourcePath]
     },
     plugins,
     devServer: {
-      contentBase: isProduction ? '../bin' : '../src',
+      contentBase: isProduction ? "../bin" : "../src",
       historyApiFallback: true,
       port: 3000,
       compress: isProduction,
       inline: !isProduction,
-      host: '0.0.0.0',
+      host: "0.0.0.0",
       stats: {
         assets: true,
         children: false,
@@ -188,10 +210,10 @@ module.exports = env => {
         version: false,
         warnings: true,
         colors: {
-          green: '\u001b[32m',
-        },
-      },
-    },
+          green: "\u001b[32m"
+        }
+      }
+    }
   };
 
   return webPackConf;

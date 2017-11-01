@@ -1,18 +1,25 @@
-<template> 
-<section class="appointments">
-  <Card v-for="session in sessions" :key="session.id" 
-    v-bind:id="session.id"
-    v-bind:sessionDate="session.date" 
-    v-bind:sessionTherapy="session.therapy" 
-    v-bind:withTimeInterval="false" />
-</section>
+<template>
+  <section class="appointments">
+    <Card v-for="session in sessions" 
+      :key="session.id" 
+      v-bind:id="session.id" 
+      v-bind:sessionDate="session.date" 
+      v-bind:sessionTherapy="session.therapy" 
+      v-bind:withTimeInterval="false" 
+      v-on:sessionClick="handleSessionClick" />
+  </section>
 </template>
 
 <script>
 import Card from "../../../app/components/sessionCard.vue";
 export default {
   components: { Card },
-  props: ["sessions"]
+  props: ["sessions"],
+  methods: {
+    handleSessionClick: function(ev) {
+      this.$emit("sessionClick", ev);
+    }
+  }  
 };
 </script>
 

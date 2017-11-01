@@ -7,9 +7,7 @@ const state = {
 };
 
 const getters = {
-  nextSessions: (currState) => {
-    return currState.nextSessions;
-  },
+  nextSessions: currState => currState.nextSessions,
 };
 
 const actions = {

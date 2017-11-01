@@ -1,7 +1,7 @@
 <template>
-  <div id="home-container" class="home-view container bg">
+  <div id="home-container" class="home-view container bg-beach">
     <DayCard />
-    <SessionPool :sessions="sessions" v-if="sessions.length > 0" />
+    <SessionPool :sessions="sessions" v-if="sessions.length > 0" v-on:sessionClick="handleSessionClick" />
     <HomeMenu />
   </div>
 </template>
@@ -19,17 +19,25 @@ export default {
   }),
   created() {
     this.$store.dispatch("getNextSessions", this.$route.params.userId);
+  },
+  methods: {
+    handleSessionClick(ev) {
+      this.$router.push({
+        name: "session",
+        params: { sessionId: ev.currentTarget.id }
+      });
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+@import "../../app/app.scss";
+
 .home-view {
   position: relative;
   display: inline-flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
   justify-content: flex-end;
 
   &.container {
@@ -37,8 +45,8 @@ export default {
     height: 100%;
   }
 
-  &.bg {
-    background-image: url("./assets/img/app-bg.jpeg");
+  &.bg-beach {
+    background-image: url("../../app/assets/img/app-bg.jpeg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;

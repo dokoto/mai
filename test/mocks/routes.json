@@ -1,5 +1,6 @@
 {
   "/nextsessions/:userId": "/nextsessions?userId=:userId",
+  "/sessions/:sessionId": "/sessions?id=:sessionId",
   "/sessions/:year/:month/:day": "/sessions?date.year=:year&date.month=:month&date.day=:day",
   "/users/:type": "/users?type=:type"
 }
