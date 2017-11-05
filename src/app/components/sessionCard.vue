@@ -68,6 +68,7 @@ export default {
     font-size: 1.6em;
     color: $colorGrey1;
     margin-left: 2%;
+    margin-top: 2%;
   }
 }
 </style>

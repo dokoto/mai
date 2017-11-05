@@ -6,7 +6,7 @@ import store from './store';
 
 sync(store, router);
 
-console.log('ENVIRONMENT VARS %s %s %s %s %s', TARGET, PLATFORM, VERSION, REST_API, LANGUAGE);
+console.log('ENVIRONMENT VARS %s %s %s %s %s \n%s \n%s', TARGET, PLATFORM, VERSION, REST_API, LANGUAGE, GOOGLE_MAPS_KEY, GOOGLE_GEOCODING_KEY);
 
 const app = new Vue({
   router,

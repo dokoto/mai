@@ -70,6 +70,8 @@ module.exports = env => {
       PLATFORM: JSON.stringify(env.platform),
       VERSION: JSON.stringify(env.version),
       REST_API,
+      GOOGLE_MAPS_KEY: JSON.stringify(Conf.GOOGLE.MAPS_KEY),
+      GOOGLE_GEOCODING_KEY: JSON.stringify(Conf.GOOGLE.MAPS_GEOLOCAL_KEY),
       LANGUAGE: JSON.stringify(env.language),
       "process.env": {
         NODE_ENV:

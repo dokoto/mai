@@ -6,6 +6,8 @@ module.exports = {
         "VERSION": true,
         "REST_API": true,
        "LANGUAGE": true,
+       "GOOGLE_MAPS_KEY": true, 
+       "GOOGLE_GEOCODING_KEY": true
     },
     "rules": {
         "no-param-reassign": 0,

@@ -14,7 +14,7 @@
       "therapist": {
         "id": "T1",
         "name": "Carmen Montoro",
-        "url": "/users/T1"
+        "type":"THERAPIST"
       },
       "therapy": {
         "id": "S1",
@@ -37,7 +37,7 @@
       "therapist": {
         "id": "T1",
         "name": "Carmen Montoro",
-        "url": "/users/T1"
+        "type":"THERAPIST"
       },
       "therapy": {
         "id": "S1",
@@ -60,7 +60,7 @@
       "therapist": {
         "id": "T1",
         "name": "Carmen Montoro",
-        "url": "/users/T1"
+        "type":"THERAPIST"
       },
       "therapy": {
         "id": "S3",
@@ -83,7 +83,7 @@
       "therapist": {
         "id": "T1",
         "name": "Carmen Montoro",
-        "url": "/users/T1"
+        "type":"THERAPIST"
       },
       "therapy": {
         "id": "S2",
@@ -99,7 +99,7 @@
         "by": {
           "type": "THERAPIST",
           "id": "T1",
-          "url": "/users/T1"
+          "type":"THERAPIST"
         },
         "reason": "Te folle un pez"
       },
@@ -112,7 +112,7 @@
       "therapist": {
         "id": "T1",
         "name": "Carmen Montoro",
-        "url": "/users/T1"
+        "type":"THERAPIST"
       },
       "therapy": {
         "id": "S2",
@@ -136,7 +136,7 @@
       "therapist": {
         "id": "T1",
         "name": "Carmen Montoro",
-        "url": "/users/T1"
+        "type":"THERAPIST"
       },
       "therapy": {
         "id": "S1",
@@ -159,7 +159,7 @@
       "therapist": {
         "id": "T1",
         "name": "Carmen Montoro",
-        "url": "/users/T1"
+        "type":"THERAPIST"
       },
       "therapy": {
         "id": "S1",
@@ -182,7 +182,7 @@
       "therapist": {
         "id": "T1",
         "name": "Carmen Montoro",
-        "url": "/users/T1"
+        "type":"THERAPIST"
       },
       "therapy": {
         "id": "S3",
@@ -205,7 +205,7 @@
       "therapist": {
         "id": "T1",
         "name": "Carmen Montoro",
-        "url": "/users/T1"
+        "type":"THERAPIST"
       },
       "therapy": {
         "id": "S2",
@@ -221,7 +221,7 @@
         "by": {
           "type": "THERAPIST",
           "id": "T1",
-          "url": "/users/T1"
+          "type":"THERAPIST"
         },
         "reason": "Te folle un pez"
       },
@@ -234,7 +234,7 @@
       "therapist": {
         "id": "T1",
         "name": "Carmen Montoro",
-        "url": "/users/T1"
+        "type":"THERAPIST"
       },
       "therapy": {
         "id": "S2",
@@ -257,16 +257,46 @@
       "id": "T1",
       "type": "THERAPIST",
       "name": "Carmen Montoro",
-      "address": "C\\ Mierder, 22",
+      "address": {
+        "localtion": {
+          "lat": 40.41594508029149,
+          "lng": -3.727298319708498
+        },
+        "formatted_address": "Av. de Portugal, 71, 28011 Madrid, España"
+      },
       "phone": "623467982",
       "email": "carmen@gmail.com",
-      "therapys": ["S1", "S2", "S3"]
+      "therapys": ["S1", "S2", "S3"],
+      "webPage": "http://www.google.es",
+      "thumb": "http://localhost:8809/therapist-1.jpg"
+    },{
+      "id": "T2",
+      "type": "THERAPIST",
+      "name": "Paco el Fresco Martinez",
+      "address": {
+        "localtion": {
+          "lat": 40.41594508029149,
+          "lng": -3.727298319708498
+        },
+        "formatted_address": "Av. de Portugal, 71, 28011 Madrid, España"
+      },
+      "phone": "623457982",
+      "email": "paco.freco@gmail.com",
+      "therapys": ["S1", "S3"],
+      "webPage": "http://www.google.es",
+      "thumb": "http://localhost:8809/therapist-2.jpg"
     },
     {
       "id": "C1",
       "type": "CLIENT",
       "name": "Hecho Polvo Marinez",
-      "address": "C\\ Jodido que te cagas, 222",
+      "address": {
+        "localtion": {
+          "lat": 40.41594508029149,
+          "lng": -3.727298319708498
+        },
+        "formatted_address": "Av. de Portugal, 71, 28011 Madrid, España"
+      },
       "phone": "623237982",
       "email": "hechopolvo@gmail.com"
     },
@@ -274,7 +304,13 @@
       "id": "C2",
       "type": "CLIENT",
       "name": "Merder Carmelo Marinez",
-      "address": "C\\ Jodido, 222",
+      "address": {
+        "localtion": {
+          "lat": 40.41594508029149,
+          "lng": -3.727298319708498
+        },
+        "formatted_address": "Av. de Portugal, 71, 28011 Madrid, España"
+      },
       "phone": "6234537982",
       "email": "hechopolvo.2@gmail.com"
     },
@@ -282,7 +318,13 @@
       "id": "C3",
       "type": "CLIENT",
       "name": "Rokoni Persiana Marinez",
-      "address": "C\\ Para morir, 222",
+      "address": {
+        "localtion": {
+          "lat": 40.41594508029149,
+          "lng": -3.727298319708498
+        },
+        "formatted_address": "Av. de Portugal, 71, 28011 Madrid, España"
+      },
       "phone": "623223982",
       "email": "hechopolvo.3@gmail.com"
     }
@@ -291,7 +333,7 @@
     "S1": {
       "id": "S1",
       "name": "Fisiotherapy",
-      "description": "Fisiotherapy bla bla bla"
+      "description": "Fisiotherapy bla bla bla"      
     },
     "S2": {
       "id": "S2",

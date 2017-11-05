@@ -1,43 +1,31 @@
-/*
-  MIRA ESTA:
-  https://webdesign.tutsplus.com/es/articles/css3-transitions-and-transforms-from-scratch--webdesign-4975
-*/
-
 <template>
   <section class="therapist-carrusel box">
-    <span class="therapist-carrusel-item">
+    <span class="therapist-carrusel-item" v-for="therapist in therapists" :key="therapist.id" >
       <span class="therapist-img-box">
-        <img class="therapist-img" src="../../app/assets/img/therapist-1.jpg" />
+        <img class="therapist-img" :src="therapist.thumb" />
       </span>
+      <div class="wrapper">
       <span class="h-separator"></span>
-      <span class="therapist-name">Maria del Bosque Martin Perez Castro</span>
-    </span>
-    <span class="therapist-carrusel-item">
-      <span class="therapist-img-box">
-        <img class="therapist-img" src="../../app/assets/img/therapist-1.jpg" />
-      </span>
-      <span class="h-separator"></span>
-      <span class="therapist-name">Maria del Bosque Martin Perez Castro</span>
-    </span>
-    <span class="therapist-carrusel-item">
-      <span class="therapist-img-box">
-        <img class="therapist-img" src="../../app/assets/img/therapist-1.jpg" />
-      </span>
-      <span class="h-separator"></span>
-      <span class="therapist-name">Maria del Bosque Martin Perez Castro</span>
+      <span class="therapist-name">{{ therapist.name }}</span>
+      </div>
     </span>
   </section>
 </template>
-
 <script>
 import "slick-carousel";
 
 export default {
+  props: ['therapists'],
+  created() {
+    console.log(this.therapists);
+  },
   mounted() {
     $(".therapist-carrusel").slick({
+      arrows: true,
       dots: false,
-      slidesToShow: 2,
-      slidesToScroll: 2
+      centerMode: false,      
+      slidesToShow: 1,
+      slidesToScroll: 1
     });
   }
 };
@@ -49,6 +37,29 @@ export default {
 
 .slick-slide img {
   display: inline-flex;
+}
+.slick-next {
+  background-image: url("../../app/assets/img/next.png");
+  background-repeat: no-repeat;
+  width: 20px;
+  background-size: contain;
+  background-position-y: center;
+  background-color: transparent;
+  border: 0px;
+  font-size: 0;
+  outline: none;
+}
+
+.slick-prev {
+  background-image: url("../../app/assets/img/back.png");
+  background-repeat: no-repeat;
+  width: 20px;
+  background-size: contain;
+  background-position-y: center;
+  background-color: transparent;
+  border: 0px;
+  font-size: 0;
+  outline: none;
 }
 
 .therapist-carrusel {
@@ -64,8 +75,12 @@ export default {
 .therapist-carrusel-item {
   display: inline-flex !important;
   flex-direction: column;
-  width: auto !important;
-  margin-right: 10px;
+  /*width: auto !important;
+  margin-right: 10px;*/
+  .wrapper {
+    display: inline-flex !important;
+    flex-direction: column;
+  }
 }
 .therapist-img-box {
   text-align: center;
@@ -84,6 +99,6 @@ export default {
 
 .therapist-name {
   text-align: center;
-  font-size: 0.8em;
+  font-size: 0.7em;
 }
 </style>
