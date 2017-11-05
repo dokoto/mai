@@ -3,7 +3,6 @@ import { RECEIVE_NEXT_SESSIONS } from './types';
 
 const state = {
   nextSessions: [],
-  currentDate: new Date(),
 };
 
 const getters = {

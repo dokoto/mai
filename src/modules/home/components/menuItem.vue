@@ -1,6 +1,6 @@
 <template>
   <span class="option" v-bind:class="className">
-    <a v-bind:href="url" target="_self">
+    <a v-bind:href="calendarUrl" target="_self">
       <img v-bind:src="icon" class="option-icon" />
     </a>
   </span>
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  props: ["className", "url", "icon"]
+  props: ["className", "calendarUrl", "icon"]
 };
 </script>
 

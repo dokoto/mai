@@ -2,28 +2,33 @@
   <div id="home-container" class="home-view container bg-beach">
     <DayCard />
     <SessionPool :sessions="sessions" v-if="sessions.length > 0" v-on:sessionClick="handleSessionClick" />
-    <HomeMenu />
+    <HomeMenu :userId="userId" />
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import SessionPool from "./components/sessionPool.vue";
-import HomeMenu from "./components/menu.vue";
-import DayCard from "../../app/components/dayCard.vue";
+import { mapGetters } from 'vuex';
+import SessionPool from './components/sessionPool.vue';
+import HomeMenu from './components/menu.vue';
+import DayCard from '../../app/components/dayCard.vue';
 
 export default {
   components: { SessionPool, HomeMenu, DayCard },
   computed: mapGetters({
-    sessions: "nextSessions"
+    sessions: 'nextSessions'
   }),
+  data() {
+    return {
+      userId: this.$route.params.userId
+    }
+  },
   created() {
-    this.$store.dispatch("getNextSessions", this.$route.params.userId);
+    this.$store.dispatch('getNextSessions', this.$route.params.userId);
   },
   methods: {
     handleSessionClick(ev) {
       this.$router.push({
-        name: "session",
+        name: 'session',
         params: { sessionId: ev.currentTarget.id }
       });
     }

@@ -1,6 +1,6 @@
 <template>
   <section class="menu">
-    <HomeMenuItem className="pastel-orange" :icon="calendarIcon" url="/calendar" />
+    <HomeMenuItem className="pastel-orange" :icon="calendarIcon" :calendarUrl="calendarUrl" />
     <HomeMenuItem className="pastel-pink" :icon="emailIcon" url="/email" />
     <HomeMenuItem className="pastel-blue" :icon="chatIcon" url="/chat" />
     <HomeMenuItem className="pastel-yellow" :icon="phoneIcon" url="/phone" />
@@ -8,20 +8,30 @@
 </template>
 
 <script>
+import moment from "moment";
+
 import HomeMenuItem from "./menuItem";
 import calendarIcon from '../../../app/assets/img/icon-calendar.png';
 import emailIcon from '../../../app/assets/img/icon-email.png';
 import chatIcon from '../../../app/assets/img/icon-chat.png';
 import phoneIcon from '../../../app/assets/img/icon-phone.png';
 
+moment.locale(LANGUAGE);
+
 export default {
-  components: {HomeMenuItem},
+  props: ['userId'],
+  components: { HomeMenuItem },
   data () {
     return {
       calendarIcon,
       emailIcon,
       chatIcon,
       phoneIcon,
+    }
+  },
+  computed: {
+    calendarUrl: function () {
+      return `/calendar/${this.userId}/${moment().format("YYYY")}/${moment().format("M")}/${moment().format("D")}`;
     }
   }
 };
