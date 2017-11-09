@@ -1,8 +1,8 @@
 {
-  "name": "perruchaapp",
+  "name": "mai",
   "version": "0.0.1",
-  "description": "perrucha App",
-  "main": "src/index.js",
+  "description": "Movilización Activa Intestinal",
+  "main": "client/index.js",
   "scripts": {
     "test-local": "node node_modules/cucumber/bin/cucumber.js --tags @mandatory --tags @local test/bdd/features",
     "test": "node node_modules/cucumber/bin/cucumber.js --tags @mandatory --tags @release test/bdd/features",

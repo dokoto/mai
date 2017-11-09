@@ -10,11 +10,11 @@ const ifs = require("os").networkInterfaces();
 const Conf = require("../.appconf.json");
 
 const rootPath = path.resolve(__dirname, "../");
-const jsSourcePath = path.join(__dirname, "../src");
-const cssPath = path.join(__dirname, "../src/app");
-const imageAppPath = path.join(__dirname, "../src/app/assets/img");
+const jsSourcePath = path.join(__dirname, "../client");
+const cssPath = path.join(__dirname, "../client/app");
+const imageAppPath = path.join(__dirname, "../client/app/assets/img");
 const buildPath = path.join(__dirname, "../bin/web");
-const sourcePath = path.join(__dirname, "../src");
+const sourcePath = path.join(__dirname, "../client");
 
 function normalizeEnvVars(env_vars) {
   console.log("ENVIRONMENT VARS %s", JSON.stringify(env_vars));
@@ -195,7 +195,7 @@ module.exports = env => {
     },
     plugins,
     devServer: {
-      contentBase: isProduction ? "../bin" : "../src",
+      contentBase: isProduction ? "../bin" : "../client",
       historyApiFallback: true,
       port: 3000,
       compress: isProduction,

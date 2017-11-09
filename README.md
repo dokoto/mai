@@ -1,4 +1,4 @@
-# PerruchaApp
+# M.A.I.
 
 To mock:
 ```bash
