@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import moment from "moment";
-import toDayIcon from "../../../app/assets/img/icon-today.png";
-import homeIcon from "../../../app/assets/img/icon-home.png";
+import moment from 'moment';
+import toDayIcon from '../../../app/assets/img/icon-today.png';
+import homeIcon from '../../../app/assets/img/icon-home.png';
 moment.locale(LANGUAGE);
 
 export default {
@@ -27,12 +27,12 @@ export default {
   computed: {
     yearMonth: function() {
       return `${moment(this.selectedDay)
-        .format("MMM")
-        .toUpperCase()} ${moment(this.selectedDay).format("YYYY")}`;
+        .format('MMM')
+        .toUpperCase()} ${moment(this.selectedDay).format('YYYY')}`;
     },
     dayName: function() {
       return moment(this.selectedDay)
-        .format("dddd")
+        .format('dddd')
         .toUpperCase();
     },
     homeUrl: function() {
@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       toDayIcon,
-      homeIcon,
+      homeIcon
     };
   }
 };

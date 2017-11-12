@@ -1,12 +1,6 @@
 <template>
   <section class="week-view box">
-    <DayCarruselTrack
-       v-for="(track, index) in groupOfMonths" 
-       :key="index"
-       :track="track"
-       v-bind:selectedDay="selectedDay"
-       :colorClass="colorClass[index]"
-       v-on:dayClick="handleDayClick" />
+    <DayCarruselTrack v-for="(track, index) in groupOfMonths" :key="index" :track="track" v-bind:selectedDay="selectedDay" :colorClass="colorClass[index]" v-on:dayClick="handleDayClick" />
     <span class="end"></span>
   </section>
 </template>
@@ -20,17 +14,20 @@ export default {
   props: ['dayNumber', 'monthNumber', 'year', 'numberOfMonths', 'selectedDay'],
   computed: {
     groupOfMonths() {
-      return calcMonthsAHeadFrom(`${this.year}${this.monthNumber}${this.dayNumber}`, this.numberOfMonths);
+      return calcMonthsAHeadFrom(
+        `${this.year}${this.monthNumber}${this.dayNumber}`,
+        this.numberOfMonths
+      );
     }
   },
   data() {
     return {
       colorClass: ['monthColorOne', 'monthColorTwo', 'monthColorThree']
-    }
+    };
   },
-   methods: {
+  methods: {
     handleDayClick: function(ev) {
-      this.$emit("dayClick", ev);
+      this.$emit('dayClick', ev);
     }
   }
 };
@@ -44,13 +41,13 @@ export default {
   flex-direction: row;
   overflow: auto;
   padding: 2%;
-  
+
   .end {
     min-width: 1px;
     background-color: white;
   }
 }
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 </style>

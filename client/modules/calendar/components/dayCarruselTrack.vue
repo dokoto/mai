@@ -1,17 +1,13 @@
 <template>
   <div class="month" :class="colorClass">
-    <div class="month-box" 
-      v-for="(day, index) in track" 
-      :key="index" 
-      v-on:click="handleDayClick" 
-      :data-day-id="`${day.yearNumber}${day.monthNumber}${day.dayNumber}`">
-      <span class="month-v-name" v-bind:class="monthColorClass" v-if="index === 0 || day.dayNumber == 1" >{{ day.monthShotName }}</span>
+    <div class="month-box" v-for="(day, index) in track" :key="index" v-on:click="handleDayClick" :data-day-id="`${day.yearNumber}${day.monthNumber}${day.dayNumber}`">
+      <span class="month-v-name" v-bind:class="monthColorClass" v-if="index === 0 || day.dayNumber == 1">{{ day.monthShotName }}</span>
       <div class="day-box" v-bind:class="{ daySelected: selectedDay === `${day.yearNumber}${day.monthNumber}${day.dayNumber}` }">
         <span class="day-name">{{ day.dayName }}</span>
         <span class="day-number">{{ day.dayNumber}}</span>
       </div>
     </div>
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -20,11 +16,11 @@ export default {
   data() {
     return {
       monthColorClass: this.colorClass
-    }
+    };
   },
   methods: {
     handleDayClick: function(ev) {
-      this.$emit("dayClick", ev);
+      this.$emit('dayClick', ev);
     }
   }
 };
@@ -46,7 +42,7 @@ export default {
     flex-direction: row;
     color: $colorGrey2;
     width: 50px;
-    height: 55px;
+    height: 50px;
   }
 
   .month-v-name {
@@ -54,14 +50,14 @@ export default {
     text-orientation: upright;
     font-weight: bold;
     font-size: 0.7em;
-    color: $colorDarkGrey2;    
+    color: $colorDarkGrey2;
     .hide {
       visibility: hidden;
     }
   }
   .monthColorOne {
-     background-color: $colorPastelOrange;
-   }
+    background-color: $colorPastelOrange;
+  }
   .monthColorTwo {
     background-color: $colorPastelPink;
   }
@@ -87,17 +83,17 @@ export default {
       margin: 0;
     }
   }
-    .daySelected {
-      color: crimson !important;
-    }
+  .daySelected {
+    color: crimson !important;
+  }
 }
-  .monthColorOne {
-    border-bottom-color: $colorPastelOrange;
-  }
-  .monthColorTwo {
-    border-bottom-color: $colorPastelPink;
-  }
-  .monthColorThree {
-    border-bottom-color: $colorPastelBlue;
-  }
+.monthColorOne {
+  border-bottom-color: $colorPastelOrange;
+}
+.monthColorTwo {
+  border-bottom-color: $colorPastelPink;
+}
+.monthColorThree {
+  border-bottom-color: $colorPastelBlue;
+}
 </style>

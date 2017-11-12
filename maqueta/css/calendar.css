@@ -206,12 +206,13 @@ body {
     border-bottom-color: rosybrown;
 
 }
-
-/* DAY CARRUSEL */
-
 .day-view li:last-child {
     border-bottom: 0;
 }
+
+/* DAY CARRUSEL */
+
+
 
 .time-box .time {
     font-size: 1em;
@@ -259,6 +260,7 @@ input[type="checkbox"]+label {
     cursor: pointer;
     margin-top: 6%;
     margin-left: 8%;
+    user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;

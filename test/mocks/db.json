@@ -345,5 +345,6 @@
       "name": "M.A.I.",
       "description": "M.A.I. bla bla bla"
     }
-  }
+  },
+  "sessionschedule": ["10:00", "11:30", "13:00", "16:00", "17:30", "19:00", "20:30"]
 }
