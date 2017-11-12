@@ -1,26 +1,41 @@
 <template>
   <article class="calendar-page container bg-beach">
-    <Header :userId="userId" />
-    <DayCarrusel :dayNumber="dayNumber" :monthNumber="monthNumber" :year="year" :numberOfWeeks="numberOfWeeks" />
+    <HeaderCalendar 
+      :userId="userId"
+      v-bind:selectedDay="selectedDay" />
+    <DayCarrusel 
+      :dayNumber="dayNumber" 
+      :monthNumber="monthNumber" 
+      :year="year" 
+      :numberOfMonths="numberOfMonths" 
+      v-bind:selectedDay="selectedDay"
+      v-on:dayClick="handleDayClick" />
     <TableAppointment :dayNumber="dayNumber" :monthNumber="monthNumber" :year="year" />
   </article>
 </template>
 
 <script>
-import Header from './components/header.vue';
+import HeaderCalendar from './components/header.vue';
 import DayCarrusel from './components/dayCarrusel.vue';
 import TableAppointment from './components/tableAppointment.vue';
 
+const numberOfMonths = 2;
 export default {
-  components: { Header, DayCarrusel, TableAppointment },
+  components: { HeaderCalendar, DayCarrusel, TableAppointment },
   data() {
     return {
       userId: this.$route.params.userId,
       dayNumber: this.$route.params.day,
       monthNumber: this.$route.params.month,
       year: this.$route.params.year,
-      numberOfWeeks: 3,
+      selectedDay: `${this.$route.params.year}${this.$route.params.month}${this.$route.params.day}`,
+      numberOfMonths,
     };
+  },
+  methods: {
+    handleDayClick: function (ev) {
+      this.selectedDay = $(ev.currentTarget).attr('data-day-id');
+    }
   }
 };
 </script>

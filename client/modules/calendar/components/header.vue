@@ -9,9 +9,6 @@
       </span>
     </section>
     <nav class="menu">
-      <a href="#">
-        <img :src="toDayIcon" class="icon-menu" />
-      </a>
       <a :href="homeUrl">
         <img :src="homeIcon" class="icon-menu" />
       </a>
@@ -26,15 +23,15 @@ import homeIcon from "../../../app/assets/img/icon-home.png";
 moment.locale(LANGUAGE);
 
 export default {
-  props: ['userId'],
+  props: ['userId', 'selectedDay'],
   computed: {
     yearMonth: function() {
-      return `${moment()
+      return `${moment(this.selectedDay)
         .format("MMM")
-        .toUpperCase()} ${moment().format("YYYY")}`;
+        .toUpperCase()} ${moment(this.selectedDay).format("YYYY")}`;
     },
     dayName: function() {
-      return moment()
+      return moment(this.selectedDay)
         .format("dddd")
         .toUpperCase();
     },

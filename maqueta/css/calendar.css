@@ -103,10 +103,11 @@ body {
     flex-direction: column;
 }
 
+/* DAY CARRUSEL */
 .week-view {
     display: inline-flex;
     flex-direction: row;
-    padding-bottom: 0%;
+    overflow: auto;
 }
 
 .week-view .day-name {
@@ -128,8 +129,8 @@ body {
 .day-box {
     display: inline-flex;
     flex-direction: column;
-    width: 15%;
-    color: #c5c4c4
+    color: #848181;
+    width: 50px;
 }
 
 .day-view {
@@ -147,6 +148,66 @@ body {
     border-color: #c5c4c4;
     flex: 0 0 auto;
 }
+
+.month-box {
+    display: inline-flex;
+    flex-direction: row;
+    color: #c5c4c4;
+    width: 50px;
+    height: 55px;
+}
+
+.month-v-name {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-weight: bold;
+    font-size: 0.7em;
+    color: #828080;
+}
+.month-v-name.one {
+    background-color: greenyellow;    
+}
+ .month-v-name.two {
+    background-color: yellow;  
+ }
+.month-v-name.hide {
+    visibility: hidden;
+}
+
+.month-name {
+    position: fixed;
+    font-size: 0.8em;
+}
+
+.month {
+    display: inline-flex;
+    flex-direction: row;
+    min-width: auto;
+    margin-top: 2%;
+    margin-right: 4%;
+    border-bottom: solid 7px;
+}
+.end {
+    min-width: 1px;
+    background-color: white;
+}
+
+.month.one {
+    border-bottom-color: greenyellow;
+
+}
+
+.month.two {
+    border-bottom-color: yellow;
+
+}
+
+.month.three {
+    border-bottom-color: rosybrown;
+
+}
+
+/* DAY CARRUSEL */
 
 .day-view li:last-child {
     border-bottom: 0;

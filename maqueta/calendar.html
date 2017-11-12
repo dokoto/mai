@@ -7,15 +7,13 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta id="viewport" name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  />
+  <meta id="viewport" name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
   <title>CALENDAR-VIEW</title>
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/calendar.css">
   <link rel="stylesheet" href="css/dialog.css">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -24,7 +22,7 @@
       <header class="calendar-header box">
         <section class="today-view">
           <spam class="month-year">
-            MAY 2017
+            2017
           </spam>
           <spam class="day-name">
             MONDAY
@@ -43,34 +41,123 @@
         </nav>
       </header>
       <section class="week-view box">
-        <dl class="day-box">
-          <dt class="day-name">SUN</dt>
-          <dd class="day-number">23</dd>
-        </dl>
-        <dl class="day-box today">
-          <dt class="day-name">MON</dt>
-          <dd class="day-number">24</dd>
-        </dl>
-        <dl class="day-box">
-          <dt class="day-name">THU</dt>
-          <dd class="day-number">25</dd>
-        </dl>
-        <dl class="day-box">
-          <dt class="day-name">WEB</dt>
-          <dd class="day-number">26</dd>
-        </dl>
-        <dl class="day-box">
-          <dt class="day-name">THR</dt>
-          <dd class="day-number">27</dd>
-        </dl>
-        <dl class="day-box">
-          <dt class="day-name">FRI</dt>
-          <dd class="day-number">28</dd>
-        </dl>
-        <dl class="day-box">
-          <dt class="day-name">SAT</dt>
-          <dd class="day-number">29</dd>
-        </dl>
+        <div id="nov" class="month one">
+          <div class="month-box">
+            <span class="month-v-name one">NOV</span>
+            <div class="day-box">
+              <span class="day-name">SUN</span>
+              <span class="day-number">23</span>
+            </div>
+          </div>
+          <div class="month-box">
+            <span class="month-v-name hide">NOV</span>
+            <div class="day-box today">
+              <span class="day-name">SUN</span>
+              <span class="day-number">24</span>
+            </div>
+          </div>
+          <div class="month-box">
+            <span class="month-v-name hide">NOV</span>
+            <div class="day-box">
+              <span class="day-name">SUN</span>
+              <span class="day-number">25</span>
+            </div>
+          </div>
+          <div class="month-box">
+            <span class="month-v-name hide">NOV</span>
+            <div class="day-box">
+              <span class="day-name">SUN</span>
+              <span class="day-number">26</span>
+            </div>
+          </div>
+          <div class="month-box">
+            <span class="month-v-name hide">NOV</span>
+            <div class="day-box">
+              <span class="day-name">SUN</span>
+              <span class="day-number">27</span>
+            </div>
+          </div>
+          <div class="month-box">
+            <span class="month-v-name hide">NOV</span>
+            <div class="day-box">
+              <span class="day-name">SUN</span>
+              <span class="day-number">28</span>
+            </div>
+          </div>
+          <div class="month-box">
+            <span class="month-v-name hide">NOV</span>
+            <div class="day-box">
+              <span class="day-name">SUN</span>
+              <span class="day-number">29</span>
+            </div>
+          </div>
+          <div class="month-box">
+            <span class="month-v-name hide">NOV</span>
+            <div class="day-box">
+              <span class="day-name">SUN</span>
+              <span class="day-number">30</span>
+            </div>
+          </div>
+        </div>
+        <div id="nov" class="month two">
+            <div class="month-box">
+                <span class="month-v-name two">DIC</span>
+                <div class="day-box">
+                  <span class="day-name">SUN</span>
+                  <span class="day-number">23</span>
+                </div>
+              </div>
+              <div class="month-box">
+                <span class="month-v-name hide">DIC</span>
+                <div class="day-box today">
+                  <span class="day-name">SUN</span>
+                  <span class="day-number">24</span>
+                </div>
+              </div>
+              <div class="month-box">
+                <span class="month-v-name hide">DIC</span>
+                <div class="day-box">
+                  <span class="day-name">SUN</span>
+                  <span class="day-number">25</span>
+                </div>
+              </div>
+              <div class="month-box">
+                <span class="month-v-name hide">DIC</span>
+                <div class="day-box">
+                  <span class="day-name">SUN</span>
+                  <span class="day-number">26</span>
+                </div>
+              </div>
+              <div class="month-box">
+                <span class="month-v-name hide">DIC</span>
+                <div class="day-box">
+                  <span class="day-name">SUN</span>
+                  <span class="day-number">27</span>
+                </div>
+              </div>
+              <div class="month-box">
+                <span class="month-v-name hide">DIC</span>
+                <div class="day-box">
+                  <span class="day-name">SUN</span>
+                  <span class="day-number">28</span>
+                </div>
+              </div>
+              <div class="month-box">
+                <span class="month-v-name hide">DIC</span>
+                <div class="day-box">
+                  <span class="day-name">SUN</span>
+                  <span class="day-number">29</span>
+                </div>
+              </div>
+              <div class="month-box">
+                <span class="month-v-name hide">DIC</span>
+                <div class="day-box">
+                  <span class="day-name">SUN</span>
+                  <span class="day-number">30</span>
+                </div>
+              </div>
+        </div>
+        <span id="nov" class="end"></span>
       </section>
       <ul class="day-view box">
         <li class="time-box session-unavailable">
@@ -138,19 +225,18 @@
 <script type="text/javascript">
   var transition;
 
-  $('input[type="checkbox"]').change(function (ev) {
+  $('input[type="checkbox"]').change(function(ev) {
     if ($(this).is(':checked')) {
       $('.modal')[0].showModal();
       transition = setTimeout(() => $('.modal').addClass('dialog-scale'), 0.5);
     }
   });
 
-  $('.cancel, .accept').on('click', function () {
+  $('.cancel, .accept').on('click', function() {
     $('.modal')[0].close();
     $('.modal').removeClass('dialog-scale');
     clearTimeout(transition);
   });
-
 </script>
 
 </html>

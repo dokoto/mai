@@ -13,6 +13,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../../app/app.scss";
 .option {
   width: 20vw;
   height: 20vw;
@@ -24,18 +25,18 @@ export default {
 }
 
 .pastel-orange {
-  background-color: rgb(253, 202, 162);
+  background-color: $colorPastelOrange;
 }
 
 .pastel-pink {
-  background-color: rgb(251, 182, 202);
+  background-color: $colorPastelPink;
 }
 
 .pastel-blue {
-  background-color: rgb(199, 236, 255);
+  background-color: $colorPastelBlue;
 }
 
 .pastel-yellow {
-  background-color: rgb(255, 237, 120);
+  background-color: $colorPastelYellow;
 }
 </style>

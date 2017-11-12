@@ -16,9 +16,6 @@ import "slick-carousel";
 
 export default {
   props: ['therapists'],
-  created() {
-    console.log(this.therapists);
-  },
   mounted() {
     $(".therapist-carrusel").slick({
       arrows: true,

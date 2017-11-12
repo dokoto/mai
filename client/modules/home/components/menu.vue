@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     calendarUrl: function () {
-      return `/calendar/${this.userId}/${moment().format("YYYY")}/${moment().format("M")}/${moment().format("D")}`;
+      return `/calendar/${this.userId}/${moment().format("YYYY")}/${moment().format("M")}/${moment().add(1, 'days').format("D")}`;
     }
   }
 };
