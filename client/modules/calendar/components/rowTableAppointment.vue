@@ -1,15 +1,23 @@
 <template>
-  <li :id="session.id" class="time-box" v-bind:class="{ sessionUnavailable: !session.permisions.editable }" v-on:click="handleSessionClick">
+  <li :id="session.id"
+    class="time-box"
+    v-bind:class="{ sessionUnavailable: !session.permisions.editable }"
+    v-bind:data-time="session.time"
+    v-bind:data-selectedday="selectedDay"
+    v-on:click="handleSessionClick">
     <span class="time">{{ session.time }}</span>
     <span class="v-separator"></span>
-    <input type="checkbox" v-bind:id="checkId" :checked="!session.permisions.editable" :disabled="!session.permisions.editable">
+    <input type="checkbox"
+      v-bind:id="checkId"
+      :checked="!session.permisions.editable"
+      :disabled="!session.permisions.editable">
     <label v-bind:for="checkId">{{sessionName }}</label>
   </li>
 </template>
 
 <script>
 export default {
-  props: ['session'],
+  props: ['session', 'selectedDay'],
   computed: {
     sessionName: function() {
       return this.session.permisions.view
@@ -17,10 +25,10 @@ export default {
         : this.$i18n.t('calendar.noAvaiable');
     },
   },
-  data () {
+  data() {
     return {
       checkId: `${this.session.id}-check`,
-    }
+    };
   },
   methods: {
     handleSessionClick: function(ev) {

@@ -1,6 +1,11 @@
 <template>
   <section class="week-view box">
-    <DayCarruselTrack v-for="(track, index) in groupOfMonths" :key="index" :track="track" v-bind:selectedDay="selectedDay" :colorClass="colorClass[index]" v-on:dayClick="handleDayClick" />
+    <DayCarruselTrack v-for="(track, index) in groupOfMonths"
+      :key="index"
+      :track="track"
+      v-bind:selectedDay="selectedDay"
+      :colorClass="colorClass[index]"
+      v-on:dayClick="handleDayClick" />
     <span class="end"></span>
   </section>
 </template>

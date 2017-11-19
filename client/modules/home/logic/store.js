@@ -16,7 +16,7 @@ const actions = {
   async getNextSessions({ commit }, userId) {
     const sessions = await services.getNextSessions(userId);
     const therapysIds = sessions.map(item => _.get(item, 'therapy.id'));
-    const therapys = await services.getTherapys(therapysIds);
+    const therapys = await services.getTherapies(therapysIds);
     commit(RECEIVE_NEXT_SESSIONS, { sessions });
     commit(RECEIVE_THERAPYES, { therapys });
   },

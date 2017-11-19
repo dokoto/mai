@@ -1,62 +1,81 @@
 <template>
   <article class="calendar-page container bg-beach">
-    <HeaderCalendar :userId="userId" v-bind:selectedDay="selectedDay" />
-    <DayCarrusel :dayNumber="dayNumber" :monthNumber="monthNumber" :year="year" :numberOfMonths="numberOfMonths" v-bind:selectedDay="selectedDay" v-on:dayClick="handleDayClick" />
-    <TableAppointment v-if="sessions.length > 0" v-bind:selectedDay="selectedDay" v-bind:sessions="sessions" v-on:sessionClick="handleSessionClick" />
+    <HeaderCalendar :userId="userId"
+      v-bind:selectedDay="selectedDay" />
+    <DayCarrusel :dayNumber="dayNumber"
+      :monthNumber="monthNumber"
+      :year="year"
+      :numberOfMonths="numberOfMonths"
+      v-bind:selectedDay="selectedDay"
+      v-on:dayClick="handleDayClick" />
+    <TableAppointment v-if="sessions.length > 0"
+      v-bind:selectedDay="selectedDay"
+      v-bind:sessions="sessions"
+      v-on:sessionClick="handleSessionClick" />
+    <transition name="modal">
+      <DialogSession v-if="saveSession.open"
+        v-bind:timeSelected="saveSession.timeSelected"
+        v-bind:daySelected="saveSession.daySelected"
+        v-bind:session="saveSession.session"
+        v-bind:therapists="saveSession.therapists"
+        v-bind:therapies="saveSession.therapies" />
+    </transition>
   </article>
 </template>
 
 <script>
-import _ from 'lodash';
 import { mapGetters } from 'vuex';
 import HeaderCalendar from './components/header.vue';
 import DayCarrusel from './components/dayCarrusel.vue';
 import TableAppointment from './components/tableAppointment.vue';
-import { findSessionById } from '../../app/utils';
+import DialogSession from './components/dialogSession.vue';
 
 const numberOfMonths = 2;
 export default {
-  components: { HeaderCalendar, DayCarrusel, TableAppointment },
-  computed: mapGetters({
-    sessions: 'calendar/scheduleTable',
-  }),
+  components: { HeaderCalendar, DayCarrusel, TableAppointment, DialogSession },
+  computed: {
+    ...mapGetters({
+      sessions: 'calendar/scheduleTable',
+      selectedDay: 'calendar/selectedDay',
+      saveSession: 'calendar/saveSession',
+    }),
+  },
   data() {
     return {
       userId: this.$route.params.userId,
       dayNumber: this.$route.params.day,
       monthNumber: this.$route.params.month,
       year: this.$route.params.year,
-      selectedDay:
-        this.$store.getters['calendar/selectedDay'] ||
-        `${this.$route.params.year}${this.$route.params.month}${this.$route
-          .params.day}`,
       numberOfMonths,
     };
   },
   methods: {
     handleDayClick: function(ev) {
-      this.selectedDay = $(ev.currentTarget).attr('data-day-id');
-      this.$store.dispatch('calendar/getToDaySessions', this.selectedDay);
+      ev.preventDefault();
+      this.$store.dispatch(
+        'calendar/changeDay',
+        $(ev.currentTarget).attr('data-day-id'),
+      );
     },
     handleSessionClick: function(ev) {
-      const sessionSelected = _.find(
-        this.sessions,
-        findSessionById(ev.currentTarget.id),
-      );
-      const permisions = _.get(sessionSelected, 'permisions');
-      if (permisions.editable) {
-        // Action on editable session
-      } else if (permisions.view) {
-        this.$router.push({
-          name: 'session',
-          params: { sessionId: ev.currentTarget.id },
-        });
-      }
+      ev.preventDefault();
+      this.$store.dispatch('calendar/saveSession', {
+        router: this.$router,
+        sessions: this.sessions,
+        id: ev.currentTarget.id,
+        daySelected: $(ev.currentTarget).attr('data-selectedday'),
+        timeSelected: $(ev.currentTarget).attr('data-time'),
+      });
     },
   },
   created() {
     this.$store.dispatch('calendar/setUserId', this.$route.params.userId);
-    this.$store.dispatch('calendar/getToDaySessions', this.selectedDay);
+    this.$store.dispatch(
+      'calendar/getToDaySessions',
+      this.selectedDay ||
+        `${this.$route.params.year}${this.$route.params.month}${this.$route
+          .params.day}`,
+    );
   },
 };
 </script>
@@ -81,5 +100,19 @@ export default {
     background-size: cover;
     background-attachment: fixed;
   }
+}
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>

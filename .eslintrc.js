@@ -8,7 +8,8 @@ module.exports = {
     LANGUAGE: true,
     GOOGLE_MAPS_KEY: true,
     GOOGLE_GEOCODING_KEY: true,
-    fetch: true
+    fetch: true,
+    $: true
   },
   parserOptions: {
     ecmaVersion: 8,

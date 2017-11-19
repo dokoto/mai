@@ -72,7 +72,7 @@ export function generateAppointmentTable(schedule, sessions, selectedDay, therap
     const sessionNameKey = `texts.${LANGUAGE}.name`;
 
     return {
-      id: _.get(sessionOccupy, 'id', `${session}-${selectedDay}-${userId}`),
+      id: _.get(sessionOccupy, 'id', `${session.replace(':', '')}-${selectedDay}-${userId}`),
       time: _.get(sessionOccupy, 'date.time', session),
       name: _.get(sessionTexts, sessionNameKey, ''),
       permisions: {

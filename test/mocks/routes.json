@@ -5,5 +5,5 @@
   "/users/:type": "/users?type=:type",
   "/users/:type/:userId": "/users?type=:type&id=:userId",
   "/sessionschedule": "/sessionschedule",
-  "/therapys/id": "/therapys?id=:id"
+  "/therapies/id": "/therapies?id=:id"
 }

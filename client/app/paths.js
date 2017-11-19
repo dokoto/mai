@@ -1,5 +1,5 @@
 export const nextSessions = `${REST_API}/nextsessions`;
-export const therapys = `${REST_API}/therapys`;
+export const therapies = `${REST_API}/therapies`;
 export const sessions = `${REST_API}/sessions`;
 export const users = `${REST_API}/users`;
 export const Sessions = `${REST_API}/sessions`;

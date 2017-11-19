@@ -1,6 +1,10 @@
 <template>
   <ul class="day-view box">
-    <RowAppointment v-for="session in sessions" :key="session.id" :session="session" v-on:sessionClick="handleSessionClick" />
+    <RowAppointment v-for="session in sessions"
+      v-bind:key="session.id"
+      v-bind:session="session"
+      v-bind:selectedDay="selectedDay"
+      v-on:sessionClick="handleSessionClick" />
   </ul>
 </template>
 
