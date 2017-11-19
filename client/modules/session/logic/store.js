@@ -1,4 +1,5 @@
-import services from './services';
+import _ from 'lodash/object';
+import services from '../../../app/services';
 import { RECEIVE_SESSION, RECEIVE_SESSION_THERAPIST } from './types';
 
 const state = {
@@ -16,14 +17,14 @@ const getters = {
 };
 
 const actions = {
-  getSession({ commit }, sessionId) {
-    services.getSession(sessionId)
-      .then((session) => {
-        commit(RECEIVE_SESSION, { session });
-        const [reponseSession] = session;
-        return services.getUser(reponseSession.therapist.type, reponseSession.therapist.id);
-      })
-      .then(therapist => commit(RECEIVE_SESSION_THERAPIST, { therapist }));
+  async getSession({ commit }, sessionId) {
+    const session = await services.getSession(sessionId);
+    const therapist = await services.getUser(
+      _.get(session, '[0].therapist.type'),
+      _.get(session, '[0].therapist.id'),
+    );
+    commit(RECEIVE_SESSION, { session });
+    commit(RECEIVE_SESSION_THERAPIST, { therapist });
   },
 };
 
@@ -37,6 +38,7 @@ const mutations = {
 };
 
 export default {
+  namespaced: true,
   state,
   getters,
   mutations,

@@ -37,19 +37,19 @@ export default {
     },
     homeUrl: function() {
       return `${/home/}${this.userId}`;
-    }
+    },
   },
   data() {
     return {
       toDayIcon,
-      homeIcon
+      homeIcon,
     };
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../../app/app.scss";
+@import '../../../app/app.scss';
 
 .calendar-header {
   display: inline-flex;

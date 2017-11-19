@@ -6,18 +6,20 @@
 </template>
 
 <script>
-import moment from "moment";
+import moment from 'moment';
 moment.locale(LANGUAGE);
 
 export default {
   computed: {
     currDayNumber() {
-      return moment().format("D");
+      return moment().format('D');
     },
     currDayName() {
-      return moment().format("dddd").toUpperCase();
-    }
-  }
+      return moment()
+        .format('dddd')
+        .toUpperCase();
+    },
+  },
 };
 </script>
 

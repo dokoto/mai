@@ -1,6 +1,6 @@
 <template>
   <ul class="day-view box">
-    <RowAppointment v-for="session in sessions" :key="session.id" :session="session" />
+    <RowAppointment v-for="session in sessions" :key="session.id" :session="session" v-on:sessionClick="handleSessionClick" />
   </ul>
 </template>
 
@@ -10,11 +10,16 @@ import RowAppointment from './rowTableAppointment.vue';
 export default {
   props: ['sessions', 'selectedDay'],
   components: { RowAppointment },
+  methods: {
+    handleSessionClick: function(ev) {
+      this.$emit('sessionClick', ev);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../../app/app.scss";
+@import '../../../app/app.scss';
 .day-view {
   display: flex;
   flex-direction: column;

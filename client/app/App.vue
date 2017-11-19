@@ -25,16 +25,16 @@ textarea {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color:aquamarine;
+  background-color: aquamarine;
 }
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 1s
+  transition: opacity 1s;
 }
 
 .fade-enter,
 .fade-leave-active {
-  opacity: 0
+  opacity: 0;
 }
 </style>

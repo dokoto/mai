@@ -7,7 +7,15 @@ module.exports = {
     REST_API: true,
     LANGUAGE: true,
     GOOGLE_MAPS_KEY: true,
-    GOOGLE_GEOCODING_KEY: true
+    GOOGLE_GEOCODING_KEY: true,
+    fetch: true
+  },
+  parserOptions: {
+    ecmaVersion: 8,
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true
+    }
   },
   rules: {
     "no-param-reassign": 0,

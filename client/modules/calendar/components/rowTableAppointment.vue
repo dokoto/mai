@@ -1,24 +1,42 @@
 <template>
-  <li class="time-box" v-bind:class="{ sessionUnavailable: !session.isSessionAvailable }">
-      <span class="time">{{ session.time }}</span>
-      <span class="v-separator"></span>
-      <input type="checkbox" v-bind:id="session.id" :checked="!session.isSessionAvailable" :disabled="!session.isSessionAvailable">
-      <label v-bind:for="session.id">{{ session.name }}</label>
-    </li>
+  <li :id="session.id" class="time-box" v-bind:class="{ sessionUnavailable: !session.permisions.editable }" v-on:click="handleSessionClick">
+    <span class="time">{{ session.time }}</span>
+    <span class="v-separator"></span>
+    <input type="checkbox" v-bind:id="checkId" :checked="!session.permisions.editable" :disabled="!session.permisions.editable">
+    <label v-bind:for="checkId">{{sessionName }}</label>
+  </li>
 </template>
 
 <script>
 export default {
-  props: ["session"],
+  props: ['session'],
+  computed: {
+    sessionName: function() {
+      return this.session.permisions.view
+        ? this.session.name
+        : this.$i18n.t('calendar.noAvaiable');
+    },
+  },
+  data () {
+    return {
+      checkId: `${this.session.id}-check`,
+    }
+  },
+  methods: {
+    handleSessionClick: function(ev) {
+      this.$emit('sessionClick', ev);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+@import '../../../app/app.scss';
 .time-box {
   display: inline-flex;
   flex-direction: row;
   border-bottom: solid 1px;
-  border-color: #c5c4c4;
+  border-color: $colorGrey1;
   flex: 0 0 auto;
 
   .time {
@@ -38,31 +56,31 @@ export default {
   .v-separator {
     width: 1px;
     margin: 6px 0;
-    background: #c5c4c4;
+    background: $colorGrey1;
   }
 
   .sessionUnavailable .time {
-    color: #ddd;
+    color: $colorGrey2;
   }
 
-  .sessionUnavailable input[type="checkbox"] + label {
-    color: #ddd;
+  .sessionUnavailable input[type='checkbox'] + label {
+    color: $colorGrey2;
   }
 
-  .sessionUnavailable input[type="checkbox"] + label:before {
-    border-color: #ddd;
+  .sessionUnavailable input[type='checkbox'] + label:before {
+    border-color: $colorGrey2;
   }
 
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     display: none;
   }
 
-  input[type="checkbox"] + label {
+  input[type='checkbox'] + label {
     display: block;
     position: relative;
     padding-left: 10%;
     font-size: 1em;
-    color: #ddd;
+    color: $colorDarkGrey2;
     cursor: pointer;
     margin-top: 6%;
     margin-left: 8%;
@@ -73,16 +91,16 @@ export default {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
-  input[type="checkbox"] + label:last-child {
+  input[type='checkbox'] + label:last-child {
     margin-bottom: 0;
   }
 
-  input[type="checkbox"] + label:before {
-    content: "";
+  input[type='checkbox'] + label:before {
+    content: '';
     display: block;
     width: 20px;
     height: 20px;
-    border: 2px solid #6cc0e5;
+    border: 2px solid $colorBlue1;
     position: absolute;
     left: -14px;
     top: -5px;
@@ -92,7 +110,7 @@ export default {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
-  input[type="checkbox"]:checked + label:before {
+  input[type='checkbox']:checked + label:before {
     width: 10px;
     top: -10px;
     left: -5px;

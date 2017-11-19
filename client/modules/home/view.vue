@@ -1,7 +1,7 @@
 <template>
   <div id="home-container" class="home-view container bg-beach">
     <DayCard />
-    <SessionPool :sessions="sessions" v-if="sessions.length > 0" v-on:sessionClick="handleSessionClick" />
+    <SessionPool :sessions="sessions" :therapys="therapys" v-if="sessions.length > 0 && therapys.length > 0" v-on:sessionClick="handleSessionClick" />
     <HomeMenu :userId="userId" />
   </div>
 </template>
@@ -15,29 +15,30 @@ import DayCard from '../../app/components/dayCard.vue';
 export default {
   components: { SessionPool, HomeMenu, DayCard },
   computed: mapGetters({
-    sessions: 'nextSessions'
+    sessions: 'home/nextSessions',
+    therapys: 'home/getTherapys',
   }),
   data() {
     return {
-      userId: this.$route.params.userId
-    }
+      userId: this.$route.params.userId,
+    };
   },
   created() {
-    this.$store.dispatch('getNextSessions', this.$route.params.userId);
+    this.$store.dispatch('home/getNextSessions', this.$route.params.userId);
   },
   methods: {
     handleSessionClick(ev) {
       this.$router.push({
         name: 'session',
-        params: { sessionId: ev.currentTarget.id }
+        params: { sessionId: ev.currentTarget.id },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../app/app.scss";
+@import '../../app/app.scss';
 
 .home-view {
   position: relative;
@@ -51,7 +52,7 @@ export default {
   }
 
   &.bg-beach {
-    background-image: url("../../app/assets/img/app-bg.jpeg");
+    background-image: url('../../app/assets/img/app-bg.jpeg');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;

@@ -1,25 +1,26 @@
 <template>
   <section class="appointments">
-    <Card v-for="session in sessions" 
-      :key="session.id" 
-      v-bind:id="session.id" 
-      v-bind:sessionDate="session.date" 
-      v-bind:sessionTherapy="session.therapy" 
-      v-bind:withTimeInterval="false" 
-      v-on:sessionClick="handleSessionClick" />
+    <Card v-for="session in sessions" :key="session.id" v-bind:id="session.id" v-bind:sessionDate="session.date" v-bind:sessionTherapy="therapysByLang[session.therapy.id]" v-bind:withTimeInterval="false" v-on:sessionClick="handleSessionClick" />
   </section>
 </template>
 
 <script>
-import Card from "../../../app/components/sessionCard.vue";
+import Card from '../../../app/components/sessionCard.vue';
+import { reduceTherapysByLanguage } from '../../../app/utils';
+
 export default {
   components: { Card },
-  props: ["sessions"],
+  props: ['sessions', 'therapys'],
   methods: {
     handleSessionClick: function(ev) {
-      this.$emit("sessionClick", ev);
-    }
-  }  
+      this.$emit('sessionClick', ev);
+    },
+  },
+  computed: {
+    therapysByLang() {
+      return this.therapys.reduce(reduceTherapysByLanguage, {});
+    },
+  },
 };
 </script>
 

@@ -1,42 +1,42 @@
 <template>
   <section class="therapist-carrusel box">
-    <span class="therapist-carrusel-item" v-for="therapist in therapists" :key="therapist.id" >
+    <span class="therapist-carrusel-item" v-for="therapist in therapists" :key="therapist.id">
       <span class="therapist-img-box">
         <img class="therapist-img" :src="therapist.thumb" />
       </span>
       <div class="wrapper">
-      <span class="h-separator"></span>
-      <span class="therapist-name">{{ therapist.name }}</span>
+        <span class="h-separator"></span>
+        <span class="therapist-name">{{ therapist.name }}</span>
       </div>
     </span>
   </section>
 </template>
 <script>
-import "slick-carousel";
+import 'slick-carousel';
 
 export default {
   props: ['therapists'],
   mounted() {
-    $(".therapist-carrusel").slick({
+    $('.therapist-carrusel').slick({
       arrows: true,
       dots: false,
-      centerMode: false,      
+      centerMode: false,
       slidesToShow: 1,
-      slidesToScroll: 1
+      slidesToScroll: 1,
     });
-  }
+  },
 };
 </script>
 
 <style lang="scss">
-@import "node_modules/slick-carousel/slick/slick.scss";
-@import "../app.scss";
+@import 'node_modules/slick-carousel/slick/slick.scss';
+@import '../app.scss';
 
 .slick-slide img {
   display: inline-flex;
 }
 .slick-next {
-  background-image: url("../../app/assets/img/next.png");
+  background-image: url('../../app/assets/img/next.png');
   background-repeat: no-repeat;
   width: 20px;
   background-size: contain;
@@ -48,7 +48,7 @@ export default {
 }
 
 .slick-prev {
-  background-image: url("../../app/assets/img/back.png");
+  background-image: url('../../app/assets/img/back.png');
   background-repeat: no-repeat;
   width: 20px;
   background-size: contain;

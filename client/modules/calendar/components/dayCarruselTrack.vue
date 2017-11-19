@@ -15,19 +15,19 @@ export default {
   props: ['track', 'colorClass', 'selectedDay'],
   data() {
     return {
-      monthColorClass: this.colorClass
+      monthColorClass: this.colorClass,
     };
   },
   methods: {
     handleDayClick: function(ev) {
       this.$emit('dayClick', ev);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../../app/app.scss";
+@import '../../../app/app.scss';
 
 .month {
   display: inline-flex;

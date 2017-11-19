@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import moment from "moment";
+import moment from 'moment';
 
-import HomeMenuItem from "./menuItem";
+import HomeMenuItem from './menuItem';
 import calendarIcon from '../../../app/assets/img/icon-calendar.png';
 import emailIcon from '../../../app/assets/img/icon-email.png';
 import chatIcon from '../../../app/assets/img/icon-chat.png';
@@ -21,19 +21,23 @@ moment.locale(LANGUAGE);
 export default {
   props: ['userId'],
   components: { HomeMenuItem },
-  data () {
+  data() {
     return {
       calendarIcon,
       emailIcon,
       chatIcon,
       phoneIcon,
-    }
+    };
   },
   computed: {
-    calendarUrl: function () {
-      return `/calendar/${this.userId}/${moment().format("YYYY")}/${moment().format("M")}/${moment().add(1, 'days').format("D")}`;
-    }
-  }
+    calendarUrl: function() {
+      return `/calendar/${this.userId}/${moment().format(
+        'YYYY',
+      )}/${moment().format('M')}/${moment()
+        .add(1, 'days')
+        .format('D')}`;
+    },
+  },
 };
 </script>
 

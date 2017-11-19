@@ -7,45 +7,45 @@
 </template>
 
 <script>
-import moment from "moment";
+import moment from 'moment';
 
 moment.locale(LANGUAGE);
 export default {
-  props: ["id", "sessionDate", "sessionTherapy", "withTimeInterval"],
+  props: ['id', 'sessionDate', 'sessionTherapy', 'withTimeInterval'],
   computed: {
     formatDateTime() {
       return moment(
         `${this.sessionDate.year}-${this.sessionDate.month}-${this.sessionDate
-          .day} ${this.sessionDate.time}`
+          .day} ${this.sessionDate.time}`,
       )
-        .format("dddd D MMMM")
+        .format('dddd D MMMM')
         .toUpperCase();
     },
     timeBegin() {
       return moment(
         `${this.sessionDate.year}-${this.sessionDate.month}-${this.sessionDate
-          .day} ${this.sessionDate.time}`
-      ).format("hh:mm A");
+          .day} ${this.sessionDate.time}`,
+      ).format('hh:mm A');
     },
     timeEnd() {
       return moment(
         `${this.sessionDate.year}-${this.sessionDate.month}-${this.sessionDate
-          .day} ${this.sessionDate.time}`
+          .day} ${this.sessionDate.time}`,
       )
-        .add(45, "m")
-        .format("hh:mm A");
-    }
+        .add(45, 'm')
+        .format('hh:mm A');
+    },
   },
   methods: {
     handleSessionClick: function(ev) {
-      this.$emit("sessionClick", ev);
-    }
-  }
+      this.$emit('sessionClick', ev);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../app.scss";
+@import '../app.scss';
 
 .sessionCard {
   display: inline-flex;

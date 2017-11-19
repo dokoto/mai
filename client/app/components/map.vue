@@ -10,27 +10,27 @@
  * GEOCODING
  * http://nchaulet.github.io/node-geocoder/
  */
-import GoogleMapsLoader from "google-maps";
+import GoogleMapsLoader from 'google-maps';
 
 export default {
-  props: ["therapistAdress", "mapZoom"],
+  props: ['therapistAdress', 'mapZoom'],
   created() {
     GoogleMapsLoader.KEY = GOOGLE_MAPS_KEY;
     GoogleMapsLoader.load(google => {
-      const map = new google.maps.Map(document.getElementById("map"), {
+      const map = new google.maps.Map(document.getElementById('map'), {
         mapTypeControl: false,
         zoom: this.mapZoom,
-        center: this.therapistAdress.localtion
+        center: this.therapistAdress.localtion,
       });
       const marker = new google.maps.Marker({
         position: this.therapistAdress.localtion,
-        map: map
+        map: map,
       });
     });
   },
   beforeDestroy() {
     GoogleMapsLoader.release(console.log('Google API released'));
-  }
+  },
 };
 </script>
 

@@ -7,7 +7,7 @@
 
 <script>
 import DayCarruselTrack from './dayCarruselTrack.vue';
-import calcMonthsAHeadFrom from '../logic/utils';
+import calcMonthsAHeadFrom from '../../../app/utils';
 
 export default {
   components: { DayCarruselTrack },
@@ -16,25 +16,25 @@ export default {
     groupOfMonths() {
       return calcMonthsAHeadFrom(
         `${this.year}${this.monthNumber}${this.dayNumber}`,
-        this.numberOfMonths
+        this.numberOfMonths,
       );
-    }
+    },
   },
   data() {
     return {
-      colorClass: ['monthColorOne', 'monthColorTwo', 'monthColorThree']
+      colorClass: ['monthColorOne', 'monthColorTwo', 'monthColorThree'],
     };
   },
   methods: {
     handleDayClick: function(ev) {
       this.$emit('dayClick', ev);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../../app/app.scss";
+@import '../../../app/app.scss';
 
 .week-view {
   display: inline-flex;

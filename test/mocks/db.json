@@ -17,8 +17,7 @@
         "type":"THERAPIST"
       },
       "therapy": {
-        "id": "S1",
-        "name": "Fisiotherapy"
+        "id": "S1"
       },
       "address": "Calle Pedo, 22 Madrid"
     },
@@ -40,8 +39,7 @@
         "type":"THERAPIST"
       },
       "therapy": {
-        "id": "S1",
-        "name": "Fisiotherapy Bones"
+        "id": "S1"
       },
       "address": "Calle Pedo, 22 Madrid"
     },
@@ -63,8 +61,7 @@
         "type":"THERAPIST"
       },
       "therapy": {
-        "id": "S3",
-        "name": "M.A.I."
+        "id": "S3"
       },
       "address": "Calle Pedo, 22 Madrid"
     },
@@ -86,8 +83,7 @@
         "type":"THERAPIST"
       },
       "therapy": {
-        "id": "S2",
-        "name": "Osteopaty"
+        "id": "S2"
       },
       "address": "Calle Pedo, 22 Madrid"
     },
@@ -97,7 +93,6 @@
       "status": {
         "canceled": true,
         "by": {
-          "type": "THERAPIST",
           "id": "T1",
           "type":"THERAPIST"
         },
@@ -115,15 +110,14 @@
         "type":"THERAPIST"
       },
       "therapy": {
-        "id": "S2",
-        "name": "Osteopaty"
+        "id": "S2"
       },
       "address": "Calle Pedo, 22 Madrid"
     }
   ],
   "sessions": [{
       "id": "201711011000",
-      "userId": "C1",
+      "userId": "C2",
       "status": {
         "canceled": false
       },
@@ -139,8 +133,7 @@
         "type":"THERAPIST"
       },
       "therapy": {
-        "id": "S1",
-        "name": "Fisiotherapy"
+        "id": "S1"
       },
       "address": "Calle Pedo, 22 Madrid"
     },
@@ -154,7 +147,7 @@
         "year": "2017",
         "month": "11",
         "day": "11",
-        "time": "12:00"
+        "time": "11:30"
       },
       "therapist": {
         "id": "T1",
@@ -162,8 +155,7 @@
         "type":"THERAPIST"
       },
       "therapy": {
-        "id": "S1",
-        "name": "Fisiotherapy Bones"
+        "id": "S1"
       },
       "address": "Calle Pedo, 22 Madrid"
     },
@@ -185,8 +177,7 @@
         "type":"THERAPIST"
       },
       "therapy": {
-        "id": "S3",
-        "name": "M.A.I."
+        "id": "S3"
       },
       "address": "Calle Pedo, 22 Madrid"
     },
@@ -208,8 +199,7 @@
         "type":"THERAPIST"
       },
       "therapy": {
-        "id": "S2",
-        "name": "Osteopaty"
+        "id": "S2"
       },
       "address": "Calle Pedo, 22 Madrid"
     },
@@ -219,7 +209,6 @@
       "status": {
         "canceled": true,
         "by": {
-          "type": "THERAPIST",
           "id": "T1",
           "type":"THERAPIST"
         },
@@ -228,8 +217,8 @@
       "date": {
         "year": "2017",
         "month": "11",
-        "day": "05",
-        "time": "20:30"
+        "day": "06",
+        "time": "17:30"
       },
       "therapist": {
         "id": "T1",
@@ -237,8 +226,7 @@
         "type":"THERAPIST"
       },
       "therapy": {
-        "id": "S2",
-        "name": "Osteopaty"
+        "id": "S2"
       },
       "address": "Calle Pedo, 22 Madrid"
     }
@@ -329,22 +317,52 @@
       "email": "hechopolvo.3@gmail.com"
     }
   ],
-  "therapys": {
-    "S1": {
-      "id": "S1",
-      "name": "Fisiotherapy",
-      "description": "Fisiotherapy bla bla bla"      
+  "therapys": [
+    {
+      "id": "S1", 
+      "texts": {
+        "EN": {
+          "lang": "EN",
+          "name": "Fisiotherapy",
+          "description": "Fisiotherapy bla bla bla"
+        },
+        "ES": {
+          "lang": "ES",
+          "name": "Fisioterapia",
+          "description": "Fisioterapia bla bla bla" 
+        }
+      }     
     },
-    "S2": {
-      "id": "S2",
-      "name": "Fisiotherapy",
-      "description": "Fisiotherapy bla bla bla"
+    {
+      "id": "S2", 
+      "texts": {
+        "EN": {
+          "lang": "EN",
+          "name": "Osteopaty",
+          "description": "Osteopaty bla bla bla"
+        },
+        "ES": {
+          "lang": "ES",
+          "name": "Osteopatia",
+          "description": "Osteopatia bla bla bla" 
+        }
+      }     
     },
-    "S3": {
-      "id": "S3",
-      "name": "M.A.I.",
-      "description": "M.A.I. bla bla bla"
+    {
+      "id": "S3", 
+      "texts": {
+        "EN": {
+          "lang": "EN",
+          "name": "M.A.I.",
+          "description": "M.A.I. bla bla bla"
+        },
+        "ES": {
+          "lang": "ES",
+          "name": "M.A.I.",
+          "description": "M.A.I. bla bla bla" 
+        }
+      }     
     }
-  },
+  ],
   "sessionschedule": ["10:00", "11:30", "13:00", "16:00", "17:30", "19:00", "20:30"]
 }

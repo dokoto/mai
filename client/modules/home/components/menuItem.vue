@@ -8,12 +8,12 @@
 
 <script>
 export default {
-  props: ["className", "calendarUrl", "icon"]
+  props: ['className', 'calendarUrl', 'icon'],
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../../app/app.scss";
+@import '../../../app/app.scss';
 .option {
   width: 20vw;
   height: 20vw;

@@ -155,6 +155,7 @@ module.exports = env => {
       });
   } else {
     entries = [
+      "babel-polyfill",
       "webpack-dev-server/client?http://localhost:3000",
       "webpack/hot/only-dev-server",
       "index.js"

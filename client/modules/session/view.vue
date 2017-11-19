@@ -9,23 +9,23 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Card from "../../app/components/sessionCard.vue";
-import DayCard from "../../app/components/dayCard.vue";
-import TherapistCarrusel from "../../app/components/therapistCarrusel.vue";
-import Map from "../../app/components/map.vue";
+import { mapGetters } from 'vuex';
+import Card from '../../app/components/sessionCard.vue';
+import DayCard from '../../app/components/dayCard.vue';
+import TherapistCarrusel from '../../app/components/therapistCarrusel.vue';
+import Map from '../../app/components/map.vue';
 
 export default {
   components: { DayCard, Card, TherapistCarrusel, Map },
   computed: mapGetters({
-    session: "session",
-    therapists: "therapists",
-    therapistAdress: "therapistAdress",
-    mapZoom: "mapZoom"
+    session: 'session/session',
+    therapists: 'session/therapists',
+    therapistAdress: 'session/therapistAdress',
+    mapZoom: 'session/mapZoom',
   }),
   created() {
-    this.$store.dispatch("getSession", this.$route.params.sessionId);
-  }
+    this.$store.dispatch('session/getSession', this.$route.params.sessionId);
+  },
 };
 </script>
 
@@ -42,7 +42,7 @@ export default {
   }
 
   &.bg-beach {
-    background-image: url("../../app/assets/img/app-bg.jpeg");
+    background-image: url('../../app/assets/img/app-bg.jpeg');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
