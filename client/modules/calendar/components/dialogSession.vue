@@ -1,9 +1,10 @@
-<template>
+<template>  
   <dialog class="modal"
     :id="dialodId">
     <div class="meeting-date">
-      <span class="time">date</span>
-      <span class="date">time</span>
+      <span class="mediumSizeText">{{ yearMonth }}</span>
+      <span class="bigSizeText">{{ sessionDay }}</span>
+      <span class="mediumSizeText">{{ timeSelected }}</span>
     </div>
     <TherapistCarrusel v-bind:therapists="therapists"
       v-if="therapists.length > 0" />
@@ -13,48 +14,58 @@
       <span class="v-separator"></span>
       <button class="c-button cancel"
         v-on:click="handleCancelClick">Cancel</button>
-    </div>
+    </div>    
   </dialog>
 </template>
 
 <script>
+import moment from 'moment';
 import TherapistCarrusel from '../../../app/components/therapistCarrusel';
+
+moment.locale(LANGUAGE);
 
 export default {
   components: { TherapistCarrusel },
-  props: ['dialodId', 'timeSelected', 'daySelected', 'session', 'therapists', 'therapies'],
-  methods: {
-    handleAcceptClick: function(ev) {},
-    handleCancelClick: function(ev) {
-      $('.modal')[0].close();
-      $('.modal').removeClass('dialog-scale');
+  computed: {
+    yearMonth: function() {
+      return `${moment(this.selectedDay)
+        .format('MMM')
+        .toUpperCase()} ${moment(this.selectedDay).format('YYYY')}`;
+    },
+    sessionDay: function() {
+      return moment(this.daySelected)
+        .format('dddd')
+        .toUpperCase();
     },
   },
-  created() {
-    //$('.modal')[0].showModal();
-  }
+  props: [
+    'dialodId',
+    'timeSelected',
+    'daySelected',
+    'session',
+    'therapists',
+    'therapies',
+  ],
+  methods: {
+    handleAcceptClick: function(ev) {
+      this.$emit('dialogAcept', ev);
+    },
+    handleCancelClick: function(ev) {
+      this.$emit('dialogCancel', ev);
+    },
+  },
+  mounted() {
+    console.log('opening dialog');
+  },
 };
 </script>
 <style lang="scss" scoped>
+
 dialog {
   border: solid 1px;
-  top: 30%;
-  //visibility: hidden;
-  transform: scale(0.1);
-  transition: transform 200ms;
-
-  &.dialog-scale {
-    top: 35%;
-    width: 90%;
-    visibility: visible;
-    transform: scale(1);
-  }
-
-  &.undialog-scale {
-    //visibility: hidden;
-    transform: scale(0.1);
-    transition: transform 200ms;
-  }
+  top: 10%;
+  width: 80%;
+  z-index: 5;
 }
 
 .modal {
@@ -77,20 +88,20 @@ dialog {
     border-bottom-color: #ddd;
     margin-bottom: 4%;
     padding-bottom: 4%;
-  }
 
-  .meeting-date .time {
-    color: crimson;
-    font-size: 2.5em;
-    font-weight: bold;
-    align-self: center;
-  }
+    .mediumSizeText {
+      color: crimson;
+      font-size: 1.2em;
+      font-weight: bold;
+      align-self: center;
+    }
 
-  .meeting-date .date {
-    color: crimson;
-    font-size: 0.9em;
-    align-self: center;
-    font-weight: bold;
+    .bigSizeText {
+      color: crimson;
+      font-size: 1.8em;
+      align-self: center;
+      font-weight: bold;
+    }
   }
 
   .therapist-carrusel {

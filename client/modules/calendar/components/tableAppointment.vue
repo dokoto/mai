@@ -1,6 +1,6 @@
 <template>
   <ul class="day-view box">
-    <RowAppointment v-for="session in sessions"
+    <RowAppointment v-for="session in toDaySessions"
       v-bind:key="session.id"
       v-bind:session="session"
       v-bind:selectedDay="selectedDay"
@@ -12,7 +12,7 @@
 import RowAppointment from './rowTableAppointment.vue';
 
 export default {
-  props: ['sessions', 'selectedDay'],
+  props: ['toDaySessions', 'selectedDay'],
   components: { RowAppointment },
   methods: {
     handleSessionClick: function(ev) {

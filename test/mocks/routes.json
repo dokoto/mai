@@ -4,6 +4,6 @@
   "/sessions/:year/:month/:day": "/sessions?date.year=:year&date.month=:month&date.day=:day",
   "/users/:type": "/users?type=:type",
   "/users/:type/:userId": "/users?type=:type&id=:userId",
-  "/sessionschedule": "/sessionschedule",
+  "/sessionTimeSchedule": "/sessionTimeSchedule",
   "/therapies/id": "/therapies?id=:id"
 }

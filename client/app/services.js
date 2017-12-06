@@ -25,7 +25,7 @@ export default {
     return fetch(`${paths.Sessions}/${yearNumber}/${monthNumber}/${dayNumber}`).then(response =>
       response.json());
   },
-  getSessionSchedule() {
-    return fetch(`${paths.SessionsSchedule}`).then(response => response.json());
+  getSessionTimeSchedule() {
+    return fetch(`${paths.SessionTimeSchedule}`).then(response => response.json());
   },
 };

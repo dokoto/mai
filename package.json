@@ -6,7 +6,7 @@
   "scripts": {
     "test-local": "node node_modules/cucumber/bin/cucumber.js --tags @mandatory --tags @local test/bdd/features",
     "test": "node node_modules/cucumber/bin/cucumber.js --tags @mandatory --tags @release test/bdd/features",
-    "maqueta": "browser-sync start --server --files 'css/*.css' --startPath 'maqueta'",
+    "maqueta": "serve -s maqueta",
     "mock": "node node_modules/json-server/bin/index.js --watch test/mocks/db.json --port 4000 --routes test/mocks/routes.json & browser-sync start --serveStatic 'static' --port 8809",
     "watch": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./scripts/webpack.config.js --colors --no-info  --env.target='dev' --env.env='loc' --env.platform='web' --env.version='0.0.1' --env.language='EN'",
     "dev": "node node_modules/webpack/bin/webpack.js --config ./scripts/webpack.config.js --progress --profile --colors --env.target='dev' --env.env='dev' --env.platform='web' --env.version='0.0.1' --env.language='EN'",

@@ -8,18 +8,21 @@
       :numberOfMonths="numberOfMonths"
       v-bind:selectedDay="selectedDay"
       v-on:dayClick="handleDayClick" />
-    <TableAppointment v-if="sessions.length > 0"
+    <TableAppointment v-if="toDaySessions.length > 0"
       v-bind:selectedDay="selectedDay"
-      v-bind:sessions="sessions"
+      v-bind:toDaySessions="toDaySessions"
       v-on:sessionClick="handleSessionClick" />
     <transition name="modal">
-      <DialogSession v-if="saveSession.open"
-        v-bind:timeSelected="saveSession.timeSelected"
-        v-bind:daySelected="saveSession.daySelected"
-        v-bind:session="saveSession.session"
-        v-bind:therapists="saveSession.therapists"
-        v-bind:therapies="saveSession.therapies" />
+      <DialogSession v-if="newAppointment.isDialogOpen"
+        v-bind:timeSelected="newAppointment.timeSelected"
+        v-bind:daySelected="newAppointment.daySelected"
+        v-bind:session="newAppointment.session"
+        v-bind:therapists="newAppointment.therapists"
+        v-bind:therapies="newAppointment.therapies"
+        v-on:dialogCancel="handleDialogCancel"
+        v-on:dialogAcept="handleDialogAcept" />
     </transition>
+    <OpacityLayer v-bind:active="newAppointment.isDialogOpen" />
   </article>
 </template>
 
@@ -29,15 +32,22 @@ import HeaderCalendar from './components/header.vue';
 import DayCarrusel from './components/dayCarrusel.vue';
 import TableAppointment from './components/tableAppointment.vue';
 import DialogSession from './components/dialogSession.vue';
+import OpacityLayer from '../../app/components/opacityLayer.vue';
 
 const numberOfMonths = 2;
 export default {
-  components: { HeaderCalendar, DayCarrusel, TableAppointment, DialogSession },
+  components: {
+    HeaderCalendar,
+    DayCarrusel,
+    TableAppointment,
+    DialogSession,
+    OpacityLayer,
+  },
   computed: {
     ...mapGetters({
-      sessions: 'calendar/scheduleTable',
+      toDaySessions: 'calendar/toDaySessions',
       selectedDay: 'calendar/selectedDay',
-      saveSession: 'calendar/saveSession',
+      newAppointment: 'calendar/newAppointment',
     }),
   },
   data() {
@@ -46,7 +56,7 @@ export default {
       dayNumber: this.$route.params.day,
       monthNumber: this.$route.params.month,
       year: this.$route.params.year,
-      numberOfMonths,
+      numberOfMonths
     };
   },
   methods: {
@@ -59,14 +69,19 @@ export default {
     },
     handleSessionClick: function(ev) {
       ev.preventDefault();
-      this.$store.dispatch('calendar/saveSession', {
+      this.$store.dispatch('calendar/createAppointment', {
         router: this.$router,
-        sessions: this.sessions,
         id: ev.currentTarget.id,
         daySelected: $(ev.currentTarget).attr('data-selectedday'),
         timeSelected: $(ev.currentTarget).attr('data-time'),
       });
     },
+    handleDialogCancel: function (ev) {
+      this.$store.dispatch('calendar/cancelAppointment', this.$route.params.userId);
+    },
+    handleDialogAcept: function (ev) {
+      
+    }
   },
   created() {
     this.$store.dispatch('calendar/setUserId', this.$route.params.userId);
