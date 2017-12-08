@@ -256,7 +256,7 @@
       "email": "carmen@gmail.com",
       "therapys": ["S1", "S2", "S3"],
       "webPage": "http://www.google.es",
-      "thumb": "http://localhost:8809/therapist-1.jpg"
+      "thumb": "http://localhost:8809/img/therapist-1.jpg"
     },{
       "id": "T2",
       "type": "THERAPIST",
@@ -272,7 +272,7 @@
       "email": "paco.freco@gmail.com",
       "therapys": ["S1", "S3"],
       "webPage": "http://www.google.es",
-      "thumb": "http://localhost:8809/therapist-2.jpg"
+      "thumb": "http://localhost:8809/img/therapist-2.jpg"
     },
     {
       "id": "C1",
