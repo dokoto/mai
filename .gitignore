@@ -1,6 +1,5 @@
 node_modules
 *.log
 .DS_Store
-/bin
 package-lock.json
 .gitconfig
