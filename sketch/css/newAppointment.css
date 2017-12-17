@@ -1,0 +1,286 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+input,
+textarea {
+  font-family: Arial, Tahoma, HelveticaNeue;
+}
+
+body {
+  background-image: url(../img/bg-playa-5.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.appointment-page {
+  overflow-y: scroll;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: auto;
+  margin-bottom: 2%;
+}
+
+.box {
+  margin-right: 2%;
+  margin-left: 2%;
+  margin-top: 2%;
+  padding: 2%;
+  background-color: white;
+}
+
+.day-of-month {
+  color: white;
+  position: absolute;
+  top: 0;
+  display: inline-flex;
+  flex-direction: column;
+  margin: 4%;
+}
+
+.day-number {
+  text-align: center;
+  font-size: 5em;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 4%;
+  margin-left: 4%;
+}
+
+.day-name {
+  text-align: center;
+  font-size: 1.3em;
+  width: 100%;
+  margin-left: 4%;
+}
+
+.therapist-img-box {
+  text-align: center;
+}
+
+.therapist-img {
+  width: 100px;
+  border-radius: 50%;
+}
+
+.therapist-carrusel {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-bottom: 4%;
+}
+
+.therapist-carrusel-item {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.h-separator {
+  height: 2px;
+  margin: 4% 0%;
+  background: #c5c4c4;
+}
+
+.therapist-name {
+  text-align: center;
+  font-size: 0.8em;
+}
+
+.date-detail {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.date-detail .date {
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+.date-detail .therapy-description {
+  font-size: 1.6em;
+  margin-top: 1%;
+  margin-left: 2%;
+}
+
+.date-detail .time-interval {
+  font-size: 1.6em;
+  color: #328c29;
+  font-weight: bold;
+}
+
+.location {
+  margin-bottom: 2%;
+}
+
+.location .map {
+  height: 400px;
+  margin-top: 2%;
+}
+
+.therapist {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.title-section {
+  padding: 2%;
+  background-color: #f9f9f9;
+  border-color: #ececec;
+  margin-bottom: 3%;
+}
+
+.title-section .title {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #7b656d;
+}
+
+.symbol {
+  width: 9em;
+  border: solid 0.1em;
+  border-radius: 50%;
+  border-color: white;
+  padding: 0px;
+}
+
+.symbol-container {
+  margin-top: 10%;
+  margin-bottom: 5%;
+  text-align: center;
+}
+
+.flex-colum {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-align-first-corners {
+  justify-content: space-between;
+}
+
+.flex-align-second-center {
+    align-items: center;
+}
+
+.padding-2x {
+  padding: 2%;
+}
+
+.combo-container {
+  padding: 2%;
+}
+
+.combo-container .item-selected-value {
+  font-size: 1.6em;
+}
+
+.combo-container .item-selected-icon {
+  font-size: 1.0em;
+}
+
+.combo {
+  margin-top: 0.3em;  
+  list-style: none;
+  padding: 0;
+  border: solid 1px;
+  border-color: #e8e6e6;
+  overflow: auto;
+  height: 100px;
+}
+
+.combo .item {
+  font-size: 1.2em;
+  padding: 2%;
+}
+
+.combo .item:hover {
+  background-color: #f7f7f0;
+  font-weight: bold;
+}
+
+.hide {
+  display: none;
+}
+
+.input-map-container {
+  position: relative;
+}
+
+.input-map-container {
+  position: relative;
+}
+
+.input-inside-icon {
+  position: absolute;
+  right: 0;
+  width: 15%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: solid 1px;
+  border-color: #e4e3e3;
+}
+
+.input-map-autocomplete {
+  outline: none;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 50px;
+  border: solid 1px;
+  border-color: #e4e3e3;
+  font-size: 1.2em;
+}
+
+.menu {
+  display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.c-button {
+font-size: 1.8em;
+}
+
+.cancel {
+      margin-left: 4%;
+}
+
+.accept {
+      margin-right: 4%;
+}
+
+.v-separator {
+  width: 1px;
+  margin: 6px 0;
+  background: #c5c4c4;
+}
