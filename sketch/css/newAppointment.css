@@ -284,3 +284,131 @@ font-size: 1.8em;
   margin: 6px 0;
   background: #c5c4c4;
 }
+
+/* DAY CARRUSEL */
+.week-view {
+  display: inline-flex;
+  flex-direction: row;
+  overflow: auto;
+  width: 100%;
+  margin-bottom: 2%;
+}
+
+.week-view .day-name {
+  font-size: 0.7em;
+  text-align: center;
+}
+
+.week-view .day-number {
+  font-size: 1.7em;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.day-box {
+  display: inline-flex;
+  flex-direction: column;
+  color: #848181;
+  width: 50px;
+}
+
+.day-view {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  /*height: 80%;*/
+  flex-wrap: nowrap;
+}
+
+.time-box {
+  display: inline-flex;
+  flex-direction: row;
+  border-bottom: solid 1px;
+  border-color: #c5c4c4;
+  flex: 0 0 auto;
+}
+
+.month-box {
+  display: inline-flex;
+  flex-direction: row;
+  color: #c5c4c4;
+  width: 50px;
+  height: 55px;
+}
+
+.month-v-name {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-weight: bold;
+  font-size: 0.7em;
+  color: #828080;
+}
+.month-v-name.one {
+  background-color: greenyellow;    
+}
+.month-v-name.two {
+  background-color: yellow;  
+}
+.month-v-name.hide {
+  visibility: hidden;
+}
+
+.month-name {
+  position: fixed;
+  font-size: 0.8em;
+}
+
+.month {
+  display: inline-flex;
+  flex-direction: row;
+  min-width: auto;
+  margin-top: 2%;
+  margin-right: 4%;
+  border-bottom: solid 7px;
+}
+.end {
+  min-width: 1px;
+  background-color: white;
+}
+
+.month.one {
+  border-bottom-color: greenyellow;
+
+}
+
+.month.two {
+  border-bottom-color: yellow;
+
+}
+
+.month.three {
+  border-bottom-color: rosybrown;
+
+}
+.day-view li:last-child {
+  border-bottom: 0;
+}
+
+/* DAY CARRUSEL */
+
+.time-container {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: auto auto auto auto;
+  padding: 0;
+  margin: 0;
+}
+
+.time-item {
+  font-size: 1.5em;
+    justify-self: center;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    color: green;
+}
