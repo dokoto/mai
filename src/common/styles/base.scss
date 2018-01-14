@@ -5,8 +5,23 @@
   background-color: white;
 }
 
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-align-first-corners {
+  justify-content: space-between;
+}
+
+.flex-align-second-center {
+    align-items: center;
+}
+
 $colorGrey1: #b1b0b0;
 $colorGrey2: #c5c4c4;
+$colorGrey3: #e4e3e3;
+$colorWhite0: white;
 $colorDarkGrey1: #848181;
 $colorDarkGrey2: #828080;
 $colorPastelOrange: rgb(253, 202, 162);

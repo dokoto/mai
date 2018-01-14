@@ -1,23 +1,38 @@
 import Vue from 'vue';
 
 import { storiesOf } from '@storybook/vue';
+import { faMapMarkerAlt } from '@fortawesome/fontawesome-free-solid';
 
-import MapCard from '../../../src/common/components/MapCard.vue';
+import LocationMap from '../../../src/common/components/LocationMap.vue';
+import InputBoxed from '../../../src/common/components/InputBoxed.vue';
 
-storiesOf('MapCard', module).add('MapCard: read only', () => ({
-  components: { MapCard },
+storiesOf('InputBoxed', module).add('InputBoxed: read only', () => ({
+  components: { InputBoxed },
   data() {
     return {
-      therapistAdress: {
+      id: 'story-inputBoxed',
+      placeHolder: 'Avenida de Portugal 71',
+      iconClasses: 'fas fa-map-marker-alt',
+      icon: faMapMarkerAlt,
+    };
+  },
+  template:
+    '<InputBoxed v-bind:id="id" v-bind:placeHolder="placeHolder" v-bind:icon="icon" />',
+}));
+
+storiesOf('LocationMap', module).add('LocationMap: read only', () => ({
+  components: { LocationMap },
+  data() {
+    return {
+      address: {
         localtion: {
           lat: 40.41594508029149,
           lng: -3.727298319708498,
         },
         formatted_address: 'Av. de Portugal, 71, 28011 Madrid, España',
       },
-      mapZoom: 15,
+      zoom: 15,
     };
   },
-  template:
-    '<MapCard v-bind:therapistAdress="therapistAdress" v-bind:mapZoom="mapZoom" />',
+  template: '<LocationMap v-bind:address="address" v-bind:zoom="zoom" />',
 }));

@@ -59,6 +59,12 @@
     "webpack-dev-server": "^2.9.5"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.2",
+    "@fortawesome/fontawesome-free-brands": "^5.0.4",
+    "@fortawesome/fontawesome-free-regular": "^5.0.4",
+    "@fortawesome/fontawesome-free-solid": "^5.0.4",
+    "@fortawesome/fontawesome-free-webfonts": "^1.0.2",
+    "@fortawesome/vue-fontawesome": "0.0.22",
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "es6-promise": "^4.1.1",

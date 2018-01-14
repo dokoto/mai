@@ -1,6 +1,6 @@
 <template>
   <section class="location box">
-    <div class="address">{{ therapistAdress.formatted_address }}</div>
+    <div class="address">{{ address.formatted_address }}</div>
     <div class="map" id="map"></div>
   </section>
 </template>
@@ -13,17 +13,17 @@
 import GoogleMapsLoader from 'google-maps';
 
 export default {
-  props: ['therapistAdress', 'mapZoom'],
+  props: ['address', 'zoom'],
   created() {
     GoogleMapsLoader.KEY = process.env.MAPS_KEY;
     GoogleMapsLoader.load(google => {
       const map = new google.maps.Map(document.getElementById('map'), {
         mapTypeControl: false,
-        zoom: this.mapZoom,
-        center: this.therapistAdress.localtion,
+        zoom: this.zoom,
+        center: this.address.localtion,
       });
       const marker = new google.maps.Marker({
-        position: this.therapistAdress.localtion,
+        position: this.address.localtion,
         map,
       });
       marker.setMap(map);

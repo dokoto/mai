@@ -3,7 +3,7 @@
     <DayCard />
     <Card v-bind:id="session.id" v-bind:sessionDate="session.date" v-bind:sessionTherapy="session.therapy" v-bind:withTimeInterval="true" v-if="session.id !== undefined" />
     <TherapistCarrusel v-bind:therapists="therapists" v-if="therapists.length > 0" />
-    <MapCard v-bind:therapistAdress="therapistAdress" v-bind:mapZoom="mapZoom" v-if="therapists.length > 0" />
+    <LocationMap v-bind:address="therapistAdress" v-bind:zoom="mapZoom" v-if="therapists.length > 0" />
   </article>
 </template>
 
@@ -12,11 +12,11 @@ import { mapGetters } from 'vuex';
 import Card from '../../common/components/sessionCard.vue';
 import DayCard from '../../common/components/dayCard.vue';
 import TherapistCarrusel from '../../common/components/therapistCarrusel.vue';
-import MapCard from '../../common/components/MapCard.vue';
+import LocationMap from '../../common/components/LocationMap.vue';
 
 export default {
   components: {
-    DayCard, Card, TherapistCarrusel, MapCard,
+    DayCard, Card, TherapistCarrusel, LocationMap,
   },
   computed: mapGetters({
     session: 'session/session',
