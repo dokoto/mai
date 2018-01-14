@@ -5,6 +5,7 @@
   "main": "client/index.js",
   "scripts": {
     "sketch": "serve -s sketch",
+    "storybook": "start-storybook -p 9001 -c test/storybook",
     "mock": "node node_modules/json-server/bin/index.js --watch test/mocks/db.json --port 4000 --routes test/mocks/routes.json & node_modules/serve/bin/serve.js -s static -p 8809",
     "watch": "cross-env BABEL_ENV=dev node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./scripts/webpack.config.js --hot --colors --no-info --env.env='dev' --env.platform='web' --env.version='0.0.1-test'",
     "build": "cross-env BABEL_ENV=prod node node_modules/webpack/bin/webpack.js --config ./scripts/webpack.config.js --progress --profile --colors --env.env='prod' --env.platform='web' --env.version='0.0.1'",
@@ -14,6 +15,8 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.33",
+    "@storybook/addon-viewport": "^3.3.9",
+    "@storybook/vue": "^3.3.9",
     "autoprefixer": "^7.2.2",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",

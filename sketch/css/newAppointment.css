@@ -113,7 +113,6 @@ body {
 
 .date-detail .date {
   font-size: 1.6em;
-  font-weight: bold;
 }
 
 .date-detail .therapy-description {
@@ -124,8 +123,6 @@ body {
 
 .date-detail .time-interval {
   font-size: 1.6em;
-  color: #328c29;
-  font-weight: bold;
 }
 
 .location {
@@ -286,12 +283,18 @@ font-size: 1.8em;
 }
 
 /* DAY CARRUSEL */
+.week-container {
+  border: solid 1px;
+    border-color: #ececec;
+}
+
 .week-view {
   display: inline-flex;
   flex-direction: row;
   overflow: auto;
   width: 100%;
   margin-bottom: 2%;
+  padding-left: 2%;
 }
 
 .week-view .day-name {
@@ -396,19 +399,23 @@ font-size: 1.8em;
 
 /* DAY CARRUSEL */
 
-.time-container {
+.time-container { 
   list-style-type: none;
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  grid-template-rows: auto auto auto auto;
-  padding: 0;
-  margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto auto auto;
+    padding: 0;
+    margin: 0;
+    border: solid 1px;
+    border-color: #ececec;
 }
+
+
 
 .time-item {
   font-size: 1.5em;
-    justify-self: center;
-    padding-top: 4%;
-    padding-bottom: 4%;
-    color: green;
+  justify-self: center;
+  padding-top: 4%;
+  padding-bottom: 4%;
+  color: #848181;
 }

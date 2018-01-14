@@ -40,6 +40,7 @@ export default {
   margin-bottom: 2%;
   margin-top: 2%;
   .address {
+    font-family: Arial, Tahoma, HelveticaNeue;
     font-size: 0.8em;
     margin-left: 2%;
     margin-top: 2%;
