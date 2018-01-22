@@ -12,12 +12,24 @@ storiesOf('InputBoxed', module).add('InputBoxed: read only', () => ({
     return {
       id: 'story-inputBoxed',
       placeHolder: 'Avenida de Portugal 71',
-      iconClasses: 'fas fa-map-marker-alt',
       icon: faMapMarkerAlt,
+      readOnly: true,
     };
   },
   template:
-    '<InputBoxed v-bind:id="id" v-bind:placeHolder="placeHolder" v-bind:icon="icon" />',
+    '<InputBoxed v-bind:id="id" v-bind:placeHolder="placeHolder" v-bind:icon="icon" v-bind:readOnly="readOnly" />',
+})).add('InputBoxed: write turn on', () => ({
+  components: { InputBoxed },
+  data() {
+    return {
+      id: 'story-inputBoxed',
+      placeHolder: 'Avenida de Portugal 71',
+      icon: faMapMarkerAlt,
+      readOnly: false,
+    };
+  },
+  template:
+    '<InputBoxed v-bind:id="id" v-bind:placeHolder="placeHolder" v-bind:icon="icon" v-bind:readOnly="readOnly" />',
 }));
 
 storiesOf('LocationMap', module).add('LocationMap: read only', () => ({
@@ -32,6 +44,10 @@ storiesOf('LocationMap', module).add('LocationMap: read only', () => ({
         formatted_address: 'Av. de Portugal, 71, 28011 Madrid, España',
       },
       zoom: 15,
+      id: 'story-inputBoxed',
+      placeHolder: 'Avenida de Portugal 71',
+      icon: faMapMarkerAlt,
+      readOnly: true,
     };
   },
   template: '<LocationMap v-bind:address="address" v-bind:zoom="zoom" />',

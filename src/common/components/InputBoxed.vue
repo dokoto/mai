@@ -2,8 +2,10 @@
   <div :id="id"
     class="input-boxed-container flex-row flex-align-first-corners flex-align-second-center">
     <input type="text"
+      maxlength="200"
       class="input-boxed"
-      :placeholder="placeHolder" />
+      :placeholder="placeHolder"
+      :readonly="readOnly" />
     <div class="input-boxed-icon"
       v-on:click="handleInputBoxedClick">
       <font-awesome-icon :icon="icon" />
@@ -13,12 +15,29 @@
 
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import { faMapMarkerAlt } from '@fortawesome/fontawesome-free-solid';
 
 export default {
   components: {
     FontAwesomeIcon,
   },
-  props: ['id', 'placeHolder', 'icon'],
+  props: {
+    id: {
+      type: String,
+      default: 'input-boxed',
+    }, 
+    placeHolder: {
+      type: String,
+      default: 'Address',
+    }, 
+    icon: {
+      default: faMapMarkerAlt
+    }, 
+    readOnly: {
+      type: Boolean,
+      default: true
+    }
+  },
   methods: {
     handleInputBoxedClick(ev) {
       this.$emit('handleInputBoxedClick', ev);
@@ -32,14 +51,14 @@ export default {
 
 .input-boxed-container {
   position: relative;
-  height: 2.5em;
+  height: 2.5rem;
 
   .input-boxed {
     font-family: Arial, Tahoma, HelveticaNeue;
     outline: none;
     width: 100%;
     padding-left: 10px;
-    padding-right: 10px;
+    padding-right: 4rem;
     height: 100%;
     border: solid 1px;
     border-color: $colorGrey3;
@@ -51,7 +70,7 @@ export default {
   .input-boxed-icon {
     position: absolute;
     right: 0;
-    width: 15%;
+    width: 3rem;
     height: 100%;
     display: flex;
     flex-direction: column;

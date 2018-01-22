@@ -1,7 +1,11 @@
 <template>
   <section class="location box">
-    <div class="address">{{ address.formatted_address }}</div>
-    <div class="map" id="map"></div>
+    <InputBoxed v-bind:id="id"
+      v-bind:placeHolder="placeHolder"
+      v-bind:icon="icon"
+      v-bind:readOnly="readOnly" />
+    <div class="map"
+      id="map"></div>
   </section>
 </template>
 
@@ -11,9 +15,11 @@
  * https://github.com/Carrooi/Js-GoogleMapsLoader
  */
 import GoogleMapsLoader from 'google-maps';
+import InputBoxed from './InputBoxed.vue';
 
 export default {
-  props: ['address', 'zoom'],
+  props: ['address', 'zoom', 'icon', 'placeHolder', 'readOnly'],
+  components: { InputBoxed },
   created() {
     GoogleMapsLoader.KEY = process.env.MAPS_KEY;
     GoogleMapsLoader.load(google => {
