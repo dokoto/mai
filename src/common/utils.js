@@ -99,3 +99,18 @@ export function reduceTherapysByLanguage(prev, curr) {
   prev[curr.id] = curr.texts[window.glob.language];
   return prev;
 }
+
+/**
+ * Get a static image from google map
+ * @param {object} center - { lat: number, lng: number }
+ * @param {number} zoom - [1-18] view map zoom
+ * @param {object} size - { witdh: number, height: number }
+ * @param {string} key - Google Api key
+ * @ref https://developers.google.com/maps/documentation/static-maps/?hl=es-419
+ */
+export function getStaticMapImage(center, zoom, size, key) {   
+  const url = `${ consts.GOOGLE_STATIC_MAPS_URL }?center=${ center.lat },${
+    center.lng
+  }&zoom=${ zoom }&size=${ size.witdh }x${ size.height }&key=${ key }`;
+  return fetch(url).then(response => response.json());
+}

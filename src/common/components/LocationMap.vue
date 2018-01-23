@@ -4,7 +4,7 @@
       v-bind:placeHolder="placeHolder"
       v-bind:icon="icon"
       v-bind:readOnly="readOnly" />
-    <div class="map"
+    <div class="map hide"
       id="map"></div>
   </section>
 </template>
@@ -42,6 +42,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../styles/base.scss';
 .location {
   margin-bottom: 2%;
   margin-top: 2%;
