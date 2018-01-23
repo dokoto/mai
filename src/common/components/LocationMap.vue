@@ -1,11 +1,14 @@
 <template>
   <section class="location box">
-    <InputBoxed v-bind:id="id"
-      v-bind:placeHolder="placeHolder"
-      v-bind:icon="icon"
-      v-bind:readOnly="readOnly" />
-    <div class="map hide"
-      id="map"></div>
+    <InputBoxed :id="id"
+      :placeHolder="placeHolder"
+      :icon="icon"
+      :readOnly="readOnly"
+      v-on:handleInputBoxedClick="handleInputBoxedClicked" />
+    <div class="map" v-show="showMap"      
+      :id="id + 'map'">
+      <img id="static-map" v-if="readOnly" :src="defaulMapImage" />
+      </div>
   </section>
 </template>
 
@@ -16,9 +19,38 @@
  */
 import GoogleMapsLoader from 'google-maps';
 import InputBoxed from './InputBoxed.vue';
+import { faMapMarkerAlt } from '@fortawesome/fontawesome-free-solid';
+import defaultStaticMap from '../../../static/img/default-static-map.png';
 
 export default {
-  props: ['address', 'zoom', 'icon', 'placeHolder', 'readOnly'],
+  props: {
+    id: {
+      type: String,
+      default: 'locationMap',
+    },
+    address: {
+      type: Object,
+    },
+    zoom: {
+      type: Number,
+      default: 15,
+    },
+    icon: {
+      default: faMapMarkerAlt,
+    },
+    placeHolder: {
+      type: String,
+      default: 'Address',
+    },
+    readOnly: {
+      type: Boolean,
+      default: true,
+    },
+    showMap: {
+      type: Boolean,
+      default: false,
+    },
+  },
   components: { InputBoxed },
   created() {
     GoogleMapsLoader.KEY = process.env.MAPS_KEY;
@@ -34,6 +66,16 @@ export default {
       });
       marker.setMap(map);
     });
+  },
+  data() {
+    return {
+      defaulMapImage: defaultStaticMap,
+    };
+  },
+  methods: {
+    handleInputBoxedClicked(ev) {
+      console.log('Inputboxed cliecked')
+    }
   },
   beforeDestroy() {
     GoogleMapsLoader.release(console.log('Google API released'));
@@ -58,5 +100,3 @@ export default {
   }
 }
 </style>
-
-
