@@ -1,14 +1,14 @@
 <template>
   <section class="location box">
-    <InputBoxed :id="id"
+    <InputBoxed :id="ids.idInput"
       :placeHolder="placeHolder"
       :icon="icon"
       :readOnly="readOnly"
-      v-on:handleInputBoxedClick="handleInputBoxedClicked" />
-    <div class="map" v-show="showMap"      
-      :id="id + 'map'">
-      <img id="static-map" v-if="readOnly" :src="defaulMapImage" />
-      </div>
+      v-on:handleInputBoxedClick="handleInputBoxedClicked"
+      class="map-autocomplete" />
+    <div :id="ids.idMap" class="map" v-show="hasShowMap">      
+      <StaticMap :address="address" :size="staticMapSize" />
+    </div>
   </section>
 </template>
 
@@ -17,10 +17,13 @@
  * GEOCODING
  * https://github.com/Carrooi/Js-GoogleMapsLoader
  */
+import $ from 'jquery';
 import GoogleMapsLoader from 'google-maps';
 import InputBoxed from './InputBoxed.vue';
+import StaticMap from './StaticMap.vue';
+import * as maps from '../utils.map';
 import { faMapMarkerAlt } from '@fortawesome/fontawesome-free-solid';
-import defaultStaticMap from '../../../static/img/default-static-map.png';
+import picDefaultStaticMap from '../../../static/img/default-static-map.png';
 
 export default {
   props: {
@@ -29,14 +32,11 @@ export default {
       default: 'locationMap',
     },
     address: {
-      type: Object,
+      type: String,
     },
     zoom: {
       type: Number,
       default: 15,
-    },
-    icon: {
-      default: faMapMarkerAlt,
     },
     placeHolder: {
       type: String,
@@ -51,31 +51,36 @@ export default {
       default: false,
     },
   },
-  components: { InputBoxed },
+  components: { InputBoxed, StaticMap },
+  computed: {
+    staticMapSize: function() {
+      return {
+        width: 400,
+        height: 200,
+      };
+    },
+    ids: function() {
+      return {
+        idInput: `${this.id}-inputboxed-map`,
+        idMap: `${this.id}-map`,
+      };
+    },
+  },
   created() {
-    GoogleMapsLoader.KEY = process.env.MAPS_KEY;
-    GoogleMapsLoader.load(google => {
-      const map = new google.maps.Map(document.getElementById('map'), {
-        mapTypeControl: false,
-        zoom: this.zoom,
-        center: this.address.localtion,
-      });
-      const marker = new google.maps.Marker({
-        position: this.address.localtion,
-        map,
-      });
-      marker.setMap(map);
-    });
+    if (this.readOnly) {
+    }
   },
   data() {
     return {
-      defaulMapImage: defaultStaticMap,
+      defaulMapImage: picDefaultStaticMap,
+      icon: faMapMarkerAlt,
+      hasShowMap: this.showMap,
     };
   },
   methods: {
     handleInputBoxedClicked(ev) {
-      console.log('Inputboxed cliecked')
-    }
+      this.hasShowMap = !this.hasShowMap;
+    },
   },
   beforeDestroy() {
     GoogleMapsLoader.release(console.log('Google API released'));

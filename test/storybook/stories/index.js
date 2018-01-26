@@ -5,13 +5,14 @@ import { faMapMarkerAlt } from '@fortawesome/fontawesome-free-solid';
 
 import LocationMap from '../../../src/common/components/LocationMap.vue';
 import InputBoxed from '../../../src/common/components/InputBoxed.vue';
+import StaticMap from '../../../src/common/components/StaticMap.vue';
 
 storiesOf('InputBoxed', module).add('InputBoxed: read only', () => ({
   components: { InputBoxed },
   data() {
     return {
       id: 'story-inputBoxed',
-      placeHolder: 'Avenida de Portugal 71',
+      placeHolder: 'Fake Address',
       icon: faMapMarkerAlt,
       readOnly: true,
     };
@@ -23,7 +24,7 @@ storiesOf('InputBoxed', module).add('InputBoxed: read only', () => ({
   data() {
     return {
       id: 'story-inputBoxed',
-      placeHolder: 'Avenida de Portugal 71',
+      placeHolder: 'Fake Address',
       icon: faMapMarkerAlt,
       readOnly: false,
     };
@@ -32,20 +33,25 @@ storiesOf('InputBoxed', module).add('InputBoxed: read only', () => ({
     '<InputBoxed v-bind:id="id" v-bind:placeHolder="placeHolder" v-bind:icon="icon" v-bind:readOnly="readOnly" />',
 }));
 
+storiesOf('StaticMap', module).add('StaticMap', () => ({
+  components: { StaticMap },
+  data() {
+    return {
+      address: 'Av. de Portugal, 71, 28011 Madrid, España',
+      zoom: 15,
+    };
+  },
+  template: '<StaticMap :address="address" :zoom="zoom" />',
+}));
+
 storiesOf('LocationMap', module).add('LocationMap: read only', () => ({
   components: { LocationMap },
   data() {
     return {
-      address: {
-        localtion: {
-          lat: 40.41594508029149,
-          lng: -3.727298319708498,
-        },
-        formatted_address: 'Av. de Portugal, 71, 28011 Madrid, España',
-      },
+      address: 'Av. de Portugal, 71, 28011 Madrid, España',
       zoom: 15,
       id: 'story-inputBoxed',
-      placeHolder: 'Avenida de Portugal 71',
+      placeHolder: 'Fake Address',
       icon: faMapMarkerAlt,
       readOnly: true,
     };
