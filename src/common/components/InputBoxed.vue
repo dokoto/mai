@@ -5,7 +5,8 @@
       maxlength="200"
       class="input-boxed"
       :placeholder="placeHolder"
-      :readonly="readOnly" />
+      :readonly="readOnly"
+      :value="value" />
     <div class="input-boxed-icon"
       v-on:click="handleInputBoxedClick">
       <font-awesome-icon :icon="icon" />
@@ -36,6 +37,9 @@ export default {
     readOnly: {
       type: Boolean,
       default: true
+    },
+    value: {
+      type: String
     }
   },
   methods: {

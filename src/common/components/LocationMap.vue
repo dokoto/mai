@@ -2,13 +2,18 @@
   <section class="location box">
     <InputBoxed :id="ids.idInput"
       :placeHolder="placeHolder"
+      :value="address"
       :icon="icon"
       :readOnly="readOnly"
       v-on:handleInputBoxedClick="handleInputBoxedClicked"
       class="map-autocomplete" />
-    <div :id="ids.idMap" class="map" v-show="hasShowMap">      
-      <StaticMap :address="address" :size="staticMapSize" />
-    </div>
+      <transition name="fade"
+        @enter="animateSlideDown"
+        @leave="animateSlideUp">
+        <div :id="ids.idMap" class="map" v-show="hasShowMap">      
+          <StaticMap :address="address" :size="staticMapSize" v-if="readOnly" />
+        </div>
+      </transition>
   </section>
 </template>
 
@@ -81,6 +86,16 @@ export default {
     handleInputBoxedClicked(ev) {
       this.hasShowMap = !this.hasShowMap;
     },
+    animateSlideDown(el, done) {
+      $(el).slideDown('slow', function () {
+        done();
+      });
+    },
+    animateSlideUp(el, done) {
+      $(el).slideUp('slow', function () {
+        done();
+      });      
+    }
   },
   beforeDestroy() {
     GoogleMapsLoader.release(console.log('Google API released'));

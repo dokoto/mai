@@ -12,7 +12,9 @@ import * as consts from '../common/constants';
 export function getStaticMapImage(center, zoom, size, apikey) {
   const url = `${ consts.GOOGLE_STATIC_MAPS_URL }?center=${ center.lat },${
     center.lng
-  }&zoom=${ zoom }&size=${ size.width }x${ size.height }&key=${ apikey }`;
+  }&zoom=${ zoom }&size=${ size.width }x${ size.height }&markers=color:blue|label:T|${ center.lat },${
+    center.lng
+  }&key=${ apikey }`;
   return fetch(url).then(response => response.blob());
 }
 

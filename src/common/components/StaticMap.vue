@@ -59,8 +59,7 @@ export default {
 <style lang="scss" scoped>
 .static-map-container {
   width: 100%;
-  text-align: center;
-  padding-top: 2%;
+  text-align: center;  
   img {
     width: 100%;
   }
