@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import GoogleMapsLoader from 'google-maps';
 import * as consts from '../common/constants';
 
 /**
@@ -30,4 +31,33 @@ export function geocodeAddress(address, apikey) {
   return fetch(url)
     .then(response => response.json())
     .then(coors => _.get(coors, 'results[0].geometry.location'));
+}
+
+export async function renderDynamicMap($map, google, zoom, center) {
+  const map = new google.maps.Map(_.get($map, '[0]'), {
+    gestureHandling: 'cooperative',
+    zoom,
+    center,
+  });
+  const marker = new google.maps.Marker({
+    position: center,
+    map,
+  });
+  marker.setMap(map);
+  return map;
+}
+
+export async function initAutoCompleteAddressInput($autoCompleInput, google, onChangeCallBack) {
+  const autocomplete = new google.maps.places.Autocomplete(_.get($autoCompleInput, '[0]'), {});
+  $autoCompleInput.on('change', onChangeCallBack);
+}
+
+export function loadGoogleMaps(apikey, libraries) {
+  GoogleMapsLoader.KEY = apikey;
+  GoogleMapsLoader.LIBRARIES = libraries;
+  return new Promise(resolve => {
+    GoogleMapsLoader.load(function (google) {
+      resolve(google);
+    });
+  });
 }

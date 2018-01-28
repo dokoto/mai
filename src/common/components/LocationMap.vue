@@ -8,8 +8,9 @@
       v-on:handleInputBoxedClick="handleInputBoxedClicked"
       class="map-autocomplete" />
       <transition name="fade"
-        @enter="animateSlideDown"
-        @leave="animateSlideUp">
+        @before-enter="animateSlideDown"
+        @leave="animateSlideUp"
+        :css="false">
         <div :id="ids.idMap" class="map" v-show="hasShowMap">      
           <StaticMap :address="address" :size="staticMapSize" v-if="readOnly" />
         </div>
@@ -29,6 +30,10 @@ import StaticMap from './StaticMap.vue';
 import * as maps from '../utils.map';
 import { faMapMarkerAlt } from '@fortawesome/fontawesome-free-solid';
 import picDefaultStaticMap from '../../../static/img/default-static-map.png';
+
+let googleApi = null;
+let map = null;
+let defaultCenter = {};
 
 export default {
   props: {
@@ -55,6 +60,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    apikey: {
+      type: String,
+      default: 'AIzaSyBnnYz5MN9EkxI-lmKNLE1GvxkqvrxPDvQ',
+    },
   },
   components: { InputBoxed, StaticMap },
   computed: {
@@ -71,8 +80,19 @@ export default {
       };
     },
   },
-  created() {
-    if (this.readOnly) {
+  async mounted() {
+    if (!this.readOnly) {
+      const $map = $(`#${this.ids.idMap}`).first();
+      const $autoCompleInput = $(`#${this.ids.idInput} input`).first();
+      googleApi = await maps.loadGoogleMaps(this.apikey, ['places']);
+      maps.initAutoCompleteAddressInput(
+        $autoCompleInput,
+        googleApi,
+        this.handleAutoCompleteAddressInput.bind(null, google, $map),
+      );
+      const center = await maps.geocodeAddress(this.address || this.placeHolder, this.apikey);
+      defaultCenter = center;
+      map = await maps.renderDynamicMap($map, googleApi, this.zoom, center);
     }
   },
   data() {
@@ -83,19 +103,27 @@ export default {
     };
   },
   methods: {
+    async handleAutoCompleteAddressInput(google, $map, ev) {
+      var address = $(ev.currentTarget).val();
+      const center = await maps.geocodeAddress(address, this.apikey);
+      defaultCenter = center;
+      map = await maps.renderDynamicMap($map, google, this.zoom, center);
+    },
     handleInputBoxedClicked(ev) {
       this.hasShowMap = !this.hasShowMap;
     },
-    animateSlideDown(el, done) {
-      $(el).slideDown('slow', function () {
+    handleResizeMap() {
+      googleApi.maps.event.trigger(map, 'resize');
+      map.setCenter(new google.maps.LatLng(defaultCenter.lat, defaultCenter.lng));
+    },
+    animateSlideDown(el) {
+      $(el).slideDown('slow', !this.readOnly ? this.handleResizeMap : null);
+    },
+    animateSlideUp(el, done) {
+      $(el).slideUp('slow', function() {
         done();
       });
     },
-    animateSlideUp(el, done) {
-      $(el).slideUp('slow', function () {
-        done();
-      });      
-    }
   },
   beforeDestroy() {
     GoogleMapsLoader.release(console.log('Google API released'));
