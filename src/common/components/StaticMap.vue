@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import * as maps from '../utils.map';
+import GoogleMapsLoader from 'google-maps';
 import picDefaultStaticMap from '../../../static/img/default-static-map.png';
 
 export default {
@@ -39,15 +39,15 @@ export default {
   data() {
     return {
       defaulMapImage: picDefaultStaticMap,
+      locationMap: new LocationMap(this.apikey),
     };
   },
-  async created() {
-    const center = await maps.geocodeAddress(this.address, this.apiKey);
-    const blob = await maps.getStaticMapImage(
+  async mounted() {
+    const center = await this.locationMap.geocodeAddress(this.address);
+    const blob = await this.locationMap.getStaticMapImage(
       center,
       this.zoom,
       this.size,
-      this.apiKey,
     );
     const objectUrl = URL.createObjectURL(blob);
     const img = document.querySelector('#static-map');

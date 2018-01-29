@@ -27,7 +27,6 @@ import $ from 'jquery';
 import GoogleMapsLoader from 'google-maps';
 import InputBoxed from './InputBoxed.vue';
 import StaticMap from './StaticMap.vue';
-import * as maps from '../utils.map';
 import LocationMap from './LocationMap';
 import { faMapMarkerAlt } from '@fortawesome/fontawesome-free-solid';
 import picDefaultStaticMap from '../../../static/img/default-static-map.png';

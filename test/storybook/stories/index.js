@@ -6,6 +6,7 @@ import { faMapMarkerAlt } from '@fortawesome/fontawesome-free-solid';
 import LocationMap from '../../../src/common/components/LocationMap.vue';
 import InputBoxed from '../../../src/common/components/InputBoxed.vue';
 import StaticMap from '../../../src/common/components/StaticMap.vue';
+import ComboBoxed from '../../../src/common/components/ComboBoxed.vue';
 
 storiesOf('InputBoxed', module)
   .add('InputBoxed: read only', () => ({
@@ -34,6 +35,17 @@ storiesOf('InputBoxed', module)
     template:
       '<InputBoxed v-bind:id="id" v-bind:placeHolder="placeHolder" v-bind:icon="icon" v-bind:readOnly="readOnly" />',
   }));
+
+storiesOf('ComboBoxed', module).add('ComboBoxed', () => ({
+  components: { ComboBoxed },
+  data() {
+    return {
+      id: 'comboboxed-test',
+    };
+  },
+  template:
+    '<ComboBoxed :id="id" />',
+}));
 
 storiesOf('StaticMap', module).add('StaticMap', () => ({
   components: { StaticMap },
@@ -72,5 +84,6 @@ storiesOf('LocationMap', module)
         readOnly: false,
       };
     },
-    template: '<LocationMap :zoom="zoom" :placeHolder="placeHolder" :readOnly="readOnly" :icon="icon" />',
+    template:
+      '<LocationMap :zoom="zoom" :placeHolder="placeHolder" :readOnly="readOnly" :icon="icon" />',
   }));
