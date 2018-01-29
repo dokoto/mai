@@ -34,6 +34,7 @@ import picDefaultStaticMap from '../../../static/img/default-static-map.png';
 let googleApi = null;
 let map = null;
 let defaultCenter = {};
+let autocomplete = null;
 
 export default {
   props: {
@@ -85,7 +86,7 @@ export default {
       const $map = $(`#${this.ids.idMap}`).first();
       const $autoCompleInput = $(`#${this.ids.idInput} input`).first();
       googleApi = await maps.loadGoogleMaps(this.apikey, ['places']);
-      maps.initAutoCompleteAddressInput(
+      autocomplete = await maps.initAutoCompleteAddressInput(
         $autoCompleInput,
         googleApi,
         this.handleAutoCompleteAddressInput.bind(null, google, $map),
@@ -103,9 +104,9 @@ export default {
     };
   },
   methods: {
-    async handleAutoCompleteAddressInput(google, $map, ev) {
-      var address = $(ev.currentTarget).val();
-      const center = await maps.geocodeAddress(address, this.apikey);
+    async handleAutoCompleteAddressInput(google, $map) {
+      const place = autocomplete.getPlace();
+      const center = await maps.geocodeAddress(place.formatted_address, this.apikey);
       defaultCenter = center;
       map = await maps.renderDynamicMap($map, google, this.zoom, center);
     },

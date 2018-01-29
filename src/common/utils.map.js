@@ -48,8 +48,11 @@ export async function renderDynamicMap($map, google, zoom, center) {
 }
 
 export async function initAutoCompleteAddressInput($autoCompleInput, google, onChangeCallBack) {
-  const autocomplete = new google.maps.places.Autocomplete(_.get($autoCompleInput, '[0]'), {});
-  $autoCompleInput.on('change', onChangeCallBack);
+  const autocomplete = new google.maps.places.Autocomplete(_.get($autoCompleInput, '[0]'), {
+    types: ['geocode'],
+  });
+  autocomplete.addListener('place_changed', onChangeCallBack);
+  return autocomplete;
 }
 
 export function loadGoogleMaps(apikey, libraries) {
