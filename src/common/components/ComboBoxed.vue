@@ -55,6 +55,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    multiSelect: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -64,10 +68,10 @@ export default {
     };
   },
   methods: {
-     handleShowItems(ev) {
+    handleShowItems(ev) {
       this.isOpen = !this.isOpen;
     },
-     animateSlideDown(el) {
+    animateSlideDown(el) {
       $(el).slideDown('slow');
     },
     animateSlideUp(el, done) {
@@ -76,6 +80,10 @@ export default {
       });
     },
     handleChangeSelected(ev) {
+      if (!this.multiSelect) {
+        $('li.item').removeClass('item-selected');
+      }
+      $(ev.currentTarget).toggleClass('item-selected');
       this.itemSelectedValue = $(ev.currentTarget).text();
     },
   },
@@ -88,34 +96,23 @@ export default {
 
 .combo-container {
   font-family: Arial, Tahoma, HelveticaNeue;
-  .item-selected {
-    border: solid 1px;
-    border-color: #e4e3e3;
-    font-size: 1.2em;
-  }
-  .item-selected-value {
-    font-size: 1.2em;
-  }
-  .item-selected-icon {
-    font-size: 1em;
-  }
   .combo {
     margin-top: 0.3em;
     list-style: none;
     padding: 0;
     border: solid 1px;
-    border-color: #e8e6e6;
+    border-color: $colorGrey3;
     overflow: auto;
     height: 100px;
-  }
-  .combo {
     .item {
-      font-size: 1.2em;
+      font-size: $form-font-size;
       padding: 2%;
+    }
+    .item-selected  {
+      font-weight: bold;
     }
     .item:hover {
       background-color: #f7f7f0;
-      font-weight: bold;
     }
   }
 }
