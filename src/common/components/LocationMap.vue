@@ -28,13 +28,9 @@ import GoogleMapsLoader from 'google-maps';
 import InputBoxed from './InputBoxed.vue';
 import StaticMap from './StaticMap.vue';
 import * as maps from '../utils.map';
+import LocationMap from './LocationMap';
 import { faMapMarkerAlt } from '@fortawesome/fontawesome-free-solid';
 import picDefaultStaticMap from '../../../static/img/default-static-map.png';
-
-let googleApi = null;
-let map = null;
-let defaultCenter = {};
-let autocomplete = null;
 
 export default {
   props: {
@@ -85,15 +81,9 @@ export default {
     if (!this.readOnly) {
       const $map = $(`#${this.ids.idMap}`).first();
       const $autoCompleInput = $(`#${this.ids.idInput} input`).first();
-      googleApi = await maps.loadGoogleMaps(this.apikey, ['places']);
-      autocomplete = await maps.initAutoCompleteAddressInput(
-        $autoCompleInput,
-        googleApi,
-        this.handleAutoCompleteAddressInput.bind(null, google, $map),
-      );
-      const center = await maps.geocodeAddress(this.address || this.placeHolder, this.apikey);
-      defaultCenter = center;
-      map = await maps.renderDynamicMap($map, googleApi, this.zoom, center);
+      await this.locationMap.activateGoogleMaps();
+      this.locationMap.activateAutoComplete($autoCompleInput);
+      this.locationMap.renderDynamicMap($map, this.zoom, this.address || this.placeHolder); 
     }
   },
   data() {
@@ -101,21 +91,15 @@ export default {
       defaulMapImage: picDefaultStaticMap,
       icon: faMapMarkerAlt,
       hasShowMap: this.showMap,
+      locationMap: new LocationMap(this.apikey, ['places']),
     };
   },
   methods: {
-    async handleAutoCompleteAddressInput(google, $map) {
-      const place = autocomplete.getPlace();
-      const center = await maps.geocodeAddress(place.formatted_address, this.apikey);
-      defaultCenter = center;
-      map = await maps.renderDynamicMap($map, google, this.zoom, center);
-    },
     handleInputBoxedClicked(ev) {
       this.hasShowMap = !this.hasShowMap;
     },
     handleResizeMap() {
-      googleApi.maps.event.trigger(map, 'resize');
-      map.setCenter(new google.maps.LatLng(defaultCenter.lat, defaultCenter.lng));
+      this.locationMap.resize();
     },
     animateSlideDown(el) {
       $(el).slideDown('slow', !this.readOnly ? this.handleResizeMap : null);
@@ -127,7 +111,7 @@ export default {
     },
   },
   beforeDestroy() {
-    GoogleMapsLoader.release(console.log('Google API released'));
+    this.locationMap.releaseGoogleMaps();
   },
 };
 </script>
