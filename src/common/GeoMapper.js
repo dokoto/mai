@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import GoogleMapsLoader from 'google-maps';
-import * as consts from '../constants';
+import * as consts from './constants';
 
-export default class LocationMap {
+export default class GeoMapper {
   /**
    * @public
    * @param {string} apikey - Google Api key

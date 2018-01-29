@@ -1,16 +1,25 @@
 <template>
   <div class="combo-container" :id="id">
-    <div class="flex-row flex-align-first-corners flex-align-second-center" v-on:click="handleShowItems">
-      <span class="item-selected-value">{{ itemSelected }}</span>
-      <font-awesome-icon :icon="icon" />
-    </div>
-    <ul class="combo" v-show="isOpen">
-      <li class="item" v-for="item in items" :key="item" v-on:click="handleChangeSelected" >{{ item }}</li>
-    </ul>
+    <InputBoxed :id="id"
+      :placeHolder="placeHolder"
+      :value="itemSelectedValue"
+      :icon="icon"
+      :readOnly="readOnly"
+      v-on:handleInputBoxedClick="handleShowItems"
+      class="map-autocomplete" />
+      <transition name="fade"
+        @before-enter="animateSlideDown"
+        @leave="animateSlideUp"
+        :css="false">
+        <ul class="combo" v-show="isOpen">
+          <li class="item" v-for="item in items" :key="item" v-on:click="handleChangeSelected" >{{ item }}</li>
+        </ul>
+    </transition>
   </div>
 </template>
 
 <script>
+import $ from 'jquery';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { faPencilAlt } from '@fortawesome/fontawesome-free-solid';
 
@@ -23,8 +32,14 @@ export default {
       type: String,
       default: 'combo-boxed',
     },
+    placeHolder: {
+      type: String,
+      default: 'Fake Title',
+    },
     icon: {
-      default: faPencilAlt,
+      default: function() {
+        return faPencilAlt;
+      },
     },
     itemSelected: {
       type: String,
@@ -38,23 +53,32 @@ export default {
     },
     showOpen: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      isOpen: showOpen
+      isOpen: this.showOpen,
+      itemSelectedValue: this.itemSelected,
+      readOnly: true,
     };
   },
   methods: {
-    handleShowItems(ev) {
-      $(ev.currentTarget).parent().find('.combo').slideToggle('slow');
+     handleShowItems(ev) {
+      this.isOpen = !this.isOpen;
+    },
+     animateSlideDown(el) {
+      $(el).slideDown('slow');
+    },
+    animateSlideUp(el, done) {
+      $(el).slideUp('slow', function() {
+        done();
+      });
     },
     handleChangeSelected(ev) {
-      const text = $(ev.currentTarget).text();
-      $('.item').parent().parent().find('.item-selected-value').text(text);
-    }
-  }
+      this.itemSelectedValue = $(ev.currentTarget).text();
+    },
+  },
 };
 </script>
 
@@ -63,8 +87,14 @@ export default {
 @import '../styles/base.scss';
 
 .combo-container {
+  font-family: Arial, Tahoma, HelveticaNeue;
+  .item-selected {
+    border: solid 1px;
+    border-color: #e4e3e3;
+    font-size: 1.2em;
+  }
   .item-selected-value {
-    font-size: 1.6em;
+    font-size: 1.2em;
   }
   .item-selected-icon {
     font-size: 1em;

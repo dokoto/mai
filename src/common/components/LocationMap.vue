@@ -27,7 +27,7 @@ import $ from 'jquery';
 import GoogleMapsLoader from 'google-maps';
 import InputBoxed from './InputBoxed.vue';
 import StaticMap from './StaticMap.vue';
-import LocationMap from './LocationMap';
+import GeoMapper from '../GeoMapper';
 import { faMapMarkerAlt } from '@fortawesome/fontawesome-free-solid';
 import picDefaultStaticMap from '../../../static/img/default-static-map.png';
 
@@ -80,9 +80,9 @@ export default {
     if (!this.readOnly) {
       const $map = $(`#${this.ids.idMap}`).first();
       const $autoCompleInput = $(`#${this.ids.idInput} input`).first();
-      await this.locationMap.activateGoogleMaps();
-      this.locationMap.activateAutoComplete($autoCompleInput);
-      this.locationMap.renderDynamicMap($map, this.zoom, this.address || this.placeHolder); 
+      await this.geoMapper.activateGoogleMaps();
+      this.geoMapper.activateAutoComplete($autoCompleInput);
+      this.geoMapper.renderDynamicMap($map, this.zoom, this.address || this.placeHolder); 
     }
   },
   data() {
@@ -90,7 +90,7 @@ export default {
       defaulMapImage: picDefaultStaticMap,
       icon: faMapMarkerAlt,
       hasShowMap: this.showMap,
-      locationMap: new LocationMap(this.apikey, ['places']),
+      geoMapper: new GeoMapper(this.apikey, ['places']),
     };
   },
   methods: {
@@ -98,7 +98,7 @@ export default {
       this.hasShowMap = !this.hasShowMap;
     },
     handleResizeMap() {
-      this.locationMap.resize();
+      this.geoMapper.resize();
     },
     animateSlideDown(el) {
       $(el).slideDown('slow', !this.readOnly ? this.handleResizeMap : null);
@@ -110,7 +110,7 @@ export default {
     },
   },
   beforeDestroy() {
-    this.locationMap.releaseGoogleMaps();
+    this.geoMapper.releaseGoogleMaps();
   },
 };
 </script>
