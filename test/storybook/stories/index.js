@@ -7,6 +7,8 @@ import LocationMap from '../../../src/common/components/LocationMap.vue';
 import InputBoxed from '../../../src/common/components/InputBoxed.vue';
 import StaticMap from '../../../src/common/components/StaticMap.vue';
 import ComboBoxed from '../../../src/common/components/ComboBoxed.vue';
+import DayCarrusel from '../../../src/common/components/DayCarrusel.vue';
+import DayCarruselBoxed from '../../../src/common/components/DayCarruselBoxed.vue';
 
 storiesOf('InputBoxed', module)
   .add('InputBoxed: read only', () => ({
@@ -36,16 +38,26 @@ storiesOf('InputBoxed', module)
       '<InputBoxed v-bind:id="id" v-bind:placeHolder="placeHolder" v-bind:icon="icon" v-bind:readOnly="readOnly" />',
   }));
 
-storiesOf('ComboBoxed', module).add('ComboBoxed', () => ({
-  components: { ComboBoxed },
-  data() {
-    return {
-      id: 'comboboxed-test',
-    };
-  },
-  template:
-    '<ComboBoxed :id="id" />',
-}));
+storiesOf('ComboBoxed', module)
+  .add('ComboBoxed: single selection', () => ({
+    components: { ComboBoxed },
+    data() {
+      return {
+        id: 'comboboxed-test',
+      };
+    },
+    template: '<ComboBoxed :id="id" />',
+  }))
+  .add('ComboBoxed: multiselection', () => ({
+    components: { ComboBoxed },
+    data() {
+      return {
+        id: 'comboboxed-test',
+        multiSelect: true,
+      };
+    },
+    template: '<ComboBoxed :id="id" :multiSelect="multiSelect" />',
+  }));
 
 storiesOf('StaticMap', module).add('StaticMap', () => ({
   components: { StaticMap },
@@ -87,3 +99,23 @@ storiesOf('LocationMap', module)
     template:
       '<LocationMap :zoom="zoom" :placeHolder="placeHolder" :readOnly="readOnly" :icon="icon" />',
   }));
+
+storiesOf('DayCarrusel', module).add('DayCarrusel', () => ({
+  components: { DayCarrusel },
+  data() {
+    return {
+      id: 'day-carrusel-test',
+    };
+  },
+  template: '<DayCarrusel :id="id" />',
+}));
+
+storiesOf('DayCarruselBoxed', module).add('DayCarruselBoxed', () => ({
+  components: { DayCarruselBoxed },
+  data() {
+    return {
+      id: 'day-carrusel-boxed-test',
+    };
+  },
+  template: '<DayCarruselBoxed :id="id" />',
+}));

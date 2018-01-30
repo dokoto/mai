@@ -1,7 +1,13 @@
 import moment from 'moment';
 import _ from 'lodash';
 
-import * as consts from '../common/constants';
+import * as consts from './constants';
+
+if (!window.glob || !window.glob.language) {
+  window.glob = {
+    language: 'es',
+  };
+}
 
 moment.locale(window.glob.language.toLowerCase());
 
@@ -37,6 +43,10 @@ function createDayAHeadArray(dateString, numOfMonthsAHead) {
   return _.range(moment(dateString, consts.INT_DATE_FORMAT)
     .add(numOfMonthsAHead, 'months')
     .diff(moment(dateString, consts.INT_DATE_FORMAT), 'days'));
+}
+
+export function formatDate(date) {
+  return moment(date, consts.INT_DATE_FORMAT).format('dddd DD MMMM YYYY').toUpperCase();
 }
 
 export default function calcMonthsAHeadFrom(dateString, numOfMonthsAHead) {

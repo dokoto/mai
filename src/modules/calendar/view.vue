@@ -31,7 +31,7 @@ import $ from 'jquery';
 import { mapGetters } from 'vuex';
 import { formatIntDate } from '../../common/utils';
 import HeaderCalendar from './components/header.vue';
-import DayCarrusel from './components/dayCarrusel.vue';
+import DayCarrusel from './components/DayCarrusel.vue';
 import TableAppointment from './components/tableAppointment.vue';
 import DialogSession from './components/dialogSession.vue';
 import OpacityLayer from '../../common/components/opacityLayer.vue';

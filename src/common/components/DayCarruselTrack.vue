@@ -2,8 +2,7 @@
   <div class="month" :class="colorClass">
     <div class="month-box" v-for="(day, index) in track" :key="index" v-on:click="handleDayClick" :data-day-id="`${day.yearNumber}${day.monthNumber}${day.dayNumber}`">
       <span class="month-v-name" v-bind:class="monthColorClass" v-if="index === 0 || day.dayNumber == 1">{{ day.monthShotName.replace('.', '') }}</span>
-      <div class="day-box" v-bind:class="{ daySelected: selectedDay === `${day.yearNumber}${day.monthNumber}${day.dayNumber}` }"
-        v-bind:data-test="selectedDay">
+      <div class="day-box" :class="{ daySelected: selectedDay === `${day.yearNumber}${day.monthNumber}${day.dayNumber}` }">
         <span class="day-name">{{ day.dayName.replace('.', '') }}</span>
         <span class="day-number">{{ day.dayNumber}}</span>
       </div>
@@ -12,6 +11,12 @@
 </template>
 
 <script>
+import $ from 'jquery';
+
+const state = {
+  selectDayItem: null,
+};
+
 export default {
   props: ['track', 'colorClass', 'selectedDay'],
   data() {
@@ -21,21 +26,26 @@ export default {
   },
   methods: {
     handleDayClick(ev) {
-      this.$emit('dayClick', ev);
+      const newSelectedDay = $(ev.currentTarget).attr('data-day-id');
+      $(
+        `[data-day-id="${state.selectDayItem || this.selectedDay}"] .day-box`,
+      ).removeClass('daySelected');
+      $(`[data-day-id="${newSelectedDay}"] .day-box`).addClass('daySelected');
+      state.selectDayItem = newSelectedDay;
+      this.$emit('dayCarruselTrackDayClick', ev);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../../../common/styles/base.scss';
+@import '../styles/base.scss';
 
 .month {
   display: inline-flex;
   flex-direction: row;
   min-width: auto;
-  margin-top: 2%;
-  margin-right: 4%;
+  margin-right: 1%;
   border-bottom: solid 7px;
 
   .month-box {
