@@ -36,6 +36,10 @@ function mapCalendar(dateString) {
       .add(currentDay, 'day')
       .format('YYYY')
       .toUpperCase(),
+    fullDate: moment(dateString, consts.INT_DATE_FORMAT)
+      .add(currentDay, 'day')
+      .format('YYYYMMDD')
+      .toUpperCase(),
   });
 }
 
@@ -46,9 +50,23 @@ function createDayAHeadArray(dateString, numOfMonthsAHead) {
 }
 
 export function formatDate(date) {
-  return moment(date, consts.INT_DATE_FORMAT).format('dddd DD MMMM YYYY').toUpperCase();
+  return moment(date, consts.INT_DATE_FORMAT)
+    .format('dddd DD MMMM YYYY')
+    .toUpperCase();
 }
 
+export function addMinutes(time, minutesToAdd) {
+  return moment(time, 'HH:mm')
+    .add(minutesToAdd, 'm')
+    .format('HH:mm');
+}
+
+/**
+ *
+ * @param {*} dateString
+ * @param {*} numOfMonthsAHead
+ * @returns {Array} A month by item with this structure: {dayNumber: '03', dayName: 'SAB', monthName: 'FEBRERO', monthNumber: '02', monthShotName:'FEB', yearNumber: '2018'}
+ */
 export default function calcMonthsAHeadFrom(dateString, numOfMonthsAHead) {
   return _.chain(createDayAHeadArray(dateString, numOfMonthsAHead))
     .map(mapCalendar(dateString))

@@ -1,8 +1,12 @@
 <template>
   <div class="month" :class="colorClass">
-    <div class="month-box" v-for="(day, index) in track" :key="index" v-on:click="handleDayClick" :data-day-id="`${day.yearNumber}${day.monthNumber}${day.dayNumber}`">
+    <div class="month-box" v-for="(day, index) in track" :key="index" 
+      v-on:click="handleDayClick" 
+      :data-day-id="`${day.fullDate}`"
+      :class="{ dayDisable: daysDisables.includes(`${day.fullDate}`) }" >
       <span class="month-v-name" v-bind:class="monthColorClass" v-if="index === 0 || day.dayNumber == 1">{{ day.monthShotName.replace('.', '') }}</span>
-      <div class="day-box" :class="{ daySelected: selectedDay === `${day.yearNumber}${day.monthNumber}${day.dayNumber}` }">
+      <div class="day-box" 
+        :class="{ daySelected: !daysDisables.includes(`${day.fullDate}`) && selectedDay === `${day.fullDate}` }">
         <span class="day-name">{{ day.dayName.replace('.', '') }}</span>
         <span class="day-number">{{ day.dayNumber}}</span>
       </div>
@@ -18,7 +22,37 @@ const state = {
 };
 
 export default {
-  props: ['track', 'colorClass', 'selectedDay'],
+  props: {
+    track: {
+      type: Array,
+      defaul: function() {
+        return [
+          {
+            dayName: 'SÁB.',
+            dayNumber: '03',
+            monthName: 'FEBRERO',
+            monthNumber: '02',
+            monthShotName: 'FEB.',
+            yearNumber: '2018',
+          },
+        ];
+      },
+    },
+    daysDisables: {
+      type: Array,
+      default: function() {
+        return ['20180204', '20180220'];
+      },
+    },
+    colorClass: {
+      type: String,
+      default: 'monthColorOne',
+    },
+    selectedDay: {
+      type: String,
+      default: '06',
+    },
+  },
   data() {
     return {
       monthColorClass: this.colorClass,
@@ -96,6 +130,11 @@ export default {
   }
   .daySelected {
     color: crimson !important;
+  }
+  .dayDisable {
+    text-decoration: line-through;
+    pointer-events: none;
+    color: black;
   }
 }
 .monthColorOne {

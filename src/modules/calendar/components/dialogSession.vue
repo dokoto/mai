@@ -20,7 +20,7 @@
 
 <script>
 import moment from 'moment';
-import TherapistCarrusel from '../../../common/components/therapistCarrusel.vue';
+import TherapistCarrusel from '../../../common/components/TherapistCarrusel.vue';
 import * as consts from '../../../common/constants';
 
 moment.locale(window.glob.language);

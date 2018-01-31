@@ -76,7 +76,6 @@
     "moment": "^2.19.1",
     "promise-polyfill": "^6.0.2",
     "resolve-url-loader": "^2.2.0",
-    "slick-carousel": "^1.8.1",
     "vue": "^2.5.2",
     "vue-i18n": "^7.3.2",
     "vue-router": "^3.0.1",

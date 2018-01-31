@@ -9,6 +9,8 @@ import StaticMap from '../../../src/common/components/StaticMap.vue';
 import ComboBoxed from '../../../src/common/components/ComboBoxed.vue';
 import DayCarrusel from '../../../src/common/components/DayCarrusel.vue';
 import DayCarruselBoxed from '../../../src/common/components/DayCarruselBoxed.vue';
+import GridSelectorBoxed from '../../../src/common/components/GridSelectorBoxed.vue';
+import TherapistCarrusel from '../../../src/common/components/TherapistCarrusel.vue';
 
 storiesOf('InputBoxed', module)
   .add('InputBoxed: read only', () => ({
@@ -119,3 +121,129 @@ storiesOf('DayCarruselBoxed', module).add('DayCarruselBoxed', () => ({
   },
   template: '<DayCarruselBoxed :id="id" />',
 }));
+
+storiesOf('GridSelectorBoxed', module).add('GridSelectorBoxed', () => ({
+  components: { GridSelectorBoxed },
+  data() {
+    return {
+      id: 'grid-selector-boxed-test',
+    };
+  },
+  template: '<GridSelectorBoxed :id="id" />',
+}));
+
+storiesOf('TherapistCarrusel', module)
+  .add('TherapistCarrusel: One Item', () => ({
+    components: { TherapistCarrusel },
+    data() {
+      return {
+        id: 'therapist-carrusel-test',
+        therapistsDisabled: [],
+        therapists: [
+          {
+            id: 'T1',
+            name: 'Paka',
+            thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
+          },
+        ],
+      };
+    },
+    template: '<TherapistCarrusel :id="id" :therapists="therapists" :therapistsDisabled="therapistsDisabled" />',
+  }))
+  .add('TherapistCarrusel: Two Items', () => ({
+    components: { TherapistCarrusel },
+    data() {
+      return {
+        id: 'therapist-carrusel-test',
+        therapistsDisabled: [],
+        therapists: [
+          {
+            id: 'T1',
+            name: 'Paka',
+            thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
+          },
+          {
+            id: 'T2',
+            name: 'Pakajara',
+            thumb:
+              'https://vmtherapy.com/wp-content/uploads/2014/01/Vanessa-Marin_AB-6709-1024x682.jpg',
+          },
+        ],
+      };
+    },
+    template: '<TherapistCarrusel :id="id" :therapists="therapists" :therapistsDisabled="therapistsDisabled" />',
+  }))
+  .add('TherapistCarrusel: Three Items', () => ({
+    components: { TherapistCarrusel },
+    data() {
+      return {
+        id: 'therapist-carrusel-test',
+        therapistsDisabled: [],
+        therapists: [
+          {
+            id: 'T1',
+            name: 'Paka',
+            thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
+          },
+          {
+            id: 'T2',
+            name: 'Pakajara',
+            thumb:
+              'https://vmtherapy.com/wp-content/uploads/2014/01/Vanessa-Marin_AB-6709-1024x682.jpg',
+          },
+          {
+            id: 'T3',
+            name: 'Perojeres',
+            thumb:
+              'https://i1.wp.com/smileconcepts.co.uk/wp-content/uploads/2017/11/lucy-fisher-dental-therapist.jpg',
+          },
+        ],
+      };
+    },
+    template: '<TherapistCarrusel :id="id" :therapists="therapists" :therapistsDisabled="therapistsDisabled" />',
+  }))
+  .add('TherapistCarrusel: Multiples Items', () => ({
+    components: { TherapistCarrusel },
+    data() {
+      return {
+        id: 'therapist-carrusel-test',
+        therapists: [
+          {
+            id: 'T1',
+            name: 'Paka:T1',
+            thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
+          },
+          {
+            id: 'T2',
+            name: 'Pakajara:T2',
+            thumb:
+              'https://vmtherapy.com/wp-content/uploads/2014/01/Vanessa-Marin_AB-6709-1024x682.jpg',
+          },
+          {
+            id: 'T3',
+            name: 'Perojeres:T3',
+            thumb:
+              'https://i1.wp.com/smileconcepts.co.uk/wp-content/uploads/2017/11/lucy-fisher-dental-therapist.jpg',
+          },
+          {
+            id: 'T4',
+            name: 'Paka:T4',
+            thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
+          },
+          {
+            id: 'T5',
+            name: 'Pakajara:T5',
+            thumb:
+              'https://vmtherapy.com/wp-content/uploads/2014/01/Vanessa-Marin_AB-6709-1024x682.jpg',
+          },
+          {
+            id: 'T6',
+            name: 'Perojeres:T6',
+            thumb:
+              'https://i1.wp.com/smileconcepts.co.uk/wp-content/uploads/2017/11/lucy-fisher-dental-therapist.jpg',
+          },
+        ],
+      };
+    },
+    template: '<TherapistCarrusel :id="id" :therapists="therapists" />',
+  }));

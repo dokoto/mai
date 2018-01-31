@@ -2,12 +2,14 @@
   <article class="calendar-page container bg-beach">
     <HeaderCalendar :userId="userId"
       v-bind:selectedDay="selectedDay" />
-    <DayCarrusel :dayNumber="dayNumber"
+    <DayCarrusel :id="`day-carrusel-${year}`"
+      :dayNumber="dayNumber"
       :monthNumber="monthNumber"
       :year="year"
       :numberOfMonths="numberOfMonths"
       v-bind:selectedDay="selectedDay"
-      v-on:dayClick="handleDayClick" />
+      v-on:dayCarruselDayClick="handleDayClick"
+      class="box" />
     <TableAppointment v-if="toDaySessions.length > 0"
       v-bind:selectedDay="selectedDay"
       v-bind:toDaySessions="toDaySessions"
@@ -31,7 +33,7 @@ import $ from 'jquery';
 import { mapGetters } from 'vuex';
 import { formatIntDate } from '../../common/utils';
 import HeaderCalendar from './components/header.vue';
-import DayCarrusel from './components/DayCarrusel.vue';
+import DayCarrusel from '../../common/components/DayCarrusel.vue';
 import TableAppointment from './components/tableAppointment.vue';
 import DialogSession from './components/dialogSession.vue';
 import OpacityLayer from '../../common/components/opacityLayer.vue';

@@ -1,8 +1,8 @@
 <template>
-  <div class="combo-container" :id="id">
+  <div class="grid-selector-container" :id="id">
     <InputBoxed :id="id"
       :placeHolder="placeHolder"
-      :value="itemSelectedValue"
+      :value="itenSelectedFormated"
       :icon="icon"
       :readOnly="readOnly"
       v-on:handleInputBoxedClick="handleShowItems"
@@ -11,11 +11,14 @@
         @before-enter="animateSlideDown"
         @leave="animateSlideUp"
         :css="false">
-        <ul class="combo" v-show="isOpen">
-          <li class="item padding-2x" v-for="item in items" :key="item" v-on:click="handleChangeSelected" >{{ item }}</li>
+        <ul class="grid-items" v-show="isOpen">
+          <li class="grid-item" v-for="item in items" 
+            :key="item" 
+            v-on:click="handleChangeSelected" 
+            :class="{ 'grid-item-disable': disableItems.includes(item), 'grid-item-selected': item === itemSelectedValue }">{{ item }}</li>
         </ul>
     </transition>
-  </div>
+  </div>  
 </template>
 
 <script>
@@ -23,15 +26,17 @@ import $ from 'jquery';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { faPencilAlt } from '@fortawesome/fontawesome-free-solid';
 import InputBoxed from './InputBoxed.vue';
+import { addMinutes } from '../utils';
 
 export default {
   components: {
-    FontAwesomeIcon, InputBoxed
+    FontAwesomeIcon,
+    InputBoxed,
   },
   props: {
     id: {
       type: String,
-      default: 'combo-boxed',
+      default: 'grid-selector-boxed',
     },
     placeHolder: {
       type: String,
@@ -44,12 +49,18 @@ export default {
     },
     itemSelected: {
       type: String,
-      default: 'Combo item selected',
+      default: '10:00',
     },
     items: {
       type: Array,
       default: function() {
-        return ['Selection 1', 'Selection 2', 'Selection 3', 'Selection 4'];
+        return ['10:00', '11:30', '13:00', '16:00', '17:30', '19:00', '20:30'];
+      },
+    },
+    disableItems: {
+      type: Array,
+      default: function() {
+        return ['17:30', '20:30'];
       },
     },
     showOpen: {
@@ -58,8 +69,12 @@ export default {
     },
     multiSelect: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
+    interval: {
+      type: String,
+      default: '45',
+    },
   },
   data() {
     return {
@@ -67,6 +82,12 @@ export default {
       itemSelectedValue: this.itemSelected,
       readOnly: true,
     };
+  },
+  computed: {
+    itenSelectedFormated() {
+      const finished = addMinutes(this.itemSelectedValue, this.interval);
+      return `${this.itemSelectedValue} >> ${finished}`;
+    },
   },
   methods: {
     handleShowItems(ev) {
@@ -82,36 +103,44 @@ export default {
     },
     handleChangeSelected(ev) {
       if (!this.multiSelect) {
-        $('li.item').removeClass('item-selected');
+        $('li.grid-item').removeClass('grid-item-selected');
       }
-      $(ev.currentTarget).toggleClass('item-selected');
+      $(ev.currentTarget).toggleClass('grid-item-selected');
       this.itemSelectedValue = $(ev.currentTarget).text();
     },
   },
 };
 </script>
 
-
 <style lang="scss" scoped>
 @import '../styles/base.scss';
 
-.combo-container {
+.grid-selector-container {
   font-family: Arial, Tahoma, HelveticaNeue;
-  .combo {
-    margin-top: 0.3em;
-    list-style: none;
+  .grid-items {
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto auto auto;
     padding: 0;
+    margin: 0;
     border: solid 1px;
     border-color: $colorGrey3;
-    overflow: auto;
-    height: 100px;
-    .item {
+    .grid-item {
       font-size: $form-font-size;
+      justify-self: center;
+      padding-top: 4%;
+      padding-bottom: 4%;
+      color: $colorDarkGrey1;
     }
-    .item-selected  {
+    .grid-item-selected {
       font-weight: bold;
     }
-    .item:hover {
+    .grid-item-disable {
+      text-decoration: line-through;
+      pointer-events: none;
+    }
+    .grid-item:hover {
       background-color: $colorWhite1;
     }
   }

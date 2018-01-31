@@ -11,7 +11,15 @@
         @before-enter="animateSlideDown"
         @leave="animateSlideUp"
         :css="false">
-        <DayCarrusel v-show="isOpen" :dayNumber="dayNumber" :monthNumber="monthNumber" :year="year" :numberOfMonths="numberOfMonths" :selectedDay="SelectedDate" v-on:dayCarruselDayClick="handleDayClick" />
+        <DayCarrusel 
+          v-show="isOpen" 
+          :dayNumber="dayNumber" 
+          :monthNumber="monthNumber" 
+          :year="year" 
+          :numberOfMonths="numberOfMonths" 
+          :selectedDay="SelectedDateProp" 
+          v-on:dayCarruselDayClick="handleDayClick" 
+          class="day-carrusel-wrapper"/>
     </transition>
   </div>
 </template>
@@ -74,7 +82,7 @@ export default {
     return {
       readOnly: true,
       isOpen: this.showOpen,
-      SelectedDateData: formatDate(this.SelectedDateProp),
+      SelectedDateData: this.SelectedDateProp,
     };
   },
   computed: {
@@ -87,7 +95,7 @@ export default {
       this.isOpen = !this.isOpen;
     },
     handleDayClick(ev) {
-      this.SelectedDateData = formatDate($(ev.currentTarget).attr('data-day-id'));      
+      this.SelectedDateData = $(ev.currentTarget).attr('data-day-id');      
       this.$emit('dayCarruselBoxed:dayClick', ev);
     },
     animateSlideDown(el) {
@@ -109,5 +117,9 @@ export default {
   font-family: Arial, Tahoma, HelveticaNeue;
   border: solid 1px;
   border-color: #ececec;
+
+  .day-carrusel-wrapper {
+    width: 94%;
+  }
 }
 </style>

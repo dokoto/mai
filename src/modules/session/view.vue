@@ -1,9 +1,13 @@
 <template>
   <article class="session-page container bg-beach">
     <DayCard />
-    <Card v-bind:id="session.id" v-bind:sessionDate="session.date" v-bind:sessionTherapy="session.therapy" v-bind:withTimeInterval="true" v-if="session.id !== undefined" />
-    <TherapistCarrusel v-bind:therapists="therapists" v-if="therapists.length > 0" />
-    <LocationMap v-bind:address="therapistAdress" v-bind:zoom="mapZoom" v-if="therapists.length > 0" />
+    <Card :id="session.id" :sessionDate="session.date" :sessionTherapy="session.therapy" :withTimeInterval="true" v-if="session.id !== undefined" />
+    <TherapistCarrusel 
+      :id="`therapist-carrusel-${session.date}`" 
+      :therapists="therapists" 
+      :therapistSelected="[]" 
+      v-if="therapists.length > 0" />
+    <LocationMap :address="therapistAdress" :zoom="mapZoom" v-if="therapists.length > 0" />
   </article>
 </template>
 
@@ -11,7 +15,7 @@
 import { mapGetters } from 'vuex';
 import Card from '../../common/components/sessionCard.vue';
 import DayCard from '../../common/components/dayCard.vue';
-import TherapistCarrusel from '../../common/components/therapistCarrusel.vue';
+import TherapistCarrusel from '../../common/components/TherapistCarrusel.vue';
 import LocationMap from '../../common/components/LocationMap.vue';
 
 export default {

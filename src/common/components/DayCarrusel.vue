@@ -1,5 +1,5 @@
 <template>
-  <section class="week-view">
+  <section class="week-view flex-row">
     <DayCarruselTrack v-for="(track, index) in groupOfMonths"
       :key="index"
       :track="track"
@@ -68,11 +68,8 @@ export default {
 
 .week-view {
   font-family: Arial, Tahoma, HelveticaNeue;
-  display: inline-flex;
-  flex-direction: row;
   overflow: auto;
   padding: 2%;
-  width: 95%;
 
   .end {
     min-width: 1px;
