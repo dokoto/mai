@@ -37,8 +37,7 @@ export default {
           {
             id: 'T1',
             name: 'Paka',
-            thumb:
-              'https://www.online-therapy.com/files/img/slider/therapist.jpg',
+            thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
           },
         ];
       },
@@ -69,8 +68,12 @@ export default {
         $('.therapist-img').removeClass('therapist-img-selected');
         $('.therapist-name').removeClass('therapist-name-selected');
       }
-      $(ev.currentTarget).find('.therapist-img').toggleClass('therapist-img-selected');
-      $(ev.currentTarget).find('.therapist-name').toggleClass('therapist-name-selected');
+      $(ev.currentTarget)
+        .find('.therapist-img')
+        .toggleClass('therapist-img-selected');
+      $(ev.currentTarget)
+        .find('.therapist-name')
+        .toggleClass('therapist-name-selected');
       this.itemSelectedValue = $(ev.currentTarget).attr('id');
     },
   },

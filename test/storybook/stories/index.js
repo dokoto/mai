@@ -11,6 +11,7 @@ import DayCarrusel from '../../../src/common/components/DayCarrusel.vue';
 import DayCarruselBoxed from '../../../src/common/components/DayCarruselBoxed.vue';
 import GridSelectorBoxed from '../../../src/common/components/GridSelectorBoxed.vue';
 import TherapistCarrusel from '../../../src/common/components/TherapistCarrusel.vue';
+import Card from '../../../src/common/components/Card.vue';
 
 storiesOf('InputBoxed', module)
   .add('InputBoxed: read only', () => ({
@@ -73,7 +74,7 @@ storiesOf('StaticMap', module).add('StaticMap', () => ({
 }));
 
 storiesOf('LocationMap', module)
-  .add('LocationMap: read only', () => ({
+  .add('LocationMap: read only Closed', () => ({
     components: { LocationMap },
     data() {
       return {
@@ -86,6 +87,21 @@ storiesOf('LocationMap', module)
       };
     },
     template: '<LocationMap v-bind:address="address" v-bind:zoom="zoom" />',
+  }))
+  .add('LocationMap: read only Opened', () => ({
+    components: { LocationMap },
+    data() {
+      return {
+        address: 'Av. de Portugal, 71, 28011 Madrid, España',
+        zoom: 15,
+        id: 'story-inputBoxed',
+        placeHolder: 'Fake Address',
+        icon: faMapMarkerAlt,
+        readOnly: true,
+        showMap: true,
+      };
+    },
+    template: '<LocationMap :address="address" :zoom="zoom" :showMap="showMap" />',
   }))
   .add('LocationMap: writable', () => ({
     components: { LocationMap },
@@ -130,6 +146,17 @@ storiesOf('GridSelectorBoxed', module).add('GridSelectorBoxed', () => ({
     };
   },
   template: '<GridSelectorBoxed :id="id" />',
+}));
+
+storiesOf('Card', module).add('Card', () => ({
+  components: { Card },
+  data() {
+    return {
+      id: 'white-card-test',
+      title: 'Card Super Title',
+    };
+  },
+  template: '<Card :id="id" :title="title"><p>Contenido muy chulo</p>',
 }));
 
 storiesOf('TherapistCarrusel', module)

@@ -245,13 +245,7 @@
       "id": "T1",
       "type": "THERAPIST",
       "name": "Carmen Montoro",
-      "address": {
-        "localtion": {
-          "lat": 40.41594508029149,
-          "lng": -3.727298319708498
-        },
-        "formatted_address": "Av. de Portugal, 71, 28011 Madrid, España"
-      },
+      "address": "Av. de Portugal, 71, 28011 Madrid, España",
       "phone": "623467982",
       "email": "carmen@gmail.com",
       "therapys": ["S1", "S2", "S3"],
@@ -261,13 +255,7 @@
       "id": "T2",
       "type": "THERAPIST",
       "name": "Paco el Fresco Martinez",
-      "address": {
-        "localtion": {
-          "lat": 40.41594508029149,
-          "lng": -3.727298319708498
-        },
-        "formatted_address": "Av. de Portugal, 71, 28011 Madrid, España"
-      },
+      "address": "Av. de Portugal, 71, 28011 Madrid, España",
       "phone": "623457982",
       "email": "paco.freco@gmail.com",
       "therapys": ["S1", "S3"],
@@ -278,13 +266,7 @@
       "id": "C1",
       "type": "CLIENT",
       "name": "Hecho Polvo Marinez",
-      "address": {
-        "localtion": {
-          "lat": 40.41594508029149,
-          "lng": -3.727298319708498
-        },
-        "formatted_address": "Av. de Portugal, 71, 28011 Madrid, España"
-      },
+      "address": "Av. de Portugal, 71, 28011 Madrid, España",
       "phone": "623237982",
       "email": "hechopolvo@gmail.com"
     },
@@ -292,13 +274,7 @@
       "id": "C2",
       "type": "CLIENT",
       "name": "Merder Carmelo Marinez",
-      "address": {
-        "localtion": {
-          "lat": 40.41594508029149,
-          "lng": -3.727298319708498
-        },
-        "formatted_address": "Av. de Portugal, 71, 28011 Madrid, España"
-      },
+      "address": "Av. de Portugal, 71, 28011 Madrid, España",
       "phone": "6234537982",
       "email": "hechopolvo.2@gmail.com"
     },
