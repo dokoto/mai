@@ -70,7 +70,9 @@ export default {
   font-family: Arial, Tahoma, HelveticaNeue;
   overflow: auto;
   padding: 2%;
-
+  border: solid 1px;
+  border-color: #ececec;
+  
   .end {
     min-width: 1px;
     background-color: white;

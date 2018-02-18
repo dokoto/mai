@@ -9,7 +9,6 @@
 <script>
 import moment from 'moment';
 import * as consts from '../../common/constants';
-
 moment.locale(window.glob.language);
 export default {
   props: ['id', 'sessionDate', 'sessionTherapy', 'withTimeInterval'],
@@ -41,7 +40,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '../styles/base.scss';
-
 .sessionCard {
   display: inline-flex;
   flex-direction: column;
@@ -67,4 +65,3 @@ export default {
   }
 }
 </style>
-

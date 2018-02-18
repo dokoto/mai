@@ -27,6 +27,21 @@ storiesOf('InputBoxed', module)
     template:
       '<InputBoxed v-bind:id="id" v-bind:placeHolder="placeHolder" v-bind:icon="icon" v-bind:readOnly="readOnly" />',
   }))
+  .add('InputBoxed: read only and no boxed no icon', () => ({
+    components: { InputBoxed },
+    data() {
+      return {
+        id: 'story-inputBoxed',
+        placeHolder: 'Fake Address',
+        icon: faMapMarkerAlt,
+        readOnly: true,
+        noIcon: true,
+        noBorder: true,
+      };
+    },
+    template:
+      '<InputBoxed :id="id" :placeHolder="placeHolder" :icon="icon" :readOnly="readOnly" :noIcon="noIcon" :noBorder="noBorder" />',
+  }))
   .add('InputBoxed: write turn on', () => ({
     components: { InputBoxed },
     data() {
@@ -169,7 +184,7 @@ storiesOf('TherapistCarrusel', module)
         therapists: [
           {
             id: 'T1',
-            name: 'Paka',
+            name: 'Pakatoko Alfaro Sanchez',
             thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
           },
         ],
@@ -186,7 +201,7 @@ storiesOf('TherapistCarrusel', module)
         therapists: [
           {
             id: 'T1',
-            name: 'Paka',
+            name: 'Pakatoko Alfaro Sanchez',
             thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
           },
           {
@@ -209,7 +224,7 @@ storiesOf('TherapistCarrusel', module)
         therapists: [
           {
             id: 'T1',
-            name: 'Paka',
+            name: 'Pakatoko Alfaro Sanchez',
             thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
           },
           {
@@ -237,7 +252,7 @@ storiesOf('TherapistCarrusel', module)
         therapists: [
           {
             id: 'T1',
-            name: 'Paka:T1',
+            name: 'Pakatoko Alfaro Sanchez:T1',
             thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
           },
           {

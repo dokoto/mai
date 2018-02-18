@@ -1,10 +1,13 @@
 <template>
-    <div class="day-carrusel-container" :id="id">
+    <div class="day-carrusel-container" 
+    :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
+    :id="id">
     <InputBoxed :id="id"
       :placeHolder="placeHolder"
       :value="selectDateFormated"
       :icon="icon"
       :readOnly="readOnly"
+      :noBorder="noBorder"
       v-on:handleInputBoxedClick="handleShowDays"
       class="map-autocomplete" />
       <transition name="fade"
@@ -77,6 +80,10 @@ export default {
       type: String,
       default: '20180208',
     },
+    noBorder: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -88,14 +95,14 @@ export default {
   computed: {
     selectDateFormated() {
       return formatDate(this.SelectedDateData);
-    }
+    },
   },
   methods: {
     handleShowDays() {
       this.isOpen = !this.isOpen;
     },
     handleDayClick(ev) {
-      this.SelectedDateData = $(ev.currentTarget).attr('data-day-id');      
+      this.SelectedDateData = $(ev.currentTarget).attr('data-day-id');
       this.$emit('dayCarruselBoxed:dayClick', ev);
     },
     animateSlideDown(el) {
@@ -115,8 +122,13 @@ export default {
 
 .day-carrusel-container {
   font-family: Arial, Tahoma, HelveticaNeue;
-  border: solid 1px;
-  border-color: #ececec;
+  &.boxed {
+    border: solid 1px;
+    border-color: $colorGrey4;
+  }
+  &.no-boxed {
+    border: solid 0px;
+  }
 
   .day-carrusel-wrapper {
     width: 94%;

@@ -1,6 +1,8 @@
 <template>
   <div class="static-map-container">
+    <a :href="`https://www.google.com/maps/search/?api=1&query=${center.lat},${center.lng}&zoom=${zoom}`">
     <img :id="id" :src="defaulMapImage" />
+    </a>
   </div>
 </template>
 
@@ -39,13 +41,14 @@ export default {
   data() {
     return {
       defaulMapImage: picDefaultStaticMap,
-      geoMapper: new GeoMapper(this.apikey),
+      geoMapper: new GeoMapper(this.apikey),      
+      center: {},
     };
   },
   async mounted() {
-    const center = await this.geoMapper.geocodeAddress(this.address);
+    this.center = await this.geoMapper.geocodeAddress(this.address);
     const blob = await this.geoMapper.getStaticMapImage(
-      center,
+      this.center,
       this.zoom,
       this.size,
     );

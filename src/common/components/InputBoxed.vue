@@ -3,11 +3,13 @@
     class="input-boxed-container flex-row flex-align-first-corners flex-align-second-center">
     <input type="text"
       maxlength="200"
-      class="input-boxed"
+      class="input"
+      :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
       :placeholder="placeHolder"
       :readonly="readOnly"
       :value="value" />
-    <div class="input-boxed-icon"
+    <div class="input-icon" v-if="!noIcon"
+      :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
       v-on:click="handleInputBoxedClick">
       <font-awesome-icon :icon="icon" />
     </div>
@@ -26,21 +28,31 @@ export default {
     id: {
       type: String,
       default: 'input-boxed',
-    }, 
+    },
     placeHolder: {
       type: String,
       default: 'Address',
-    }, 
+    },
     icon: {
-      default: faMapMarkerAlt
-    }, 
+      default: function() {
+        return faMapMarkerAlt;
+      },
+    },
     readOnly: {
       type: Boolean,
-      default: true
+      default: true,
+    },
+    noIcon: {
+      type: Boolean,
+      default: false,
+    },
+    noBorder: {
+      type: Boolean,
+      default: false,
     },
     value: {
-      type: String
-    }
+      type: String,
+    },
   },
   methods: {
     handleInputBoxedClick(ev) {
@@ -57,21 +69,26 @@ export default {
   position: relative;
   height: 2.5rem;
 
-  .input-boxed {
+  .input {
     font-family: Arial, Tahoma, HelveticaNeue;
     outline: none;
     width: 100%;
     padding-left: 10px;
-    padding-right: 4rem;
     height: 100%;
-    border: solid 1px;
-    border-color: $colorGrey3;
     font-size: 1.2em;
     padding-bottom: 0;
     padding-top: 0;
+    &.boxed {
+      border: solid 1px;
+      border-color: $colorGrey3;
+      padding-right: 4rem;
+    }
+    &.no-boxed {
+      border: solid 0px;
+    }
   }
 
-  .input-boxed-icon {
+  .input-icon {
     position: absolute;
     right: 0;
     width: 3rem;
@@ -81,11 +98,15 @@ export default {
     justify-content: center;
     align-items: center;
     background-color: $colorWhite0;
-    border: solid 1px;
     border-bottom: 0;
     border-top: 0;
-    border-color: $colorGrey3;
+    &.boxed {
+      border: solid 1px;
+      border-color: $colorGrey3;
+    }
+    &.no-boxed {
+      border: solid 0px;
+    }
   }
 }
 </style>
-

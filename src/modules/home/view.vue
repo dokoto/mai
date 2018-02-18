@@ -29,7 +29,7 @@ export default {
   methods: {
     handleSessionClick(ev) {
       this.$router.push({
-        name: 'session',
+        name: 'sessionView',
         params: { sessionId: ev.currentTarget.id },
       });
     },

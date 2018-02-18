@@ -7,6 +7,8 @@
 </template>
 
 <style lang="scss">
+@import '../../common/styles/base.scss';
+
 body,
 html {
   width: 100%;
@@ -18,14 +20,21 @@ html {
 body,
 input,
 textarea {
-  font-family: Arial, Tahoma;
+  font-family: Arial, Tahoma, HelveticaNeue;
+}
+
+body {
+  background-image: url($bg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .app {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: aquamarine;
 }
 
 .fade-enter-active,

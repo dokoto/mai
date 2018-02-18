@@ -1,5 +1,5 @@
 <template>
-  <section class="location box">
+  <section class="location">
     <InputBoxed :id="ids.idInput"
       :placeHolder="placeHolder"
       :value="address"
@@ -11,7 +11,10 @@
         @before-enter="animateSlideDown"
         @leave="animateSlideUp"
         :css="false">
-        <div :id="ids.idMap" class="map" v-show="hasShowMap">      
+        <div :id="ids.idMap" 
+          class="map" 
+          :class="[ readOnly ? 'dynamic-height' : 'static-height' ]"
+          v-show="hasShowMap">      
           <StaticMap :address="address" :size="staticMapSize" v-if="readOnly" />
         </div>
       </transition>
@@ -118,17 +121,20 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/base.scss';
 .location {
-  margin-bottom: 2%;
-  margin-top: 2%;
   .address {
     font-family: Arial, Tahoma, HelveticaNeue;
     font-size: 0.8em;
     margin-left: 2%;
     margin-top: 2%;
   }
-  .map {
-    height: 200px;
+  .map {    
     margin-top: 1%;
+    &.static-height {
+      height: 200px;
+    }
+    &.dynamic-height {
+      height: auto;
+    }
   }
 }
 </style>

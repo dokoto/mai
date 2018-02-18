@@ -5,6 +5,7 @@
       :value="itenSelectedFormated"
       :icon="icon"
       :readOnly="readOnly"
+      :noBorder="noBorder"
       v-on:handleInputBoxedClick="handleShowItems"
       class="map-autocomplete" />
       <transition name="fade"
@@ -74,6 +75,10 @@ export default {
     interval: {
       type: String,
       default: '45',
+    },
+    noBorder: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

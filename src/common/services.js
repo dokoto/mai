@@ -20,6 +20,9 @@ export default {
   getUser(type, id) {
     return fetch(`${ paths.users }/${ type }/${ id || '' }`).then(response => response.json());
   },
+  getUsersByType(type) {
+    return fetch(`${ paths.users }/${ type }`).then(response => response.json());
+  },
   getToDaySessions(selectedDay) {
     const [yearNumber, monthNumber, dayNumber] = getArrayDate(selectedDay);
     return fetch(`${ paths.Sessions }/${ yearNumber }/${ monthNumber }/${ dayNumber }`).then(response =>

@@ -10,7 +10,7 @@
         <img class="therapist-img" :src="therapist.thumb" 
           :class="{ 'therapist-img-selected': therapistSelected === therapist.id }" />
       </div>
-      <div class="wrapper flex-column">
+      <div class="flex-column">
         <span class="h-separator"></span>
         <div class="flex-row flex-align-first-center">
           <p class="therapist-name"
@@ -117,11 +117,11 @@ export default {
 
 .therapist-img-selected {
   border: solid;
-  border-color: $colorGreen0;
+  border-color: $colorPastelGreen0;
 }
 
 .therapist-name-selected {
-  color: $colorGreen0;
+  color: $colorDarkGrey3;
   font-weight: bold;
 }
 
@@ -129,8 +129,10 @@ export default {
   margin: 0;
   text-align: center;
   font-size: $form-font-size;
-  overflow: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
   width: 10ch;
 }
+
 </style>

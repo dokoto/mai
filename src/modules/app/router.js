@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '../home/view.vue';
-import Session from '../session/view.vue';
-import NewSession from '../session/create.vue';
+import SessionView from '../session/view.vue';
+import SessionEdit from '../session/edit.vue';
 import Calendar from '../calendar/view.vue';
 
 Vue.use(Router);
@@ -17,14 +17,14 @@ export default new Router({
       components: { container: Home },
     },
     {
-      name: 'session',
-      path: '/session/:sessionId',
-      components: { container: Session },
+      name: 'sessionView',
+      path: '/session/view/:sessionId',
+      components: { container: SessionView },
     },
     {
-      name: 'newsession',
-      path: '/session/new/:sessionId/:daySelected',
-      components: { container: NewSession },
+      name: 'sessionEdit',
+      path: '/session/edit/:sessionId?',
+      components: { container: SessionEdit },
     },
     {
       name: 'calendar',

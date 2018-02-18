@@ -5,6 +5,7 @@
       :value="itemSelectedValue"
       :icon="icon"
       :readOnly="readOnly"
+      :noBorder="noBorder"
       v-on:handleInputBoxedClick="handleShowItems"
       class="map-autocomplete" />
       <transition name="fade"
@@ -59,7 +60,11 @@ export default {
     multiSelect: {
       type: Boolean,
       default: false
-    }
+    },
+    noBorder: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
