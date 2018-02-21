@@ -1,20 +1,25 @@
 <template>
-  <div class="combo-container" :id="id">
+  <div class="combo-container"
+    :id="id">
     <InputBoxed :id="id"
       :placeHolder="placeHolder"
       :value="itemSelectedValue"
       :icon="icon"
       :readOnly="readOnly"
       :noBorder="noBorder"
-      v-on:handleInputBoxedClick="handleShowItems"
+      @handleInputBoxedClick="handleShowItems"
       class="map-autocomplete" />
-      <transition name="fade"
-        @before-enter="animateSlideDown"
-        @leave="animateSlideUp"
-        :css="false">
-        <ul class="combo" v-show="isOpen">
-          <li class="item padding-2x" v-for="item in items" :key="item" v-on:click="handleChangeSelected" >{{ item }}</li>
-        </ul>
+    <transition name="fade"
+      @before-enter="animateSlideDown"
+      @leave="animateSlideUp"
+      :css="false">
+      <ul class="combo"
+        v-show="isOpen">
+        <li class="item padding-2x"
+          v-for="item in items"
+          :key="item"
+          v-on:click="handleChangeSelected">{{ item }}</li>
+      </ul>
     </transition>
   </div>
 </template>
@@ -27,7 +32,8 @@ import InputBoxed from './InputBoxed.vue';
 
 export default {
   components: {
-    FontAwesomeIcon, InputBoxed
+    FontAwesomeIcon,
+    InputBoxed,
   },
   props: {
     id: {
@@ -45,7 +51,6 @@ export default {
     },
     itemSelected: {
       type: String,
-      default: 'Combo item selected',
     },
     items: {
       type: Array,
@@ -59,7 +64,7 @@ export default {
     },
     multiSelect: {
       type: Boolean,
-      default: false
+      default: false,
     },
     noBorder: {
       type: Boolean,
@@ -91,6 +96,7 @@ export default {
       }
       $(ev.currentTarget).toggleClass('item-selected');
       this.itemSelectedValue = $(ev.currentTarget).text();
+      this.$emit('onChange', this.itemSelectedValue);
     },
   },
 };
@@ -113,7 +119,7 @@ export default {
     .item {
       font-size: $form-font-size;
     }
-    .item-selected  {
+    .item-selected {
       font-weight: bold;
     }
     .item:hover {

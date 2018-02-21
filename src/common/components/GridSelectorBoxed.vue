@@ -1,5 +1,6 @@
 <template>
-  <div class="grid-selector-container" :id="id">
+  <div class="grid-selector-container"
+    :id="id">
     <InputBoxed :id="id"
       :placeHolder="placeHolder"
       :value="itenSelectedFormated"
@@ -8,18 +9,20 @@
       :noBorder="noBorder"
       v-on:handleInputBoxedClick="handleShowItems"
       class="map-autocomplete" />
-      <transition name="fade"
-        @before-enter="animateSlideDown"
-        @leave="animateSlideUp"
-        :css="false">
-        <ul class="grid-items" v-show="isOpen">
-          <li class="grid-item" v-for="item in items" 
-            :key="item" 
-            v-on:click="handleChangeSelected" 
-            :class="{ 'grid-item-disable': disableItems.includes(item), 'grid-item-selected': item === itemSelectedValue }">{{ item }}</li>
-        </ul>
+    <transition name="fade"
+      @before-enter="animateSlideDown"
+      @leave="animateSlideUp"
+      :css="false">
+      <ul class="grid-items"
+        v-show="isOpen">
+        <li class="grid-item"
+          v-for="item in items"
+          :key="item"
+          v-on:click="handleChangeSelected"
+          :class="{ 'grid-item-disable': disableItems.includes(item), 'grid-item-selected': item === itemSelectedValue }">{{ item }}</li>
+      </ul>
     </transition>
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -28,6 +31,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { faPencilAlt } from '@fortawesome/fontawesome-free-solid';
 import InputBoxed from './InputBoxed.vue';
 import { addMinutes } from '../utils';
+import * as consts from '../constants.js';
 
 export default {
   components: {
@@ -50,7 +54,6 @@ export default {
     },
     itemSelected: {
       type: String,
-      default: '10:00',
     },
     items: {
       type: Array,
@@ -90,8 +93,12 @@ export default {
   },
   computed: {
     itenSelectedFormated() {
-      const finished = addMinutes(this.itemSelectedValue, this.interval);
-      return `${this.itemSelectedValue} >> ${finished}`;
+      if (this.itemSelectedValue) {
+        const finished = addMinutes(this.itemSelectedValue, this.interval);
+        return `${this.itemSelectedValue} >> ${finished}`;
+      } else {
+        return consts.EMPTY_STRING;
+      }
     },
   },
   methods: {

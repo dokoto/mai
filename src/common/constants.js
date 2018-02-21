@@ -6,3 +6,5 @@ export const USERS = {
   THERAPIST: 'THERAPIST',
   CLIENT: 'CLIENT',
 };
+export const EMPTY_STRING = '';
+export const MAP_ZOOM = 15;

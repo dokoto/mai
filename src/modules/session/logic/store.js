@@ -1,7 +1,14 @@
 import _ from 'lodash/object';
 import services from '../../../common/services';
 import * as consts from '../../../common/constants';
-import { RECEIVE_SESSION, RECEIVE_SESSION_THERAPISTS, RECEIVE_SESSION_THERAPIES, RECEIVE_ALL_THERAPIES } from './types';
+import {
+  RECEIVE_SESSION,
+  RECEIVE_SESSION_THERAPISTS,
+  RECEIVE_SESSION_THERAPIES,
+  RECEIVE_ALL_THERAPIES,
+  RECEIVE_SESSION_TIME_SCHEDULE,
+  SET_THERAPY_TYPE,
+} from './types';
 
 /*
  * TERAPIA: therapy
@@ -15,18 +22,27 @@ const state = {
   session: {},
   therapists: [],
   therapies: [],
-  currentDate: new Date(),
-  mapZoom: 15,
+  mapZoom: consts.MAP_ZOOM,
+  sessionTimeSchedule: [],
+  selected: {
+    type: consts.EMPTY_STRING,
+    date: consts.EMPTY_STRING,
+    time: consts.EMPTY_STRING,
+  },
 };
 
 const getters = {
   session: currState => currState.session,
   therapists: currState => currState.therapists,
   therapistAddress: currState => _.get(currState, 'therapists[0].address'),
-  firstTherapy: currState => _.get(currState, `therapies[0].texts[${ window.glob.language.toUpperCase() }]`),
+  firstTherapy: currState =>
+    _.get(currState, `therapies[0].texts[${ window.glob.language.toUpperCase() }]`),
   mapZoom: currState => currState.mapZoom,
   // NEW
-  allTherapiesName: currState => currState.therapies.map(item => _.get(item, `texts[${ window.glob.language.toUpperCase() }].name`)),
+  allTherapiesName: currState =>
+    currState.therapies.map(item =>
+      _.get(item, `texts[${ window.glob.language.toUpperCase() }].name`)),
+  // sessionTimeSchedule: currState => currState.sessionTimeSchedule,
 };
 
 const actions = {
@@ -48,9 +64,16 @@ const actions = {
     commit(RECEIVE_SESSION_THERAPISTS, { therapists });
   },
   // NEW
-  async getAllTherapies({ commit }) {
+  async fetchAllTherapies({ commit }) {
     const therapies = await services.getTherapies();
     commit(RECEIVE_ALL_THERAPIES, { therapies });
+  },
+  async fetchSessionTimeSchedule({ commit }) {
+    const sessionTimeSchedule = await services.getSessionTimeSchedule();
+    commit(RECEIVE_SESSION_TIME_SCHEDULE, { sessionTimeSchedule });
+  },
+  setTherapyType({ commit }, therapi) {
+    commit(SET_THERAPY_TYPE, { therapi });
   },
 };
 
@@ -67,6 +90,12 @@ const mutations = {
   // NEW
   [RECEIVE_ALL_THERAPIES](currState, { therapies }) {
     currState.therapies = therapies;
+  },
+  [RECEIVE_SESSION_TIME_SCHEDULE](currState, { sessionTimeSchedule }) {
+    currState.sessionTimeSchedule = sessionTimeSchedule;
+  },
+  [SET_THERAPY_TYPE](currState, { therapi }) {
+    currState.selected.type = therapi;
   },
 };
 

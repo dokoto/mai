@@ -23,7 +23,7 @@ export default new Router({
     },
     {
       name: 'sessionEdit',
-      path: '/session/edit/:sessionId?',
+      path: '/session/edit',
       components: { container: SessionEdit },
     },
     {

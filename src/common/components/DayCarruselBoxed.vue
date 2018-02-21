@@ -1,5 +1,5 @@
 <template>
-    <div class="day-carrusel-container" 
+  <div class="day-carrusel-container"
     :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
     :id="id">
     <InputBoxed :id="id"
@@ -10,19 +10,18 @@
       :noBorder="noBorder"
       v-on:handleInputBoxedClick="handleShowDays"
       class="map-autocomplete" />
-      <transition name="fade"
-        @before-enter="animateSlideDown"
-        @leave="animateSlideUp"
-        :css="false">
-        <DayCarrusel 
-          v-show="isOpen" 
-          :dayNumber="dayNumber" 
-          :monthNumber="monthNumber" 
-          :year="year" 
-          :numberOfMonths="numberOfMonths" 
-          :selectedDay="SelectedDateProp" 
-          v-on:dayCarruselDayClick="handleDayClick" 
-          class="day-carrusel-wrapper"/>
+    <transition name="fade"
+      @before-enter="animateSlideDown"
+      @leave="animateSlideUp"
+      :css="false">
+      <DayCarrusel v-show="isOpen"
+        :dayNumber="dayNumber"
+        :monthNumber="monthNumber"
+        :year="year"
+        :numberOfMonths="numberOfMonths"
+        :selectedDay="SelectedDateProp"
+        v-on:dayCarruselDayClick="handleDayClick"
+        class="day-carrusel-wrapper" />
     </transition>
   </div>
 </template>
@@ -35,6 +34,7 @@ import { faPencilAlt } from '@fortawesome/fontawesome-free-solid';
 import InputBoxed from './InputBoxed.vue';
 import DayCarrusel from './DayCarrusel.vue';
 import { formatDate } from '../utils';
+import * as consts from '../constants.js';
 
 export default {
   components: {
@@ -78,7 +78,6 @@ export default {
     },
     SelectedDateProp: {
       type: String,
-      default: '20180208',
     },
     noBorder: {
       type: Boolean,
@@ -94,7 +93,7 @@ export default {
   },
   computed: {
     selectDateFormated() {
-      return formatDate(this.SelectedDateData);
+      return this.SelectedDateData ? formatDate(this.SelectedDateData) : consts.EMPTY_STRING;
     },
   },
   methods: {

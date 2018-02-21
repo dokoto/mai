@@ -8,6 +8,11 @@ const es = {
       therapist: 'Terapeuta',
       location: 'Lugar',
     },
+    therapi: {
+      type: 'Seleccione terapia',
+      date: 'Seleccione fecha',
+      time: 'Seleccione hora',
+    },
   },
 };
 
