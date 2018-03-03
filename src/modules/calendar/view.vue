@@ -3,9 +3,7 @@
     <HeaderCalendar :userId="userId"
       v-bind:selectedDay="selectedDay" />
     <DayCarrusel :id="`day-carrusel-${year}`"
-      :dayNumber="dayNumber"
-      :monthNumber="monthNumber"
-      :year="year"
+      :selectedDate="selectedDate"
       :numberOfMonths="numberOfMonths"
       v-bind:selectedDay="selectedDay"
       v-on:dayCarruselDayClick="handleDayClick"
@@ -57,9 +55,7 @@ export default {
   data() {
     return {
       userId: this.$route.params.userId,
-      dayNumber: this.$route.params.day,
-      monthNumber: this.$route.params.month,
-      year: this.$route.params.year,
+      selectedDate: this.$route.params.selectedDate,
       numberOfMonths,
     };
   },

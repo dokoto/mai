@@ -43,13 +43,17 @@ function mapCalendar(dateString) {
   });
 }
 
+export function formatDateNumeric(date = new Date()) {
+  return moment(date, consts.INT_DATE_FORMAT).format('YYYYMMDD');
+}
+
 function createDayAHeadArray(dateString, numOfMonthsAHead) {
   return _.range(moment(dateString, consts.INT_DATE_FORMAT)
     .add(numOfMonthsAHead, 'months')
     .diff(moment(dateString, consts.INT_DATE_FORMAT), 'days'));
 }
 
-export function formatDate(date) {
+export function formatDate(date = new Date()) {
   return moment(date, consts.INT_DATE_FORMAT)
     .format('dddd DD MMMM YYYY')
     .toUpperCase();

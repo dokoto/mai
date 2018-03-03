@@ -82,6 +82,7 @@ export default {
       border: solid 1px;
       border-color: $colorGrey3;
       padding-right: 4rem;
+      border-radius: 5px;
     }
     &.no-boxed {
       border: solid 0px;
@@ -103,6 +104,7 @@ export default {
     &.boxed {
       border: solid 1px;
       border-color: $colorGrey3;
+      border-radius: 0px 5px 5px 0px;
     }
     &.no-boxed {
       border: solid 0px;

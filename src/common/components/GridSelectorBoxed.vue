@@ -93,7 +93,7 @@ export default {
   },
   computed: {
     itenSelectedFormated() {
-      if (this.itemSelectedValue) {
+      if (this.itemSelectedValue && !this.disableItems.includes(this.itemSelectedValue)) {
         const finished = addMinutes(this.itemSelectedValue, this.interval);
         return `${this.itemSelectedValue} >> ${finished}`;
       } else {
@@ -119,6 +119,7 @@ export default {
       }
       $(ev.currentTarget).toggleClass('grid-item-selected');
       this.itemSelectedValue = $(ev.currentTarget).text();
+      this.$emit('gridSelectorBoxed:onChange', this.itemSelectedValue);
     },
   },
 };
@@ -137,6 +138,7 @@ export default {
     padding: 0;
     margin: 0;
     border: solid 1px;
+    border-radius: 5px;
     border-color: $colorGrey3;
     .grid-item {
       font-size: $form-font-size;
@@ -149,6 +151,7 @@ export default {
       font-weight: bold;
     }
     .grid-item-disable {
+      font-weight: normal;
       text-decoration: line-through;
       pointer-events: none;
     }

@@ -4,7 +4,7 @@
       v-for="therapist in therapists" 
       :key="therapist.id"
       :id="therapist.id"
-      v-show="!therapistsDisabled.includes(therapist.id)"
+      v-show="!disablesTherapists.includes(therapist.id)"
       @click="handleTherapistSelected" >      
       <div class="therapist-img-box">
         <img class="therapist-img" :src="therapist.thumb" 
@@ -46,7 +46,7 @@ export default {
       type: String,
       default: 'T1',
     },
-    therapistsDisabled: {
+    disablesTherapists: {
       type: Array,
       default: function() {
         return ['T2', 'T5'];
@@ -75,6 +75,7 @@ export default {
         .find('.therapist-name')
         .toggleClass('therapist-name-selected');
       this.itemSelectedValue = $(ev.currentTarget).attr('id');
+      this.$emit('therapistCarrusel:onChange', this.itemSelectedValue);
     },
   },
 };

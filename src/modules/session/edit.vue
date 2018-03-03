@@ -4,6 +4,16 @@
       <img class="symbol"
         src="../../../static/img/therapy-symbol.png" />
     </div>
+    <Card id="session-edit-therapist-carrusel-card"
+      :title="literals.therapistTitle"
+      :icon="therapistStatus.icon"
+      :iconColor="therapistStatus.color">
+      <TherapistCarrusel :id="`session-edit-therapist-carrusel-${session.date}`"
+        :therapists="therapists"
+        :disablesTherapists="disablesTherapists"
+        :therapistSelected="therapiSelected"
+        @therapistCarrusel:onChange="handleTherapiSelected" />
+    </Card>
     <Card id="session-edit-card"
       :title="literals.sessionTitle"
       :icon="sessionIconStatus.icon"
@@ -13,22 +23,21 @@
         :items="allTherapiesName"
         :itemSelected="therapySelected"
         :placeHolder="literals.therapieTypeComboDefault"
-        @onChange="onChange" />
+        @comboBoxed:onChange="onChangeTherapies" />
       <DayCarruselBoxed id="session-edit-date"
         :placeHolder="literals.therapieDateComboDefault"
-        :noBorder="true" />
+        :disablesDates="disablesDates"
+        :initDate="initDate"
+        :SelectedDateProp="daySelected"
+        :noBorder="true"
+        @dayCarruselBoxed:dayClick="handleDateSelected" />
       <GridSelectorBoxed id="session-edit-time"
         :placeHolder="literals.therapieTimeComboDefault"
         :items="sessionTimeSchedule"
-        :noBorder="true" />
-    </Card>
-    <Card id="session-edit-therapist-carrusel-card"
-      :title="literals.therapistTitle"
-      :icon="therapistStatus.icon"
-      :iconColor="therapistStatus.color">
-      <TherapistCarrusel :id="`session-edit-therapist-carrusel-${session.date}`"
-        :therapists="therapists"
-        v-if="therapists.length > 0" />
+        :disableItems="disablesTimes"
+        :itemSelected="timeSelected"
+        :noBorder="true"
+        @gridSelectorBoxed:onChange="handleTimeSelected" />
     </Card>
     <Card id="session-edit-location-card"
       :title="literals.locationTitle"
@@ -37,8 +46,7 @@
       <LocationMap :address="therapistAddress"
         :zoom="mapZoom"
         :showMap="true"
-        :readOnly="false"
-        v-if="therapists.length > 0" />
+        :readOnly="false" />
     </Card>
   </article>
 </template>
@@ -68,45 +76,27 @@ export default {
     LocationMap,
   },
   computed: {
+    //DELTE?
     ...mapGetters({
       session: 'session/session',
       therapy: 'session/therapy',
-      therapists: 'session/therapists',
       therapistAddress: 'session/therapistAddress',
       mapZoom: 'session/mapZoom',
       // NEW
       allTherapiesName: 'session/allTherapiesName',
     }),
-    ...mapState({
-      therapySelected: state => state.session.selected.type,
-      sessionTimeSchedule: state => state.session.sessionTimeSchedule,
+    ...mapState('session', {
+      therapiSelected: state => state.selected.therapi,
+      therapySelected: state => state.selected.type,
+      daySelected: state => state.selected.date,
+      timeSelected: state => state.selected.time,
+      sessionTimeSchedule: state => state.sessionTimeSchedule,
+      disablesDates: state => state.disablesDates,
+      disablesTimes: state => state.disablesTimes,
+      disablesTherapists: state => state.disablesTherapists,
+      initDate: state => state.initDate,
+      therapists: state => state.therapists,
     }),
-    formatDate() {
-      return moment(
-        `${this.session.date.year}-${this.session.date.month}-${this.session.date.day}`,
-        consts.INT_DATE_FORMAT,
-      )
-        .format('dddd D MMMM')
-        .toUpperCase();
-    },
-    timeBegin() {
-      return moment(
-        `${this.session.date.year}-${this.session.date.month}-${this.session.date.day} ${
-          this.session.date.time
-        }`,
-        consts.INT_DATE_FORMAT,
-      ).format('hh:mm A');
-    },
-    timeEnd() {
-      return moment(
-        `${this.session.date.year}-${this.session.date.month}-${this.session.date.day} ${
-          this.session.date.time
-        }`,
-        consts.INT_DATE_FORMAT,
-      )
-        .add(consts.THERAPY_SESSION_IN_MINUTES, 'm')
-        .format('hh:mm A');
-    },
     sessionIconStatus() {
       return {
         icon: faQuestionCircle,
@@ -127,28 +117,42 @@ export default {
     },
   },
   methods: {
-    onChange(value) {
-      this.$store.dispatch('session/setTherapyType', value);
+    handleTherapiSelected(newTherapi) {
+      this.$store.dispatch('session/setTherapi', newTherapi);
+      this.$store.dispatch('session/fetchAllTherapies');
+      this.$store.dispatch('session/fetchBusyDays', newTherapi);      
+    },
+    handleDateSelected(newSelectedDate) {
+      this.$store.dispatch('session/setDate', newSelectedDate);
+      this.$store.dispatch('session/fetchBusyTimes', newSelectedDate);      
+    },
+    onChangeTherapies(newTherapy) {
+      this.$store.dispatch('session/setTherapyType', newTherapy);
+    },
+    handleTimeSelected(newTime) {
+      this.$store.dispatch('session/setTime', newTime);
     },
   },
   created() {
-    this.date = this.$route.query.date;
-    this.time = this.$route.query.time;
-    this.sessionId = this.$route.query.sessionId;
-    this.$store.dispatch('session/fetchAllTherapies', this.$route.params.sessionId);
+    this.$store.dispatch('session/initDate');
+    this.$store.dispatch('session/fetchAllTherapies');
+    this.$store.dispatch('session/fetchAllTherapists');
+    this.$store.dispatch('session/fetchBusyTherapists');
+    this.$store.dispatch('session/fetchBusyDays');
     this.$store.dispatch('session/fetchSessionTimeSchedule');
-    if (sessionId) {
-      this.$store.dispatch('session/getSession', sessionId);
-    } else if (date && time) {
+    if (this.$route.query.sessionId) {
+      this.$store.dispatch('session/getSession', this.$route.query.sessionId);
     }
   },
   data() {
     return {
+      //DELTE?-INIT
       sessionId: consts.EMPTY_STRING,
       date: consts.EMPTY_STRING,
       time: consts.EMPTY_STRING,
       selectedDate: consts.EMPTY_STRING,
       selectTime: consts.EMPTY_STRING,
+      //DELTE?-END
       literals: {
         sessionTitle: this.$i18n.t('session.title.session'),
         therapistTitle: this.$i18n.t('session.title.therapist'),

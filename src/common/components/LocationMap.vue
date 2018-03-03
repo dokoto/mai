@@ -129,6 +129,7 @@ export default {
   }
   .map {    
     margin-top: 1%;
+    border-radius: 5px;
     &.static-height {
       height: 200px;
     }

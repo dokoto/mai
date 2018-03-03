@@ -1,12 +1,12 @@
 <template>
   <div class="month" :class="colorClass">
     <div class="month-box" v-for="(day, index) in track" :key="index" 
-      v-on:click="handleDayClick" 
+      @click="handleDayClick" 
       :data-day-id="`${day.fullDate}`"
-      :class="{ dayDisable: daysDisables.includes(`${day.fullDate}`) }" >
+      :class="{ dayDisable: disablesDates.includes(`${day.fullDate}`) }" >
       <span class="month-v-name" v-bind:class="monthColorClass" v-if="index === 0 || day.dayNumber == 1">{{ day.monthShotName.replace('.', '') }}</span>
       <div class="day-box" 
-        :class="{ daySelected: !daysDisables.includes(`${day.fullDate}`) && selectedDay === `${day.fullDate}` }">
+        :class="{ daySelected: !disablesDates.includes(`${day.fullDate}`) && selectedDate === `${day.fullDate}` }">
         <span class="day-name">{{ day.dayName.replace('.', '') }}</span>
         <span class="day-number">{{ day.dayNumber}}</span>
       </div>
@@ -18,7 +18,7 @@
 import $ from 'jquery';
 
 const state = {
-  selectDayItem: null,
+  selectedDate: null,
 };
 
 export default {
@@ -38,7 +38,7 @@ export default {
         ];
       },
     },
-    daysDisables: {
+    disablesDates: {
       type: Array,
       default: function() {
         return ['20180204', '20180220'];
@@ -48,25 +48,26 @@ export default {
       type: String,
       default: 'monthColorOne',
     },
-    selectedDay: {
+    selectedDateProp: {
       type: String,
-      default: '06',
+      default: '06012018',
     },
   },
   data() {
     return {
       monthColorClass: this.colorClass,
+      selectedDate: this.selectedDateProp
     };
   },
   methods: {
     handleDayClick(ev) {
-      const newSelectedDay = $(ev.currentTarget).attr('data-day-id');
+      const newSelectedDate = $(ev.currentTarget).attr('data-day-id');
       $(
-        `[data-day-id="${state.selectDayItem || this.selectedDay}"] .day-box`,
+        `[data-day-id="${state.selectedDate || this.selectedDate}"] .day-box`,
       ).removeClass('daySelected');
-      $(`[data-day-id="${newSelectedDay}"] .day-box`).addClass('daySelected');
-      state.selectDayItem = newSelectedDay;
-      this.$emit('dayCarruselTrackDayClick', ev);
+      $(`[data-day-id="${newSelectedDate}"] .day-box`).addClass('daySelected');
+      state.selectedDate = newSelectedDate;
+      this.$emit('dayCarruselTrackDayClick', newSelectedDate);
     },
   },
 };

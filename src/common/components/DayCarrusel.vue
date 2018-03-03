@@ -3,9 +3,10 @@
     <DayCarruselTrack v-for="(track, index) in groupOfMonths"
       :key="index"
       :track="track"
-      :selectedDay="selectedDay"
+      :selectedDateProp="selectedDate"
+      :disablesDates="disablesDates"
       :colorClass="colorClass[index]"
-      v-on:dayCarruselTrackDayClick="handleDayClick" />
+      @dayCarruselTrackDayClick="handleDayClick" />
     <span class="end"></span>
   </section>
 </template>
@@ -21,33 +22,28 @@ export default {
       type: String,
       default: 'day-carrusel',
     },
-    dayNumber: {
+    initDate: {
       type: String,
-      default: '03',
-    },
-    monthNumber: {
-      type: String,
-      default: '02',
-    },
-    year: {
-      type: String,
-      default: '2018',
+      default: '20180201',
     },
     numberOfMonths: {
       type: Number,
       default: 2,
     },
-    selectedDay: {
+    selectedDate: {
       type: String,
       default: '20180208',
+    },
+    disablesDates: {
+      type: Array,
+      default: function() {
+        return ['20180204', '20180220'];
+      },
     },
   },
   computed: {
     groupOfMonths() {
-      return calcMonthsAHeadFrom(
-        `${this.year}${this.monthNumber}${this.dayNumber}`,
-        this.numberOfMonths,
-      );
+      return calcMonthsAHeadFrom(this.initDate, this.numberOfMonths);
     },
   },
   data() {
@@ -56,8 +52,8 @@ export default {
     };
   },
   methods: {
-    handleDayClick(ev) {      
-      this.$emit('dayCarruselDayClick', ev);
+    handleDayClick(newSelectedDate) {
+      this.$emit('dayCarruselDayClick', newSelectedDate);
     },
   },
 };
@@ -71,8 +67,9 @@ export default {
   overflow: auto;
   padding: 2%;
   border: solid 1px;
+  border-radius: 5px;
   border-color: #ececec;
-  
+
   .end {
     min-width: 1px;
     background-color: white;

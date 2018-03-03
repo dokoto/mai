@@ -15,11 +15,10 @@
       @leave="animateSlideUp"
       :css="false">
       <DayCarrusel v-show="isOpen"
-        :dayNumber="dayNumber"
-        :monthNumber="monthNumber"
-        :year="year"
+        :initDate="initDate"
         :numberOfMonths="numberOfMonths"
         :selectedDay="SelectedDateProp"
+        :disablesDates="disablesDates"
         v-on:dayCarruselDayClick="handleDayClick"
         class="day-carrusel-wrapper" />
     </transition>
@@ -60,17 +59,8 @@ export default {
       type: Boolean,
       default: false,
     },
-    dayNumber: {
+    initDate: {
       type: String,
-      default: '03',
-    },
-    monthNumber: {
-      type: String,
-      default: '02',
-    },
-    year: {
-      type: String,
-      default: '2018',
     },
     numberOfMonths: {
       type: Number,
@@ -78,6 +68,12 @@ export default {
     },
     SelectedDateProp: {
       type: String,
+    },
+    disablesDates: {
+      type: Array,
+      default: function() {
+        return ['20180204', '20180220'];
+      },
     },
     noBorder: {
       type: Boolean,
@@ -93,16 +89,16 @@ export default {
   },
   computed: {
     selectDateFormated() {
-      return this.SelectedDateData ? formatDate(this.SelectedDateData) : consts.EMPTY_STRING;
+      return this.SelectedDateProp ? formatDate(this.SelectedDateProp) : consts.EMPTY_STRING;
     },
   },
   methods: {
     handleShowDays() {
       this.isOpen = !this.isOpen;
     },
-    handleDayClick(ev) {
-      this.SelectedDateData = $(ev.currentTarget).attr('data-day-id');
-      this.$emit('dayCarruselBoxed:dayClick', ev);
+    handleDayClick(newSelectedDate) {
+      this.SelectedDateData = newSelectedDate;
+      this.$emit('dayCarruselBoxed:dayClick', newSelectedDate);
     },
     animateSlideDown(el) {
       $(el).slideDown('slow');
@@ -123,6 +119,7 @@ export default {
   font-family: Arial, Tahoma, HelveticaNeue;
   &.boxed {
     border: solid 1px;
+    border-radius: 5px;    
     border-color: $colorGrey4;
   }
   &.no-boxed {

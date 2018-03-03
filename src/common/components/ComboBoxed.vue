@@ -3,7 +3,7 @@
     :id="id">
     <InputBoxed :id="id"
       :placeHolder="placeHolder"
-      :value="itemSelectedValue"
+      :value="itemSelected"
       :icon="icon"
       :readOnly="readOnly"
       :noBorder="noBorder"
@@ -96,7 +96,7 @@ export default {
       }
       $(ev.currentTarget).toggleClass('item-selected');
       this.itemSelectedValue = $(ev.currentTarget).text();
-      this.$emit('onChange', this.itemSelectedValue);
+      this.$emit('comboBoxed:onChange', this.itemSelectedValue);
     },
   },
 };
@@ -113,9 +113,9 @@ export default {
     list-style: none;
     padding: 0;
     border: solid 1px;
+    border-radius: 5px;
     border-color: $colorGrey3;
     overflow: auto;
-    height: 100px;
     .item {
       font-size: $form-font-size;
     }

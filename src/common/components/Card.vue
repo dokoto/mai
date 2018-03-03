@@ -49,6 +49,7 @@ export default {
     margin-right: 2%;
     margin-left: 2%;
     margin-top: 2%;
+    border-radius: 5px;
     padding: 2%;
     background-color: $colorWhite0;
   }
@@ -57,6 +58,7 @@ export default {
     background-color: $colorWhite2;
     border-color: $colorGrey4;
     margin-bottom: 3%;
+    border-radius: 5px;
     .title {
       font-size: 1.3em;
       font-weight: bold;

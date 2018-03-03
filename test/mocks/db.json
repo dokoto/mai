@@ -114,10 +114,9 @@
       },
       "address": "Calle Pedo, 22 Madrid"
     }
-  ],
+  ],  
   "sessions": [{
       "id": "201711011000",
-      "userId": "C2",
       "status": {
         "canceled": false
       },
@@ -248,7 +247,7 @@
       "address": "Av. de Portugal, 71, 28011 Madrid, España",
       "phone": "623467982",
       "email": "carmen@gmail.com",
-      "therapys": ["S1", "S2", "S3"],
+      "therapys": ["S1", "S3"],
       "webPage": "http://www.google.es",
       "thumb": "http://localhost:8809/img/therapist-1.jpg"
     },{
@@ -258,7 +257,7 @@
       "address": "Av. de Portugal, 71, 28011 Madrid, España",
       "phone": "623457982",
       "email": "paco.freco@gmail.com",
-      "therapys": ["S1", "S3"],
+      "therapys": ["S2"],
       "webPage": "http://www.google.es",
       "thumb": "http://localhost:8809/img/therapist-2.jpg"
     },
@@ -340,5 +339,8 @@
       }     
     }
   ],
-  "sessionTimeSchedule": ["10:00", "11:30", "13:00", "16:00", "17:30", "19:00", "20:30"]
+  "sessionTimeSchedule": ["10:00", "11:30", "13:00", "16:00", "17:30", "19:00", "20:30"],
+  "busyDays": ["20180305", "20180320", "20180405"],
+  "busyTimes": ["11:30", "19:00"],
+  "busyTherapists": ["T4", "T5"]
 }
