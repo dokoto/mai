@@ -5,19 +5,21 @@
       :value="address"
       :icon="icon"
       :readOnly="readOnly"
-      v-on:handleInputBoxedClick="handleInputBoxedClicked"
+      @handleInputBoxedClick="handleInputBoxedClicked"
       class="map-autocomplete" />
-      <transition name="fade"
-        @before-enter="animateSlideDown"
-        @leave="animateSlideUp"
-        :css="false">
-        <div :id="ids.idMap" 
-          class="map" 
-          :class="[ readOnly ? 'dynamic-height' : 'static-height' ]"
-          v-show="hasShowMap">      
-          <StaticMap :address="address" :size="staticMapSize" v-if="readOnly" />
-        </div>
-      </transition>
+    <transition name="fade"
+      @before-enter="animateSlideDown"
+      @leave="animateSlideUp"
+      :css="false">
+      <div :id="ids.idMap"
+        class="map"
+        :class="[ readOnly ? 'dynamic-height' : 'static-height' ]"
+        v-show="hasShowMap">
+        <StaticMap :address="address"
+          :size="staticMapSize"
+          v-if="readOnly" />
+      </div>
+    </transition>
   </section>
 </template>
 
@@ -85,7 +87,7 @@ export default {
       const $autoCompleInput = $(`#${this.ids.idInput} input`).first();
       await this.geoMapper.activateGoogleMaps();
       this.geoMapper.activateAutoComplete($autoCompleInput);
-      this.geoMapper.renderDynamicMap($map, this.zoom, this.address || this.placeHolder); 
+      this.geoMapper.renderDynamicMap($map, this.zoom, this.address || this.placeHolder);
     }
   },
   data() {
@@ -97,6 +99,11 @@ export default {
     };
   },
   methods: {
+    updateMap(address) {
+      const $map = $(`#${this.ids.idMap}`).first();
+      this.geoMapper.renderDynamicMap($map, this.zoom, address);
+      console.log('hitler');
+    },
     handleInputBoxedClicked(ev) {
       this.hasShowMap = !this.hasShowMap;
     },
@@ -111,6 +118,7 @@ export default {
         done();
       });
     },
+
   },
   beforeDestroy() {
     this.geoMapper.releaseGoogleMaps();
@@ -127,7 +135,7 @@ export default {
     margin-left: 2%;
     margin-top: 2%;
   }
-  .map {    
+  .map {
     margin-top: 1%;
     border-radius: 5px;
     &.static-height {

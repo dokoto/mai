@@ -8,7 +8,7 @@
       :title="literals.therapistTitle"
       :icon="therapistStatus.icon"
       :iconColor="therapistStatus.color">
-      <TherapistCarrusel :id="`session-edit-therapist-carrusel-${session.date}`"
+      <TherapistCarrusel id="session-edit-therapist-carrusel"
         :therapists="therapists"
         :disablesTherapists="disablesTherapists"
         :therapistSelected="therapiSelected"
@@ -28,7 +28,7 @@
         :placeHolder="literals.therapieDateComboDefault"
         :disablesDates="disablesDates"
         :initDate="initDate"
-        :SelectedDateProp="daySelected"
+        :selectedDate="daySelected"
         :noBorder="true"
         @dayCarruselBoxed:dayClick="handleDateSelected" />
       <GridSelectorBoxed id="session-edit-time"
@@ -43,9 +43,10 @@
       :title="literals.locationTitle"
       :icon="locationStatus.icon"
       :iconColor="locationStatus.color">
-      <LocationMap :address="therapistAddress"
+      <LocationMap ref="locationMap"
         :zoom="mapZoom"
-        :showMap="true"
+        :address="addressSelected"
+        :showMap="false"
         :readOnly="false" />
     </Card>
   </article>
@@ -78,10 +79,10 @@ export default {
   computed: {
     //DELTE?
     ...mapGetters({
-      session: 'session/session',
-      therapy: 'session/therapy',
-      therapistAddress: 'session/therapistAddress',
-      mapZoom: 'session/mapZoom',
+      //session: 'session/session',
+      //therapy: 'session/therapy',
+      //therapistAddress: 'session/therapistAddress',
+      // mapZoom: 'session/mapZoom',
       // NEW
       allTherapiesName: 'session/allTherapiesName',
     }),
@@ -90,41 +91,62 @@ export default {
       therapySelected: state => state.selected.type,
       daySelected: state => state.selected.date,
       timeSelected: state => state.selected.time,
+      addressSelected: state => state.selected.address,
       sessionTimeSchedule: state => state.sessionTimeSchedule,
       disablesDates: state => state.disablesDates,
       disablesTimes: state => state.disablesTimes,
       disablesTherapists: state => state.disablesTherapists,
       initDate: state => state.initDate,
       therapists: state => state.therapists,
+      mapZoom: state => state.mapZoom,
     }),
     sessionIconStatus() {
-      return {
-        icon: faQuestionCircle,
-        color: 'red',
-      };
+      return this.$store.state.session.selected.type &&
+        this.$store.state.session.selected.date &&
+        this.$store.state.session.selected.time
+        ? {
+            icon: faCheckCircle,
+            color: 'green',
+          }
+        : {
+            icon: faQuestionCircle,
+            color: 'red',
+          };
     },
     therapistStatus() {
-      return {
-        icon: faQuestionCircle,
-        color: 'red',
-      };
+      return this.$store.state.session.selected.therapi
+        ? {
+            icon: faCheckCircle,
+            color: 'green',
+          }
+        : {
+            icon: faQuestionCircle,
+            color: 'red',
+          };
     },
     locationStatus() {
-      return {
-        icon: faQuestionCircle,
-        color: 'red',
-      };
+      return this.$store.state.session.selected.address
+        ? {
+            icon: faCheckCircle,
+            color: 'green',
+          }
+        : {
+            icon: faQuestionCircle,
+            color: 'red',
+          };
     },
   },
   methods: {
     handleTherapiSelected(newTherapi) {
       this.$store.dispatch('session/setTherapi', newTherapi);
+      this.$store.dispatch('session/setAddress', newTherapi);
       this.$store.dispatch('session/fetchAllTherapies');
-      this.$store.dispatch('session/fetchBusyDays', newTherapi);      
+      this.$store.dispatch('session/fetchBusyDays', newTherapi);
+      this.$refs.locationMap.updateMap(this.$store.state.session.selected.address);
     },
     handleDateSelected(newSelectedDate) {
       this.$store.dispatch('session/setDate', newSelectedDate);
-      this.$store.dispatch('session/fetchBusyTimes', newSelectedDate);      
+      this.$store.dispatch('session/fetchBusyTimes', newSelectedDate);
     },
     onChangeTherapies(newTherapy) {
       this.$store.dispatch('session/setTherapyType', newTherapy);
@@ -147,11 +169,11 @@ export default {
   data() {
     return {
       //DELTE?-INIT
-      sessionId: consts.EMPTY_STRING,
+      /* sessionId: consts.EMPTY_STRING,
       date: consts.EMPTY_STRING,
       time: consts.EMPTY_STRING,
       selectedDate: consts.EMPTY_STRING,
-      selectTime: consts.EMPTY_STRING,
+      selectTime: consts.EMPTY_STRING,*/
       //DELTE?-END
       literals: {
         sessionTitle: this.$i18n.t('session.title.session'),

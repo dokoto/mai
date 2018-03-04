@@ -16,6 +16,7 @@ import {
   SET_DATE,
   RECEIVE_DISABLE_THERAPISTS,
   SET_THERAPI,
+  SET_ADDRESS,
 } from './types';
 
 /*
@@ -37,10 +38,11 @@ const state = {
   disablesTimes: consts.EMPTY_ARRAY,
   disablesTherapists: consts.EMPTY_ARRAY,
   selected: {
-    therapi: consts.EMPTY_STRING,    
+    therapi: consts.EMPTY_STRING,
     type: consts.EMPTY_STRING,
     date: consts.EMPTY_STRING,
     time: consts.EMPTY_STRING,
+    address: consts.EMPTY_STRING,
   },
 };
 
@@ -123,6 +125,10 @@ const actions = {
   setTime({ commit }, time) {
     commit(SET_TIME, { time });
   },
+  setAddress({ commit }, newTherapi, updateMap) {
+    const therapi = state.therapists.filter(item => item.id === newTherapi);
+    commit(SET_ADDRESS, { address: _.get(therapi, '[0].address') });
+  },
   initDate({ commit }, initDate = formatDateNumeric()) {
     commit(SET_INIT_DATE, { initDate });
   },
@@ -168,7 +174,10 @@ const mutations = {
   },
   [SET_THERAPI](currState, { therapi }) {
     currState.selected.therapi = therapi;
-  },  
+  },
+  [SET_ADDRESS](currState, { address }) {
+    currState.selected.address = address;
+  },
 };
 
 export default {

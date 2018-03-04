@@ -18,7 +18,7 @@
         <li class="grid-item"
           v-for="item in items"
           :key="item"
-          v-on:click="handleChangeSelected"
+          @click="handleChangeSelected"
           :class="{ 'grid-item-disable': disableItems.includes(item), 'grid-item-selected': item === itemSelectedValue }">{{ item }}</li>
       </ul>
     </transition>
@@ -87,11 +87,13 @@ export default {
   data() {
     return {
       isOpen: this.showOpen,
-      itemSelectedValue: this.itemSelected,
       readOnly: true,
     };
   },
   computed: {
+    itemSelectedValue() {
+      return this.itemSelected;
+    },
     itenSelectedFormated() {
       if (this.itemSelectedValue && !this.disableItems.includes(this.itemSelectedValue)) {
         const finished = addMinutes(this.itemSelectedValue, this.interval);
@@ -118,8 +120,7 @@ export default {
         $('li.grid-item').removeClass('grid-item-selected');
       }
       $(ev.currentTarget).toggleClass('grid-item-selected');
-      this.itemSelectedValue = $(ev.currentTarget).text();
-      this.$emit('gridSelectorBoxed:onChange', this.itemSelectedValue);
+      this.$emit('gridSelectorBoxed:onChange', $(ev.currentTarget).text());
     },
   },
 };

@@ -11,3 +11,4 @@ export const SET_INIT_DATE = 'SET_INIT_DATE';
 export const SET_DATE = 'SET_DATE';
 export const SET_TIME = 'SET_TIME';
 export const SET_THERAPI = 'SET_THERAPI';
+export const SET_ADDRESS = 'SET_ADDRESS';

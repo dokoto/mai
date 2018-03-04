@@ -6,7 +6,7 @@
       :class="{ dayDisable: disablesDates.includes(`${day.fullDate}`) }" >
       <span class="month-v-name" v-bind:class="monthColorClass" v-if="index === 0 || day.dayNumber == 1">{{ day.monthShotName.replace('.', '') }}</span>
       <div class="day-box" 
-        :class="{ daySelected: !disablesDates.includes(`${day.fullDate}`) && selectedDate === `${day.fullDate}` }">
+        :class="{ daySelected: !disablesDates.includes(`${day.fullDate}`) && selectDateFormated === `${day.fullDate}` }">
         <span class="day-name">{{ day.dayName.replace('.', '') }}</span>
         <span class="day-number">{{ day.dayNumber}}</span>
       </div>
@@ -56,8 +56,13 @@ export default {
   data() {
     return {
       monthColorClass: this.colorClass,
-      selectedDate: this.selectedDateProp
+      //selectedDate: this.selectedDateProp
     };
+  },
+  computed: {
+    selectDateFormated() {
+      return this.selectedDateProp;
+    }
   },
   methods: {
     handleDayClick(ev) {

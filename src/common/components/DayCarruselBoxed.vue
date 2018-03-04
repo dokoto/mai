@@ -17,7 +17,7 @@
       <DayCarrusel v-show="isOpen"
         :initDate="initDate"
         :numberOfMonths="numberOfMonths"
-        :selectedDay="SelectedDateProp"
+        :selectedDate="selectedDate"
         :disablesDates="disablesDates"
         v-on:dayCarruselDayClick="handleDayClick"
         class="day-carrusel-wrapper" />
@@ -66,7 +66,7 @@ export default {
       type: Number,
       default: 2,
     },
-    SelectedDateProp: {
+    selectedDate: {
       type: String,
     },
     disablesDates: {
@@ -84,12 +84,12 @@ export default {
     return {
       readOnly: true,
       isOpen: this.showOpen,
-      SelectedDateData: this.SelectedDateProp,
+      //SelectedDateData: this.selectedDate,
     };
   },
   computed: {
     selectDateFormated() {
-      return this.SelectedDateProp ? formatDate(this.SelectedDateProp) : consts.EMPTY_STRING;
+      return this.selectedDate ? formatDate(this.selectedDate) : consts.EMPTY_STRING;
     },
   },
   methods: {
@@ -97,7 +97,7 @@ export default {
       this.isOpen = !this.isOpen;
     },
     handleDayClick(newSelectedDate) {
-      this.SelectedDateData = newSelectedDate;
+      //this.SelectedDateData = newSelectedDate;
       this.$emit('dayCarruselBoxed:dayClick', newSelectedDate);
     },
     animateSlideDown(el) {

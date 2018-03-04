@@ -6,11 +6,11 @@
       class="input"
       :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
       :placeholder="placeHolder"
-      :readonly="readOnly"
+      :readonly="readOnly"      
       :value="value" />
     <div class="input-icon" v-if="!noIcon"
       :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
-      v-on:click="handleInputBoxedClick">
+      @click="handleInputBoxedClick">
       <font-awesome-icon :icon="icon" />
     </div>
   </div>
@@ -58,6 +58,10 @@ export default {
     handleInputBoxedClick(ev) {
       this.$emit('handleInputBoxedClick', ev);
     },
+    handleInputBoxedOnChange(ev) {
+      console.log('hitler');      
+      this.$emit('inputBoxed:onChange', ev);
+    }
   },
 };
 </script>
