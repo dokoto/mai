@@ -125,7 +125,7 @@ const actions = {
   setTime({ commit }, time) {
     commit(SET_TIME, { time });
   },
-  setAddress({ commit }, newTherapi, updateMap) {
+  setAddress({ commit }, newTherapi) {
     const therapi = state.therapists.filter(item => item.id === newTherapi);
     commit(SET_ADDRESS, { address: _.get(therapi, '[0].address') });
   },

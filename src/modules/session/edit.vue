@@ -163,8 +163,9 @@ export default {
     this.$store.dispatch('session/fetchBusyTherapists');
     this.$store.dispatch('session/fetchBusyDays');
     this.$store.dispatch('session/fetchSessionTimeSchedule');
-    if (this.$route.query.sessionId) {
-      this.$store.dispatch('session/getSession', this.$route.query.sessionId);
+    if (this.$route.params.date && this.$route.params.time) {
+      this.$store.dispatch('session/setDate', this.$route.params.date);
+      this.$store.dispatch('session/setTime', this.$route.params.time);
     }
   },
   data() {

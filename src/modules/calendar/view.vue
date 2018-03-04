@@ -40,17 +40,18 @@ export default {
     }),
   },
   methods: {
-    handleDayClick(newSelectedDate) {      
+    handleDayClick(newSelectedDate) {
       this.$store.dispatch('calendar/changeDay', newSelectedDate);
       this.$store.dispatch('calendar/getToDaySessions');
     },
     handleSessionClick(ev) {
       ev.preventDefault();
-      this.$store.dispatch('calendar/createAppointment', {
-        router: this.$router,
-        id: ev.currentTarget.id,
-        daySelected: $(ev.currentTarget).attr('data-selectedday'),
-        timeSelected: $(ev.currentTarget).attr('data-time'),
+      this.$router.push({
+        name: 'sessionEdit',
+        params: {
+          date: $(ev.currentTarget).attr('data-selectedday'),
+          time: $(ev.currentTarget).attr('data-time'),
+        },
       });
     },
   },

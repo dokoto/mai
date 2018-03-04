@@ -1,6 +1,12 @@
 <template>
   <section class="appointments">
-    <Card v-for="session in sessions" :key="session.id" v-bind:id="session.id" v-bind:sessionDate="session.date" v-bind:sessionTherapy="therapysByLang[session.therapy.id]" v-bind:withTimeInterval="false" v-on:sessionClick="handleSessionClick" />
+    <Card v-for="session in sessions"
+      :key="session.id"
+      v-bind:id="session.id"
+      v-bind:sessionDate="session.date"
+      v-bind:sessionTherapy="therapysByLang[session.therapy.id]"
+      v-bind:withTimeInterval="false"
+      v-on:sessionClick="handleSessionClick" />
   </section>
 </template>
 
