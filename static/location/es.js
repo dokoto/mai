@@ -12,6 +12,7 @@ const es = {
       type: 'Seleccione terapia',
       date: 'Seleccione fecha',
       time: 'Seleccione hora',
+      address: 'Seleccione direccion',
     },
   },
 };

@@ -56,6 +56,7 @@ export default {
 .calendar-header {
   display: inline-flex;
   flex-direction: row;
+  border-radius: 5px;
 
   .today-view {
     display: inline-flex;

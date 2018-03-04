@@ -11,6 +11,7 @@ const en = {
     type: 'Select therapi',
     date: 'Select date',
     time: 'Select time',
+    address: 'Select address',
   },
 };
 

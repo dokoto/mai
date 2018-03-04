@@ -17,11 +17,12 @@ export default {
 .option {
   width: 20vw;
   height: 20vw;
+  border-radius: 5px;
 }
 
 .option-icon {
   width: 50%;
-  margin: 25%;
+  margin: 25%;  
 }
 
 .pastel-orange {

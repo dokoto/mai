@@ -44,6 +44,7 @@
       :icon="locationStatus.icon"
       :iconColor="locationStatus.color">
       <LocationMap ref="locationMap"
+        :placeHolder="literals.therapieLocationDefault"
         :zoom="mapZoom"
         :address="addressSelected"
         :showMap="false"
@@ -182,6 +183,7 @@ export default {
         therapieTypeComboDefault: this.$i18n.t('session.therapi.type'),
         therapieDateComboDefault: this.$i18n.t('session.therapi.date'),
         therapieTimeComboDefault: this.$i18n.t('session.therapi.time'),
+        therapieLocationDefault: this.$i18n.t('session.therapi.address'),
       },
     };
   },

@@ -58,6 +58,7 @@ export default {
   flex-direction: row;
   background-color: white;
   justify-content: space-evenly;
+  border-radius: 5px;
 }
 </style>
 

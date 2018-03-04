@@ -43,6 +43,7 @@ export default {
 .sessionCard {
   display: inline-flex;
   flex-direction: column;
+  border-radius: 5px;
   .date {
     font-size: 1em;
     font-weight: bold;

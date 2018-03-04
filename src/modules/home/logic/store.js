@@ -1,5 +1,5 @@
 import _ from 'lodash/object';
-import services from '../../../common/services';
+import * as services from '../../../common/services';
 import { RECEIVE_NEXT_SESSIONS, RECEIVE_THERAPYES } from './types';
 
 const state = {
