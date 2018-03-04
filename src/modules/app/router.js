@@ -28,7 +28,7 @@ export default new Router({
     },
     {
       name: 'calendar',
-      path: '/calendar/:userId/:year/:month/:day',
+      path: '/calendar/:userId',
       components: { container: Calendar },
     },
   ],

@@ -5,20 +5,10 @@
       "status": {
         "canceled": false
       },
-      "date": {
-        "year": "2017",
-        "month": "11",
-        "day": "01",
-        "time": "10:00"
-      },
-      "therapist": {
-        "id": "T1",
-        "name": "Carmen Montoro",
-        "type":"THERAPIST"
-      },
-      "therapy": {
-        "id": "S1"
-      },
+      "date": "20171101",
+      "time": "11:30",
+      "therapist": "T1",
+      "therapy": "S1",
       "address": "Calle Pedo, 22 Madrid"
     },
     {
@@ -27,20 +17,10 @@
       "status": {
         "canceled": false
       },
-      "date": {
-        "year": "2017",
-        "month": "11",
-        "day": "11",
-        "time": "12:00"
-      },
-      "therapist": {
-        "id": "T1",
-        "name": "Carmen Montoro",
-        "type":"THERAPIST"
-      },
-      "therapy": {
-        "id": "S1"
-      },
+      "date": "20171102",
+      "time": "12:30",
+      "therapist": "T1",
+      "therapy": "S1",
       "address": "Calle Pedo, 22 Madrid"
     },
     {
@@ -49,20 +29,10 @@
       "status": {
         "canceled": false
       },
-      "date": {
-        "year": "2017",
-        "month": "11",
-        "day": "03",
-        "time": "17:30"
-      },
-      "therapist": {
-        "id": "T1",
-        "name": "Carmen Montoro",
-        "type":"THERAPIST"
-      },
-      "therapy": {
-        "id": "S3"
-      },
+      "date": "20171103",
+      "time": "17:30",
+      "therapist": "T1",
+      "therapy": "S1",
       "address": "Calle Pedo, 22 Madrid"
     },
     {
@@ -71,20 +41,10 @@
       "status": {
         "canceled": false
       },
-      "date": {
-        "year": "2017",
-        "month": "11",
-        "day": "05",
-        "time": "20:30"
-      },
-      "therapist": {
-        "id": "T1",
-        "name": "Carmen Montoro",
-        "type":"THERAPIST"
-      },
-      "therapy": {
-        "id": "S2"
-      },
+      "date": "20171105",
+      "time": "20:30",
+      "therapist": "T1",
+      "therapy": "S1",
       "address": "Calle Pedo, 22 Madrid"
     },
     {
@@ -98,20 +58,10 @@
         },
         "reason": "Te folle un pez"
       },
-      "date": {
-        "year": "2017",
-        "month": "11",
-        "day": "05",
-        "time": "20:30"
-      },
-      "therapist": {
-        "id": "T1",
-        "name": "Carmen Montoro",
-        "type":"THERAPIST"
-      },
-      "therapy": {
-        "id": "S2"
-      },
+      "date": "20171108",
+      "time": "11:30",
+      "therapist": "T1",
+      "therapy": "S2",
       "address": "Calle Pedo, 22 Madrid"
     }
   ],  
@@ -120,20 +70,10 @@
       "status": {
         "canceled": false
       },
-      "date": {
-        "year": "2017",
-        "month": "11",
-        "day": "01",
-        "time": "10:00"
-      },
-      "therapist": {
-        "id": "T1",
-        "name": "Carmen Montoro",
-        "type":"THERAPIST"
-      },
-      "therapy": {
-        "id": "S1"
-      },
+      "date": "20180306",
+      "time": "11:30",
+      "therapist": "T1",
+      "therapy": "S1",
       "address": "Calle Pedo, 22 Madrid"
     },
     {
@@ -142,20 +82,10 @@
       "status": {
         "canceled": false
       },
-      "date": {
-        "year": "2017",
-        "month": "11",
-        "day": "11",
-        "time": "11:30"
-      },
-      "therapist": {
-        "id": "T1",
-        "name": "Carmen Montoro",
-        "type":"THERAPIST"
-      },
-      "therapy": {
-        "id": "S1"
-      },
+      "date": "20171111",
+      "time": "11:30",
+      "therapist": "T1",
+      "therapy": "S1",
       "address": "Calle Pedo, 22 Madrid"
     },
     {
@@ -164,20 +94,10 @@
       "status": {
         "canceled": false
       },
-      "date": {
-        "year": "2017",
-        "month": "11",
-        "day": "03",
-        "time": "17:30"
-      },
-      "therapist": {
-        "id": "T1",
-        "name": "Carmen Montoro",
-        "type":"THERAPIST"
-      },
-      "therapy": {
-        "id": "S3"
-      },
+      "date": "20171112",
+      "time": "11:30",
+      "therapist": "T1",
+      "therapy": "S3",
       "address": "Calle Pedo, 22 Madrid"
     },
     {
@@ -186,20 +106,10 @@
       "status": {
         "canceled": false
       },
-      "date": {
-        "year": "2017",
-        "month": "11",
-        "day": "05",
-        "time": "20:30"
-      },
-      "therapist": {
-        "id": "T1",
-        "name": "Carmen Montoro",
-        "type":"THERAPIST"
-      },
-      "therapy": {
-        "id": "S2"
-      },
+      "date": "20171113",
+      "time": "11:30",
+      "therapist": "T1",
+      "therapy": "S2",
       "address": "Calle Pedo, 22 Madrid"
     },
     {
@@ -213,20 +123,10 @@
         },
         "reason": "Te folle un pez"
       },
-      "date": {
-        "year": "2017",
-        "month": "11",
-        "day": "06",
-        "time": "17:30"
-      },
-      "therapist": {
-        "id": "T1",
-        "name": "Carmen Montoro",
-        "type":"THERAPIST"
-      },
-      "therapy": {
-        "id": "S2"
-      },
+      "date": "20171114",
+      "time": "11:30",
+      "therapist": "T1",
+      "therapy": "S2",
       "address": "Calle Pedo, 22 Madrid"
     }
   ],

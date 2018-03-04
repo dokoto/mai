@@ -1,17 +1,17 @@
 <template>
   <li :id="session.id"
     class="time-box"
-    v-bind:class="{ sessionUnavailable: !session.permisions.editable }"
-    v-bind:data-time="session.time"
-    v-bind:data-selectedday="selectedDay"
-    v-on:click="handleSessionClick">
+    :class="{ sessionUnavailable: !session.permisions.editable }"
+    :data-time="session.time"
+    :data-selectedday="selectedDay"
+    @click="handleSessionClick">
     <span class="time">{{ session.time }}</span>
     <span class="v-separator"></span>
     <input type="checkbox"
-      v-bind:id="checkId"
+      :id="checkId"
       :checked="!session.permisions.editable"
       :disabled="!session.permisions.editable">
-    <label v-bind:for="checkId">{{sessionName }}</label>
+    <label :for="checkId">{{sessionName }}</label>
   </li>
 </template>
 
@@ -44,7 +44,7 @@ export default {
   display: inline-flex;
   flex-direction: row;
   border-bottom: solid 1px;
-  border-color: $colorGrey1;
+  border-color: $colorGrey3;
   flex: 0 0 auto;
 
   .time {
@@ -64,7 +64,7 @@ export default {
   .v-separator {
     width: 1px;
     margin: 6px 0;
-    background: $colorGrey1;
+    background: $colorGrey3;
   }
 
   .sessionUnavailable .time {

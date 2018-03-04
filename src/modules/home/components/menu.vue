@@ -23,6 +23,7 @@ import calendarIcon from '../../../../static/img/icon-calendar.png';
 import emailIcon from '../../../../static/img/icon-email.png';
 import chatIcon from '../../../../static/img/icon-chat.png';
 import phoneIcon from '../../../../static/img/icon-phone.png';
+import * as consts from '../../../common/constants.js'
 
 moment.locale(window.glob.language);
 
@@ -39,9 +40,7 @@ export default {
   },
   computed: {
     calendarUrl() {
-      return `/calendar/${ this.userId }/${ moment().format('YYYY') }/${ moment().format('MM') }/${ moment()
-        .add(1, 'days')
-        .format('DD') }`;
+      return `/calendar/${ this.userId }/${ moment().add(1, 'days').format(consts.INT_DATE_FORMAT) }`;
     },
   },
 };

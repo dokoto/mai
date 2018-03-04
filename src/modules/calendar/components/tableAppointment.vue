@@ -1,10 +1,10 @@
 <template>
   <ul class="day-view box">
     <RowAppointment v-for="session in toDaySessions"
-      v-bind:key="session.id"
-      v-bind:session="session"
-      v-bind:selectedDay="selectedDay"
-      v-on:sessionClick="handleSessionClick" />
+      :key="session.id"
+      :session="session"
+      :selectedDay="selectedDay"
+      @sessionClick="handleSessionClick" />
   </ul>
 </template>
 
@@ -30,6 +30,7 @@ export default {
   overflow-y: auto;
   flex-wrap: nowrap;
   padding-left: 0;
+  border-radius: 5px;  
 }
 .day-view li:last-child {
   border-bottom: 0;

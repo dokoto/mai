@@ -44,7 +44,7 @@ function mapCalendar(dateString) {
 }
 
 export function formatDateNumeric(date = new Date()) {
-  return moment(date, consts.INT_DATE_FORMAT).format('YYYYMMDD');
+  return moment(date, consts.INT_DATE_FORMAT).format(consts.INT_DATE_FORMAT);
 }
 
 function createDayAHeadArray(dateString, numOfMonthsAHead) {
@@ -92,7 +92,7 @@ export function findSessionById(id) {
 }
 
 export function findSessionByTime(time) {
-  return item => _.get(item, 'date.time') === time;
+  return item => _.get(item, 'time') === time;
 }
 
 export function findTherapyTexts(session) {

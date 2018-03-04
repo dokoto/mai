@@ -1,121 +1,92 @@
 import moment from 'moment';
 import _ from 'lodash';
-import $ from 'jquery';
-import services from '../../../common/services';
+import * as services from '../../../common/services';
+import * as consts from '../../../common/constants';
 
 import {
   RECEIVE_TODAY_SESSIONS,
   RECEIVE_SESSION_TIME_SCHEDULE,
   SET_USER_ID,
   RECEIVE_THERAPYES,
-  SAVE_SESSION,
-  CLOSE_SESSION_DIALOG,
-  SET_SELECTED_DAY,
+  SET_SELECTED_DATA,
+  SET_INIT_DATE,
 } from './types';
-import { generateAppointmentTable, findSessionById } from '../../../common/utils';
+import { formatDateNumeric, generateAppointmentTable } from '../../../common/utils';
 
 moment.locale(window.glob.language.toLowerCase());
 
 const state = {
-  userId: '',
-  toDaySessions: [],
-  selectedDay: '',
-  timeSelected: '',
-  sessionTimeSchedule: [],
-  therapies: [],
-  newAppointment: {
-    isDialogOpen: false,
-  },
+  userId: consts.EMPTY_STRING,
+  toDaySessions: consts.EMPTY_ARRAY,
+  selectedDate: formatDateNumeric(),
+  timeSelected: consts.EMPTY_STRING,
+  sessionTimeSchedule: consts.EMPTY_ARRA,
+  therapies: consts.EMPTY_ARRA,
+  numberOfMonths: consts.MONTHS_INTERVAL,
+  initDate: consts.EMPTY_STRING,
 };
 
 const getters = {
-  selectedDay: currState => currState.selectedDay,
   toDaySessions: currState => currState.toDaySessions,
   sessionTimeSchedule: currState => currState.sessionTimeSchedule,
   getTherapies: currState => currState.therapies,
-  newAppointment: currState => currState.newAppointment,
-  userId: currState => currState.userId,
 };
 
-const actions = {
-  async getToDaySessions({ commit }, selectedDay) {
-    commit(SET_SELECTED_DAY, selectedDay);
+/*
+ * TERAPIA: therapy
+ * TERAPIAS: therapies
+ * -----------------------
+ * TERAPEUTA: therapi
+ * TERAPEUTAS: therapists
+ */
 
-    const daySessions = await services.getToDaySessions(selectedDay);
+const actions = {
+  async getToDaySessions({ commit }) {
+    const daySessions = await services.getToDaySessions(state.selectedDate);
     const sessionTimeSchedule = await services.getSessionTimeSchedule();
     commit(RECEIVE_SESSION_TIME_SCHEDULE, { sessionTimeSchedule });
 
-    const therapyIds = daySessions.map(item => _.get(item, 'therapy.id'));
-    const therapies = await services.getTherapies(therapyIds);
+    const therapy = _.get(daySessions, '[0].therapy');
+    const therapies = await services.getTherapies([therapy]);
     commit(RECEIVE_THERAPYES, { therapies });
     commit(RECEIVE_TODAY_SESSIONS, {
       sessionTimeSchedule,
       daySessions,
-      selectedDay,
+      selectedDate: state.selectedDate,
       therapies,
-      userId: getters.userId,
+      userId: state.userId,
     });
   },
   setUserId({ commit }, userId) {
     commit(SET_USER_ID, { userId });
   },
-  changeDay({ commit, dispatch }, selectedDay) {
-    commit(SET_USER_ID, selectedDay);
-    dispatch('getToDaySessions', selectedDay);
+  changeDay({ commit }, selectedDate) {
+    commit(SET_SELECTED_DATA, selectedDate);
   },
-  closeAppointmentDialog({ commit }) {
-    commit(CLOSE_SESSION_DIALOG, false);
-  },
-  async openAppointmentDialog({ commit }, {
-    router, id, daySelected, timeSelected,
-  }) {
-    const sessionTimeSelected = _.find(getters.sessionTimeSchedule, findSessionById(id));
-    const permisions = _.get(sessionTimeSelected, 'permisions');
-    if (permisions.editable) {
-      const $check = $(`#${ id }-check`);
-      if (!$check.is(':checked')) {
-        const therapists = await services.getUser('THERAPIST');
-        const therapies = await services.getTherapies();
-        commit(SAVE_SESSION, {
-          open: true,
-          therapists,
-          timeSelected,
-          daySelected,
-          therapies,
-          sessionTimeSelected,
-        });
-      }
-    } else if (permisions.view) {
-      router.push({
-        name: 'session',
-        params: { sessionId: id },
-      });
-    }
+  initDate({ commit }, initDate = formatDateNumeric()) {
+    commit(SET_INIT_DATE, { initDate });
   },
 };
 
 const mutations = {
-  [CLOSE_SESSION_DIALOG](currState, isDialogOpen) {
-    currState.newAppointment.isDialogOpen = isDialogOpen;
-  },
   [RECEIVE_TODAY_SESSIONS](currState, toDaySessionsDatas) {
     const {
-      sessionTimeSchedule, daySessions, selectedDay, therapies, userId,
+      sessionTimeSchedule, daySessions, selectedDate, therapies, userId,
     } = toDaySessionsDatas;
     currState.toDaySessions = generateAppointmentTable(
       sessionTimeSchedule,
       daySessions,
-      selectedDay,
+      selectedDate,
       therapies,
       userId
     );
-    currState.selectedDay = toDaySessionsDatas.selectedDay;
+    currState.selectedDate = toDaySessionsDatas.selectedDate;
   },
   [RECEIVE_SESSION_TIME_SCHEDULE](currState, { sessionTimeSchedule }) {
     currState.sessionTimeSchedule = sessionTimeSchedule;
   },
-  [SET_SELECTED_DAY](currState, selectedDay) {
-    currState.selectedDay = selectedDay;
+  [SET_SELECTED_DATA](currState, selectedDate) {
+    currState.selectedDate = selectedDate;
   },
   [SET_USER_ID](currState, { userId }) {
     currState.userId = userId;
@@ -123,8 +94,8 @@ const mutations = {
   [RECEIVE_THERAPYES](currState, { therapies }) {
     currState.therapies = therapies;
   },
-  [SAVE_SESSION](currState, newAppointment) {
-    currState.newAppointment = newAppointment;
+  [SET_INIT_DATE](currState, { initDate }) {
+    currState.initDate = initDate;
   },
 };
 

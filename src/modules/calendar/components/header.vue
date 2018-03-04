@@ -25,15 +25,15 @@ import * as consts from '../../../common/constants';
 moment.locale(window.glob.language);
 
 export default {
-  props: ['userId', 'selectedDay'],
+  props: ['userId', 'selectedDate'],
   computed: {
     yearMonth() {
-      return `${ moment(this.selectedDay, consts.INT_DATE_FORMAT)
+      return `${ moment(this.selectedDate, consts.INT_DATE_FORMAT)
         .format('MMM')
-        .toUpperCase().replace('.', '') } ${ moment(this.selectedDay, consts.INT_DATE_FORMAT).format('YYYY') }`;
+        .toUpperCase().replace('.', '') } ${ moment(this.selectedDate, consts.INT_DATE_FORMAT).format('YYYY') }`;
     },
     dayName() {
-      return moment(this.selectedDay, consts.INT_DATE_FORMAT)
+      return moment(this.selectedDate, consts.INT_DATE_FORMAT)
         .format('dddd')
         .toUpperCase();
     },

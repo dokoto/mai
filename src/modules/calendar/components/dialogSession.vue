@@ -1,3 +1,4 @@
+//DELTE?
 <template>  
   <dialog class="modal"
     :id="dialodId">

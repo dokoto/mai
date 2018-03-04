@@ -1,3 +1,4 @@
+//DELTE?
 <template>
   <div v-bind:class="{ lock: active }"></div>
 </template>

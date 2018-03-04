@@ -1,5 +1,4 @@
 import * as paths from './paths';
-import { getArrayDate } from './utils';
 
 export function getNextSessions(userId) {
   return fetch(`${ paths.nextSessions }/${ userId }`).then(response => response.json());
@@ -23,8 +22,7 @@ export function getUsersByType(type) {
   return fetch(`${ paths.users }/${ type }`).then(response => response.json());
 }
 export function getToDaySessions(selectedDay) {
-  const [yearNumber, monthNumber, dayNumber] = getArrayDate(selectedDay);
-  return fetch(`${ paths.Sessions }/${ yearNumber }/${ monthNumber }/${ dayNumber }`).then(response =>
+  return fetch(`${ paths.sessionsBy }/${ selectedDay }`).then(response =>
     response.json());
 }
 export function getSessionTimeSchedule() {
