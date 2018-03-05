@@ -81,27 +81,35 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/base.scss';
 
+$month-box-h: 4.375em;
+$month-box-w: 4.375em;
+$vertial-month-font-size: 0.9em;
+$day-box-w: 4.375em;
+$day-name-font-size: 1.2em;
+$day-number-font-size: 2.2em;
+$border-bottom-size: 0.4em;
+
 .month {
   display: inline-flex;
   flex-direction: row;
   min-width: auto;
   margin-right: 1%;
-  border-bottom: solid 7px;
+  border-bottom: solid $border-bottom-size;
 
   .month-box {
     display: inline-flex;
     flex-direction: row;
     color: $colorGrey2;
-    width: 50px;
-    height: 50px;
+    padding-bottom: 0.5em;
   }
 
   .month-v-name {
     writing-mode: vertical-rl;
     text-orientation: upright;
     font-weight: bold;
-    font-size: 0.7em;
+    font-size: $vertial-month-font-size;
     color: $colorDarkGrey2;
+    padding: 0.1em;
     .hide {
       visibility: hidden;
     }
@@ -120,15 +128,15 @@ export default {
     display: inline-flex;
     flex-direction: column;
     color: $colorDarkGrey1;
-    width: 50px;
+    width: $day-box-w;
 
     .day-name {
-      font-size: 0.7em;
+      font-size: $day-name-font-size;
       text-align: center;
     }
 
     .day-number {
-      font-size: 1.7em;
+      font-size: $day-number-font-size;
       text-align: center;
       padding: 0;
       margin: 0;

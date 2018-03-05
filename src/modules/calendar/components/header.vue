@@ -29,7 +29,7 @@ export default {
   computed: {
     yearMonth() {
       return `${ moment(this.selectedDate, consts.INT_DATE_FORMAT)
-        .format('MMM')
+        .format('MMMM')
         .toUpperCase().replace('.', '') } ${ moment(this.selectedDate, consts.INT_DATE_FORMAT).format('YYYY') }`;
     },
     dayName() {
