@@ -1,7 +1,9 @@
 <template>
-  <aside class="day-of-month">
-    <span class="day-number">{{ currDayNumber }}</span>
-    <span class="day-name">{{ currDayName }}</span>
+  <aside class="day-of-month flex-row">
+    <div class="flex-column day-col">
+      <span class="day-number">{{ currDayNumber }}</span>
+      <span class="day-name">{{ currDayName }}</span>
+    </div>
   </aside>
 </template>
 
@@ -25,28 +27,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../styles/base.scss';
 .day-of-month {
   color: white;
-  position: absolute;
-  top: 0;
-  display: inline-flex;
-  flex-direction: column;
-  margin: 4%;
-}
 
-.day-number {
-  text-align: center;
-  font-size: 5em;
-  font-weight: bold;
-  width: 100%;
-  margin-top: 4%;
-  margin-left: 4%;
-}
+  .day-col {
+    margin-left: 3%;
+    margin-bottom: 10%;
 
-.day-name {
-  text-align: center;
-  font-size: 1.3em;
-  width: 100%;
-  margin-left: 4%;
+    .day-number {
+      text-align: center;
+      font-size: 5em;
+      font-weight: bold;
+    }
+
+    .day-name {
+      text-align: center;
+      font-size: 1.3em;
+    }
+  }
 }
 </style>

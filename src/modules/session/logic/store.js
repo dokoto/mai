@@ -64,10 +64,10 @@ const actions = {
   // DELETE?
   async getSession({ commit }, sessionId) {
     const session = await services.getSession(sessionId);
-    const therapies = await services.getTherapies([_.get(session, '[0].therapy.id')]);
+    const therapies = await services.getTherapies([_.get(session, '[0].therapy')]);
     const therapists = await services.getUser(
-      _.get(session, '[0].therapist.type'),
-      _.get(session, '[0].therapist.id')
+      consts.USERS.THERAPIST,
+      _.get(session, '[0].therapist')
     );
     commit(RECEIVE_SESSION, { session });
     commit(RECEIVE_SESSION_THERAPIES, { therapies });

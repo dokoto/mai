@@ -1,5 +1,5 @@
 <template>
-  <article class="session-view-page bg-beach">    
+  <article class="session-view-page">    
     <div class="symbol-container">
       <img class="symbol" src="../../../static/img/therapy-symbol.png" />
     </div>
@@ -78,18 +78,15 @@ export default {
       mapZoom: 'session/mapZoom',
     }),
     formatDate() {
-      return moment(`${ this.session.date.year }-${ this.session.date.month }-${ this.session.date
-        .day }`, consts.INT_DATE_FORMAT)
+      return moment(`${ this.session.date}`, consts.INT_DATE_FORMAT)
         .format('dddd D MMMM')
         .toUpperCase();
     },
     timeBegin() {
-      return moment(`${ this.session.date.year }-${ this.session.date.month }-${ this.session.date
-        .day } ${ this.session.date.time }`, consts.INT_DATE_FORMAT).format('hh:mm A');
+      return moment(`${ this.session.date } ${ this.session.date.time }`, consts.INT_DATE_FORMAT).format('hh:mm A');
     },
     timeEnd() {
-      return moment(`${ this.session.date.year }-${ this.session.date.month }-${ this.session.date
-        .day } ${ this.session.date.time }`, consts.INT_DATE_FORMAT)
+      return moment(`${ this.session.date } ${ this.session.date.time }`, consts.INT_DATE_FORMAT)
         .add(consts.THERAPY_SESSION_IN_MINUTES, 'm')
         .format('hh:mm A');
     },
@@ -114,6 +111,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../common/styles/base.scss';
 .session-view-page {
   overflow-y: scroll;
   position: relative;
@@ -123,18 +121,5 @@ export default {
   width: 100%;
   height: auto;
   margin-bottom: 2%;
-
-  .symbol-container {
-    margin-top: 10%;
-    margin-bottom: 5%;
-    text-align: center;
-    .symbol {
-      width: 9em;
-      border: solid 0.1em;
-      border-radius: 50%;
-      border-color: white;
-      padding: 0px;
-    }
-  }
 }
 </style>

@@ -57,7 +57,8 @@ export default {
   display: inline-flex;
   flex-direction: row;
   border-radius: 5px;
-
+  flex-shrink: 0;
+  
   .today-view {
     display: inline-flex;
     flex-direction: column;

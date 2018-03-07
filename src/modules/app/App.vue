@@ -20,7 +20,7 @@ html {
 body,
 input,
 textarea {
-  font-family: Arial, Tahoma, HelveticaNeue;
+  font-family: 'Open Sans', sans-serif;
 }
 
 body {

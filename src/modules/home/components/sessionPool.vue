@@ -4,7 +4,7 @@
       :key="session.id"
       v-bind:id="session.id"
       v-bind:sessionDate="session.date"
-      v-bind:sessionTherapy="therapysByLang[session.therapy.id]"
+      v-bind:sessionTherapy="therapysByLang[session.therapy]"
       v-bind:withTimeInterval="false"
       v-on:sessionClick="handleSessionClick" />
   </section>
@@ -33,9 +33,14 @@ export default {
 <style lang="scss" scoped>
 .appointments {
   width: 100%;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
+  overflow-y: auto;
   margin-bottom: 3%;
+  padding-top: 4%;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 </style>
 

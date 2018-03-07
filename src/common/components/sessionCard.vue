@@ -1,8 +1,12 @@
 <template>
-  <div class="sessionCard box" v-bind:id="id" v-on:click="handleSessionClick">
+  <div class="sessionCard box"
+    v-bind:id="id"
+    v-on:click="handleSessionClick">
     <span class="date">{{ formatDateTime }}</span>
-    <span class="name" v-bind:class="{ marginxl: !withTimeInterval }">{{ sessionTherapy.name }}</span>
-    <span class="time-interval" v-if="withTimeInterval">{{ timeBegin }} &#8680; {{ timeEnd }}</span>
+    <span class="name"
+      :class="{ marginxl: !withTimeInterval }">{{ sessionTherapy.name }}</span>
+    <span class="time-interval"
+      v-if="withTimeInterval">{{ timeBegin }} &#8680; {{ timeEnd }}</span>
   </div>
 </template>
 
@@ -14,18 +18,25 @@ export default {
   props: ['id', 'sessionDate', 'sessionTherapy', 'withTimeInterval'],
   computed: {
     formatDateTime() {
-      return moment(`${ this.sessionDate.year }-${ this.sessionDate.month }-${ this.sessionDate
-        .day } ${ this.sessionDate.time }`, consts.INT_DATE_FORMAT)
+      return moment(`${this.sessionDate}`, consts.INT_DATE_FORMAT)
         .format('dddd D MMMM')
         .toUpperCase();
     },
     timeBegin() {
-      return moment(`${ this.sessionDate.year }-${ this.sessionDate.month }-${ this.sessionDate
-        .day } ${ this.sessionDate.time }`, consts.INT_DATE_FORMAT).format('hh:mm A');
+      return moment(
+        `${this.sessionDate.year}-${this.sessionDate.month}-${this.sessionDate.day} ${
+          this.sessionDate.time
+        }`,
+        consts.INT_DATE_FORMAT,
+      ).format('hh:mm A');
     },
     timeEnd() {
-      return moment(`${ this.sessionDate.year }-${ this.sessionDate.month }-${ this.sessionDate
-        .day } ${ this.sessionDate.time }`, consts.INT_DATE_FORMAT)
+      return moment(
+        `${this.sessionDate.year}-${this.sessionDate.month}-${this.sessionDate.day} ${
+          this.sessionDate.time
+        }`,
+        consts.INT_DATE_FORMAT,
+      )
         .add(45, 'm')
         .format('hh:mm A');
     },
@@ -41,9 +52,10 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/base.scss';
 .sessionCard {
-  display: inline-flex;
-  flex-direction: column;
+  display: flex;
   border-radius: 5px;
+  flex-direction: column;
+  flex-shrink: 0;
   .date {
     font-size: 1em;
     font-weight: bold;

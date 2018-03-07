@@ -7,7 +7,7 @@
       :selectedDate="selectedDate"
       :numberOfMonths="numberOfMonths"
       @dayCarruselDayClick="handleDayClick"
-      class="box" />
+      class="box shrink-0" />
     <TableAppointment v-if="toDaySessions.length > 0"
       :selectedDay="selectedDate"
       :toDaySessions="toDaySessions"
@@ -64,6 +64,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../common/styles/base.scss';
+
 .calendar-page {
   position: relative;
   display: inline-flex;

@@ -192,6 +192,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../common/styles/base.scss';
 .session-edit-page {
   overflow-y: scroll;
   position: relative;
@@ -201,18 +202,5 @@ export default {
   width: 100%;
   height: auto;
   margin-bottom: 2%;
-
-  .symbol-container {
-    margin-top: 10%;
-    margin-bottom: 5%;
-    text-align: center;
-    .symbol {
-      width: 9em;
-      border: solid 0.1em;
-      border-radius: 50%;
-      border-color: white;
-      padding: 0px;
-    }
-  }
 }
 </style>

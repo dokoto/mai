@@ -5,12 +5,8 @@
     :data-time="session.time"
     :data-selectedday="selectedDay"
     @click="handleSessionClick">
-    <span class="time">{{ session.time }}</span>
+    <span class="time flex-column flex-align-first-center">{{ session.time }}</span>
     <span class="v-separator"></span>
-    <input type="checkbox"
-      :id="checkId"
-      :checked="!session.permisions.editable"
-      :disabled="!session.permisions.editable">
     <label :for="checkId">{{sessionName }}</label>
   </li>
 </template>
@@ -20,14 +16,12 @@ export default {
   props: ['session', 'selectedDay'],
   computed: {
     sessionName() {
-      return this.session.permisions.view
-        ? this.session.name
-        : this.$i18n.t('calendar.noAvaiable');
+      return this.session.permisions.view ? this.session.name : this.$i18n.t('calendar.noAvaiable');
     },
   },
   data() {
     return {
-      checkId: `${ this.session.id }-check`,
+      checkId: `${this.session.id}-check`,
     };
   },
   methods: {
@@ -46,9 +40,10 @@ export default {
   border-bottom: solid 1px;
   border-color: $colorGrey3;
   flex: 0 0 auto;
+  height: 6em;
 
   .time {
-    font-size: 1em;
+    font-size: 1.1em;
     color: black;
     font-weight: bold;
     margin: 5%;
@@ -77,58 +72,6 @@ export default {
 
   .sessionUnavailable input[type='checkbox'] + label:before {
     border-color: $colorGrey2;
-  }
-
-  input[type='checkbox'] {
-    display: none;
-  }
-
-  input[type='checkbox'] + label {
-    display: block;
-    position: relative;
-    padding-left: 10%;
-    font-size: 1em;
-    color: $colorDarkGrey2;
-    cursor: pointer;
-    margin-top: 6%;
-    margin-left: 8%;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-
-  input[type='checkbox'] + label:last-child {
-    margin-bottom: 0;
-  }
-
-  input[type='checkbox'] + label:before {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid $colorBlue1;
-    position: absolute;
-    left: -14px;
-    top: -5px;
-    opacity: 0.6;
-    -webkit-transition: all 0.12s, border-color 0.08s;
-    transition: all 0.12s, border-color 0.08s;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-
-  input[type='checkbox']:checked + label:before {
-    width: 10px;
-    top: -10px;
-    left: -5px;
-    border-radius: 0;
-    opacity: 1;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 }
 </style>

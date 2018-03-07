@@ -23,6 +23,18 @@
   justify-content: center;
 }
 
+.grow-2 {
+  flex-grow: 2;
+}
+
+.grow-0 {
+  flex-grow: 0;
+}
+
+.shrink-0 {
+  flex-shrink: 0;
+}
+
 .flex-align-second-center {
     align-items: center;
 }
@@ -34,6 +46,31 @@
 .padding-2x {
   padding: 2%;
 }
+
+.symbol-container {
+  margin-top: 10%;
+  margin-bottom: 5%;
+  text-align: center;
+  .symbol {
+    width: 9em;
+    border: solid 0.1em;
+    border-radius: 50%;
+    border-color: white;
+    padding: 0px;
+  }
+}
+
+.symbol-container-no-border {
+  margin-top: 10%;
+  margin-bottom: 5%;
+  text-align: center;
+  .symbol {
+    width: 9em;
+    padding: 0px;
+  }
+}
+
+@import url(//fonts.googleapis.com/css?family=Open+Sans);
 
 $bg: '../../../static/img/app-bg.jpeg';
 $form-font-size: 1.2em;

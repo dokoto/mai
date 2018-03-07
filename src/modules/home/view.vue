@@ -1,7 +1,13 @@
 <template>
-  <div id="home-container" class="home-view container bg-beach">
-    <DayCard />
-    <SessionPool :sessions="sessions" :therapys="therapys" v-if="sessions.length > 0 && therapys.length > 0" v-on:sessionClick="handleSessionClick" />
+  <div id="home-container"
+    class="home-view container">
+    <div class="symbol-container-no-border  grow-2">
+      <img class="symbol" src="../../../static/img/medical.png" />
+    </div>
+    <SessionPool :sessions="sessions"
+      :therapys="therapys"
+      v-if="sessions.length > 0 && therapys.length > 0"
+      v-on:sessionClick="handleSessionClick" />
     <HomeMenu :userId="userId" />
   </div>
 </template>
@@ -51,12 +57,5 @@ export default {
     height: 100%;
   }
 
-  &.bg-beach {
-    background-image: url('../../../static/img/app-bg.jpeg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-  }
 }
 </style>

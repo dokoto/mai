@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     calendarUrl() {
-      return `/calendar/${ this.userId }/${ moment().add(1, 'days').format(consts.INT_DATE_FORMAT) }`;
+      return `/calendar/${ this.userId }`;
     },
   },
 };
@@ -58,6 +58,7 @@ export default {
   background-color: white;
   justify-content: space-evenly;
   border-radius: 5px;
+  flex-shrink: 0;
 }
 </style>
 
