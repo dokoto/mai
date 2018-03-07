@@ -1,13 +1,17 @@
 <template>
   <li :id="session.id"
-    class="time-box"
+    class="time-box flex-row shrink-0"
     :class="{ sessionUnavailable: !session.permisions.editable }"
     :data-time="session.time"
     :data-selectedday="selectedDay"
     @click="handleSessionClick">
     <span class="time flex-column flex-align-first-center">{{ session.time }}</span>
     <span class="v-separator"></span>
-    <label :for="checkId">{{sessionName }}</label>
+    <div class="mini-session-data flex-column flex-align-first-center grow-2">
+      <span class="add">Nueva cita</span>
+      <span class="therapy">FISIOTERAPIA</span>
+      <span class="therapi">Carmen Hitler Perez</span>
+    </div>
   </li>
 </template>
 
@@ -35,11 +39,8 @@ export default {
 <style lang="scss" scoped>
 @import '../../../common/styles/base.scss';
 .time-box {
-  display: inline-flex;
-  flex-direction: row;
   border-bottom: solid 1px;
   border-color: $colorGrey3;
-  flex: 0 0 auto;
   height: 6em;
 
   .time {
@@ -66,12 +67,16 @@ export default {
     color: $colorGrey2;
   }
 
-  .sessionUnavailable input[type='checkbox'] + label {
-    color: $colorGrey2;
-  }
-
-  .sessionUnavailable input[type='checkbox'] + label:before {
-    border-color: $colorGrey2;
+  .mini-session-data {
+    padding-left: 1em;
+    .add {
+      font-size: 1.2em;
+      color: green;
+    }
+    .therapy {
+    }
+    .therapi {
+    }
   }
 }
 </style>
