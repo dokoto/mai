@@ -96,27 +96,43 @@ export function findSessionByTime(time) {
 }
 
 export function findTherapyTexts(session) {
-  return item => item.id === _.get(session, 'therapy.id', '');
+  return item => item.id === _.get(session, 'therapy', '');
 }
 
-export function generateAppointmentTable(schedule, sessions, selectedDay, therapys, userId) {
+/*
+ * TERAPIA: therapy
+ * TERAPIAS: therapies
+ * -----------------------
+ * TERAPEUTA: therapi
+ * TERAPEUTAS: therapists
+ */
+export function generateAppointmentTable(
+  schedule,
+  sessions,
+  selectedDay,
+  therapys,
+  therapists,
+  userId
+) {
   return schedule.map(session => {
     const sessionOccupy = _.find(sessions, findSessionByTime(session));
     const sessionTexts = _.find(therapys, findTherapyTexts(sessionOccupy));
     const sessionNameKey = `texts.${ window.glob.language }.name`;
+    const therapi = therapists.filter(item => item.id === _.get(sessionOccupy, 'therapist'));
 
     return {
       id: _.get(sessionOccupy, 'id', `${ session.replace(':', '') }-${ selectedDay }-${ userId }`),
       time: _.get(sessionOccupy, 'date.time', session),
-      name: _.get(sessionTexts, sessionNameKey, ''),
+      therapy: _.get(sessionTexts, sessionNameKey, ''),
+      therapi: _.get(therapi, '[0].name'),
       permisions: {
         view: _.get(sessionOccupy, 'id', false)
-          ? userId === sessionOccupy.userId || userId === sessionOccupy.therapist.id
+          ? userId === sessionOccupy.userId || userId === sessionOccupy.therapist
           : true,
         cancelable: _.get(sessionOccupy, 'id', false)
-          ? userId === sessionOccupy.userId || userId === sessionOccupy.therapist.id
+          ? userId === sessionOccupy.userId || userId === sessionOccupy.therapist
           : false,
-        editable: _.get(sessionOccupy, 'id', false) ? userId === sessionOccupy.therapist.id : true,
+        editable: _.get(sessionOccupy, 'id', false) ? userId === sessionOccupy.therapist : true,
       },
       sessionOccupy,
     };

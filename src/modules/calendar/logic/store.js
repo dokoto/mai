@@ -46,14 +46,15 @@ const actions = {
     const sessionTimeSchedule = await services.getSessionTimeSchedule();
     commit(RECEIVE_SESSION_TIME_SCHEDULE, { sessionTimeSchedule });
 
-    const therapy = _.get(daySessions, '[0].therapy');
-    const therapies = await services.getTherapies([therapy]);
+    const therapists = await services.getUser(consts.USERS.THERAPIST);
+    const therapies = await services.getTherapies();
     commit(RECEIVE_THERAPYES, { therapies });
     commit(RECEIVE_TODAY_SESSIONS, {
       sessionTimeSchedule,
       daySessions,
       selectedDate: state.selectedDate,
       therapies,
+      therapists,
       userId: state.userId,
     });
   },
@@ -71,13 +72,19 @@ const actions = {
 const mutations = {
   [RECEIVE_TODAY_SESSIONS](currState, toDaySessionsDatas) {
     const {
-      sessionTimeSchedule, daySessions, selectedDate, therapies, userId,
+      sessionTimeSchedule,
+      daySessions,
+      selectedDate,
+      therapies,
+      therapists,
+      userId,
     } = toDaySessionsDatas;
     currState.toDaySessions = generateAppointmentTable(
       sessionTimeSchedule,
       daySessions,
       selectedDate,
       therapies,
+      therapists,
       userId
     );
     currState.selectedDate = toDaySessionsDatas.selectedDate;
