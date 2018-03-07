@@ -10,7 +10,7 @@
     </section>
     <nav class="menu">
       <a :href="homeUrl">
-        <img :src="homeIcon" class="icon-menu" />
+        <font-awesome-icon :icon="icon" size="2x" color="#848181"/>
       </a>
     </nav>
   </header>
@@ -21,11 +21,16 @@ import moment from 'moment';
 import toDayIcon from '../../../../static/img/icon-today.png';
 import homeIcon from '../../../../static/img/icon-home.png';
 import * as consts from '../../../common/constants';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import { faHome } from '@fortawesome/fontawesome-free-solid';
 
 moment.locale(window.glob.language);
 
 export default {
   props: ['userId', 'selectedDate'],
+  components: {
+    FontAwesomeIcon,
+  },
   computed: {
     yearMonth() {
       return `${ moment(this.selectedDate, consts.INT_DATE_FORMAT)
@@ -45,6 +50,7 @@ export default {
     return {
       toDayIcon,
       homeIcon,
+      icon: faHome,
     };
   },
 };
@@ -88,10 +94,10 @@ export default {
     a {
       margin-left: 8%;
     }
+  }
 
-    .icon-menu {
-      width: 20px;
-    }
+  icon-color {
+    color: $colorDarkGrey1;
   }
 }
 </style>
