@@ -1,6 +1,6 @@
 const en = {
   calendar: {
-    noAvaiable: 'Not avaiable',
+    noAvaiable: 'Busy',
   },
   session: {
     session: 'Session',

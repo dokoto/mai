@@ -1,11 +1,14 @@
 <template>
-   <section :id="id" class="card white-box">
-      <div class="title-section flex-row flex-align-first-corners flex-align-second-center">
-        <span class="title">{{ title }}</span>
-        <font-awesome-icon :icon="icon" :color="iconColor" :size="iconSize"/>
-      </div>
-      <slot />
-   </section>
+  <section :id="id"
+    class="card white-box">
+    <div class="title-section flex-row flex-align-first-corners flex-align-second-center">
+      <span class="title">{{ title }}</span>
+      <font-awesome-icon :icon="icon"
+        :color="iconColor"
+        :size="iconSize" />
+    </div>
+    <slot />
+  </section>
 </template>
 
 <script>
@@ -28,7 +31,7 @@ export default {
     icon: {
       default: function() {
         return faCheckCircle;
-      }
+      },
     },
     iconColor: {
       default: 'green',
@@ -36,8 +39,8 @@ export default {
     iconSize: {
       default: '2x',
     },
-  }
-}
+  },
+};
 </script>
 
 

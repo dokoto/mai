@@ -3,7 +3,7 @@
       "id": "201711011000",
       "userId": "C1",
       "status": {
-        "canceled": false
+        "value": "active"
       },
       "date": "20171101",
       "time": "11:30",
@@ -15,7 +15,7 @@
       "id": "201711011034",
       "userId": "C1",
       "status": {
-        "canceled": false
+        "value": "active"
       },
       "date": "20171102",
       "time": "12:30",
@@ -27,7 +27,7 @@
       "id": "201711011001",
       "userId": "C1",
       "status": {
-        "canceled": false
+        "value": "active"
       },
       "date": "20171103",
       "time": "17:30",
@@ -39,7 +39,7 @@
       "id": "201711011002",
       "userId": "C2",
       "status": {
-        "canceled": false
+        "value": "active"
       },
       "date": "20171105",
       "time": "20:30",
@@ -51,11 +51,8 @@
       "id": "201711011003",
       "userId": "C3",
       "status": {
-        "canceled": true,
-        "by": {
-          "id": "T1",
-          "type":"THERAPIST"
-        },
+        "value": "cancel",
+        "who": "T1",
         "reason": "Te folle un pez"
       },
       "date": "20171108",
@@ -68,7 +65,7 @@
   "sessions": [{
       "id": "201711011000",
       "status": {
-        "canceled": false
+        "value": "active"
       },
       "date": "20180307",
       "time": "11:30",
@@ -80,7 +77,7 @@
       "id": "201711011034",
       "userId": "C1",
       "status": {
-        "canceled": false
+        "value": "active"
       },
       "date": "20180308",
       "time": "11:30",
@@ -92,7 +89,7 @@
       "id": "201711011001",
       "userId": "C1",
       "status": {
-        "canceled": false
+        "value": "active"
       },
       "date": "20180309",
       "time": "11:30",
@@ -104,7 +101,7 @@
       "id": "201711011002",
       "userId": "C2",
       "status": {
-        "canceled": false
+        "value": "active"
       },
       "date": "20180310",
       "time": "11:30",
@@ -116,11 +113,8 @@
       "id": "201711011003",
       "userId": "C3",
       "status": {
-        "canceled": true,
-        "by": {
-          "id": "T1",
-          "type":"THERAPIST"
-        },
+        "value": "cancel",
+        "by": "T1",
         "reason": "Te folle un pez"
       },
       "date": "20180311",
@@ -192,7 +186,7 @@
       "email": "hechopolvo.3@gmail.com"
     }
   ],
-  "therapies": [
+  "therapies": [d
     {
       "id": "S1", 
       "texts": {
