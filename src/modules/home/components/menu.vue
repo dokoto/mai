@@ -1,29 +1,48 @@
 <template>
   <section class="menu">
-    <HomeMenuItem className="pastel-orange" :icon="calendarIcon" url="/calendar" />
-    <HomeMenuItem className="pastel-pink" :icon="emailIcon" url="/email" />
-    <HomeMenuItem className="pastel-blue" :icon="chatIcon" url="/chat" />
-    <HomeMenuItem className="pastel-yellow" :icon="phoneIcon" url="/phone" />
+    <HomeMenuItem className="pastel-orange"
+      :icon="calendarIcon"
+      :calendarUrl="calendarUrl" />
+    <HomeMenuItem className="pastel-pink"
+      :icon="emailIcon"
+      url="/email" />
+    <HomeMenuItem className="pastel-blue"
+      :icon="chatIcon"
+      url="/chat" />
+    <HomeMenuItem className="pastel-yellow"
+      :icon="phoneIcon"
+      url="/phone" />
   </section>
 </template>
 
 <script>
-import HomeMenuItem from "./menuItem";
-import calendarIcon from '../assets/img/icon-calendar.png';
-import emailIcon from '../assets/img/icon-email.png';
-import chatIcon from '../assets/img/icon-chat.png';
-import phoneIcon from '../assets/img/icon-phone.png';
+import moment from 'moment';
+
+import HomeMenuItem from './menuItem.vue';
+import calendarIcon from '../../../../static/img/icon-calendar.png';
+import emailIcon from '../../../../static/img/icon-email.png';
+import chatIcon from '../../../../static/img/icon-chat.png';
+import phoneIcon from '../../../../static/img/icon-phone.png';
+import * as consts from '../../../common/constants.js'
+
+moment.locale(window.glob.language);
 
 export default {
-  components: {HomeMenuItem},
-  data () {
+  props: ['userId'],
+  components: { HomeMenuItem },
+  data() {
     return {
       calendarIcon,
       emailIcon,
       chatIcon,
       phoneIcon,
-    }
-  }
+    };
+  },
+  computed: {
+    calendarUrl() {
+      return `/calendar/${ this.userId }`;
+    },
+  },
 };
 </script>
 
@@ -38,6 +57,8 @@ export default {
   flex-direction: row;
   background-color: white;
   justify-content: space-evenly;
+  border-radius: 5px;
+  flex-shrink: 0;
 }
 </style>
 

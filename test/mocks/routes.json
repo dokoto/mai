@@ -1,5 +1,14 @@
 {
   "/nextsessions/:userId": "/nextsessions?userId=:userId",
-  "/sessions/:year/:month/:day": "/sessions?date.year=:year&date.month=:month&date.day=:day",
-  "/users/:type": "/users?type=:type"
+  "/sessions/:sessionId": "/sessions?id=:sessionId",
+  "/sessions/by/:date": "/sessions?date=:date",  
+  "/users/:type": "/users?type=:type",
+  "/users/:type/:userId": "/users?type=:type&id=:userId",
+  "/sessionTimeSchedule": "/sessionTimeSchedule",
+  "/busyTimes/:userId/:date": "/busyTimes",
+  "/busyDays/:userId/:initDate/:numOfMonths": "/busyDays",
+  "/busyTherapists": "/busyTherapists",
+  "/therapies/id": "/therapies?id=:id",
+  "/new/appointment":""
 }
+  

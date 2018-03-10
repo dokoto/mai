@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta id="viewport" name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>APPOINTMENT-VIEW</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/newAppointment.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/picker.js"></script>
+</head>
+
+<body>
+  <main id="app" class="container">
+    <article class="appointment-page">
+      <div class="symbol-container">
+        <img class="symbol" src="../img/therapy-1.png" />
+      </div>
+      <section class="date-detail box">
+        <div class="title-section flex-row flex-align-first-corners flex-align-second-center">
+          <span class="title">Session</span>
+          <i class="fa fa-check-circle fa-2x" aria-hidden="true" color="green"></i>
+        </div>
+        <div class="combo-container">
+          <div class="item-selected flex-row flex-align-first-corners flex-align-second-center">
+            <span class="item-selected-value">Fisiotherapy Session</span>
+            <i class="item-selected-icon fa fa-pencil-alt" aria-hidden="true"></i>
+          </div>
+          <ul class="combo hide">
+            <li class="item">Seleccion 1</li>
+            <li class="item">Seleccion 2</li>
+            <li class="item">Seleccion 3</li>
+            <li class="item">Seleccion 4</li>
+          </ul>
+        </div>
+        <div id="data-picker-container">
+          <div id="data-picker" class="flex-row flex-align-first-corners flex-align-second-center padding-2x">
+            <span class="date">THURSDAY 16 MAY</span>
+            <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+          </div>
+          <div class="week-container hide">
+            <div class="week-view">
+              <div id="nov" class="month one">
+                <div class="month-box">
+                  <span class="month-v-name one">NOV</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">23</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">NOV</span>
+                  <div class="day-box today">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">24</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">NOV</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">25</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">NOV</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">26</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">NOV</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">27</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">NOV</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">28</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">NOV</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">29</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">NOV</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">30</span>
+                  </div>
+                </div>
+              </div>
+              <div id="nov" class="month two">
+                <div class="month-box">
+                  <span class="month-v-name two">DIC</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">23</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">DIC</span>
+                  <div class="day-box today">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">24</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">DIC</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">25</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">DIC</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">26</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">DIC</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">27</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">DIC</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">28</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">DIC</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">29</span>
+                  </div>
+                </div>
+                <div class="month-box">
+                  <span class="month-v-name hide">DIC</span>
+                  <div class="day-box">
+                    <span class="day-name">SUN</span>
+                    <span class="day-number">30</span>
+                  </div>
+                </div>
+              </div>
+              <span id="nov" class="end"></span>
+            </div>
+          </div>
+        </div>
+        <div id="time-picker-container">
+          <div id="time-picker" class="flex-row flex-align-first-corners flex-align-second-center padding-2x">
+            <span class="time-interval">11:00 &#8680; 11:45</span>
+            <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+          </div>
+          <div class="time-picker-container hide">
+            <ul class="time-container">
+              <li class="time-item">10:00</li>
+              <li class="time-item">11:30</li>
+              <li class="time-item">13:00</li>
+              <li class="time-item">16:00</li>
+              <li class="time-item">17:30</li>
+              <li class="time-item">19:00</li>
+              <li class="time-item">20:30</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="therapist box">
+        <div class="title-section flex-row flex-align-first-corners flex-align-second-center">
+          <span class="title">Therapist</span>
+          <i class="fa fa-question-circle fa-2x" aria-hidden="true" color="red"></i>
+        </div>
+        <section class="therapist-carrusel">
+          <spam class="therapist-carrusel-item">
+            <span class="therapist-img-box">
+            <img class="therapist-img" src="img/therapist-1.jpg" />
+          </span>
+            <spam class="h-separator"></spam>
+            <spam class="therapist-name">Maria del Bosque Martin Perez Castro</spam>
+          </spam>
+        </section>
+      </section>
+      <section class="location box">
+        <div class="title-section flex-row flex-align-first-corners flex-align-second-center">
+          <span class="title">Place</span>
+          <i class="fa fa-check-circle fa-2x" aria-hidden="true" color="green"></i>
+        </div>
+        <div class="input-map-container flex-row flex-align-first-corners flex-align-second-center">
+          <input type="text" class="input-map-autocomplete" placeholder="Calle Antillon, 4 28011 Madrid" />
+          <div class="input-inside-icon">
+            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="map hide" id="map"></div>
+      </section>
+      <section class="menu box">
+        <button class="c-button accept">Accept</button>
+        <spam class="v-separator"></spam>
+        <button class="c-button cancel">Cancel</button>
+      </section>
+    </article>
+  </main>
+</body>
+<script type="text/javascript">
+  const DEFAULT_ADDRESS = 'Calle Antillon, 4 28011 Madrid';
+  let DEFAULT_POSITION = {};
+  let map = null;
+  let geocoder = null;
+  let autocomplete = null;
+  let marker = null;
+
+  function initMap() {
+    const input = $('.input-map-autocomplete')[0];
+    geocoder = new google.maps.Geocoder;
+    $map = $('.map')[0];
+    autocomplete = new google.maps.places.Autocomplete(input, {});
+    geocodeAddress(DEFAULT_ADDRESS, geocoder, $map);
+
+    $('.input-map-autocomplete').on('change', function() {
+      console.log('PLACES CHANGED');
+      var address = $('.input-map-autocomplete').val();
+      geocodeAddress(address, geocoder, $map);
+    });
+  }
+
+  function geolocate() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var geolocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        setCurrentPositionInMap(geolocation);
+      });
+    }
+  }
+
+  function setPositionInMap($map, position) {
+    map = new google.maps.Map($map, {
+      zoom: 16,
+      center: position,
+      gestureHandling: 'cooperative'
+    });
+    marker = new google.maps.Marker({
+      position: position,
+      map: map
+    });
+  }
+
+  /*
+    function setCurrentPositionInMap(geolocation) {
+      var map = new google.maps.Map($('.map')[0], {
+        zoom: 15,
+        center: geolocation
+      });
+
+      var geocoder = new google.maps.Geocoder;
+      var infowindow = new google.maps.InfoWindow;
+      geocodeLatLng(geocoder, map, geolocation, infowindow);
+    }
+  */
+
+  function geocodeAddress(address, geocoder, $map) {
+    geocoder.geocode({
+      'address': address
+    }, function(results, status) {
+      if (status === 'OK') {
+        DEFAULT_POSITION = {
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        };
+        setPositionInMap($map, DEFAULT_POSITION);
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
+
+  function geocodeLatLng(geocoder, map, geolocation, infowindow) {
+    geocoder.geocode({
+      'location': geolocation
+    }, function(results, status) {
+      if (status === 'OK') {
+        if (results[1]) {
+          map.setZoom(11);
+          var marker = new google.maps.Marker({
+            position: geolocation,
+            map: map
+          });
+          $('#addressSelector').val(results[1].formatted_address);
+          infowindow.setContent('Therapys home');
+          infowindow.open(map, marker);
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    });
+  }
+
+  (function uiCombo() {
+    $('.item-selected').click(function() {
+      $(this).parent().find('.combo').slideToggle('slow');
+    });
+    $('.combo li').click(function() {
+      const text = $(this).text();
+      $('.item').parent().parent().find('.item-selected-value').text(text);
+    });
+  })();
+
+  (function uiDataPicker() {
+    $('#data-picker').click(function() {
+      $(this).parent().find('.week-container').slideToggle('slow');
+    });
+  })();
+
+  (function uiTimePicker() {
+    $('#time-picker').click(function() {
+      $(this).parent().find('.time-picker-container').slideToggle('slow');
+    });
+  })();
+
+
+  (function uiInputMap() {
+    $('.input-inside-icon').click(function() {
+      $(this).parent().parent().find('.map').slideToggle('slow', function() {
+        google.maps.event.trigger(map, 'resize');
+        map.setCenter(new google.maps.LatLng(DEFAULT_POSITION.lat, DEFAULT_POSITION.lng));
+      });
+    });
+  })();
+</script>
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnnYz5MN9EkxI-lmKNLE1GvxkqvrxPDvQ&callback=initMap&libraries=places">
+</script>
+
+</html>

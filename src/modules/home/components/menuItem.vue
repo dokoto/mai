@@ -1,6 +1,6 @@
 <template>
   <span class="option" v-bind:class="className">
-    <a v-bind:href="url" target="_self">
+    <a v-bind:href="calendarUrl" target="_self">
       <img v-bind:src="icon" class="option-icon" />
     </a>
   </span>
@@ -8,34 +8,36 @@
 
 <script>
 export default {
-  props: ["className", "url", "icon"]
+  props: ['className', 'calendarUrl', 'icon'],
 };
 </script>
 
 <style lang="scss" scoped>
+@import '../../../common/styles/base.scss';
 .option {
   width: 20vw;
   height: 20vw;
+  border-radius: 5px;
 }
 
 .option-icon {
   width: 50%;
-  margin: 25%;
+  margin: 25%;  
 }
 
 .pastel-orange {
-  background-color: rgb(253, 202, 162);
+  background-color: $colorPastelOrange;
 }
 
 .pastel-pink {
-  background-color: rgb(251, 182, 202);
+  background-color: $colorPastelPink;
 }
 
 .pastel-blue {
-  background-color: rgb(199, 236, 255);
+  background-color: $colorPastelBlue;
 }
 
 .pastel-yellow {
-  background-color: rgb(255, 237, 120);
+  background-color: $colorPastelYellow;
 }
 </style>
