@@ -7,7 +7,7 @@ import { schema } from './model'
 export Treatment, { schema } from './model'
 
 const router = new Router()
-const { name, text } = schema.tree
+const { nameTranslId, descriptionTranslId } = schema.tree
 
 /**
  * @api {post} /treatments Create treatment
@@ -24,7 +24,7 @@ const { name, text } = schema.tree
  */
 router.post('/',
   master(),
-  body({ name, text }),
+  body({ nameTranslId, descriptionTranslId }),
   create)
 
 /**
@@ -73,7 +73,7 @@ router.get('/:id',
  */
 router.put('/:id',
   master(),
-  body({ name, text }),
+  body({ nameTranslId, descriptionTranslId }),
   update)
 
 /**

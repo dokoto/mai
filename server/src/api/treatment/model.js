@@ -1,65 +1,33 @@
 import mongoose, { Schema } from 'mongoose'
-import * as consts from '../../constants'
+import { arrayToObject } from '../../utils'
 
 const treatmentSchema = new Schema(
   {
-    treatment: {
-      type: String,
+    nameTranslId: {
+      type: Schema.Types.ObjectId,
       required: true,
-      unique: true,
-      trim: true,
-      lowercase: true,
-      index: true
+      unique: true
     },
-    text: [
-      {
-        language: {
-          type: String,
-          enum: consts.languages
-        },
-        name: {
-          type: String,
-          maxlength: 100
-        },
-        description: {
-          type: String,
-          maxlength: 1000
-        }
-      }
-    ]
+    descriptionTranslId: Schema.Types.ObjectId
   },
   {
-    timestamps: true,
-    toJSON: {
-      virtuals: true,
-      transform: (obj, ret) => {
-        delete ret._id
-      }
-    }
+    timestamps: true
   }
 )
 
 treatmentSchema.methods = {
   view (full) {
-    const view = {
-      // simple view
-      id: this.id,
-      name: this.name,
-      text: this.text,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt
+    let fields = ['id', 'nameTranslId']
+
+    if (full) {
+      fields = fields.concat(['descriptionTranslId', 'createdAt', 'updatedAt'])
     }
 
-    return full
-      ? {
-        ...view
-        // add properties for a full view
-      }
-      : view
+    return fields.reduce(arrayToObject(this), {})
   }
 }
 
 const model = mongoose.model('Treatment', treatmentSchema)
 
-export const schema = model.schema
+export const { schema } = model
 export default model

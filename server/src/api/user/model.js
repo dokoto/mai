@@ -5,6 +5,7 @@ import mongoose, { Schema } from 'mongoose'
 import mongooseKeywords from 'mongoose-keywords'
 import { env } from '../../config'
 import * as consts from '../../constants'
+import { arrayToObject } from '../../utils'
 
 const userSchema = new Schema(
   {
@@ -82,34 +83,40 @@ userSchema.path('email').set(function (email) {
 })
 
 userSchema.pre('save', function (next) {
-  if (!this.isModified('password')) return next()
+  if (!this.isModified('password')) {
+    next()
+  } else {
+    /* istanbul ignore next */
+    const rounds = env === 'test' ? 1 : 9
 
-  /* istanbul ignore next */
-  const rounds = env === 'test' ? 1 : 9
-
-  bcrypt
-    .hash(this.password, rounds)
-    .then(hash => {
-      this.password = hash
-      next()
-    })
-    .catch(next)
+    bcrypt
+      .hash(this.password, rounds)
+      .then(hash => {
+        this.password = hash
+        next()
+      })
+      .catch(next)
+  }
 })
 
 userSchema.methods = {
   view (full) {
-    const view = {}
     let fields = ['id', 'name', 'picture']
 
     if (full) {
-      fields = [...fields, 'email', 'role', 'funcRole', 'address', 'phone', 'treatments', 'createdAt', 'lastLogin']
+      fields = fields.concat([
+        'email',
+        'role',
+        'funcRole',
+        'address',
+        'phone',
+        'treatments',
+        'createdAt',
+        'lastLogin'
+      ])
     }
 
-    fields.forEach(field => {
-      view[field] = this[field]
-    })
-
-    return view
+    return fields.reduce(arrayToObject(this), {})
   },
 
   authenticate (password) {
@@ -146,9 +153,9 @@ userSchema.statics = {
   }
 }
 
-userSchema.plugin(mongooseKeywords, { paths: ['funcRole'] })
+userSchema.plugin(mongooseKeywords, { paths: ['funcRole', 'email'] })
 
 const model = mongoose.model('User', userSchema)
 
-export const schema = model.schema
+export const { schema } = model
 export default model

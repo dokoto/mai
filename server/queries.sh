@@ -4,10 +4,14 @@
 # MASTER KEY : CREACION DE USUARIOS, LOGAR USUARIOS, IDENTIFICA APP VALIDAS PARA CONECTAR CON EL SERVIDOR
 # &access_token=W0sgNBbwsfoUfe5GXNQY36p1IOHA96Gb
 #
-# GOOOGLE 
+# GOOOGLE
 # Client id: 377337024068-u3n1ddj6vhmg4ader64hhvo22shto6sp.apps.googleusercontent.com
 # Client secrete: aboV5_2O3qcZoKUWA9FVrNcM
 #
+
+#****************************************************************************************
+# USUARIOS
+#****************************************************************************************
 
 # USUARIOS: CREACION PACIENTE
 # Role: user
@@ -22,7 +26,12 @@ curl -X POST http://0.0.0.0:9000/api/users -d "email=doc1@doctors.com&password=1
 # USUARIOS: LOGIN [TOKEN EXPIRA EN 24h]
 # Role: user
 # AppRole: paciente
-curl -X POST http://0.0.0.0:9000/api/auth -u "patient2@patients.com:123456" -d "access_token=W0sgNBbwsfoUfe5GXNQY36p1IOHA96Gb" | jq 
+curl -X POST http://0.0.0.0:9000/api/auth -u "patient2@patients.com:qwerty" -d "access_token=W0sgNBbwsfoUfe5GXNQY36p1IOHA96Gb" | jq
+
+# USUARIOS: LOGIN [TOKEN EXPIRA EN 24h]
+# Role: admin
+# AppRole: doc
+curl -X POST http://0.0.0.0:9000/api/auth -u "dokoto.moloko@gmail.com:qwerty1" -d "access_token=W0sgNBbwsfoUfe5GXNQY36p1IOHA96Gb" | jq
 
 # USUARIOS: LOGIN GOOGLE
 # Role: admin
@@ -54,7 +63,7 @@ curl -X PUT http://0.0.0.0:9000/api/password-resets/[TOKEN] -d "password=qwerty1
 
 # USUARIOS: CONSULTA MIS DATOS
 # Role: user
-curl -X GET http://0.0.0.0:9000/api/users/me -d "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYTNkZmUxYzhjNTRmZjNkZDA5MjU5ZCIsImlhdCI6MTUyMDY4OTEyMX0.jPNmgKaJVnEOF-bsgt_i2kMXM6zaf5B3MlL_FUJBWdY" | jq   
+curl -X GET http://0.0.0.0:9000/api/users/me -d "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYTNkZmUxYzhjNTRmZjNkZDA5MjU5ZCIsImlhdCI6MTUyMDY4OTEyMX0.jPNmgKaJVnEOF-bsgt_i2kMXM6zaf5B3MlL_FUJBWdY" | jq
 
 # USUARIOS: CONSULTA POR ID
 # Role: admin
@@ -66,7 +75,36 @@ curl -X GET http://0.0.0.0:9000/api/users -d "access_token=eyJhbGciOiJIUzI1NiIsI
 
 # USUARIOS: CONSULTA TODOS LOS USUARIOS, FILTRANDO EN name, email, o funcRole por 'patient' y ordenado por name
 # Role: user
-# Detalles: En el modelo de usuarios esta declarados los campo funcRole "userSchema.plugin(mongooseKeywords, { paths: ['funcRole'] })" para ser poder 
+# Detalles: En el modelo de usuarios esta declarados los campo funcRole "userSchema.plugin(mongooseKeywords, { paths: ['funcRole'] })" para ser poder
 # ser filtrado por el queryparam 'q=' se puede añadir tambien &fields=name para que solo salga name o &fields=-name para que no salga name
 curl -X GET http://0.0.0.0:9000/api/users\?q\=patient\&sort\=name -d "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYTNmZTJlZGZjYmFlZjZkOWNmMTIxNyIsImlhdCI6MTUyMDY5Njg3OH0.jTW3P1_86froo3U4_-ndyo3-Mt-k11lXjXx475bg8go" | jq
 
+
+#****************************************************************************************
+# LITERALES
+#****************************************************************************************
+
+# LITERALES: CREACION LITERAL
+# Role: admin
+# AppRole: terapeuta
+curl  -H 'Content-Type: application/json' -H 'Accept: application/json' -X POST http://0.0.0.0:9000/api/literals -d '{"access_token": "[ADMIN TOKEN]", "lang": "es", "texts": {"test_hola": "hola", "test_adios":"paco"}}'
+
+# LITERALES: MODIFICAION DE UN LITERAL LITERAL
+# Role: admin
+# AppRole: terapeuta
+curl -X PUT http://0.0.0.0:9000/api/literals/5aa51bb0b39efc44e4d547c2 -d "access_token=[ADMIN TOKEN]&lang=es&texts=test_hola=adios"
+
+# LITERALES: BORRAR IDIOMA
+# Role: admin
+# AppRole: terapeuta
+curl -X DELETE http://0.0.0.0:9000/api/literals/5aa51bb0b39efc44e4d547c2  -d "access_token=[ADMIN TOKEN]"
+
+# LITERALES: BUSCAR LITERAL por idioma
+# Role: user
+# AppRole: paciente
+curl -X GET http://0.0.0.0:9000/api/literals/es/test_hola -d "access_token=[ADMIN TOKEN]"
+
+# LITERALES: OBTENER TODOS LOS LITERALES POR IDIOMA
+# Role: user
+# AppRole: paciente
+curl -X GET http://0.0.0.0:9000/api/literals/es -d "access_token=[ADMIN TOKEN]"

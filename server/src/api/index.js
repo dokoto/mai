@@ -4,6 +4,7 @@ import auth from './auth'
 import passwordReset from './password-reset'
 import treatment from './treatment'
 import appointment from './appointment'
+import literal from './literal'
 
 const router = new Router()
 
@@ -35,5 +36,6 @@ router.use('/auth', auth)
 router.use('/password-resets', passwordReset)
 router.use('/treatments', treatment)
 router.use('/appointments', appointment)
+router.use('/literals', literal)
 
 export default router
