@@ -1,65 +1,50 @@
+// https://eslint.org/docs/user-guide/configuring
+
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
-  extends: ['airbnb-base'],
-  plugins: [
-    'html'
-  ],
   parserOptions: {
-    ecmaVersion: 8,
-    sourceType: 'module',
-    ecmaFeatures: {
-      modules: true,
-      destructuring: true,
-      classes: true,
-      forOf: true,
-      blockBindings: true,
-      arrowFunctions: true,
-    },
-  },
-  globals: {
-    VERSION: true,
-    API: true,
+    parser: 'babel-eslint'
   },
   env: {
     browser: true,
-    node: true,
   },
+  // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
+  // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
+  extends: ['plugin:vue/essential', 'airbnb-base'],
+  // required to lint *.vue files
+  plugins: [
+    'vue'
+  ],
+  // check if imports actually resolve
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: 'build/webpack.base.conf.js'
+      }
+    }
+  },
+  // add your custom rules here
   rules: {
-    'no-param-reassign': ["error", { "props": false }],
-    'arrow-body-style': 0,
-    'arrow-parens': 0,
-    'class-methods-use-this': 0,
-    'func-names': 0,
-    indent: 2,
-    'new-cap': 0,
-    'no-plusplus': 0,
-    'no-return-assign': 0,
-    'quote-props': 0,
-    'template-curly-spacing': [2, 'always'],
-    'comma-dangle': [
-      'error',
-      {
-        arrays: 'always-multiline',
-        objects: 'always-multiline',
-        imports: 'always-multiline',
-        exports: 'always-multiline',
-        functions: 'never',
-      },
-    ],
-    'prefer-arrow-callback': 0,
-    'import/extensions': 0,
-    'import/no-extraneous-dependencies': 0,
-    'import/no-unresolved': 0,
-    'import/prefer-default-export': 0,
-    'no-console': ['error', { allow: ['warn', 'error', 'log'] }],
+    // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       js: 'never',
       vue: 'never'
     }],
+    // disallow reassignment of function parameters
+    // disallow parameter object manipulation except for specific exclusions
+    'no-param-reassign': ['error', {
+      props: true,
+      ignorePropertyModificationsFor: [
+        'state', // for vuex state
+        'acc', // for reduce accumulators
+        'e' // for e.returnvalue
+      ]
+    }],
+    // allow optionalDependencies
     'import/no-extraneous-dependencies': ['error', {
       optionalDependencies: ['test/unit/index.js']
     }],
+    // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  },
-};
+  }
+}

@@ -1,0 +1,146 @@
+body,
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body,
+input,
+textarea {
+    font-family: Arial, Tahoma, HelveticaNeue;
+}
+
+body {
+    background-image: url(../img/bg-playa-5.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.appointment-page {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+}
+
+.box {
+    margin-right: 2%;
+    margin-left: 2%;
+    margin-top: 2%;
+    padding: 2%;
+    background-color: white;
+}
+
+.day-of-month {
+    color: white;
+    position: absolute;
+    top: 0;
+    display: inline-flex;
+    flex-direction: column;
+    margin: 4%;
+}
+
+.day-number {
+    text-align: center;
+    font-size: 5em;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 4%;
+    margin-left: 4%;
+}
+
+.day-name {
+    text-align: center;
+    font-size: 1.3em;
+    width: 100%;
+    margin-left: 4%;
+}
+
+.therapist-img-box {
+    text-align: center;
+}
+
+.therapist-img {
+        width: 100px;
+    border-radius: 50%;
+}
+
+.therapist-carrusel {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    border-bottom: solid;
+    border-bottom-color: #ddd;
+    padding-bottom: 4%;
+}
+
+.therapist-carrusel-item {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.h-separator {
+        height: 2px;
+    margin: 4% 0%;
+    background: #c5c4c4;
+}
+
+.therapist-name {
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.date-detail {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.date-detail .date {
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+.date-detail .therapy-description {
+    font-size: 1.6em;
+    margin-top: 1%;
+    margin-left: 2%;
+}
+
+.date-detail .time-interval {
+    font-size: 1.6em;
+    color: #b1b0b0;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+.location {
+    margin-bottom: 2%;
+}
+
+.location .address {
+    font-size: 1em;
+    margin-left: 2%;
+}
+
+.location .map {
+    height: 200px;
+    margin-top: 2%;
+}
