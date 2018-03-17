@@ -8,7 +8,6 @@
   "/busyTimes/:userId/:date": "/busyTimes",
   "/busyDays/:userId/:initDate/:numOfMonths": "/busyDays",
   "/busyTherapists": "/busyTherapists",
-  "/therapies/id": "/therapies?id=:id",
-  "/new/appointment":""
+  "/therapies/id": "/therapies?id=:id"
 }
   

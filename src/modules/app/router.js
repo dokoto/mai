@@ -1,9 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '../home/view.vue';
+/*import Home from '../home/view.vue';
 import SessionView from '../session/view.vue';
 import SessionEdit from '../session/edit.vue';
-import Calendar from '../calendar/view.vue';
+import Calendar from '../calendar/view.vue';*/
+
+const Home = () => import(/* webpackChunkName: "Home" */ '../home/view.vue');
+const SessionView = () => import(/* webpackChunkName: "Session" */ '../session/view.vue');
+const SessionEdit = () => import(/* webpackChunkName: "Session" */ '../session/edit.vue');
+const Calendar = () => import(/* webpackChunkName: "Calendar" */ '../calendar/view.vue');
 
 Vue.use(Router);
 

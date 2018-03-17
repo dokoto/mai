@@ -15,10 +15,7 @@ const router = new Router()
  * @apiSuccess (Success 201) {Object} user Current user's data.
  * @apiError 401 Master access only or invalid credentials.
  */
-router.post('/',
-  master(),
-  password(),
-  login)
+router.post('/', master(), password(), login)
 
 /**
  * @api {post} /auth/facebook Authenticate with Facebook
@@ -29,9 +26,7 @@ router.post('/',
  * @apiSuccess (Success 201) {Object} user Current user's data.
  * @apiError 401 Invalid credentials.
  */
-router.post('/facebook',
-  facebook(),
-  login)
+router.post('/facebook', facebook(), login)
 
 /**
  * @api {post} /auth/github Authenticate with Github
@@ -42,9 +37,7 @@ router.post('/facebook',
  * @apiSuccess (Success 201) {Object} user Current user's data.
  * @apiError 401 Invalid credentials.
  */
-router.post('/github',
-  github(),
-  login)
+router.post('/github', github(), login)
 
 /**
  * @api {post} /auth/google Authenticate with Google
@@ -55,8 +48,6 @@ router.post('/github',
  * @apiSuccess (Success 201) {Object} user Current user's data.
  * @apiError 401 Invalid credentials.
  */
-router.post('/google',
-  google(),
-  login)
+router.post('/google', google(), login)
 
 export default router

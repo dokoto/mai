@@ -16,7 +16,9 @@ const { lang, key, text } = schema.tree
  * @apiGroup Literal
  * @apiPermission admin
  * @apiParam {String} access_token admin access token.
- * @apiParam lang Literal's lang.
+ * @apiParam lang Literal's lang key.
+ * @apiParam key Literal's key identifier.
+ * @apiParam text Literal's text literal.
  * @apiSuccess {Object} literal Literal's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Literal not found.
@@ -63,7 +65,7 @@ router.get('/', token({ required: true }), query(), index)
  * @apiError 404 Literal not found.
  * @apiError 401 user access only.
  */
-router.get('/:lang/:key', token({ required: true }), showByLangKey)
+router.get('/:lang/:key', token({ required: true }), body(), showByLangKey)
 
 /**
  * @api {get} /literals/:lang Retrieve literal
@@ -72,6 +74,7 @@ router.get('/:lang/:key', token({ required: true }), showByLangKey)
  * @apiPermission user
  * @apiParam {String} access_token user access token.
  * @apiParam {String} lang literal languaje [es,en].
+ * @apiParam {Array} keys Array of literals keys to get [Optional].
  * @apiSuccess {Object} literal Literal's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Literal not found.
@@ -80,7 +83,7 @@ router.get('/:lang/:key', token({ required: true }), showByLangKey)
 router.get('/:lang', token({ required: true }), showByLang)
 
 /**
- * @api {put} /literals/:id Update literal
+ * @api {put} /literals/:lang/:key Update literal
  * @apiName UpdateLiteral
  * @apiGroup Literal
  * @apiPermission admin
@@ -91,7 +94,7 @@ router.get('/:lang', token({ required: true }), showByLang)
  * @apiError 404 Literal not found.
  * @apiError 401 admin access only.
  */
-router.put('/:id', token({ required: true, roles: ['admin'] }), body({ lang, key, text }), update)
+router.put('/:lang/:key', token({ required: true, roles: ['admin'] }), update)
 
 /**
  * @api {delete} /literals/:id Delete literal

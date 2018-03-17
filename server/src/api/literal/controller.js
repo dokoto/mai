@@ -1,5 +1,6 @@
 import { success, notFound } from '../../services/response/'
 import { Literal } from '.'
+import * as utils from '../../utils'
 
 export const create = ({ bodymen: { body } }, res, next) =>
   Literal.create(body)
@@ -27,19 +28,24 @@ export const showByLangKey = ({ params }, res, next) =>
     .then(success(res))
     .catch(next)
 
-export const showByLang = ({ params }, res, next) => {
-  console.log('>>>>>>>>>>', params)
-  Literal.find(params)
+export const showByLang = ({ body, params }, res, next) => {
+  const query = body.keys
+    ? body.keys.reduce(utils.genOrQuery('key'), {
+      $or: [],
+      lang: params.lang
+    })
+    : params
+  Literal.find(query)
     .then(notFound(res))
     .then(literals => literals.map(literal => literal.view()))
     .then(success(res))
     .catch(next)
 }
 
-export const update = ({ bodymen: { body }, params }, res, next) =>
-  Literal.findById(params.id)
+export const update = ({ params }, res, next) =>
+  Literal.findOne(params)
     .then(notFound(res))
-    .then(literal => (literal ? Object.assign(literal, body).save() : null))
+    .then(literal => (literal ? literal.save() : null))
     .then(literal => (literal ? literal.view(true) : null))
     .then(success(res))
     .catch(next)

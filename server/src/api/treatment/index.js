@@ -4,28 +4,27 @@ import { middleware as body } from 'bodymen'
 import { master, token } from '../../services/passport'
 import { create, index, show, update, destroy } from './controller'
 import { schema } from './model'
+
 export Treatment, { schema } from './model'
 
 const router = new Router()
-const { nameTranslId, descriptionTranslId } = schema.tree
+const { key, nameLiteralKey, descriptionLiteralKey } = schema.tree
 
 /**
  * @api {post} /treatments Create treatment
  * @apiName CreateTreatment
  * @apiGroup Treatment
- * @apiPermission master
+ * @apiPermission admin
  * @apiParam {String} access_token master access token.
- * @apiParam name Treatment's name.
- * @apiParam text Treatment's text.
+ * @apiParam key Treatment's key identifier.
+ * @apiParam nameLiteralKey literal collection id for treatment name.
+ * @apiParam descriptionLiteralKey literal collection id for treatment description.
  * @apiSuccess {Object} treatment Treatment's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Treatment not found.
  * @apiError 401 master access only.
  */
-router.post('/',
-  master(),
-  body({ nameTranslId, descriptionTranslId }),
-  create)
+router.post('/', token({ required: true, roles: ['admin'] }), body({ key, nameLiteralKey, descriptionLiteralKey }), create)
 
 /**
  * @api {get} /treatments Retrieve treatments
@@ -38,28 +37,25 @@ router.post('/',
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 401 user access only.
  */
-router.get('/',
-  token({ required: true }),
-  query(),
-  index)
+router.get('/', token({ required: true }), query(), index)
 
 /**
- * @api {get} /treatments/:id Retrieve treatment
+ * @api {get} /treatments/:lang/:key Retrieve treatment
  * @apiName RetrieveTreatment
  * @apiGroup Treatment
  * @apiPermission user
  * @apiParam {String} access_token user access token.
+ * @apiParam {String} lang texts languaje.
+ * @apiParam {String} key tratment key.
  * @apiSuccess {Object} treatment Treatment's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Treatment not found.
  * @apiError 401 user access only.
  */
-router.get('/:id',
-  token({ required: true }),
-  show)
+router.get('/:lang/:key', token({ required: true }), show)
 
 /**
- * @api {put} /treatments/:id Update treatment
+ * @api {put} /treatments/:key Update treatment
  * @apiName UpdateTreatment
  * @apiGroup Treatment
  * @apiPermission master
@@ -71,10 +67,7 @@ router.get('/:id',
  * @apiError 404 Treatment not found.
  * @apiError 401 master access only.
  */
-router.put('/:id',
-  master(),
-  body({ nameTranslId, descriptionTranslId }),
-  update)
+router.put('/:key', token({ required: true, roles: ['admin'] }), body({ nameLiteralKey, descriptionLiteralKey }), update)
 
 /**
  * @api {delete} /treatments/:id Delete treatment
@@ -86,8 +79,6 @@ router.put('/:id',
  * @apiError 404 Treatment not found.
  * @apiError 401 master access only.
  */
-router.delete('/:id',
-  master(),
-  destroy)
+router.delete('/:id', token({ required: true, roles: ['admin'] }), destroy)
 
 export default router

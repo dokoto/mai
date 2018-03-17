@@ -35,7 +35,7 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: consts.users.roles,
-      default: 'user'
+      default: consts.USER
     },
     picture: {
       type: String,
@@ -43,7 +43,7 @@ const userSchema = new Schema(
     },
     funcRole: {
       type: String,
-      default: 'patient',
+      default: consts.PATIENT,
       enum: consts.users.funcRoles
     },
     address: {

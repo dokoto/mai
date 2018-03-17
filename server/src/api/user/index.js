@@ -2,8 +2,9 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { password as passwordAuth, master, token } from '../../services/passport'
-import { index, showMe, show, create, update, updatePassword, destroy } from './controller'
+import { index, showMe, show, create, createAdmin, update, updatePassword, destroy } from './controller'
 import { schema } from './model'
+import * as consts from '../../constants'
 
 export User, { schema } from './model'
 
@@ -69,13 +70,46 @@ router.post(
     password,
     name,
     picture,
-    role,
+    role: consts.USER,
     funcRole,
     address,
     phone,
     treatments
   }),
   create
+)
+
+/**
+ * @api {post} /users/admin Create admin rol user
+ * @apiName CreateUser
+ * @apiGroup User
+ * @apiPermission admin
+ * @apiParam {String} access_token Master access_token.
+ * @apiParam {String} email User's email.
+ * @apiParam {String{6..}} password User's password.
+ * @apiParam {String} [name] User's name.
+ * @apiParam {String} [picture] User's picture.
+ * @apiParam {String=user,admin} [role=user] User's role.
+ * @apiSuccess (Sucess 201) {Object} user User's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 401 Master access only.
+ * @apiError 409 Email already registered.
+ */
+router.post(
+  '/admin',
+  token({ required: true, roles: ['admin'] }),
+  body({
+    email,
+    password,
+    name,
+    picture,
+    role: consts.ADMIN,
+    funcRole,
+    address,
+    phone,
+    treatments
+  }),
+  createAdmin
 )
 
 /**
@@ -91,7 +125,7 @@ router.post(
  * @apiError 401 Current user or admin access only.
  * @apiError 404 User not found.
  */
-router.put('/:id', token({ required: true }), body({ name, picture }), update)
+router.put('/:id', token({ required: true, roles: ['admin'] }), body({ name, picture }), update)
 
 /**
  * @api {put} /users/:id/password Update password

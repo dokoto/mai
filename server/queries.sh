@@ -16,12 +16,12 @@
 # USUARIOS: CREACION PACIENTE
 # Role: user
 # AppRole: paciente
-curl -X POST http://0.0.0.0:9000/api/users -d "email=patient@patients.com&password=123456&funcRole=patient&access_token=W0sgNBbwsfoUfe5GXNQY36p1IOHA96Gb" | jq
+curl -X POST http://0.0.0.0:9000/api/users -d "email=patient4@patients.com&password=123456&funcRole=patient&access_token=W0sgNBbwsfoUfe5GXNQY36p1IOHA96Gb" | jq
 
-# USUARIOS: CREACION DOCTOR
+# USUARIOS: CREACION DOCTOR Y ADMIN USER
 # Role: admin
 # AppRole: terapeuta
-curl -X POST http://0.0.0.0:9000/api/users -d "email=doc1@doctors.com&password=123456&role=admin&funcRole=doc&access_token=W0sgNBbwsfoUfe5GXNQY36p1IOHA96Gb" | jq
+curl -X POST http://0.0.0.0:9000/api/users/admin -d "email=doc2@doctors.com&password=123456&funcRole=doc&access_token=[ADMIN TOKEN]" | jq
 
 # USUARIOS: LOGIN [TOKEN EXPIRA EN 24h]
 # Role: user
@@ -86,25 +86,60 @@ curl -X GET http://0.0.0.0:9000/api/users\?q\=patient\&sort\=name -d "access_tok
 
 # LITERALES: CREACION LITERAL
 # Role: admin
-# AppRole: terapeuta
-curl  -H 'Content-Type: application/json' -H 'Accept: application/json' -X POST http://0.0.0.0:9000/api/literals -d '{"access_token": "[ADMIN TOKEN]", "lang": "es", "texts": {"test_hola": "hola", "test_adios":"paco"}}'
+# AppRole: doc
+curl  -X POST http://0.0.0.0:9000/api/literals -d "access_token=[ADMIN TOKEN]&lang=es&key=test_hola_2&text=hola cara bola"
 
 # LITERALES: MODIFICAION DE UN LITERAL LITERAL
 # Role: admin
-# AppRole: terapeuta
-curl -X PUT http://0.0.0.0:9000/api/literals/5aa51bb0b39efc44e4d547c2 -d "access_token=[ADMIN TOKEN]&lang=es&texts=test_hola=adios"
+# AppRole: doc
+curl -X PUT http://0.0.0.0:9000/api/literals/es/test_hola -d "access_token=[ADMIN TOKEN]&text=nuevo texto guapo"
 
 # LITERALES: BORRAR IDIOMA
 # Role: admin
-# AppRole: terapeuta
+# AppRole: doc
 curl -X DELETE http://0.0.0.0:9000/api/literals/5aa51bb0b39efc44e4d547c2  -d "access_token=[ADMIN TOKEN]"
 
 # LITERALES: BUSCAR LITERAL por idioma
 # Role: user
 # AppRole: paciente
-curl -X GET http://0.0.0.0:9000/api/literals/es/test_hola -d "access_token=[ADMIN TOKEN]"
+curl -X GET http://0.0.0.0:9000/api/literals/es/test_hola -d "access_token=[TOKEN]"
+
+# LITERALES: BUSCAR LITERAL por idioma y array keys
+# Role: user
+# AppRole: paciente
+curl -X GET http://0.0.0.0:9000/api/literals/es -d "access_token=[TOKEN]&keys=test_hola&keys=test_hola_2"
 
 # LITERALES: OBTENER TODOS LOS LITERALES POR IDIOMA
 # Role: user
+# AppRole: doc
+curl -X GET http://0.0.0.0:9000/api/literals/es -d "access_token=[TOKEN]"
+
+#****************************************************************************************
+# TRATAMIENTOS
+#****************************************************************************************
+#### ATENCION si se pone coñazo con la clave duplicada por un cambio en el schema, borra la colection y reinicia el servidor
+
+# TRATAMIENTOS: CREACION TRATAMIENTO
+# Role: admin
+# AppRole: doc
+curl  -X POST http://0.0.0.0:9000/api/treatments -d "access_token=[ADMIN TOKEN]&key=t1&nameLiteralKey=test_name_1&descriptionLiteralKey=test_descript_1"
+
+# TRATAMIENTOS: MODIFICAION DE UN TRATAMIENTO
+# Role: admin
+# AppRole: doc
+curl -X PUT http://0.0.0.0:9000/api/treatments/t1 -d "access_token=[ADMIN TOKEN]&nameLiteralKey=test_name_1_mod&descriptionLiteralKey=test_descript_1_mod"
+
+# TRATAMIENTOS: BUSCAR TRATAMIENTO por clave
+# Role: user
 # AppRole: paciente
-curl -X GET http://0.0.0.0:9000/api/literals/es -d "access_token=[ADMIN TOKEN]"
+curl -X GET http://0.0.0.0:9000/api/treatments/t1 -d "access_token=[TOKEN]"
+
+# TRATAMIENTOS: OBTENER TODOS LOS TRATAMIENTOS
+# Role: user
+# AppRole: paciente
+curl -X GET http://0.0.0.0:9000/api/treatments -d "access_token=[TOKEN]"
+
+# TRATAMIENTOS: BORRAR TRATAMIENTOS
+# Role: admin
+# AppRole: doc
+curl -X DELETE http://0.0.0.0:9000/api/literals/5aa51bb0b39efc44e4d547c2  -d "access_token=[ADMIN TOKEN]"

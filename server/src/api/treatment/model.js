@@ -3,12 +3,19 @@ import { arrayToObject } from '../../utils'
 
 const treatmentSchema = new Schema(
   {
-    nameTranslId: {
-      type: Schema.Types.ObjectId,
+    key: {
+      type: String,
       required: true,
-      unique: true
+      trim: true,
+      lowercase: true,
+      index: true
     },
-    descriptionTranslId: Schema.Types.ObjectId
+    nameLiteralKey: {
+      type: String,
+      required: true,
+      index: true
+    },
+    descriptionLiteralKey: String
   },
   {
     timestamps: true
@@ -17,10 +24,10 @@ const treatmentSchema = new Schema(
 
 treatmentSchema.methods = {
   view (full) {
-    let fields = ['id', 'nameTranslId']
+    let fields = ['id', 'nameLiteralKey']
 
     if (full) {
-      fields = fields.concat(['descriptionTranslId', 'createdAt', 'updatedAt'])
+      fields = fields.concat(['descriptionLiteralKey', 'createdAt', 'updatedAt'])
     }
 
     return fields.reduce(arrayToObject(this), {})
