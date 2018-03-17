@@ -1,3 +1,0 @@
-home/:userId
-calendar/:typeUser/:userId/:year/:month
-appointment/:id

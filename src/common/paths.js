@@ -1,9 +1,0 @@
-export const nextSessions = `${ process.env.API.base }/nextsessions`;
-export const therapies = `${ process.env.API.base }/therapies`;
-export const sessions = `${ process.env.API.base }/sessions`;
-export const users = `${ process.env.API.base }/users`;
-export const sessionsBy = `${ process.env.API.base }/sessions/by`;
-export const SessionTimeSchedule = `${ process.env.API.base }/sessionTimeSchedule`;
-export const busyDays = `${ process.env.API.base }/busyDays`;
-export const busyTimes = `${ process.env.API.base }/busyTimes`;
-export const busyTherapists = `${ process.env.API.base }/busyTherapists`;

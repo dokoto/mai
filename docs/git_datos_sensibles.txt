@@ -1,5 +1,0 @@
-Como elimar un fichero del historial de git
-https://help.github.com/articles/removing-sensitive-data-from-a-repository/
-
-Como encriptar ficheros antes de subirlos a git
-https://github.com/AGWA/git-crypt

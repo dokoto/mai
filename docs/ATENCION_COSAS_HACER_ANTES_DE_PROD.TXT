@@ -1,3 +1,0 @@
-!!!! MUY IMPORTANTE
-1º- Se necesitan nuevas clave de los servicios de google
-2º- Servidor rest cambiar en .env el MASTER_KEY
