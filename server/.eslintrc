@@ -1,10 +1,15 @@
 {
-  "parser": "babel-eslint",
+  "parserOptions": {
+    "parser": "babel-eslint"
+  },
   "extends": [
     "standard"
   ],
   "env": {
     "jest": true,
     "jasmine": true
+  },
+  "rules": {
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["acc"] }]
   }
 }

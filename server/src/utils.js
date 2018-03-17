@@ -1,13 +1,13 @@
 export function arrayToObject (vals) {
-  return (prev, curr) => {
-    prev[curr] = vals[curr]
-    return prev
+  return (acc, curr) => {
+    acc[curr] = vals[curr]
+    return acc
   }
 }
 
 export function genOrQuery (orKey) {
-  return (prev, curr) => {
-    prev.$or.push({ [orKey]: curr })
-    return prev
+  return (acc, curr) => {
+    acc.$or.push({ [orKey]: curr })
+    return acc
   }
 }

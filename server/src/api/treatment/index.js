@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
-import { master, token } from '../../services/passport'
-import { create, index, show, update, destroy } from './controller'
+import { token } from '../../services/passport'
+import { create, index, showByLangKey, showByLang, update, destroy } from './controller'
 import { schema } from './model'
 
 export Treatment, { schema } from './model'
@@ -24,7 +24,12 @@ const { key, nameLiteralKey, descriptionLiteralKey } = schema.tree
  * @apiError 404 Treatment not found.
  * @apiError 401 master access only.
  */
-router.post('/', token({ required: true, roles: ['admin'] }), body({ key, nameLiteralKey, descriptionLiteralKey }), create)
+router.post(
+  '/',
+  token({ required: true, roles: ['admin'] }),
+  body({ key, nameLiteralKey, descriptionLiteralKey }),
+  create
+)
 
 /**
  * @api {get} /treatments Retrieve treatments
@@ -40,6 +45,20 @@ router.post('/', token({ required: true, roles: ['admin'] }), body({ key, nameLi
 router.get('/', token({ required: true }), query(), index)
 
 /**
+ * @api {get} /treatments/:lang Retrieve treatment
+ * @apiName RetrieveTreatment
+ * @apiGroup Treatment
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiParam {String} lang texts languaje.
+ * @apiSuccess {Object} treatment Treatment's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 404 Treatment not found.
+ * @apiError 401 user access only.
+ */
+router.get('/:lang', token({ required: true }), showByLang)
+
+/**
  * @api {get} /treatments/:lang/:key Retrieve treatment
  * @apiName RetrieveTreatment
  * @apiGroup Treatment
@@ -52,7 +71,7 @@ router.get('/', token({ required: true }), query(), index)
  * @apiError 404 Treatment not found.
  * @apiError 401 user access only.
  */
-router.get('/:lang/:key', token({ required: true }), show)
+router.get('/:lang/:key', token({ required: true }), showByLangKey)
 
 /**
  * @api {put} /treatments/:key Update treatment
@@ -67,7 +86,12 @@ router.get('/:lang/:key', token({ required: true }), show)
  * @apiError 404 Treatment not found.
  * @apiError 401 master access only.
  */
-router.put('/:key', token({ required: true, roles: ['admin'] }), body({ nameLiteralKey, descriptionLiteralKey }), update)
+router.put(
+  '/:key',
+  token({ required: true, roles: ['admin'] }),
+  body({ nameLiteralKey, descriptionLiteralKey }),
+  update
+)
 
 /**
  * @api {delete} /treatments/:id Delete treatment

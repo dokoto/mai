@@ -1,3 +1,4 @@
+import _ from 'lodash/array'
 import { success, notFound } from '../../services/response/'
 import { Treatment } from '.'
 import * as utils from '../../utils'
@@ -15,26 +16,48 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .then(success(res))
     .catch(next)
 
-export const show = ({ params }, res, next) => {
+function genLiteralQueryByKeys (keys, lang) {
+  return keys.reduce(utils.genOrQuery('key'), {
+    $or: [],
+    lang
+  })
+}
+
+function mergeLiterals (acc, curr) {
+  if (curr.key === acc.nameLiteralKey || curr.key === acc.descriptionLiteralKey) {
+    acc[curr.key] = curr.text
+  } else {
+    delete acc[acc.nameLiteralKey]
+    delete acc[acc.descriptionLiteralKey]
+  }
+  return acc
+}
+
+export const showByLang = ({ params }, res, next) => {
+  Treatment.find()
+    .then(notFound(res))
+    .then(treatments => treatments.map(treatment => treatment.view(true)))
+    .then(async (treatments) => {
+      const literalKeys = _.flatten(
+        treatments.map(item => [item.nameLiteralKey, item.descriptionLiteralKey])
+      )
+      const query = genLiteralQueryByKeys(literalKeys, params.lang)
+      const literals = await Literal.find(query)
+      return treatments.map(treatment => literals.reduce(mergeLiterals, treatment))
+    })
+    .then(success(res))
+    .catch(next)
+}
+
+export const showByLangKey = ({ params }, res, next) => {
   Treatment.findOne({ key: params.key })
     .then(notFound(res))
     .then(treatment => (treatment ? treatment.view(true) : null))
-    .then(async treatment => {
-      console.log('>>>>>>>>', treatment)
-      const query = [treatment.nameLiteralKey, treatment.descriptionLiteralKey].reduce(
-        utils.genOrQuery('key'),
-        {
-          $or: [],
-          lang: params.lang
-        }
-      )
-      console.log('>>>>>>>>', query)
-      const literal = await Literal.find(query)
-      // hay que mapear el resultado literal que es un array a la salida del tratamiento
-      treatment.nameLiteralKey = literal.nameLiteralKey
-      treatment.descriptionLiteralKey = literal.descriptionLiteralKey
-      console.log('>>>>>>>>', literal)
-      return treatment
+    .then(async (treatment) => {
+      const literalKeys = [treatment.nameLiteralKey, treatment.descriptionLiteralKey]
+      const query = genLiteralQueryByKeys(literalKeys, params.lang)
+      const literals = await Literal.find(query)
+      return literals.reduce(mergeLiterals, treatment)
     })
     .then(success(res))
     .catch(next)
