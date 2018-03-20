@@ -35,6 +35,21 @@ literalSchema.methods = {
   }
 }
 
+literalSchema.statics.bulkInsert = function (models, fn) {
+  if (!models || !models.length) return fn(null)
+
+  const bulk = this.collection.initializeOrderedBulkOp()
+  if (!bulk) return fn('bulkInsertModels: MongoDb connection is not yet established')
+
+  let model
+  for (let i = 0; i < models.length; i++) {
+    model = models[i]
+    bulk.insert(model)
+  }
+
+  bulk.execute(fn)
+}
+
 literalSchema.plugin(mongooseKeywords, { paths: ['lang', 'key'] })
 const model = mongoose.model('Literal', literalSchema)
 

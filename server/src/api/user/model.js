@@ -25,7 +25,14 @@ const userSchema = new Schema(
     name: {
       type: String,
       index: true,
-      trim: true
+      trim: true,
+      required: true
+    },
+    lastName: {
+      type: String,
+      index: true,
+      trim: true,
+      required: true
     },
     services: {
       facebook: String,
@@ -48,11 +55,18 @@ const userSchema = new Schema(
     },
     address: {
       type: String,
-      maxlength: 200
+      maxlength: 200,
+      required: true
+    },
+    addressExtra: {
+      type: String,
+      maxlength: 100,
+      required: true
     },
     phone: {
       type: Number,
-      maxlength: 20
+      maxlength: 20,
+      required: true
     },
     treatments: {
       type: [String]
@@ -105,10 +119,12 @@ userSchema.methods = {
 
     if (full) {
       fields = fields.concat([
+        'lastName',
         'email',
         'role',
         'funcRole',
         'address',
+        'addressExtra',
         'phone',
         'treatments',
         'createdAt',
@@ -127,7 +143,7 @@ userSchema.methods = {
 userSchema.statics = {
   roles: consts.users.roles,
 
-  createFromService ({ service, id, email, name, picture, funcRole, address, phone, treatments }) {
+  createFromService ({ service, id, email, name, lastName, picture, funcRole, address, addressExtra, phone, treatments }) {
     return this.findOne({ $or: [{ [`services.${service}`]: id }, { email }] }).then((user) => {
       if (user) {
         user.services[service] = id
@@ -141,13 +157,30 @@ userSchema.statics = {
         email,
         password,
         name,
+        lastName,
         picture,
         funcRole,
         address,
+        addressExtra,
         phone,
         treatments
       })
     })
+  },
+
+  bulkInsert (models, fn) {
+    if (!models || !models.length) return fn(null)
+
+    const bulk = this.collection.initializeOrderedBulkOp()
+    if (!bulk) return fn('bulkInsertModels: MongoDb connection is not yet established')
+
+    let model
+    for (let i = 0; i < models.length; i++) {
+      model = models[i]
+      bulk.insert(model)
+    }
+
+    bulk.execute(fn)
   }
 }
 

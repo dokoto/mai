@@ -1,0 +1,90 @@
+[
+  {
+    "email": "manuel@coolmail.com",
+    "password": "123456",
+    "name": "Manuel",
+    "lastName": "Ruiz Acosta",
+    "role": "user",
+    "funcRole": "patient",
+    "address": "Calle Alcala, 20 Madrid",
+    "addressExtra": "1º B",
+    "phone": "633456876"
+  },
+  {
+    "email": "david@coolmail.com",
+    "password": "123456",
+    "name": "David",
+    "lastName": "Martin Flores",
+    "role": "user",
+    "funcRole": "patient",
+    "address": "Calle Camarena, 19 Madrid",
+    "addressExtra": "1º B",
+    "phone": "644137087"
+  },
+  {
+    "email": "camilo@coolmail.com",
+    "password": "123456",
+    "name": "Camilo",
+    "lastName": "Fernandez Torres",
+    "role": "user",
+    "funcRole": "patient",
+    "address": "Calle Galileo, 12 Madrid",
+    "addressExtra": "1º B",
+    "phone": "600234980"
+  },
+  {
+    "email": "diego@coolmail.com",
+    "password": "123456",
+    "name": "Diego",
+    "lastName": "Sierra Romero",
+    "role": "user",
+    "funcRole": "patient",
+    "address": "Calle Los Arfe, 5 Madrid",
+    "addressExtra": "1º B",
+    "phone": "677854123"
+  },
+  {
+    "email": "jaime@coolmail.com",
+    "password": "123456",
+    "name": "Jaime",
+    "lastName": "López Gómez",
+    "role": "user",
+    "funcRole": "patient",
+    "address": "Calle de Julia Mediavilla, 45 Madrid",
+    "addressExtra": "1º B",
+    "phone": "609678234"
+  },
+  {
+    "email": "alicia@coolmail.com",
+    "password": "123456",
+    "name": "Alicia",
+    "lastName": "García Sánchez",
+    "role": "admin",
+    "funcRole": "doctor",
+    "address": "Calle Nivar, 12 Madrid",
+    "addressExtra": "1º B",
+    "phone": "634665123"
+  },
+  {
+    "email": "marta@coolmail.com",
+    "password": "123456",
+    "name": "Marta",
+    "lastName": "Sosa Álvarez",
+    "role": "user",
+    "funcRole": "doctor",
+    "address": "Calle de los Platillos, 10 Madrid",
+    "addressExtra": "1º B",
+    "phone": "674387798"
+  },
+  {
+    "email": "belen@coolmail.com",
+    "password": "123456",
+    "name": "Belen",
+    "lastName": "Acosta Medina",
+    "role": "user",
+    "funcRole": "doctor",
+    "address": "Calle Río Sena, 30, Leganés",
+    "addressExtra": "1º B",
+    "phone": "6385098537"
+  }
+]

@@ -19,7 +19,7 @@ import * as consts from '../../constants'
 export User, { schema } from './model'
 
 const router = new Router()
-const { email, password, name, picture, funcRole, address, phone, treatments } = schema.tree
+const { email, password, name, lastName, picture, funcRole, address, addressExtra, phone, treatments } = schema.tree
 
 /**
  * @api {get} /users Retrieve users
@@ -88,10 +88,12 @@ router.post(
     email,
     password,
     name,
+    lastName,
     picture,
     role: consts.USER,
     funcRole,
     address,
+    addressExtra,
     phone,
     treatments
   }),
@@ -121,10 +123,12 @@ router.post(
     email,
     password,
     name,
+    lastName,
     picture,
     role: consts.ADMIN,
     funcRole,
     address,
+    addressExtra,
     phone,
     treatments
   }),

@@ -1,0 +1,17 @@
+[
+  {
+    "key": "fisiotherapy",
+    "nameLiteralKey": "treatment.fisiotherapy.name",
+    "descriptionLiteralKey": "treatment.fisiotherapy.description"
+  },
+  {
+    "key": "osteopaty",
+    "nameLiteralKey": "treatment.osteopaty.name",
+    "descriptionLiteralKey": "treatment.osteopaty.description"
+  },
+  {
+    "key": "mai",
+    "nameLiteralKey": "treatment.mai.name",
+    "descriptionLiteralKey": "treatment.mai.description"
+  }
+]
