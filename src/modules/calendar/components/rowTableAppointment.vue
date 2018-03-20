@@ -8,7 +8,8 @@
     <span class="time flex-column flex-align-first-center">{{ session.time }}</span>
     <span class="v-separator"></span>
     <div class="mini-session-data flex-column flex-align-first-center grow-2">
-      <span class="add" v-show="!session.sessionOccupy">Nueva cita</span>
+      <span class="add"
+        v-show="!session.sessionOccupy">Nueva cita</span>
       <span class="therapy">{{ session.therapy }}</span>
       <span class="therapi">{{ session.therapi }}</span>
     </div>

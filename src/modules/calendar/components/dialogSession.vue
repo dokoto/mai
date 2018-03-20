@@ -1,5 +1,5 @@
 //DELTE?
-<template>  
+<template>
   <dialog class="modal"
     :id="dialodId">
     <div class="meeting-date">
@@ -15,7 +15,7 @@
       <span class="v-separator"></span>
       <button class="c-button cancel"
         v-on:click="handleCancelClick">Cancel</button>
-    </div>    
+    </div>
   </dialog>
 </template>
 
@@ -30,9 +30,9 @@ export default {
   components: { TherapistCarrusel },
   computed: {
     yearMonth() {
-      return `${ moment(this.selectedDay, consts.INT_DATE_FORMAT)
+      return `${moment(this.selectedDay, consts.INT_DATE_FORMAT)
         .format('MMM')
-        .toUpperCase() } ${ moment(this.selectedDay, consts.INT_DATE_FORMAT).format('YYYY') }`;
+        .toUpperCase()} ${moment(this.selectedDay, consts.INT_DATE_FORMAT).format('YYYY')}`;
     },
     sessionDay() {
       return moment(this.daySelected, consts.INT_DATE_FORMAT)
@@ -40,14 +40,7 @@ export default {
         .toUpperCase();
     },
   },
-  props: [
-    'dialodId',
-    'timeSelected',
-    'daySelected',
-    'session',
-    'therapists',
-    'therapies',
-  ],
+  props: ['dialodId', 'timeSelected', 'daySelected', 'session', 'therapists', 'therapies'],
   methods: {
     handleAcceptClick(ev) {
       this.$emit('dialogAcept', ev);
@@ -62,7 +55,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
 dialog {
   border: solid 1px;
   top: 10%;

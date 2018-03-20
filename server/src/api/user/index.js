@@ -2,16 +2,24 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { password as passwordAuth, master, token } from '../../services/passport'
-import { index, showMe, show, create, createAdmin, update, updatePassword, destroy } from './controller'
+import {
+  index,
+  showMe,
+  show,
+  showDoctors,
+  create,
+  createAdmin,
+  update,
+  updatePassword,
+  destroy
+} from './controller'
 import { schema } from './model'
 import * as consts from '../../constants'
 
 export User, { schema } from './model'
 
 const router = new Router()
-const {
-  email, password, name, picture, role, funcRole, address, phone, treatments
-} = schema.tree
+const { email, password, name, picture, funcRole, address, phone, treatments } = schema.tree
 
 /**
  * @api {get} /users Retrieve users
@@ -35,6 +43,17 @@ router.get('/', token({ required: true, roles: ['admin'] }), query(), index)
  * @apiSuccess {Object} user User's data.
  */
 router.get('/me', token({ required: true }), showMe)
+
+/**
+ * @api {get} /users/doctors Retrieve all doc users
+ * @apiName RetrieveUser
+ * @apiGroup User
+ * @apiPermission public
+ * @apiParam {String} User id [OPTIONAL]
+ * @apiSuccess {Object} user User's data.
+ * @apiError 404 User not found.
+ */
+router.get('/doctors', token({ required: true }), showDoctors)
 
 /**
  * @api {get} /users/:id Retrieve user

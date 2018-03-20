@@ -1,7 +1,11 @@
 <template>
-  <div id="perruchaApp" class="app">
-    <transition name="fade" mode="out-in" appear>
-      <router-view name="container" class="child-view"></router-view>
+  <div id="perruchaApp"
+    class="app">
+    <transition name="fade"
+      mode="out-in"
+      appear>
+      <router-view name="container"
+        class="child-view"></router-view>
     </transition>
   </div>
 </template>

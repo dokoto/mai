@@ -1,6 +1,7 @@
 import { success, notFound } from '../../services/response/'
 import { User } from '.'
 import { sign } from '../../services/jwt'
+import * as consts from '../../constants'
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   User.find(query, select, cursor)
@@ -17,14 +18,33 @@ export const show = ({ params }, res, next) =>
 
 export const showMe = ({ user }, res) => res.json(user.view(true))
 
+export const showDoctors = ({ body, params }, res, next) => {
+  const query = body && body.id
+    ? { funcRole: consts.DOCTOR, id: body.id }
+    : { funcRole: consts.DOCTOR }
+
+  return User.find(query)
+    .then(notFound(res))
+    .then(users => users.map(user => user.view(true)))
+    .then(success(res))
+    .catch(next)
+}
+
+export const showDocsByEmail = ({ params }, res, next) =>
+  User.findById({ id: params.id, funcRole: consts.DOCTOR, email: params.email })
+    .then(notFound(res))
+    .then(user => (user ? user.view() : null))
+    .then(success(res))
+    .catch(next)
+
 export const create = ({ bodymen: { body } }, res, next) =>
   User.create(body)
-    .then(user => {
+    .then((user) => {
       sign(user.id)
         .then(token => ({ token, user: user.view(true) }))
         .then(success(res, 201))
     })
-    .catch(err => {
+    .catch((err) => {
       /* istanbul ignore else */
       if (err.name === 'MongoError' && err.code === 11000) {
         res.status(409).json({
@@ -39,12 +59,12 @@ export const create = ({ bodymen: { body } }, res, next) =>
 
 export const createAdmin = ({ bodymen: { body } }, res, next) =>
   User.create(body)
-    .then(user => {
+    .then((user) => {
       sign(user.id)
         .then(token => ({ token, user: user.view(true) }))
         .then(success(res, 201))
     })
-    .catch(err => {
+    .catch((err) => {
       /* istanbul ignore else */
       if (err.name === 'MongoError' && err.code === 11000) {
         res.status(409).json({
@@ -58,14 +78,12 @@ export const createAdmin = ({ bodymen: { body } }, res, next) =>
     })
 
 export const saveLogin = userId =>
-  User.findById(userId).then(user => {
-    return user ? user.set({ lastLogin: Date.now() }).save() : null
-  })
+  User.findById(userId).then(user => (user ? user.set({ loggedAt: Date.now() }).save() : null))
 
 export const update = ({ bodymen: { body }, params, user }, res, next) =>
   User.findById(params.id === 'me' ? user.id : params.id)
     .then(notFound(res))
-    .then(result => {
+    .then((result) => {
       if (!result) return null
       const isAdmin = user.role === 'admin'
       const isSelfUpdate = user.id === result.id
@@ -86,7 +104,7 @@ export const update = ({ bodymen: { body }, params, user }, res, next) =>
 export const updatePassword = ({ bodymen: { body }, params, user }, res, next) =>
   User.findById(params.id === 'me' ? user.id : params.id)
     .then(notFound(res))
-    .then(result => {
+    .then((result) => {
       if (!result) return null
       const isSelfUpdate = user.id === result.id
       if (!isSelfUpdate) {

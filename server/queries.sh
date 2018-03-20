@@ -63,21 +63,30 @@ curl -X PUT http://0.0.0.0:9000/api/password-resets/[TOKEN] -d "password=qwerty1
 
 # USUARIOS: CONSULTA MIS DATOS
 # Role: user
-curl -X GET http://0.0.0.0:9000/api/users/me -d "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYTNkZmUxYzhjNTRmZjNkZDA5MjU5ZCIsImlhdCI6MTUyMDY4OTEyMX0.jPNmgKaJVnEOF-bsgt_i2kMXM6zaf5B3MlL_FUJBWdY" | jq
+curl -X GET http://0.0.0.0:9000/api/users/me -d "access_token=[TOKEN]" | jq
 
 # USUARIOS: CONSULTA POR ID
 # Role: admin
-curl -X GET http://0.0.0.0:9000/api/users/5aa3dfe1c8c54ff3dd09259d -d "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYTNmZTJlZGZjYmFlZjZkOWNmMTIxNyIsImlhdCI6MTUyMDY5Njg3OH0.jTW3P1_86froo3U4_-ndyo3-Mt-k11lXjXx475bg8go" | jq
+curl -X GET http://0.0.0.0:9000/api/users/5aa3dfe1c8c54ff3dd09259d -d "access_token=[ADMIN TOKEN]" | jq
 
 # USUARIOS: CONSULTA TODOS LOS USUARIOS
 # Role: admin
-curl -X GET http://0.0.0.0:9000/api/users -d "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYTNmZTJlZGZjYmFlZjZkOWNmMTIxNyIsImlhdCI6MTUyMDY5Njg3OH0.jTW3P1_86froo3U4_-ndyo3-Mt-k11lXjXx475bg8go" | jq
+curl -X GET http://0.0.0.0:9000/api/users -d "access_token=[ADMIN TOKEN]" | jq
 
 # USUARIOS: CONSULTA TODOS LOS USUARIOS, FILTRANDO EN name, email, o funcRole por 'patient' y ordenado por name
 # Role: user
 # Detalles: En el modelo de usuarios esta declarados los campo funcRole "userSchema.plugin(mongooseKeywords, { paths: ['funcRole'] })" para ser poder
 # ser filtrado por el queryparam 'q=' se puede añadir tambien &fields=name para que solo salga name o &fields=-name para que no salga name
-curl -X GET http://0.0.0.0:9000/api/users\?q\=patient\&sort\=name -d "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYTNmZTJlZGZjYmFlZjZkOWNmMTIxNyIsImlhdCI6MTUyMDY5Njg3OH0.jTW3P1_86froo3U4_-ndyo3-Mt-k11lXjXx475bg8go" | jq
+curl -X GET http://0.0.0.0:9000/api/users\?q\=patient\&sort\=name -d "access_token=[ADMIN TOKEN]" | jq
+
+# USUARIOS: CONSULTA TODOS LOS USUARIOS TIPO DOC
+# Role: admin
+curl -X GET http://0.0.0.0:9000/api/users/doctors -d "access_token=[TOKEN]" | jq
+
+# USUARIOS: CONSULTA UN USUARIO TIPO DOC POR EMAIL
+# Role: admin
+curl -X GET http://0.0.0.0:9000/api/users/doctors "access_token=[TOKEN]&id=23h4jg376t32jg237" | jq
+
 
 
 #****************************************************************************************
@@ -132,14 +141,35 @@ curl -X PUT http://0.0.0.0:9000/api/treatments/t1 -d "access_token=[ADMIN TOKEN]
 # TRATAMIENTOS: BUSCAR TRATAMIENTO por clave
 # Role: user
 # AppRole: paciente
-curl -X GET http://0.0.0.0:9000/api/treatments/t1 -d "access_token=[TOKEN]"
+curl -X GET http://0.0.0.0:9000/api/treatments/es/t1 -d "access_token=[TOKEN]"
 
 # TRATAMIENTOS: OBTENER TODOS LOS TRATAMIENTOS
 # Role: user
 # AppRole: paciente
-curl -X GET http://0.0.0.0:9000/api/treatments -d "access_token=[TOKEN]"
+curl -X GET http://0.0.0.0:9000/api/treatments/es -d "access_token=[TOKEN]"
 
 # TRATAMIENTOS: BORRAR TRATAMIENTOS
 # Role: admin
 # AppRole: doc
-curl -X DELETE http://0.0.0.0:9000/api/literals/5aa51bb0b39efc44e4d547c2  -d "access_token=[ADMIN TOKEN]"
+curl -X DELETE http://0.0.0.0:9000/api/treatments/5aa51bb0b39efc44e4d547c2  -d "access_token=[ADMIN TOKEN]"
+
+#****************************************************************************************
+# TIME SCHEDULE
+#****************************************************************************************
+# TRATAMIENTOS: CREACION HORA DENTRO DEL HORARIO
+# Role: admin
+# AppRole: doc
+# "10:00", "11:30", "13:00", "16:00", "17:30", "19:00", "20:30
+curl  -X POST http://0.0.0.0:9000/api/timeSchedules -d "access_token=[ADMIN TOKEN]&time=10:00"
+curl  -X POST http://0.0.0.0:9000/api/timeSchedules -d "access_token=[ADMIN TOKEN]&time=11:30"
+curl  -X POST http://0.0.0.0:9000/api/timeSchedules -d "access_token=[ADMIN TOKEN]&time=13:00"
+curl  -X POST http://0.0.0.0:9000/api/timeSchedules -d "access_token=[ADMIN TOKEN]&time=16:00"
+curl  -X POST http://0.0.0.0:9000/api/timeSchedules -d "access_token=[ADMIN TOKEN]&time=17:30"
+curl  -X POST http://0.0.0.0:9000/api/timeSchedules -d "access_token=[ADMIN TOKEN]&time=19:00"
+curl  -X POST http://0.0.0.0:9000/api/timeSchedules -d "access_token=[ADMIN TOKEN]&time=20:30"
+
+# EL RESTO DEL CRUD : Se hace de con el _id
+
+#****************************************************************************************
+# TRATAMIENTOS
+#****************************************************************************************

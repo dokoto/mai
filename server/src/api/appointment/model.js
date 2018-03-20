@@ -1,55 +1,74 @@
 import mongoose, { Schema } from 'mongoose'
+import { arrayToObject } from '../../utils'
+import * as consts from '../../constants'
 
-const appointmentSchema = new Schema({
-  email: {
-    type: String
+const appointmentSchema = new Schema(
+  {
+    date: {
+      type: Date,
+      required: true
+    },
+    time: {
+      type: String,
+      required: true
+    },
+    patientId: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
+    doctorId: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
+    treatmentKey: {
+      type: String,
+      required: true
+    },
+    address: {
+      type: String,
+      required: true
+    },
+    status: {
+      type: String,
+      default: consts.RESERVED,
+      enum: consts.appointment.status
+    },
+    allowReBooking: {
+      type: Boolean,
+      default: true
+    },
+    createddBy: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
+    cancelReason: {
+      type: String,
+      maxlength: 500
+    }
   },
-  date: {
-    type: String
-  },
-  time: {
-    type: String
-  },
-  treatment: {
-    type: String
-  },
-  doc: {
-    type: String
-  },
-  address: {
-    type: String
-  },
-  status: {
-    type: String
+  {
+    timestamps: true
   }
-}, {
-  timestamps: true,
-  toJSON: {
-    virtuals: true,
-    transform: (obj, ret) => { delete ret._id }
-  }
-})
+)
 
 appointmentSchema.methods = {
   view (full) {
-    const view = {
-      // simple view
-      id: this.id,
-      email: this.email,
-      date: this.date,
-      time: this.time,
-      treatment: this.treatment,
-      doc: this.doc,
-      address: this.address,
-      status: this.status,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt
+    let fields = [
+      'id',
+      'date',
+      'time',
+      'treatmentKey',
+      'doctorId',
+      'patientId',
+      'address',
+      'status'
+    ]
+
+    if (full) {
+      fields = fields.concat(['createdAt', 'updatedAt'])
     }
 
-    return full ? {
-      ...view
-      // add properties for a full view
-    } : view
+    return fields.reduce(arrayToObject(this), {})
   }
 }
 

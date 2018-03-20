@@ -57,7 +57,7 @@ const userSchema = new Schema(
     treatments: {
       type: [String]
     },
-    lastLogin: {
+    loggedAt: {
       type: Date
     }
   },
@@ -91,7 +91,7 @@ userSchema.pre('save', function (next) {
 
     bcrypt
       .hash(this.password, rounds)
-      .then(hash => {
+      .then((hash) => {
         this.password = hash
         next()
       })
@@ -112,7 +112,7 @@ userSchema.methods = {
         'phone',
         'treatments',
         'createdAt',
-        'lastLogin'
+        'loggedAt'
       ])
     }
 
@@ -127,10 +127,8 @@ userSchema.methods = {
 userSchema.statics = {
   roles: consts.users.roles,
 
-  createFromService ({
-    service, id, email, name, picture, funcRole, address, phone, treatments
-  }) {
-    return this.findOne({ $or: [{ [`services.${service}`]: id }, { email }] }).then(user => {
+  createFromService ({ service, id, email, name, picture, funcRole, address, phone, treatments }) {
+    return this.findOne({ $or: [{ [`services.${service}`]: id }, { email }] }).then((user) => {
       if (user) {
         user.services[service] = id
         user.name = name
