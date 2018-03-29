@@ -1,0 +1,842 @@
+[
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf4",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf5",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "MON",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "TUS",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "WED",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "THU",
+      "time": "20:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "10:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "11:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "13:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "16:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "17:30"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "19:00"
+    }
+  },
+  {
+    "doctorsId": "5ab170a8a929c744d8ddbbf6",
+    "kind": "daily",
+    "daily": {
+      "day": "FRI",
+      "time": "20:30"
+    }
+  }
+]

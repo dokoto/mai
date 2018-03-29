@@ -1,0 +1,14 @@
+[
+  {
+    "date": "",
+    "time": "",
+    "patientId": "",
+    "doctorId": "",
+    "treatmentKey": "",
+    "address": "",
+    "status": "",
+    "allowReBooking": "",
+    "createddBy": "",
+    "cancelReason": ""
+  }
+]

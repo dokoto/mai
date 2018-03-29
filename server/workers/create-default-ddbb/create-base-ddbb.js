@@ -3,13 +3,15 @@ import mongoose from '../../src/services/mongoose'
 
 import user from '../../src/api/user/model'
 import treatment from '../../src/api/treatment/model'
-// import timeSchedule from '../src/api/timeSchedule/model'
+import timeSchedule from '../../src/api/timeSchedule/model'
 import literal from '../../src/api/literal/model'
-// import appointment from '../src/api/appointment/model'
+import appointment from '../../src/api/appointment/model'
 
 const literalData = require('./literals.json')
 const treatmentData = require('./treatment.json')
 const userData = require('./users.json')
+const timeScheduleData = require('./timeSchedule.json')
+const appointmentData = require('./appointment.json')
 
 const datas = [
   {
@@ -23,10 +25,18 @@ const datas = [
   {
     data: userData,
     schema: user
+  },
+  {
+    data: timeScheduleData,
+    schema: timeSchedule
+  },
+  {
+    data: appointmentData,
+    schema: appointment
   }
 ]
 
-function doBulk(model) {
+function doBulk (model) {
   model.schema.collection.drop()
   model.schema.bulkInsert(model.data, (err, results) => {
     if (err) {
@@ -36,7 +46,7 @@ function doBulk(model) {
       console.log(results)
       process.exit(0)
     }
-});
+  })
 }
 
 mongoose.connect(mongo.uri, { useMongoClient: true })

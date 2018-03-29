@@ -15,7 +15,7 @@ const timeScheduleSchema = new Schema(
     daily: {
       day: {
         type: String,
-        enum: consts.schedule.days // MON, TUS, WED, THU, SAT, SUN
+        enum: consts.schedule.days // MON, TUS, WED, THU, FRI, SAT, SUN
       },
       time: {
         type: String
@@ -37,7 +37,7 @@ const timeScheduleSchema = new Schema(
 
 timeScheduleSchema.methods = {
   view (full) {
-    let fields = ['id', 'time']
+    let fields = ['id', 'daily']
 
     if (full) {
       fields = fields.concat(['createdAt', 'updatedAt'])
@@ -47,7 +47,22 @@ timeScheduleSchema.methods = {
   }
 }
 
-timeScheduleSchema.plugin(mongooseKeywords, { paths: ['time', 'doctorsId'] })
+timeScheduleSchema.statics.bulkInsert = function (models, fn) {
+  if (!models || !models.length) return fn(null)
+
+  const bulk = this.collection.initializeOrderedBulkOp()
+  if (!bulk) return fn('bulkInsertModels: MongoDb connection is not yet established')
+
+  let model
+  for (let i = 0; i < models.length; i++) {
+    model = models[i]
+    bulk.insert(model)
+  }
+
+  bulk.execute(fn)
+}
+
+timeScheduleSchema.plugin(mongooseKeywords, { paths: ['doctorsId'] })
 const model = mongoose.model('TimeSchedule', timeScheduleSchema)
 
 export const schema = model.schema

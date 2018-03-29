@@ -173,3 +173,6 @@ curl  -X POST http://0.0.0.0:9000/api/timeSchedules -d "access_token=[ADMIN TOKE
 #****************************************************************************************
 # TRATAMIENTOS
 #****************************************************************************************
+# TRATAMIENTOS: BORRAR TRATAMIENTOS
+# Role: admin
+# AppRole: doc
