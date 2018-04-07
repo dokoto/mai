@@ -57,6 +57,7 @@
     "express-force-ssl": "^0.3.2",
     "jsonwebtoken": "^8.1.0",
     "lodash": "^4.17.5",
+    "moment": "^2.22.0",
     "mongoose": "^4.12.4",
     "mongoose-create-unique": "^0.4.4",
     "mongoose-keywords": "^0.3.2",

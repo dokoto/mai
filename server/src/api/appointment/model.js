@@ -10,23 +10,95 @@ const appointmentSchema = new Schema(
     },
     time: {
       type: String,
-      required: true
+      required: true,
+      maxlength: 5
     },
-    patientId: {
-      type: Schema.Types.ObjectId,
-      required: true
+    patient: {
+      id: {
+        type: Schema.Types.ObjectId,
+        required: true
+      },
+      name: {
+        type: String,
+        maxlength: 100
+      },
+      surname: {
+        type: String,
+        maxlength: 200
+      },
+      email: {
+        type: String,
+        match: /^\S+@\S+\.\S+$/,
+        trim: true,
+        lowercase: true
+      }
     },
-    doctorId: {
-      type: Schema.Types.ObjectId,
-      required: true
+    doctor: {
+      id: {
+        type: Schema.Types.ObjectId,
+        required: true
+      },
+      name: {
+        type: String,
+        maxlength: 100
+      },
+      surname: {
+        type: String,
+        maxlength: 200
+      },
+      email: {
+        type: String,
+        match: /^\S+@\S+\.\S+$/,
+        trim: true,
+        lowercase: true
+      }
     },
-    treatmentKey: {
-      type: String,
-      required: true
-    },
+    treatment: [
+      {
+        key: {
+          type: String,
+          maxlength: 40
+        },
+        lang: {
+          type: String,
+          maxlength: 2,
+          enum: consts.users.languages
+        },
+        name: {
+          type: String,
+          maxlength: 300
+        },
+        description: {
+          type: String,
+          maxlength: 1000
+        }
+      }
+    ],
     address: {
-      type: String,
-      required: true
+      street: {
+        type: String,
+        maxlength: 200,
+        required: true
+      },
+      floor: {
+        type: String,
+        maxlength: 100,
+        required: true
+      },
+      postCode: {
+        type: Number,
+        maxlength: 20
+      },
+      city: {
+        type: String,
+        maxlength: 100,
+        required: true
+      },
+      country: {
+        type: String,
+        maxlength: 100,
+        required: true
+      }
     },
     status: {
       type: String,
@@ -43,7 +115,7 @@ const appointmentSchema = new Schema(
     },
     cancelReason: {
       type: String,
-      maxlength: 500
+      maxlength: 2000
     }
   },
   {

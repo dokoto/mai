@@ -1,7 +1,7 @@
 import { success, notFound } from '../../services/response/'
 import { Appointment } from '.'
 
-export const create = ({ bodymen: { body } }, res, next) =>
+export const create = ({ body }, res, next) =>
   Appointment.create(body)
     .then(appointment => appointment.view(true))
     .then(success(res, 201))
@@ -20,7 +20,7 @@ export const show = ({ params }, res, next) =>
     .then(success(res))
     .catch(next)
 
-export const update = ({ bodymen: { body }, params }, res, next) =>
+export const update = ({ body, params }, res, next) =>
   Appointment.findById(params.id)
     .then(notFound(res))
     .then(appointment => (appointment ? Object.assign(appointment, body).save() : null))

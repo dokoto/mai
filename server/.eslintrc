@@ -10,7 +10,8 @@
     "jasmine": true
   },
   "rules": {
-    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["acc"] }],
-    "func-names": ["error", "never"]
+    "no-param-reassign": 0,
+    "func-names": ["error", "never"],
+    "no-console": 0
   }
 }

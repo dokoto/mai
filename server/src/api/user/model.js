@@ -20,16 +20,19 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-      minlength: 6
+      minlength: 6,
+      maxlength: 100
     },
     name: {
       type: String,
+      maxlength: 100,
       index: true,
       trim: true,
       required: true
     },
-    lastName: {
+    surname: {
       type: String,
+      maxlength: 200,
       index: true,
       trim: true,
       required: true
@@ -53,24 +56,60 @@ const userSchema = new Schema(
       default: consts.PATIENT,
       enum: consts.users.funcRoles
     },
-    address: {
-      type: String,
-      maxlength: 200,
-      required: true
-    },
-    addressExtra: {
-      type: String,
-      maxlength: 100,
-      required: true
-    },
+    address: [
+      {
+        street: {
+          type: String,
+          maxlength: 200,
+          required: true
+        },
+        floor: {
+          type: String,
+          maxlength: 100,
+          required: true
+        },
+        postCode: {
+          type: Number,
+          maxlength: 20
+        },
+        city: {
+          type: String,
+          maxlength: 100,
+          required: true
+        },
+        country: {
+          type: String,
+          maxlength: 100,
+          required: true
+        }
+      }
+    ],
     phone: {
-      type: Number,
+      type: String,
       maxlength: 20,
       required: true
     },
-    treatments: {
-      type: [String]
-    },
+    treatments: [
+      {
+        key: {
+          type: String,
+          maxlength: 40
+        },
+        lang: {
+          type: String,
+          maxlength: 2,
+          enum: consts.users.languages
+        },
+        name: {
+          type: String,
+          maxlength: 300
+        },
+        description: {
+          type: String,
+          maxlength: 1000
+        }
+      }
+    ],
     loggedAt: {
       type: Date
     }
@@ -115,16 +154,16 @@ userSchema.pre('save', function (next) {
 
 userSchema.methods = {
   view (full) {
-    let fields = ['id', 'name', 'picture']
+    let fields = ['id', 'name', 'email']
 
     if (full) {
       fields = fields.concat([
-        'lastName',
+        'picture',
+        'surname',
         'email',
         'role',
         'funcRole',
         'address',
-        'addressExtra',
         'phone',
         'treatments',
         'createdAt',
@@ -143,7 +182,18 @@ userSchema.methods = {
 userSchema.statics = {
   roles: consts.users.roles,
 
-  createFromService ({ service, id, email, name, lastName, picture, funcRole, address, addressExtra, phone, treatments }) {
+  createFromService ({
+    service,
+    id,
+    email,
+    name,
+    surname,
+    picture,
+    funcRole,
+    address,
+    phone,
+    treatments
+  }) {
     return this.findOne({ $or: [{ [`services.${service}`]: id }, { email }] }).then((user) => {
       if (user) {
         user.services[service] = id
@@ -157,11 +207,10 @@ userSchema.statics = {
         email,
         password,
         name,
-        lastName,
+        surname,
         picture,
         funcRole,
         address,
-        addressExtra,
         phone,
         treatments
       })
@@ -175,12 +224,12 @@ userSchema.statics = {
     if (!bulk) return fn('bulkInsertModels: MongoDb connection is not yet established')
 
     let model
-    for (let i = 0; i < models.length; i++) {
+    for (let i = 0; i < models.length; i += 1) {
       model = models[i]
       bulk.insert(model)
     }
 
-    bulk.execute(fn)
+    return bulk.execute(fn)
   }
 }
 

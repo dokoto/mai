@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
-import { middleware as body } from 'bodymen'
-import { password as passwordAuth, master, token } from '../../services/passport'
+import { password as passwordAuth, master, superuser, token } from '../../services/passport'
 import {
   index,
   showMe,
@@ -13,13 +12,10 @@ import {
   updatePassword,
   destroy
 } from './controller'
-import { schema } from './model'
-import * as consts from '../../constants'
 
 export User, { schema } from './model'
 
 const router = new Router()
-const { email, password, name, lastName, picture, funcRole, address, addressExtra, phone, treatments } = schema.tree
 
 /**
  * @api {get} /users Retrieve users
@@ -81,24 +77,7 @@ router.get('/:id', token({ required: true, roles: ['admin'] }), show)
  * @apiError 401 Master access only.
  * @apiError 409 Email already registered.
  */
-router.post(
-  '/',
-  master(),
-  body({
-    email,
-    password,
-    name,
-    lastName,
-    picture,
-    role: consts.USER,
-    funcRole,
-    address,
-    addressExtra,
-    phone,
-    treatments
-  }),
-  create
-)
+router.post('/', master(), create)
 
 /**
  * @api {post} /users/admin Create admin rol user
@@ -116,24 +95,7 @@ router.post(
  * @apiError 401 Master access only.
  * @apiError 409 Email already registered.
  */
-router.post(
-  '/admin',
-  token({ required: true, roles: ['admin'] }),
-  body({
-    email,
-    password,
-    name,
-    lastName,
-    picture,
-    role: consts.ADMIN,
-    funcRole,
-    address,
-    addressExtra,
-    phone,
-    treatments
-  }),
-  createAdmin
-)
+router.post('/admin', superuser(), createAdmin)
 
 /**
  * @api {put} /users/:id Update user
@@ -148,7 +110,7 @@ router.post(
  * @apiError 401 Current user or admin access only.
  * @apiError 404 User not found.
  */
-router.put('/:id', token({ required: true, roles: ['admin'] }), body({ name, picture }), update)
+router.put('/:id', token({ required: true, roles: ['admin'] }), update)
 
 /**
  * @api {put} /users/:id/password Update password
@@ -161,7 +123,7 @@ router.put('/:id', token({ required: true, roles: ['admin'] }), body({ name, pic
  * @apiError 401 Current user access only.
  * @apiError 404 User not found.
  */
-router.put('/:id/password', passwordAuth(), body({ password }), updatePassword)
+router.put('/:id/password', passwordAuth(), updatePassword)
 
 /**
  * @api {delete} /users/:id Delete user

@@ -5,30 +5,53 @@ import * as consts from '../../constants'
 
 const timeScheduleSchema = new Schema(
   {
-    doctorsId: {
-      type: [Schema.Types.ObjectId]
-    },
-    kind: {
-      type: String,
-      enum: consts.schedule.types // daily, exception
-    },
-    daily: {
-      day: {
+    doctor: {
+      id: {
+        type: Schema.Types.ObjectId,
+        required: true
+      },
+      name: {
         type: String,
-        enum: consts.schedule.days // MON, TUS, WED, THU, FRI, SAT, SUN
+        maxlength: 100
       },
-      time: {
-        type: String
+      surname: {
+        type: String,
+        maxlength: 200
+      },
+      email: {
+        type: String,
+        match: /^\S+@\S+\.\S+$/,
+        trim: true,
+        lowercase: true
       }
     },
-    exception: {
-      date: {
-        type: Date
-      },
-      time: {
-        type: String
+    daily: [
+      {
+        day: {
+          type: String,
+          enum: consts.schedule.days // MON, TUS, WED, THU, FRI, SAT, SUN
+        },
+        time: [
+          {
+            type: String,
+            maxlength: 5
+          }
+        ]
       }
-    }
+    ],
+    exception: [
+      {
+        date: {
+          type: Date
+        },
+        time: [
+          {
+            type: String,
+            maxlength: 5
+          }
+        ]
+      }
+    ]
   },
   {
     timestamps: true
@@ -62,7 +85,7 @@ timeScheduleSchema.statics.bulkInsert = function (models, fn) {
   bulk.execute(fn)
 }
 
-timeScheduleSchema.plugin(mongooseKeywords, { paths: ['doctorsId'] })
+timeScheduleSchema.plugin(mongooseKeywords, { paths: ['doctor.email'] })
 const model = mongoose.model('TimeSchedule', timeScheduleSchema)
 
 export const schema = model.schema

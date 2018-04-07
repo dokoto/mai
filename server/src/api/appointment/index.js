@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
-import { middleware as body } from 'bodymen'
 import { token, master } from '../../services/passport'
 import { create, index, show, update, destroy } from './controller'
 import { schema } from './model'
@@ -8,18 +7,6 @@ import { schema } from './model'
 export Appointment, { schema } from './model'
 
 const router = new Router()
-const {
-  date,
-  time,
-  patientId,
-  doctorId,
-  treatmentKey,
-  address,
-  status,
-  allowReBooking,
-  createddBy,
-  cancelReason
-} = schema.tree
 
 /**
  * @api {post} /appointments Create appointment
@@ -42,23 +29,7 @@ const {
  * @apiError 404 Appointment not found.
  * @apiError 401 user access only.
  */
-router.post(
-  '/',
-  token({ required: true, roles: ['admin'] }),
-  body({
-    date,
-    time,
-    patientId,
-    doctorId,
-    treatmentKey,
-    address,
-    status,
-    allowReBooking,
-    createddBy,
-    cancelReason
-  }),
-  create
-)
+router.post('/', token({ required: true }), create)
 
 /**
  * @api {get} /appointments Retrieve appointments
@@ -104,23 +75,7 @@ router.get('/:id', token({ required: true }), show)
  * @apiError 404 Appointment not found.
  * @apiError 401 user access only.
  */
-router.put(
-  '/:id',
-  token({ required: true, roles: ['admin'] }),
-  body({
-    date,
-    time,
-    patientId,
-    doctorId,
-    treatmentKey,
-    address,
-    status,
-    allowReBooking,
-    createddBy,
-    cancelReason
-  }),
-  update
-)
+router.put('/:id', token({ required: true }), update)
 
 /**
  * @api {delete} /appointments/:id Delete appointment

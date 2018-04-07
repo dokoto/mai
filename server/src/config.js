@@ -4,7 +4,7 @@ import path from 'path'
 /* istanbul ignore next */
 const requireProcessEnv = (name) => {
   if (!process.env[name]) {
-    throw new Error('You must set the ' + name + ' environment variable')
+    throw new Error(`You must set the ${name} environment variable`)
   }
   return process.env[name]
 }
@@ -28,6 +28,7 @@ const config = {
     defaultEmail: 'no-reply@maiserver.com',
     sendgridKey: requireProcessEnv('SENDGRID_KEY'),
     masterKey: requireProcessEnv('MASTER_KEY'),
+    superUserKey: requireProcessEnv('SUPER_USER_KEY'),
     jwtSecret: requireProcessEnv('JWT_SECRET'),
     tokenExpiration: requireProcessEnv('TOKEN_EXPIRATION'),
     mongo: {

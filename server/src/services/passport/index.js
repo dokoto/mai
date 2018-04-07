@@ -3,7 +3,7 @@ import { Schema } from 'bodymen'
 import { BasicStrategy } from 'passport-http'
 import { Strategy as BearerStrategy } from 'passport-http-bearer'
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
-import { jwtSecret, masterKey } from '../../config'
+import { jwtSecret, masterKey, superUserKey } from '../../config'
 import * as facebookService from '../facebook'
 import * as githubService from '../github'
 import * as googleService from '../google'
@@ -29,6 +29,8 @@ export const github = () => passport.authenticate('github', { session: false })
 export const google = () => passport.authenticate('google', { session: false })
 
 export const master = () => passport.authenticate('master', { session: false })
+
+export const superuser = () => passport.authenticate('superuser', { session: false })
 
 export const token = ({ required, roles = User.roles } = {}) => (req, res, next) =>
   passport.authenticate('token', { session: false }, (err, user, info) => {
@@ -113,6 +115,17 @@ passport.use(
   'master',
   new BearerStrategy((token, done) => {
     if (token === masterKey) {
+      done(null, {})
+    } else {
+      done(null, false)
+    }
+  })
+)
+
+passport.use(
+  'superuser',
+  new BearerStrategy((token, done) => {
+    if (token === superUserKey) {
       done(null, {})
     } else {
       done(null, false)

@@ -1,0 +1,202 @@
+[
+  {
+    "date": "",
+    "time": "10:00",
+    "patient": {
+      "id": "5ac89c3fab0db73bc2d46d85",
+      "name": "Manuel",
+      "surname": "Ruiz Acosta",
+      "email": "manuel@coolmail.com"
+    },
+    "doctor": {
+      "id": "5ac89c3fab0db73bc2d46d97",
+      "name": "Belen",
+      "surname": "Acosta Medina",
+      "email": "belen@coolmail.com"
+    },
+    "treatment": [
+      {
+        "key": "fisiotherapy",
+        "lang": "es",
+        "name": "Fisioterapia",
+        "description": "Tratamiento de Fisioterapia avanzado"
+      },
+      {
+        "key": "fisiotherapy",
+        "lang": "en",
+        "name": "Fisiotherapy",
+        "description": "Advanced fisiotherapy treatment"
+      }
+    ],
+    "address": {
+      "street": "Calle Río Sena, 30, Leganés",
+      "floor": "1º Puerta A",
+      "postCode": "28024",
+      "city": "Madrid",
+      "country": "España"
+    },
+    "status": "reserved",
+    "allowReBooking": true,
+    "createddBy": "5ac89c3fab0db73bc2d46d85"
+  },
+  {
+    "date": "",
+    "time": "19:00",
+    "patient": {
+      "id": "5ac89c3fab0db73bc2d46d85",
+      "name": "Manuel",
+      "surname": "Ruiz Acosta",
+      "email": "manuel@coolmail.com"
+    },
+    "doctor": {
+      "id": "5ac89c3fab0db73bc2d46d97",
+      "name": "Belen",
+      "surname": "Acosta Medina",
+      "email": "belen@coolmail.com"
+    },
+    "treatment": [
+      {
+        "key": "fisiotherapy",
+        "lang": "es",
+        "name": "Fisioterapia",
+        "description": "Tratamiento de Fisioterapia avanzado"
+      },
+      {
+        "key": "fisiotherapy",
+        "lang": "en",
+        "name": "Fisiotherapy",
+        "description": "Advanced fisiotherapy treatment"
+      }
+    ],
+    "address": {
+      "street": "Calle Río Sena, 30, Leganés",
+      "floor": "1º Puerta A",
+      "postCode": "28024",
+      "city": "Madrid",
+      "country": "España"
+    },
+    "status": "reserved",
+    "allowReBooking": true,
+    "createddBy": "5ac89c3fab0db73bc2d46d85"
+  },
+  {
+    "date": "",
+    "time": "16:00",
+    "patient": {
+      "id": "5ac89c3fab0db73bc2d46d85",
+      "name": "Manuel",
+      "surname": "Ruiz Acosta",
+      "email": "manuel@coolmail.com"
+    },
+    "doctor": {
+      "id": "5ac89c3fab0db73bc2d46d97",
+      "name": "Belen",
+      "surname": "Acosta Medina",
+      "email": "belen@coolmail.com"
+    },
+    "treatment": [
+      {
+        "key": "fisiotherapy",
+        "lang": "es",
+        "name": "Fisioterapia",
+        "description": "Tratamiento de Fisioterapia avanzado"
+      },
+      {
+        "key": "fisiotherapy",
+        "lang": "en",
+        "name": "Fisiotherapy",
+        "description": "Advanced fisiotherapy treatment"
+      }
+    ],
+    "address": {
+      "street": "Calle Río Sena, 30, Leganés",
+      "floor": "1º Puerta A",
+      "postCode": "28024",
+      "city": "Madrid",
+      "country": "España"
+    },
+    "status": "reserved",
+    "allowReBooking": true,
+    "createddBy": "5ac89c3fab0db73bc2d46d85"
+  },
+  {
+    "date": "",
+    "time": "11:30",
+    "patient": {
+      "id": "5ac89c3fab0db73bc2d46d85",
+      "name": "Manuel",
+      "surname": "Ruiz Acosta",
+      "email": "manuel@coolmail.com"
+    },
+    "doctor": {
+      "id": "5ac89c3fab0db73bc2d46d97",
+      "name": "Belen",
+      "surname": "Acosta Medina",
+      "email": "belen@coolmail.com"
+    },
+    "treatment": [
+      {
+        "key": "fisiotherapy",
+        "lang": "es",
+        "name": "Fisioterapia",
+        "description": "Tratamiento de Fisioterapia avanzado"
+      },
+      {
+        "key": "fisiotherapy",
+        "lang": "en",
+        "name": "Fisiotherapy",
+        "description": "Advanced fisiotherapy treatment"
+      }
+    ],
+    "address": {
+      "street": "Calle Río Sena, 30, Leganés",
+      "floor": "1º Puerta A",
+      "postCode": "28024",
+      "city": "Madrid",
+      "country": "España"
+    },
+    "status": "reserved",
+    "allowReBooking": true,
+    "createddBy": "5ac89c3fab0db73bc2d46d85"
+  },
+  {
+    "date": "",
+    "time": "20:30",
+    "patient": {
+      "id": "5ac89c3fab0db73bc2d46d85",
+      "name": "Manuel",
+      "surname": "Ruiz Acosta",
+      "email": "manuel@coolmail.com"
+    },
+    "doctor": {
+      "id": "5ac89c3fab0db73bc2d46d97",
+      "name": "Belen",
+      "surname": "Acosta Medina",
+      "email": "belen@coolmail.com"
+    },
+    "treatment": [
+      {
+        "key": "fisiotherapy",
+        "lang": "es",
+        "name": "Fisioterapia",
+        "description": "Tratamiento de Fisioterapia avanzado"
+      },
+      {
+        "key": "fisiotherapy",
+        "lang": "en",
+        "name": "Fisiotherapy",
+        "description": "Advanced fisiotherapy treatment"
+      }
+    ],
+    "address": {
+      "street": "Calle Río Sena, 30, Leganés",
+      "floor": "1º Puerta A",
+      "postCode": "28024",
+      "city": "Madrid",
+      "country": "España"
+    },
+    "status": "reserved",
+    "allowReBooking": true,
+    "createddBy": "5ac89c3fab0db73bc2d46d85"
+  }
+]

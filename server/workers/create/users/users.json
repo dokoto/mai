@@ -1,0 +1,200 @@
+[
+  {
+    "email": "manuel@coolmail.com",
+    "password": "123456",
+    "name": "Manuel",
+    "surname": "Ruiz Acosta",
+    "role": "user",
+    "funcRole": "patient",
+    "address": [
+      {
+        "street": "Calle Alcala, 20 Madrid",
+        "floor": "1º Puerta A",
+        "postCode": "28024",
+        "city": "Madrid",
+        "country": "España"
+      }
+    ],
+    "phone": "633456876"
+  },
+  {
+    "email": "david@coolmail.com",
+    "password": "123456",
+    "name": "David",
+    "surname": "Martin Flores",
+    "role": "user",
+    "funcRole": "patient",
+    "address": [
+      {
+        "street": "Calle Camarena, 19 Madrid",
+        "floor": "1º Puerta A",
+        "postCode": "28024",
+        "city": "Madrid",
+        "country": "España"
+      }
+    ],
+    "phone": "644137087"
+  },
+  {
+    "email": "camilo@coolmail.com",
+    "password": "123456",
+    "name": "Camilo",
+    "surname": "Fernandez Torres",
+    "role": "user",
+    "funcRole": "patient",
+    "address": [
+      {
+        "street": "Calle Galileo, 12 Madrid",
+        "floor": "1º Puerta A",
+        "postCode": "28024",
+        "city": "Madrid",
+        "country": "España"
+      }
+    ],
+    "phone": "600234980"
+  },
+  {
+    "email": "diego@coolmail.com",
+    "password": "123456",
+    "name": "Diego",
+    "surname": "Sierra Romero",
+    "role": "user",
+    "funcRole": "patient",
+    "address": [
+      {
+        "street": "Calle Los Arfe, 5 Madrid",
+        "floor": "1º Puerta A",
+        "postCode": "28024",
+        "city": "Madrid",
+        "country": "España"
+      }
+    ],
+    "phone": "677854123"
+  },
+  {
+    "email": "jaime@coolmail.com",
+    "password": "123456",
+    "name": "Jaime",
+    "surname": "López Gómez",
+    "role": "user",
+    "funcRole": "patient",
+    "address": [
+      {
+        "street": "Calle de Julia Mediavilla, 45 Madrid",
+        "floor": "1º Puerta A",
+        "postCode": "28024",
+        "city": "Madrid",
+        "country": "España"
+      }
+    ],
+    "phone": "609678234"
+  },
+  {
+    "email": "alicia@coolmail.com",
+    "password": "123456",
+    "name": "Alicia",
+    "surname": "García Sánchez",
+    "role": "admin",
+    "funcRole": "doctor",
+    "address": [
+      {
+        "street": "Calle Nivar, 12 Madrid",
+        "floor": "1º Puerta A",
+        "postCode": "28024",
+        "city": "Madrid",
+        "country": "España"
+      }
+    ],
+    "phone": "634665123",
+    "treatments": [
+      {
+        "key": "fisiotherapy",
+        "lang": "es",
+        "name": "Fisioterapia",
+        "description": "Tratamiento de Fisioterapia avanzado"
+      },
+      {
+        "key": "fisiotherapy",
+        "lang": "en",
+        "name": "Fisiotherapy",
+        "description": "Advanced fisiotherapy treatment"
+      }
+    ]
+  },
+  {
+    "email": "marta@coolmail.com",
+    "password": "123456",
+    "name": "Marta",
+    "surname": "Sosa Álvarez",
+    "role": "user",
+    "funcRole": "doctor",
+    "address": [
+      {
+        "street": "Calle de los Platillos, 10 Madrid",
+        "floor": "1º Puerta A",
+        "postCode": "28024",
+        "city": "Madrid",
+        "country": "España"
+      }
+    ],
+    "phone": "674387798",
+    "treatments": [
+      {
+        "key": "osteopaty",
+        "lang": "es",
+        "name": "Osteopatia",
+        "description": "Tratamiento de Osteopatia avanzado"
+      },
+      {
+        "key": "osteopaty",
+        "lang": "en",
+        "name": "Osteopaty",
+        "description": "Advanced osteopaty treatment"
+      }
+    ]
+  },
+  {
+    "email": "belen@coolmail.com",
+    "password": "123456",
+    "name": "Belen",
+    "surname": "Acosta Medina",
+    "role": "user",
+    "funcRole": "doctor",
+    "address": [
+      {
+        "street": "Calle Río Sena, 30, Leganés",
+        "floor": "1º Puerta A",
+        "postCode": "28024",
+        "city": "Madrid",
+        "country": "España"
+      }
+    ],
+    "phone": "6385098537",
+    "treatments": [
+      {
+        "key": "fisiotherapy",
+        "lang": "es",
+        "name": "Fisioterapia",
+        "description": "Tratamiento de Fisioterapia avanzado"
+      },
+      {
+        "key": "fisiotherapy",
+        "lang": "en",
+        "name": "Fisiotherapy",
+        "description": "Advanced fisiotherapy treatment"
+      },
+      {
+        "key": "M.A.I.",
+        "lang": "es",
+        "name": "M.A.I.",
+        "description": "Movilización Activa Intestinal"
+      },
+      {
+        "key": "M.A.I.",
+        "lang": "en",
+        "name": "M.A.I.",
+        "description": "Active Bowel Mobilization"
+      }
+    ]
+  }
+]

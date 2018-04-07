@@ -2,9 +2,7 @@ import { Router } from 'express'
 import user from './user'
 import auth from './auth'
 import passwordReset from './password-reset'
-import treatment from './treatment'
 import appointment from './appointment'
-import literal from './literal'
 import timeSchedule from './timeSchedule'
 
 const router = new Router()
@@ -35,9 +33,7 @@ const router = new Router()
 router.use('/users', user)
 router.use('/auth', auth)
 router.use('/password-resets', passwordReset)
-router.use('/treatments', treatment)
 router.use('/appointments', appointment)
-router.use('/literals', literal)
 router.use('/timeSchedules', timeSchedule)
 
 export default router
