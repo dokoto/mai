@@ -5,7 +5,7 @@ export const success = (res, status) => (entity) => {
   return null
 }
 
-export const notFound = (res) => (entity) => {
+export const notFound = res => (entity) => {
   if (entity) {
     return entity
   }

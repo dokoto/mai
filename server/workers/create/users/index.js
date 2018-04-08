@@ -20,11 +20,13 @@ const rest = [
 ]
 
 async function processData (url, model, accessToken) {
-  model.access_token = accessToken
   await request({
     method: 'POST',
     uri: url,
     body: model,
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    },
     json: true
   }).catch(err => console.log('>>>>  ERROR'))
 }

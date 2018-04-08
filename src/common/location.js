@@ -14,6 +14,6 @@ const fallbackLocale = 'es';
 const locale = languageWithoutRegionCode;
 window.glob = {};
 
-window.glob.language = languageWithoutRegionCode.toUpperCase();
+window.glob.language = languageWithoutRegionCode.toLowerCase();
 
 export { locale, fallbackLocale, messages, languageWithoutRegionCode, language };

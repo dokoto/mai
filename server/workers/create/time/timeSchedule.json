@@ -1,7 +1,7 @@
 [
   {
     "doctor": {
-      "id": "5abeaa596ccf06af84e66eff",
+      "_id": "5abeaa596ccf06af84e66eff",
       "name": "Alicia",
       "surname": "García Sánchez",
       "email": "alicia@coolmail.com"
@@ -39,7 +39,7 @@
   },
   {
     "doctor": {
-      "id": "5abeaa596ccf06af84e66f00",
+      "_id": "5abeaa596ccf06af84e66f00",
       "name": "Marta",
       "surname": "Sosa Álvarez",
       "email": "marta@coolmail.com"
@@ -77,7 +77,7 @@
   },
   {
     "doctor": {
-      "id": "5abeaa596ccf06af84e66f01",
+      "_id": "5abeaa596ccf06af84e66f01",
       "name": "Belen",
       "surname": "Acosta Medina",
       "email": "belen@coolmail.com"

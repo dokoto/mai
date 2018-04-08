@@ -1,50 +1,50 @@
 <template>
-  <article class="session-view-page">    
+  <article class="session-view-page">
     <div class="symbol-container">
       <img class="symbol" src="../../../static/img/therapy-symbol.png" />
     </div>
     <Card
       id="session-view-card"
-      :title="literals.sessionTitle" 
+      :title="literals.sessionTitle"
       iconColor="blue">
-      <InputBoxed id="session-view-type" 
-        placeHolder="Session Type#Error" 
-        :readOnly="readOnly" 
+      <InputBoxed id="session-view-type"
+        placeHolder="Session Type#Error"
+        :readOnly="readOnly"
         :value="firstTherapy.name"
         :noBorder="noBorder"
         :noIcon="noIcon"
         v-if="therapists.length > 0" />
-      <InputBoxed id="session-view-date" 
-        placeHolder="Session Type#Error" 
-        :readOnly="readOnly" 
+      <InputBoxed id="session-view-date"
+        placeHolder="Session Type#Error"
+        :readOnly="readOnly"
         :value="formatDate"
         :noBorder="noBorder"
         :noIcon="noIcon"
         v-if="therapists.length > 0" />
-      <InputBoxed id="session-view-time" 
-        placeHolder="Session Type#Error" 
-        :readOnly="readOnly" 
+      <InputBoxed id="session-view-time"
+        placeHolder="Session Type#Error"
+        :readOnly="readOnly"
         :value="`${timeBegin} >> ${timeEnd}`"
         :noBorder="noBorder"
         :noIcon="noIcon"
-        v-if="therapists.length > 0" />    
+        v-if="therapists.length > 0" />
     </Card>
     <Card
       id="session-view-therapist-carrusel-card"
-      :title="literals.therapistTitle" 
+      :title="literals.therapistTitle"
       iconColor="blue">
-        <TherapistCarrusel 
-          :id="`session-view-therapist-carrusel-${session.date}`" 
+        <TherapistCarrusel
+          :id="`session-view-therapist-carrusel-${session.date}`"
           :therapists="therapists"
           v-if="therapists.length > 0" />
     </Card>
     <Card
       id="session-view-location-card"
-      :title="literals.locationTitle" 
+      :title="literals.locationTitle"
       iconColor="blue">
-      <LocationMap 
-        :address="therapistAddress" 
-        :zoom="mapZoom" 
+      <LocationMap
+        :address="therapistAddress"
+        :zoom="mapZoom"
         :showMap="showMap"
         v-if="therapists.length > 0" />
     </Card>
@@ -71,11 +71,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      session: 'session/session',
-      firstTherapy: 'session/firstTherapy',
-      therapists: 'session/therapists',
-      therapistAddress: 'session/therapistAddress',
-      mapZoom: 'session/mapZoom',
+      session: 'appointment/session',
+      firstTherapy: 'appointment/firstTherapy',
+      therapists: 'appointment/therapists',
+      therapistAddress: 'appointment/therapistAddress',
+      mapZoom: 'appointment/mapZoom',
     }),
     formatDate() {
       return moment(`${ this.session.date}`, consts.INT_DATE_FORMAT)
@@ -92,7 +92,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('session/getSession', this.$route.params.sessionId);    
+    this.$store.dispatch('session/getSession', this.$route.params.sessionId);
   },
   data() {
     return {

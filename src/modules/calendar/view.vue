@@ -57,7 +57,7 @@ export default {
   },
   created() {
     this.$store.dispatch('calendar/initDate');
-    this.$store.dispatch('calendar/setUserId', this.$route.params.userId);
+    this.$store.dispatch('calendar/setUserId');
     this.$store.dispatch('calendar/getToDaySessions');
   },
 };

@@ -14,10 +14,10 @@ export const password = () => (req, res, next) =>
     if (err && err.param) {
       return res.status(400).json(err)
     } else if (err || !user) {
-      return res.status(401).end()
+      return res.status(401).json({ message: 'Unauthorized' })
     }
     req.logIn(user, { session: false }, (err) => {
-      if (err) return res.status(401).end()
+      if (err) return res.status(401).json({ message: 'Unauthorized' })
       next()
     })
   })(req, res, next)
@@ -28,17 +28,30 @@ export const github = () => passport.authenticate('github', { session: false })
 
 export const google = () => passport.authenticate('google', { session: false })
 
-export const master = () => passport.authenticate('master', { session: false })
+// export const master = () => passport.authenticate('master', { session: false })
+export const master = () => (req, res, next) =>
+  passport.authenticate('master', { session: false }, (err, user, info) => {
+    if (err && err.param) {
+      return res.status(400).json(err)
+    } else if (err || !user) {
+      return res.status(401).json({ message: 'Wrong Master Password' })
+    }
+    req.logIn(user, { session: false }, (err) => {
+      if (err) return res.status(401).json({ message: 'Wrong Master Password' })
+      next()
+    })
+  })(req, res, next)
+
 
 export const superuser = () => passport.authenticate('superuser', { session: false })
 
 export const token = ({ required, roles = User.roles } = {}) => (req, res, next) =>
   passport.authenticate('token', { session: false }, (err, user, info) => {
     if (err || (required && !user) || (required && !~roles.indexOf(user.role))) {
-      return res.status(401).end()
+      return res.status(401).json({ message: 'Wrong user token' })
     }
     req.logIn(user, { session: false }, (err) => {
-      if (err) return res.status(401).end()
+      if (err) return res.status(401).json({ message: 'Wrong user token' })
       res.user = user
       next()
     })

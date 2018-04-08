@@ -17,11 +17,23 @@ const rest = [
 ]
 
 async function processData (url, model, accessToken) {
-  model.access_token = accessToken
+  console.log(model.doctor.email)
+  const user = await request({
+    method: 'GET',
+    uri: `http://0.0.0.0:9000/api/users?q=${model.doctor.email}`,
+    headers: {
+      Authorization: `Bearer ${TOKEN.ADMIN}`
+    },
+    json: true
+  })
+  model.doctor._id = user[0].id
   await request({
     method: 'POST',
     uri: url,
     body: model,
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    },
     json: true
   }).catch(err => console.log('>>>>  ERROR'))
 }

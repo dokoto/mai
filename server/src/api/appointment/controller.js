@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { success, notFound } from '../../services/response/'
 import { Appointment } from '.'
 
@@ -19,6 +20,29 @@ export const show = ({ params }, res, next) =>
     .then(appointment => (appointment ? appointment.view() : null))
     .then(success(res))
     .catch(next)
+
+export const showNexts = ({ params }, res, next) => {
+  const limit = Number(params.num) || 3
+  return Appointment.find({
+    $and: [
+      {
+        'patient.email': res.user.email
+      },
+      {
+        date: {
+          $gte: moment()
+            .format('YYYY-MM-DD')
+        }
+      }
+    ]
+  })
+    .limit(limit)
+    .sort({ date: 1 })
+    .then(notFound(res))
+    .then(appointments => appointments.map(appointment => appointment.view()))
+    .then(success(res))
+    .catch(next)
+}
 
 export const update = ({ body, params }, res, next) =>
   Appointment.findById(params.id)

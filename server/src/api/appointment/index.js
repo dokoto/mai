@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { token, master } from '../../services/passport'
-import { create, index, show, update, destroy } from './controller'
+import { create, index, show, update, destroy, showNexts } from './controller'
 import { schema } from './model'
 
 export Appointment, { schema } from './model'
@@ -42,7 +42,20 @@ router.post('/', token({ required: true }), create)
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 401 user access only.
  */
-router.get('/', token({ required: true }), query(), index)
+router.get('/', token({ required: true, roles: ['admin'] }), query(), index)
+
+/**
+ * @api {get} /appointments/me/nexts Retrieve nests appointments
+ * @apiName RetrieveAppointments
+ * @apiGroup Appointment
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiParam {Numbre} [num] size of appointment to show
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 404 Appointment not found.
+ * @apiError 401 user access only.
+ */
+router.get('/me/nexts/:num?', token({ required: true }), showNexts)
 
 /**
  * @api {get} /appointments/:id Retrieve appointment
@@ -55,7 +68,7 @@ router.get('/', token({ required: true }), query(), index)
  * @apiError 404 Appointment not found.
  * @apiError 401 user access only.
  */
-router.get('/:id', token({ required: true }), show)
+router.get('/:id', token({ required: true, roles: ['admin'] }), show)
 
 /**
  * @api {put} /appointments/:id Update appointment

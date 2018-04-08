@@ -1,5 +1,5 @@
 import moment from 'moment';
-import * as services from '../../../common/services';
+import * as services from '../../../common/api';
 import * as consts from '../../../common/constants';
 
 import {

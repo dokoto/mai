@@ -28,7 +28,6 @@ import * as consts from '../../../common/constants.js'
 moment.locale(window.glob.language);
 
 export default {
-  props: ['userId'],
   components: { HomeMenuItem },
   data() {
     return {
@@ -40,7 +39,7 @@ export default {
   },
   computed: {
     calendarUrl() {
-      return `/calendar/${ this.userId }`;
+      return `/calendar`;
     },
   },
 };

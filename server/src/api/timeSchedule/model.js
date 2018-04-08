@@ -6,8 +6,9 @@ import * as consts from '../../constants'
 const timeScheduleSchema = new Schema(
   {
     doctor: {
-      id: {
+      _id: {
         type: Schema.Types.ObjectId,
+        ref: 'users',
         required: true
       },
       name: {

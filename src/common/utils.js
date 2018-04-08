@@ -48,9 +48,11 @@ export function formatDateNumeric(date = new Date()) {
 }
 
 function createDayAHeadArray(dateString, numOfMonthsAHead) {
-  return _.range(moment(dateString, consts.INT_DATE_FORMAT)
-    .add(numOfMonthsAHead, 'months')
-    .diff(moment(dateString, consts.INT_DATE_FORMAT), 'days'));
+  return _.range(
+    moment(dateString, consts.INT_DATE_FORMAT)
+      .add(numOfMonthsAHead, 'months')
+      .diff(moment(dateString, consts.INT_DATE_FORMAT), 'days'),
+  );
 }
 
 export function formatDate(date = new Date()) {
@@ -112,16 +114,16 @@ export function generateAppointmentTable(
   selectedDay,
   therapys,
   therapists,
-  userId
+  userId,
 ) {
-  return schedule.map(session => {
+  return schedule.map((session) => {
     const sessionOccupy = _.find(sessions, findSessionByTime(session));
     const sessionTexts = _.find(therapys, findTherapyTexts(sessionOccupy));
-    const sessionNameKey = `texts.${ window.glob.language }.name`;
+    const sessionNameKey = `texts.${window.glob.language}.name`;
     const therapi = therapists.filter(item => item.id === _.get(sessionOccupy, 'therapist'));
 
     return {
-      id: _.get(sessionOccupy, 'id', `${ session.replace(':', '') }-${ selectedDay }-${ userId }`),
+      id: _.get(sessionOccupy, 'id', `${session.replace(':', '')}-${selectedDay}-${userId}`),
       time: _.get(sessionOccupy, 'date.time', session),
       therapy: _.get(sessionTexts, sessionNameKey, ''),
       therapi: _.get(therapi, '[0].name'),
@@ -140,7 +142,9 @@ export function generateAppointmentTable(
 }
 
 export function formatIntDate(yearNumber, monthNumber, dayNumber) {
-  return moment(`${ yearNumber }${ monthNumber }${ dayNumber }`, consts.INT_DATE_FORMAT).format(consts.INT_DATE_FORMAT);
+  return moment(`${yearNumber}${monthNumber}${dayNumber}`, consts.INT_DATE_FORMAT).format(
+    consts.INT_DATE_FORMAT,
+  );
 }
 
 export function reduceTherapysByLanguage(prev, curr) {

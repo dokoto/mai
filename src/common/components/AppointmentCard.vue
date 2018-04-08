@@ -1,10 +1,10 @@
 <template>
   <div class="sessionCard box"
-    v-bind:id="id"
-    v-on:click="handleSessionClick">
+    :id="id"
+    v-on:click="handleAppointmentCardClick">
     <span class="date">{{ formatDateTime }}</span>
     <span class="name"
-      :class="{ marginxl: !withTimeInterval }">{{ sessionTherapy.name }}</span>
+      :class="{ marginxl: !withTimeInterval }">{{ treatmentLocated.name }}</span>
     <span class="time-interval"
       v-if="withTimeInterval">{{ timeBegin }} &#8680; {{ timeEnd }}</span>
   </div>
@@ -15,35 +15,48 @@ import moment from 'moment';
 import * as consts from '../../common/constants';
 moment.locale(window.glob.language);
 export default {
-  props: ['id', 'sessionDate', 'sessionTherapy', 'withTimeInterval'],
+  props: {
+    id: {
+      type: String,
+    },
+    date: {
+      type: String,
+    },
+    time: {
+      type: String,
+    },
+    treatment: {
+      type: Array,
+    },
+    withTimeInterval: {
+      type: Boolean,
+      default: false,
+    },
+  },
   computed: {
+    treatmentLocated() {
+      return this.treatment.reduce(
+        (curr, next) => (next.lang === window.glob.language ? next : curr),
+        {},
+      );
+    },
     formatDateTime() {
-      return moment(`${this.sessionDate}`, consts.INT_DATE_FORMAT)
+      return moment(`${this.date}`, consts.INT_DATE_FORMAT)
         .format('dddd D MMMM')
         .toUpperCase();
     },
     timeBegin() {
-      return moment(
-        `${this.sessionDate.year}-${this.sessionDate.month}-${this.sessionDate.day} ${
-          this.sessionDate.time
-        }`,
-        consts.INT_DATE_FORMAT,
-      ).format('hh:mm A');
+      return moment(`${this.date} ${this.time}`, consts.INT_DATE_FORMAT).format('hh:mm A');
     },
     timeEnd() {
-      return moment(
-        `${this.sessionDate.year}-${this.sessionDate.month}-${this.sessionDate.day} ${
-          this.sessionDate.time
-        }`,
-        consts.INT_DATE_FORMAT,
-      )
+      return moment(`${this.date} ${this.time}`, consts.INT_DATE_FORMAT)
         .add(45, 'm')
         .format('hh:mm A');
     },
   },
   methods: {
-    handleSessionClick(ev) {
-      this.$emit('sessionClick', ev);
+    handleAppointmentCardClick(ev) {
+      this.$emit('appointmentCardClick', ev);
     },
   },
 };

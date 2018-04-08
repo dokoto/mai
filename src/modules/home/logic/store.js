@@ -1,40 +1,36 @@
-import _ from 'lodash/object';
-import * as services from '../../../common/services';
-import { RECEIVE_NEXT_SESSIONS, RECEIVE_THERAPYES } from './types';
+import * as services from '../../../common/api';
+import { RECEIVE_NEXT_SESSIONS } from './types';
+import { STATUS } from '../../../common/api/constants';
+import { EMPTY_ARRAY } from '../../../common/constants';
 
 const state = {
-  nextSessions: [],
-  therapys: [],
-};
-
-const getters = {
-  nextSessions: currState => currState.nextSessions,
-  getTherapys: currState => currState.therapys,
+  nextsAppointments: EMPTY_ARRAY,
 };
 
 const actions = {
-  async getNextSessions({ commit }, userId) {
-    const sessions = await services.getNextSessions(userId);
-    const therapysIds = sessions.map(item => _.get(item, 'therapy'));
-    const therapys = await services.getTherapies(therapysIds);
-    commit(RECEIVE_NEXT_SESSIONS, { sessions });
-    commit(RECEIVE_THERAPYES, { therapys });
+  async nextsAppointments({ commit }) {
+    const nextsAppointments = await services.nextsAppointments();
+    if (nextsAppointments.status === STATUS.SUCCESS) {
+      commit(RECEIVE_NEXT_SESSIONS, nextsAppointments.data);
+    } else {
+      const message =
+        nextsAppointments.status === STATUS.FAIL
+          ? nextsAppointments.data.message
+          : nextsAppointments.message;
+      commit('app/NOTIFY', { status: nextsAppointments.status, message }, { root: true });
+    }
   },
 };
 
 const mutations = {
-  [RECEIVE_NEXT_SESSIONS](currState, { sessions }) {
-    currState.nextSessions = sessions;
-  },
-  [RECEIVE_THERAPYES](currState, { therapys }) {
-    currState.therapys = therapys;
+  [RECEIVE_NEXT_SESSIONS](currState, nextsAppointments) {
+    currState.nextsAppointments = nextsAppointments;
   },
 };
 
 export default {
   namespaced: true,
   state,
-  getters,
   mutations,
   actions,
 };

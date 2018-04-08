@@ -14,8 +14,9 @@ const appointmentSchema = new Schema(
       maxlength: 5
     },
     patient: {
-      id: {
+      _id: {
         type: Schema.Types.ObjectId,
+        ref: 'users',
         required: true
       },
       name: {
@@ -34,8 +35,9 @@ const appointmentSchema = new Schema(
       }
     },
     doctor: {
-      id: {
+      _id: {
         type: Schema.Types.ObjectId,
+        ref: 'users',
         required: true
       },
       name: {
@@ -111,6 +113,7 @@ const appointmentSchema = new Schema(
     },
     createddBy: {
       type: Schema.Types.ObjectId,
+      ref: 'users',
       required: true
     },
     cancelReason: {
@@ -129,11 +132,14 @@ appointmentSchema.methods = {
       'id',
       'date',
       'time',
-      'treatmentKey',
-      'doctorId',
-      'patientId',
+      'patient',
+      'doctor',
+      'treatment',
       'address',
-      'status'
+      'status',
+      'allowReBooking',
+      'createddBy',
+      'cancelReason'
     ]
 
     if (full) {

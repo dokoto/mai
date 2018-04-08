@@ -1,5 +1,5 @@
 <template>
-  <div id="perruchaApp"
+  <div id="mai"
     class="app">
     <transition name="fade"
       mode="out-in"
@@ -7,8 +7,24 @@
       <router-view name="container"
         class="child-view"></router-view>
     </transition>
+    <Notify />
   </div>
 </template>
+
+<script>
+import Notify from './components/Notify';
+
+export default {
+  components: { Notify },
+  created: function() {
+    return this.$store.dispatch('app/tmpLogin').then(() =>
+      this.$router.push({
+        name: 'home',
+      }),
+    );
+  },
+};
+</script>
 
 <style lang="scss">
 @import '../../common/styles/base.scss';

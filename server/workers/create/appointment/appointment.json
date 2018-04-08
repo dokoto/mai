@@ -3,13 +3,13 @@
     "date": "",
     "time": "10:00",
     "patient": {
-      "id": "5ac89c3fab0db73bc2d46d85",
+      "_id": "5ac89c3fab0db73bc2d46d85",
       "name": "Manuel",
       "surname": "Ruiz Acosta",
       "email": "manuel@coolmail.com"
     },
     "doctor": {
-      "id": "5ac89c3fab0db73bc2d46d97",
+      "_id": "5ac89c3fab0db73bc2d46d97",
       "name": "Belen",
       "surname": "Acosta Medina",
       "email": "belen@coolmail.com"
@@ -43,13 +43,13 @@
     "date": "",
     "time": "19:00",
     "patient": {
-      "id": "5ac89c3fab0db73bc2d46d85",
+      "_id": "5ac89c3fab0db73bc2d46d85",
       "name": "Manuel",
       "surname": "Ruiz Acosta",
       "email": "manuel@coolmail.com"
     },
     "doctor": {
-      "id": "5ac89c3fab0db73bc2d46d97",
+      "_id": "5ac89c3fab0db73bc2d46d97",
       "name": "Belen",
       "surname": "Acosta Medina",
       "email": "belen@coolmail.com"
@@ -83,13 +83,13 @@
     "date": "",
     "time": "16:00",
     "patient": {
-      "id": "5ac89c3fab0db73bc2d46d85",
+      "_id": "5ac89c3fab0db73bc2d46d85",
       "name": "Manuel",
       "surname": "Ruiz Acosta",
       "email": "manuel@coolmail.com"
     },
     "doctor": {
-      "id": "5ac89c3fab0db73bc2d46d97",
+      "_id": "5ac89c3fab0db73bc2d46d97",
       "name": "Belen",
       "surname": "Acosta Medina",
       "email": "belen@coolmail.com"
@@ -123,13 +123,13 @@
     "date": "",
     "time": "11:30",
     "patient": {
-      "id": "5ac89c3fab0db73bc2d46d85",
+      "_id": "5ac89c3fab0db73bc2d46d85",
       "name": "Manuel",
       "surname": "Ruiz Acosta",
       "email": "manuel@coolmail.com"
     },
     "doctor": {
-      "id": "5ac89c3fab0db73bc2d46d97",
+      "_id": "5ac89c3fab0db73bc2d46d97",
       "name": "Belen",
       "surname": "Acosta Medina",
       "email": "belen@coolmail.com"
@@ -163,13 +163,13 @@
     "date": "",
     "time": "20:30",
     "patient": {
-      "id": "5ac89c3fab0db73bc2d46d85",
+      "_id": "5ac89c3fab0db73bc2d46d85",
       "name": "Manuel",
       "surname": "Ruiz Acosta",
       "email": "manuel@coolmail.com"
     },
     "doctor": {
-      "id": "5ac89c3fab0db73bc2d46d97",
+      "_id": "5ac89c3fab0db73bc2d46d97",
       "name": "Belen",
       "surname": "Acosta Medina",
       "email": "belen@coolmail.com"
