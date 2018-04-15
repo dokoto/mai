@@ -1,5 +1,3 @@
-// https://eslint.org/docs/user-guide/configuring
-
 module.exports = {
   root: true,
   parserOptions: {
@@ -46,6 +44,13 @@ module.exports = {
     }],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-param-reassign': 0
+    'no-param-reassign': ["error", { "props": true, "ignorePropertyModificationsFor": ["currState"] }],
+    'comma-dangle': ["error", "never"],
+    'no-confusing-arrow': ["error", {"allowParens": true}],
+    'arrow-parens': ["error", "as-needed"],
+    'object-shorthand': 0,
+    'space-before-function-paren': 0,
+    'func-names': 0,
+    'no-underscore-dangle': 0
   }
 }

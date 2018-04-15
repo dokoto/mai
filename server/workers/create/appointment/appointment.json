@@ -3,25 +3,28 @@
     "date": "",
     "time": "10:00",
     "patient": {
-      "_id": "5ac89c3fab0db73bc2d46d85",
+      "_id": "FAKE_ID",
       "name": "Manuel",
       "surname": "Ruiz Acosta",
       "email": "manuel@coolmail.com"
     },
     "doctor": {
-      "_id": "5ac89c3fab0db73bc2d46d97",
+      "_id": "FAKE_ID",
       "name": "Belen",
       "surname": "Acosta Medina",
-      "email": "belen@coolmail.com"
+      "email": "belen@coolmail.com",
+      "picture": "https://www.online-therapy.com/files/img/slider/therapist.jpg"
     },
     "treatment": [
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "es",
         "name": "Fisioterapia",
         "description": "Tratamiento de Fisioterapia avanzado"
       },
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "en",
         "name": "Fisiotherapy",
@@ -43,25 +46,28 @@
     "date": "",
     "time": "19:00",
     "patient": {
-      "_id": "5ac89c3fab0db73bc2d46d85",
+      "_id": "FAKE_ID",
       "name": "Manuel",
       "surname": "Ruiz Acosta",
       "email": "manuel@coolmail.com"
     },
     "doctor": {
-      "_id": "5ac89c3fab0db73bc2d46d97",
+      "_id": "FAKE_ID",
       "name": "Belen",
       "surname": "Acosta Medina",
-      "email": "belen@coolmail.com"
+      "email": "belen@coolmail.com",
+      "picture": "https://www.online-therapy.com/files/img/slider/therapist.jpg"
     },
     "treatment": [
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "es",
         "name": "Fisioterapia",
         "description": "Tratamiento de Fisioterapia avanzado"
       },
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "en",
         "name": "Fisiotherapy",
@@ -83,25 +89,28 @@
     "date": "",
     "time": "16:00",
     "patient": {
-      "_id": "5ac89c3fab0db73bc2d46d85",
+      "_id": "FAKE_ID",
       "name": "Manuel",
       "surname": "Ruiz Acosta",
       "email": "manuel@coolmail.com"
     },
     "doctor": {
-      "_id": "5ac89c3fab0db73bc2d46d97",
+      "_id": "FAKE_ID",
       "name": "Belen",
       "surname": "Acosta Medina",
-      "email": "belen@coolmail.com"
+      "email": "belen@coolmail.com",
+      "picture": "https://www.online-therapy.com/files/img/slider/therapist.jpg"
     },
     "treatment": [
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "es",
         "name": "Fisioterapia",
         "description": "Tratamiento de Fisioterapia avanzado"
       },
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "en",
         "name": "Fisiotherapy",
@@ -123,25 +132,28 @@
     "date": "",
     "time": "11:30",
     "patient": {
-      "_id": "5ac89c3fab0db73bc2d46d85",
+      "_id": "FAKE_ID",
       "name": "Manuel",
       "surname": "Ruiz Acosta",
       "email": "manuel@coolmail.com"
     },
     "doctor": {
-      "_id": "5ac89c3fab0db73bc2d46d97",
+      "_id": "FAKE_ID",
       "name": "Belen",
       "surname": "Acosta Medina",
-      "email": "belen@coolmail.com"
+      "email": "belen@coolmail.com",
+      "picture": "https://www.online-therapy.com/files/img/slider/therapist.jpg"
     },
     "treatment": [
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "es",
         "name": "Fisioterapia",
         "description": "Tratamiento de Fisioterapia avanzado"
       },
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "en",
         "name": "Fisiotherapy",
@@ -163,25 +175,28 @@
     "date": "",
     "time": "20:30",
     "patient": {
-      "_id": "5ac89c3fab0db73bc2d46d85",
+      "_id": "FAKE_ID",
       "name": "Manuel",
       "surname": "Ruiz Acosta",
       "email": "manuel@coolmail.com"
     },
     "doctor": {
-      "_id": "5ac89c3fab0db73bc2d46d97",
+      "_id": "FAKE_ID",
       "name": "Belen",
       "surname": "Acosta Medina",
-      "email": "belen@coolmail.com"
+      "email": "belen@coolmail.com",
+      "picture": "https://www.online-therapy.com/files/img/slider/therapist.jpg"
     },
     "treatment": [
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "es",
         "name": "Fisioterapia",
         "description": "Tratamiento de Fisioterapia avanzado"
       },
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "en",
         "name": "Fisiotherapy",

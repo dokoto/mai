@@ -1,10 +1,10 @@
-import * as services from '../../../common/api';
+import * as services from '@/common/api';
+import { STATUS, EMPTY_ARRAY } from '@/common/api/constants';
+import { notifyError } from '@/common/utils';
 import { RECEIVE_NEXT_SESSIONS } from './types';
-import { STATUS } from '../../../common/api/constants';
-import { EMPTY_ARRAY } from '../../../common/constants';
 
 const state = {
-  nextsAppointments: EMPTY_ARRAY,
+  nextsAppointments: EMPTY_ARRAY
 };
 
 const actions = {
@@ -13,24 +13,20 @@ const actions = {
     if (nextsAppointments.status === STATUS.SUCCESS) {
       commit(RECEIVE_NEXT_SESSIONS, nextsAppointments.data);
     } else {
-      const message =
-        nextsAppointments.status === STATUS.FAIL
-          ? nextsAppointments.data.message
-          : nextsAppointments.message;
-      commit('app/NOTIFY', { status: nextsAppointments.status, message }, { root: true });
+      notifyError(commit, nextsAppointments);
     }
-  },
+  }
 };
 
 const mutations = {
   [RECEIVE_NEXT_SESSIONS](currState, nextsAppointments) {
     currState.nextsAppointments = nextsAppointments;
-  },
+  }
 };
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions,
+  actions
 };

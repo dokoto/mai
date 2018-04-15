@@ -1,16 +1,26 @@
 import moment from 'moment';
 import _ from 'lodash';
+import { STATUS } from '@/common/api/constants';
+
 
 import * as consts from './constants';
 
 if (!window.glob || !window.glob.language) {
   window.glob = {
-    language: 'es',
+    language: 'es'
   };
 }
 
 moment.locale(window.glob.language.toLowerCase());
 
+// NEW
+export function notifyError(commit, response) {
+  const message =
+    response.status === STATUS.FAIL ? response.data.message : response.message;
+  commit('app/NOTIFY', { status: response.status, message }, { root: true });
+}
+
+// OLD
 function mapCalendar(dateString) {
   return currentDay => ({
     dayNumber: moment(dateString, consts.INT_DATE_FORMAT)
@@ -39,7 +49,7 @@ function mapCalendar(dateString) {
     fullDate: moment(dateString, consts.INT_DATE_FORMAT)
       .add(currentDay, 'day')
       .format('YYYYMMDD')
-      .toUpperCase(),
+      .toUpperCase()
   });
 }
 
@@ -51,7 +61,7 @@ function createDayAHeadArray(dateString, numOfMonthsAHead) {
   return _.range(
     moment(dateString, consts.INT_DATE_FORMAT)
       .add(numOfMonthsAHead, 'months')
-      .diff(moment(dateString, consts.INT_DATE_FORMAT), 'days'),
+      .diff(moment(dateString, consts.INT_DATE_FORMAT), 'days')
   );
 }
 
@@ -85,7 +95,7 @@ export function getArrayDate(selectedDay) {
   return [
     moment(selectedDay, consts.INT_DATE_FORMAT).format('YYYY'),
     moment(selectedDay, consts.INT_DATE_FORMAT).format('MM'),
-    moment(selectedDay, consts.INT_DATE_FORMAT).format('DD'),
+    moment(selectedDay, consts.INT_DATE_FORMAT).format('DD')
   ];
 }
 
@@ -114,37 +124,48 @@ export function generateAppointmentTable(
   selectedDay,
   therapys,
   therapists,
-  userId,
+  userId
 ) {
-  return schedule.map((session) => {
+  return schedule.map(session => {
     const sessionOccupy = _.find(sessions, findSessionByTime(session));
     const sessionTexts = _.find(therapys, findTherapyTexts(sessionOccupy));
     const sessionNameKey = `texts.${window.glob.language}.name`;
-    const therapi = therapists.filter(item => item.id === _.get(sessionOccupy, 'therapist'));
+    const therapi = therapists.filter(
+      item => item.id === _.get(sessionOccupy, 'therapist')
+    );
 
     return {
-      id: _.get(sessionOccupy, 'id', `${session.replace(':', '')}-${selectedDay}-${userId}`),
+      id: _.get(
+        sessionOccupy,
+        'id',
+        `${session.replace(':', '')}-${selectedDay}-${userId}`
+      ),
       time: _.get(sessionOccupy, 'date.time', session),
       therapy: _.get(sessionTexts, sessionNameKey, ''),
       therapi: _.get(therapi, '[0].name'),
       permisions: {
         view: _.get(sessionOccupy, 'id', false)
-          ? userId === sessionOccupy.userId || userId === sessionOccupy.therapist
+          ? userId === sessionOccupy.userId ||
+            userId === sessionOccupy.therapist
           : true,
         cancelable: _.get(sessionOccupy, 'id', false)
-          ? userId === sessionOccupy.userId || userId === sessionOccupy.therapist
+          ? userId === sessionOccupy.userId ||
+            userId === sessionOccupy.therapist
           : false,
-        editable: _.get(sessionOccupy, 'id', false) ? userId === sessionOccupy.therapist : true,
+        editable: _.get(sessionOccupy, 'id', false)
+          ? userId === sessionOccupy.therapist
+          : true
       },
-      sessionOccupy,
+      sessionOccupy
     };
   });
 }
 
 export function formatIntDate(yearNumber, monthNumber, dayNumber) {
-  return moment(`${yearNumber}${monthNumber}${dayNumber}`, consts.INT_DATE_FORMAT).format(
-    consts.INT_DATE_FORMAT,
-  );
+  return moment(
+    `${yearNumber}${monthNumber}${dayNumber}`,
+    consts.INT_DATE_FORMAT
+  ).format(consts.INT_DATE_FORMAT);
 }
 
 export function reduceTherapysByLanguage(prev, curr) {

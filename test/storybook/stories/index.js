@@ -185,7 +185,7 @@ storiesOf('TherapistCarrusel', module)
           {
             id: 'T1',
             name: 'Pakatoko Alfaro Sanchez',
-            thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
+            picture: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
           },
         ],
       };
@@ -207,7 +207,7 @@ storiesOf('TherapistCarrusel', module)
           {
             id: 'T2',
             name: 'Pakajara',
-            thumb:
+            picture:
               'https://vmtherapy.com/wp-content/uploads/2014/01/Vanessa-Marin_AB-6709-1024x682.jpg',
           },
         ],
@@ -225,18 +225,18 @@ storiesOf('TherapistCarrusel', module)
           {
             id: 'T1',
             name: 'Pakatoko Alfaro Sanchez',
-            thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
+            picture: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
           },
           {
             id: 'T2',
             name: 'Pakajara',
-            thumb:
+            picture:
               'https://vmtherapy.com/wp-content/uploads/2014/01/Vanessa-Marin_AB-6709-1024x682.jpg',
           },
           {
             id: 'T3',
             name: 'Perojeres',
-            thumb:
+            picture:
               'https://i1.wp.com/smileconcepts.co.uk/wp-content/uploads/2017/11/lucy-fisher-dental-therapist.jpg',
           },
         ],
@@ -253,35 +253,35 @@ storiesOf('TherapistCarrusel', module)
           {
             id: 'T1',
             name: 'Pakatoko Alfaro Sanchez:T1',
-            thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
+            picture: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
           },
           {
             id: 'T2',
             name: 'Pakajara:T2',
-            thumb:
+            picture:
               'https://vmtherapy.com/wp-content/uploads/2014/01/Vanessa-Marin_AB-6709-1024x682.jpg',
           },
           {
             id: 'T3',
             name: 'Perojeres:T3',
-            thumb:
+            picture:
               'https://i1.wp.com/smileconcepts.co.uk/wp-content/uploads/2017/11/lucy-fisher-dental-therapist.jpg',
           },
           {
             id: 'T4',
             name: 'Paka:T4',
-            thumb: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
+            picture: 'https://www.online-therapy.com/files/img/slider/therapist.jpg',
           },
           {
             id: 'T5',
             name: 'Pakajara:T5',
-            thumb:
+            picture:
               'https://vmtherapy.com/wp-content/uploads/2014/01/Vanessa-Marin_AB-6709-1024x682.jpg',
           },
           {
             id: 'T6',
             name: 'Perojeres:T6',
-            thumb:
+            picture:
               'https://i1.wp.com/smileconcepts.co.uk/wp-content/uploads/2017/11/lucy-fisher-dental-therapist.jpg',
           },
         ],

@@ -1,31 +1,26 @@
 <template>
   <section class="menu">
     <HomeMenuItem className="pastel-orange"
-      :icon="calendarIcon"
-      :calendarUrl="calendarUrl" />
+                  :icon="calendarIcon"
+                  url="/calendar" />
     <HomeMenuItem className="pastel-pink"
-      :icon="emailIcon"
-      url="/email" />
+                  :icon="emailIcon"
+                  url="/email" />
     <HomeMenuItem className="pastel-blue"
-      :icon="chatIcon"
-      url="/chat" />
+                  :icon="chatIcon"
+                  url="/chat" />
     <HomeMenuItem className="pastel-yellow"
-      :icon="phoneIcon"
-      url="/phone" />
+                  :icon="phoneIcon"
+                  url="/phone" />
   </section>
 </template>
 
 <script>
-import moment from 'moment';
-
-import HomeMenuItem from './menuItem.vue';
-import calendarIcon from '../../../../static/img/icon-calendar.png';
-import emailIcon from '../../../../static/img/icon-email.png';
-import chatIcon from '../../../../static/img/icon-chat.png';
-import phoneIcon from '../../../../static/img/icon-phone.png';
-import * as consts from '../../../common/constants.js'
-
-moment.locale(window.glob.language);
+import calendarIcon from '@/assets/img/icon-calendar.png';
+import emailIcon from '@/assets/img/icon-email.png';
+import chatIcon from '@/assets/img/icon-chat.png';
+import phoneIcon from '@/assets/img/icon-phone.png';
+import HomeMenuItem from './menuItem';
 
 export default {
   components: { HomeMenuItem },
@@ -34,14 +29,9 @@ export default {
       calendarIcon,
       emailIcon,
       chatIcon,
-      phoneIcon,
+      phoneIcon
     };
-  },
-  computed: {
-    calendarUrl() {
-      return `/calendar`;
-    },
-  },
+  }
 };
 </script>
 

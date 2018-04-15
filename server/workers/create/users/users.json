@@ -106,14 +106,17 @@
       }
     ],
     "phone": "634665123",
+    "picture": "https://i1.wp.com/smileconcepts.co.uk/wp-content/uploads/2017/11/lucy-fisher-dental-therapist.jpg",
     "treatments": [
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "es",
         "name": "Fisioterapia",
         "description": "Tratamiento de Fisioterapia avanzado"
       },
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "en",
         "name": "Fisiotherapy",
@@ -138,14 +141,17 @@
       }
     ],
     "phone": "674387798",
+    "picture": "https://vmtherapy.com/wp-content/uploads/2014/01/Vanessa-Marin_AB-6709-1024x682.jpg",
     "treatments": [
       {
+        "_id": "FAKE_ID",
         "key": "osteopaty",
         "lang": "es",
         "name": "Osteopatia",
         "description": "Tratamiento de Osteopatia avanzado"
       },
       {
+        "_id": "FAKE_ID",
         "key": "osteopaty",
         "lang": "en",
         "name": "Osteopaty",
@@ -170,26 +176,31 @@
       }
     ],
     "phone": "6385098537",
+    "picture": "https://www.online-therapy.com/files/img/slider/therapist.jpg",
     "treatments": [
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "es",
         "name": "Fisioterapia",
         "description": "Tratamiento de Fisioterapia avanzado"
       },
       {
+        "_id": "FAKE_ID",
         "key": "fisiotherapy",
         "lang": "en",
         "name": "Fisiotherapy",
         "description": "Advanced fisiotherapy treatment"
       },
       {
+        "_id": "FAKE_ID",
         "key": "M.A.I.",
         "lang": "es",
         "name": "M.A.I.",
         "description": "Movilización Activa Intestinal"
       },
       {
+        "_id": "FAKE_ID",
         "key": "M.A.I.",
         "lang": "en",
         "name": "M.A.I.",

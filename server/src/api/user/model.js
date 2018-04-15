@@ -1,11 +1,11 @@
-import crypto from 'crypto'
-import bcrypt from 'bcrypt'
-import randtoken from 'rand-token'
-import mongoose, { Schema } from 'mongoose'
-import mongooseKeywords from 'mongoose-keywords'
-import { env } from '../../config'
-import * as consts from '../../constants'
-import { arrayToObject } from '../../utils'
+import crypto from 'crypto';
+import bcrypt from 'bcrypt';
+import randtoken from 'rand-token';
+import mongoose, { Schema } from 'mongoose';
+import mongooseKeywords from 'mongoose-keywords';
+import { env } from '../../config';
+import * as consts from '../../constants';
+import { arrayToObject } from '../../utils';
 
 const userSchema = new Schema(
   {
@@ -117,44 +117,44 @@ const userSchema = new Schema(
   {
     timestamps: true
   }
-)
+);
 
-userSchema.path('email').set(function (email) {
+userSchema.path('email').set(function(email) {
   if (!this.picture || this.picture.indexOf('https://gravatar.com') === 0) {
     const hash = crypto
       .createHash('md5')
       .update(email)
-      .digest('hex')
-    this.picture = `https://gravatar.com/avatar/${hash}?d=identicon`
+      .digest('hex');
+    this.picture = `https://gravatar.com/avatar/${hash}?d=identicon`;
   }
 
   if (!this.name) {
-    this.name = email.replace(/^(.+)@.+$/, '$1')
+    this.name = email.replace(/^(.+)@.+$/, '$1');
   }
 
-  return email
-})
+  return email;
+});
 
-userSchema.pre('save', function (next) {
+userSchema.pre('save', function(next) {
   if (!this.isModified('password')) {
-    next()
+    next();
   } else {
     /* istanbul ignore next */
-    const rounds = env === 'test' ? 1 : 9
+    const rounds = env === 'test' ? 1 : 9;
 
     bcrypt
       .hash(this.password, rounds)
-      .then((hash) => {
-        this.password = hash
-        next()
+      .then(hash => {
+        this.password = hash;
+        next();
       })
-      .catch(next)
+      .catch(next);
   }
-})
+});
 
 userSchema.methods = {
-  view (full) {
-    let fields = ['id', 'name', 'email']
+  view(full) {
+    let fields = ['id', 'name', 'email'];
 
     if (full) {
       fields = fields.concat([
@@ -168,21 +168,23 @@ userSchema.methods = {
         'treatments',
         'createdAt',
         'loggedAt'
-      ])
+      ]);
     }
 
-    return fields.reduce(arrayToObject(this), {})
+    return fields.reduce(arrayToObject(this), {});
   },
 
-  authenticate (password) {
-    return bcrypt.compare(password, this.password).then(valid => (valid ? this : false))
+  authenticate(password) {
+    return bcrypt
+      .compare(password, this.password)
+      .then(valid => (valid ? this : false));
   }
-}
+};
 
 userSchema.statics = {
   roles: consts.users.roles,
 
-  createFromService ({
+  createFromService({
     service,
     id,
     email,
@@ -194,14 +196,16 @@ userSchema.statics = {
     phone,
     treatments
   }) {
-    return this.findOne({ $or: [{ [`services.${service}`]: id }, { email }] }).then((user) => {
+    return this.findOne({
+      $or: [{ [`services.${service}`]: id }, { email }]
+    }).then(user => {
       if (user) {
-        user.services[service] = id
-        user.name = name
-        user.picture = picture
-        return user.save()
+        user.services[service] = id;
+        user.name = name;
+        user.picture = picture;
+        return user.save();
       }
-      const password = randtoken.generate(16)
+      const password = randtoken.generate(16);
       return this.create({
         services: { [service]: id },
         email,
@@ -213,29 +217,30 @@ userSchema.statics = {
         address,
         phone,
         treatments
-      })
-    })
+      });
+    });
   },
 
-  bulkInsert (models, fn) {
-    if (!models || !models.length) return fn(null)
+  bulkInsert(models, fn) {
+    if (!models || !models.length) return fn(null);
 
-    const bulk = this.collection.initializeOrderedBulkOp()
-    if (!bulk) return fn('bulkInsertModels: MongoDb connection is not yet established')
+    const bulk = this.collection.initializeOrderedBulkOp();
+    if (!bulk)
+      return fn('bulkInsertModels: MongoDb connection is not yet established');
 
-    let model
+    let model;
     for (let i = 0; i < models.length; i += 1) {
-      model = models[i]
-      bulk.insert(model)
+      model = models[i];
+      bulk.insert(model);
     }
 
-    return bulk.execute(fn)
+    return bulk.execute(fn);
   }
-}
+};
 
-userSchema.plugin(mongooseKeywords, { paths: ['funcRole', 'email'] })
+userSchema.plugin(mongooseKeywords, { paths: ['funcRole', 'email'] });
 
-const model = mongoose.model('User', userSchema)
+const model = mongoose.model('User', userSchema);
 
-export const { schema } = model
-export default model
+export const { schema } = model;
+export default model;

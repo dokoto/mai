@@ -1,118 +1,105 @@
 <template>
-  <article class="session-view-page">
+  <article class="appointment-view-page">
     <div class="symbol-container">
-      <img class="symbol" src="../../../static/img/therapy-symbol.png" />
+      <img class="symbol"
+           src="../../../static/img/therapy-symbol.png" />
     </div>
-    <Card
-      id="session-view-card"
-      :title="literals.sessionTitle"
-      iconColor="blue">
-      <InputBoxed id="session-view-type"
-        placeHolder="Session Type#Error"
-        :readOnly="readOnly"
-        :value="firstTherapy.name"
-        :noBorder="noBorder"
-        :noIcon="noIcon"
-        v-if="therapists.length > 0" />
-      <InputBoxed id="session-view-date"
-        placeHolder="Session Type#Error"
-        :readOnly="readOnly"
-        :value="formatDate"
-        :noBorder="noBorder"
-        :noIcon="noIcon"
-        v-if="therapists.length > 0" />
-      <InputBoxed id="session-view-time"
-        placeHolder="Session Type#Error"
-        :readOnly="readOnly"
-        :value="`${timeBegin} >> ${timeEnd}`"
-        :noBorder="noBorder"
-        :noIcon="noIcon"
-        v-if="therapists.length > 0" />
+    <Card id="appointment-view-card"
+          :title="literals.appointmentTitle"
+          iconColor="blue">
+      <InputBoxed id="appointment-view-type"
+                  placeHolder="Appointment Type"
+                  :readOnly="readOnly"
+                  :value="appointment.treatment ? appointment.treatment.name : ''"
+                  :noBorder="noBorder"
+                  :noIcon="noIcon" />
+      <InputBoxed id="appointment-view-date"
+                  placeHolder="Appointment Date"
+                  :readOnly="readOnly"
+                  :value="formatDate"
+                  :noBorder="noBorder"
+                  :noIcon="noIcon" />
+      <InputBoxed id="appointment-view-time"
+                  placeHolder="Appointment Time"
+                  :readOnly="readOnly"
+                  :value="appointment.treatment ? appointment.time : ''"
+                  :noBorder="noBorder"
+                  :noIcon="noIcon" />
     </Card>
-    <Card
-      id="session-view-therapist-carrusel-card"
-      :title="literals.therapistTitle"
-      iconColor="blue">
-        <TherapistCarrusel
-          :id="`session-view-therapist-carrusel-${session.date}`"
-          :therapists="therapists"
-          v-if="therapists.length > 0" />
+    <Card id="appointment-doctors-carrusel-card"
+          :title="literals.treatmentTitle"
+          iconColor="blue">
+      <DoctorsCarrusel :id="`doctors-carrusel-${$route.params.id}`"
+                       :doctors="[appointment.doctor]"
+                       :doctorSelected="appointment.doctor._id"
+                       v-if="appointment.doctor" />
     </Card>
-    <Card
-      id="session-view-location-card"
-      :title="literals.locationTitle"
-      iconColor="blue">
-      <LocationMap
-        :address="therapistAddress"
-        :zoom="mapZoom"
-        :showMap="showMap"
-        v-if="therapists.length > 0" />
+    <Card id="appointment-view-location-card"
+          :title="literals.locationTitle"
+          iconColor="blue">
+      <LocationMap :address="formatAddress"
+                   :zoom="mapZoom"
+                   :showMap="showMap"
+                   v-if="appointment.address" />
     </Card>
   </article>
 </template>
 
 <script>
 import moment from 'moment';
-import * as consts from '../../common/constants';
-
-import { mapGetters } from 'vuex';
-import InputBoxed from '../../common/components/InputBoxed.vue';
-import TherapistCarrusel from '../../common/components/TherapistCarrusel.vue';
-import LocationMap from '../../common/components/LocationMap.vue';
-import Card from '../../common/components/Card.vue';
+import { mapState } from 'vuex';
+import { INT_DATE_FORMAT } from '@/common/constants';
+import InputBoxed from '@/common/components/InputBoxed';
+import DoctorsCarrusel from '@/common/components/DoctorsCarrusel';
+import LocationMap from '@/common/components/LocationMap';
+import Card from '@/common/components/Card';
 
 moment.locale(window.glob.language);
 export default {
   components: {
     Card,
     InputBoxed,
-    TherapistCarrusel,
-    LocationMap,
+    DoctorsCarrusel,
+    LocationMap
   },
   computed: {
-    ...mapGetters({
-      session: 'appointment/session',
-      firstTherapy: 'appointment/firstTherapy',
-      therapists: 'appointment/therapists',
-      therapistAddress: 'appointment/therapistAddress',
-      mapZoom: 'appointment/mapZoom',
-    }),
+    ...mapState('appointment', ['appointment', 'mapZoom']),
+    formatAddress() {
+      return `${this.appointment.address.street} ${
+        this.appointment.address.city
+      } ${this.appointment.address.postCode} ${
+        this.appointment.address.country
+      }`;
+    },
     formatDate() {
-      return moment(`${ this.session.date}`, consts.INT_DATE_FORMAT)
+      return moment(`${this.appointment.date}`, INT_DATE_FORMAT)
         .format('dddd D MMMM')
         .toUpperCase();
-    },
-    timeBegin() {
-      return moment(`${ this.session.date } ${ this.session.date.time }`, consts.INT_DATE_FORMAT).format('hh:mm A');
-    },
-    timeEnd() {
-      return moment(`${ this.session.date } ${ this.session.date.time }`, consts.INT_DATE_FORMAT)
-        .add(consts.THERAPY_SESSION_IN_MINUTES, 'm')
-        .format('hh:mm A');
-    },
+    }
   },
   created() {
-    this.$store.dispatch('session/getSession', this.$route.params.sessionId);
+    this.$store.dispatch('appointment/fetchAppointment', this.$route.params.id);
   },
   data() {
     return {
       literals: {
-        sessionTitle: this.$i18n.t('session.title.session'),
-        therapistTitle: this.$i18n.t('session.title.therapist'),
-        locationTitle: this.$i18n.t('session.title.location'),
+        appointmentTitle: this.$i18n.t('appointment.titles.appointment'),
+        treatmentTitle: this.$i18n.t('appointment.titles.treatment'),
+        locationTitle: this.$i18n.t('appointment.titles.location')
       },
       readOnly: true,
       showMap: true,
       noBorder: true,
-      noIcon: true,
+      noIcon: true
     };
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import '../../common/styles/base.scss';
-.session-view-page {
+.appointment-view-page {
+  font-size: 6.2vw;
   overflow-y: scroll;
   position: relative;
   display: inline-flex;

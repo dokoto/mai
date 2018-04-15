@@ -11,7 +11,7 @@ const TOKEN = {
 const rest = [
   {
     data: timeScheduleData,
-    url: 'http://0.0.0.0:9000/api/timeSchedules',
+    url: 'http://0.0.0.0:9000/api/v1/timeSchedules',
     token: 'ADMIN'
   }
 ]
@@ -20,7 +20,7 @@ async function processData (url, model, accessToken) {
   console.log(model.doctor.email)
   const user = await request({
     method: 'GET',
-    uri: `http://0.0.0.0:9000/api/users?q=${model.doctor.email}`,
+    uri: `http://0.0.0.0:9000/api/v1/users?q=${model.doctor.email}`,
     headers: {
       Authorization: `Bearer ${TOKEN.ADMIN}`
     },
@@ -48,7 +48,7 @@ async function processRest (item) {
 async function main () {
   const admin = await request({
     method: 'POST',
-    uri: 'http://0.0.0.0:9000/api/auth',
+    uri: 'http://0.0.0.0:9000/api/v1/auth',
     body: {
       access_token: TOKEN.MASTER
     },

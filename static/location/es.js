@@ -1,20 +1,20 @@
 const es = {
   calendar: {
-    noAvaiable: 'Not avaiable',
+    noAvaiable: 'Not avaiable'
   },
-  session: {
-    title: {
-      session: 'Sesión',
-      therapist: 'Terapeuta',
-      location: 'Lugar',
+  appointment: {
+    titles: {
+      appointment: 'Cita',
+      treatment: 'Terapeuta',
+      location: 'Lugar'
     },
-    therapi: {
+    treatment: {
       type: 'Seleccione terapia',
       date: 'Seleccione fecha',
       time: 'Seleccione hora',
-      address: 'Seleccione direccion',
-    },
-  },
+      address: 'Seleccione direccion'
+    }
+  }
 };
 
 export default es;

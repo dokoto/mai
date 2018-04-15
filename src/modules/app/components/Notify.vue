@@ -10,7 +10,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import { SlideYDownTransition } from 'vue2-transitions';
-import { EMPTY_STRING } from '../../../common/constants';
+import { EMPTY_STRING } from '@/common/constants';
 
 export default {
   components: { SlideYDownTransition },

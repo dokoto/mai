@@ -1,24 +1,25 @@
 <template>
   <div class="combo-container"
-    :id="id">
+       :id="id">
     <InputBoxed :id="id"
-      :placeHolder="placeHolder"
-      :value="itemSelected"
-      :icon="icon"
-      :readOnly="readOnly"
-      :noBorder="noBorder"
-      @handleInputBoxedClick="handleShowItems"
-      class="map-autocomplete" />
+                :placeHolder="placeHolder"
+                :value="itemSelected"
+                :icon="icon"
+                :readOnly="readOnly"
+                :noBorder="noBorder"
+                @handleInputBoxedClick="handleShowItems"
+                class="map-autocomplete" />
     <transition name="fade"
-      @before-enter="animateSlideDown"
-      @leave="animateSlideUp"
-      :css="false">
+                @before-enter="animateSlideDown"
+                @leave="animateSlideUp"
+                :css="false">
       <ul class="combo"
-        v-show="isOpen">
+          v-show="isOpen">
         <li class="item padding-2x"
-          v-for="item in items"
-          :key="item"
-          v-on:click="handleChangeSelected">{{ item }}</li>
+            v-for="item in items"
+            :key="item"
+            :id="item.id"
+            v-on:click="handleChangeSelected">{{ item.text }}</li>
       </ul>
     </transition>
   </div>
@@ -33,49 +34,49 @@ import InputBoxed from './InputBoxed.vue';
 export default {
   components: {
     FontAwesomeIcon,
-    InputBoxed,
+    InputBoxed
   },
   props: {
     id: {
       type: String,
-      default: 'combo-boxed',
+      default: 'combo-boxed'
     },
     placeHolder: {
       type: String,
-      default: 'Fake Title',
+      default: 'Fake Title'
     },
     icon: {
       default: function() {
         return faPencilAlt;
-      },
+      }
     },
     itemSelected: {
-      type: String,
+      type: String
     },
     items: {
       type: Array,
       default: function() {
         return ['Selection 1', 'Selection 2', 'Selection 3', 'Selection 4'];
-      },
+      }
     },
     showOpen: {
       type: Boolean,
-      default: false,
+      default: false
     },
     multiSelect: {
       type: Boolean,
-      default: false,
+      default: false
     },
     noBorder: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       isOpen: this.showOpen,
       itemSelectedValue: this.itemSelected,
-      readOnly: true,
+      readOnly: true
     };
   },
   methods: {
@@ -96,9 +97,9 @@ export default {
       }
       $(ev.currentTarget).toggleClass('item-selected');
       this.itemSelectedValue = $(ev.currentTarget).text();
-      this.$emit('comboBoxed:onChange', this.itemSelectedValue);
-    },
-  },
+      this.$emit('comboBoxedItemHasSelected', ev.currentTarget.id);
+    }
+  }
 };
 </script>
 

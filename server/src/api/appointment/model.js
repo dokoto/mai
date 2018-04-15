@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose'
-import { arrayToObject } from '../../utils'
-import * as consts from '../../constants'
+import mongoose, { Schema } from 'mongoose';
+import { arrayToObject } from '../../utils';
+import * as consts from '../../constants';
 
 const appointmentSchema = new Schema(
   {
@@ -57,6 +57,11 @@ const appointmentSchema = new Schema(
     },
     treatment: [
       {
+        _id: {
+          type: Schema.Types.ObjectId,
+          ref: 'treatments',
+          required: true
+        },
         key: {
           type: String,
           maxlength: 40
@@ -124,48 +129,48 @@ const appointmentSchema = new Schema(
   {
     timestamps: true
   }
-)
+);
 
 appointmentSchema.methods = {
-  view (full) {
-    let fields = [
-      'id',
-      'date',
-      'time',
-      'patient',
-      'doctor',
-      'treatment',
-      'address',
-      'status',
-      'allowReBooking',
-      'createddBy',
-      'cancelReason'
-    ]
+  view(full) {
+    let fields = ['id', 'date', 'time'];
 
     if (full) {
-      fields = fields.concat(['createdAt', 'updatedAt'])
+      fields = fields.concat([
+        'patient',
+        'doctor',
+        'treatment',
+        'address',
+        'status',
+        'allowReBooking',
+        'createddBy',
+        'cancelReason',
+        'createdAt',
+        'updatedAt'
+      ]);
     }
 
-    return fields.reduce(arrayToObject(this), {})
+    return fields.reduce(arrayToObject(this), {});
   }
-}
+};
 
-appointmentSchema.statics.bulkInsert = function (models, fn) {
-  if (!models || !models.length) return fn(null)
+appointmentSchema.statics.bulkInsert = function(models, fn) {
+  if (!models || !models.length) return fn(null);
 
-  const bulk = this.collection.initializeOrderedBulkOp()
-  if (!bulk) return fn('bulkInsertModels: MongoDb connection is not yet established')
+  const bulk = this.collection.initializeOrderedBulkOp();
+  if (!bulk)
+    return fn('bulkInsertModels: MongoDb connection is not yet established');
 
-  let model
+  let model;
   for (let i = 0; i < models.length; i++) {
-    model = models[i]
-    bulk.insert(model)
+    model = models[i];
+    bulk.insert(model);
   }
 
-  bulk.execute(fn)
-}
+  bulk.execute(fn);
+};
 
-const model = mongoose.model('Appointment', appointmentSchema)
+const model = mongoose.model('Appointment', appointmentSchema);
 
-export const schema = model.schema
-export default model
+export const schema = model.schema;
+export default model;

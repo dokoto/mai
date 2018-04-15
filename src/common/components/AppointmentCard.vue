@@ -1,43 +1,44 @@
 <template>
-  <div class="sessionCard box"
-    :id="id"
-    v-on:click="handleAppointmentCardClick">
+  <div class="appointmentCard box"
+       :id="id"
+       @click="ev => $emit('appointmentCardClick', ev.currentTarget.id)">
     <span class="date">{{ formatDateTime }}</span>
     <span class="name"
-      :class="{ marginxl: !withTimeInterval }">{{ treatmentLocated.name }}</span>
+          :class="{ marginxl: !withTimeInterval }">{{ treatmentLocated.name }}</span>
     <span class="time-interval"
-      v-if="withTimeInterval">{{ timeBegin }} &#8680; {{ timeEnd }}</span>
+          v-if="withTimeInterval">{{ timeBegin }} &#8680; {{ timeEnd }}</span>
   </div>
 </template>
 
 <script>
 import moment from 'moment';
-import * as consts from '../../common/constants';
+import * as consts from '@/common/constants';
+
 moment.locale(window.glob.language);
 export default {
   props: {
     id: {
-      type: String,
+      type: String
     },
     date: {
-      type: String,
+      type: String
     },
     time: {
-      type: String,
+      type: String
     },
     treatment: {
-      type: Array,
+      type: Array
     },
     withTimeInterval: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   computed: {
     treatmentLocated() {
       return this.treatment.reduce(
         (curr, next) => (next.lang === window.glob.language ? next : curr),
-        {},
+        {}
       );
     },
     formatDateTime() {
@@ -46,25 +47,22 @@ export default {
         .toUpperCase();
     },
     timeBegin() {
-      return moment(`${this.date} ${this.time}`, consts.INT_DATE_FORMAT).format('hh:mm A');
+      return moment(`${this.date} ${this.time}`, consts.INT_DATE_FORMAT).format(
+        'hh:mm A'
+      );
     },
     timeEnd() {
       return moment(`${this.date} ${this.time}`, consts.INT_DATE_FORMAT)
         .add(45, 'm')
         .format('hh:mm A');
-    },
-  },
-  methods: {
-    handleAppointmentCardClick(ev) {
-      this.$emit('appointmentCardClick', ev);
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import '../styles/base.scss';
-.sessionCard {
+.appointmentCard {
   display: flex;
   border-radius: 5px;
   flex-direction: column;

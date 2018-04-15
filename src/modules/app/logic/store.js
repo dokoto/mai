@@ -1,11 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { EMPTY_STRING } from '@/common/constants';
 import home from '../../home/logic/store';
 import appointment from '../../appointment/logic/store';
 import calendar from '../../calendar/logic/store';
 import * as services from '../../../common/api';
 import { RESET_NOTIFY, NOTIFY } from './types';
-import { EMPTY_STRING } from '../../../common/constants';
+
 
 Vue.use(Vuex);
 

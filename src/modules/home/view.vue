@@ -1,12 +1,12 @@
 <template>
   <div id="home-container"
-    class="home-view container">
-    <div class="symbol-container-no-border  grow-2">
+       class="home-view container">
+    <div class="symbol-container-no-border grow-2">
       <img class="symbol"
-        src="../../../static/img/medical.png" />
+           src="../../../static/img/medical.png" />
     </div>
     <AppointmentPoll :appointments="nextsAppointments"
-      v-on:appointmentPollClick="handleAppointmentClick" />
+                     @appointmentPollClick="handleAppointmentClick" />
     <HomeMenu />
   </div>
 </template>
@@ -14,27 +14,27 @@
 <script>
 import { mapState } from 'vuex';
 
-import AppointmentPoll from './components/AppointmentPoll.vue';
-import HomeMenu from './components/menu.vue';
+import AppointmentPoll from './components/AppointmentPoll';
+import HomeMenu from './components/menu';
 
 export default {
   components: { AppointmentPoll, HomeMenu },
   computed: {
     ...mapState('home', {
-      nextsAppointments: state => state.nextsAppointments,
-    }),
+      nextsAppointments: state => state.nextsAppointments
+    })
   },
   created() {
     this.$store.dispatch('home/nextsAppointments');
   },
   methods: {
-    handleAppointmentClick(ev) {
+    handleAppointmentClick(id) {
       this.$router.push({
-        name: 'sessionView',
-        params: { sessionId: ev.currentTarget.id },
+        name: 'appointmentEdit',
+        params: { id }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -42,6 +42,7 @@ export default {
 @import '../../common/styles/base.scss';
 
 .home-view {
+  font-size: 5vw;
   position: relative;
   display: inline-flex;
   flex-direction: column;

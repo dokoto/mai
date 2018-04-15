@@ -4,6 +4,7 @@ import auth from './auth'
 import passwordReset from './password-reset'
 import appointment from './appointment'
 import timeSchedule from './timeSchedule'
+import treatment from './treatment'
 
 const router = new Router()
 
@@ -35,5 +36,6 @@ router.use('/auth', auth)
 router.use('/password-resets', passwordReset)
 router.use('/appointments', appointment)
 router.use('/timeSchedules', timeSchedule)
+router.use('/treatments', treatment)
 
 export default router

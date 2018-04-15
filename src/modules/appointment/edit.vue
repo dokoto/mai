@@ -2,198 +2,130 @@
   <article class="session-edit-page bg-beach">
     <div class="symbol-container">
       <img class="symbol"
-        src="../../../static/img/therapy-symbol.png" />
+           src="../../../static/img/therapy-symbol.png" />
     </div>
-    <Card id="session-edit-therapist-carrusel-card"
-      :title="literals.therapistTitle"
-      :icon="therapistStatus.icon"
-      :iconColor="therapistStatus.color">
-      <TherapistCarrusel id="session-edit-therapist-carrusel"
-        :therapists="therapists"
-        :disablesTherapists="disablesTherapists"
-        :therapistSelected="therapiSelected"
-        @therapistCarrusel:onChange="handleTherapiSelected" />
+    <Card id="appointment-edit-doctors-carrusel-card"
+          :title="literals.treatmentTitle">
+      <DoctorsCarrusel :id="`doctors-carrusel-${$route.params.id}`"
+                       :doctors="doctors"
+                       :doctorSelected="appointment.doctor ? appointment.doctor.id : ''"
+                       @doctorHasSelected="loadDoctorTreatments"
+                       v-if="doctors.length" />
     </Card>
     <Card id="session-edit-card"
-      :title="literals.sessionTitle"
-      :icon="sessionIconStatus.icon"
-      :iconColor="sessionIconStatus.color">
+          :title="literals.appointmentTitle"
+          :icon="sessionIconStatus.icon"
+          :iconColor="sessionIconStatus.color">
       <ComboBoxed id="session-edit-therapies"
-        :noBorder="true"
-        :items="allTherapiesName"
-        :itemSelected="therapySelected"
-        :placeHolder="literals.therapieTypeComboDefault"
-        @comboBoxed:onChange="onChangeTherapies" />
+                  :noBorder="true"
+                  :items="treatmentsByDoctor"
+                  :placeHolder="literals.treatmentTypeComboDefault"
+                  @comboBoxedItemHasSelected="loadDoctorSchedule" />
       <DayCarruselBoxed id="session-edit-date"
-        :placeHolder="literals.therapieDateComboDefault"
-        :disablesDates="disablesDates"
-        :initDate="initDate"
-        :selectedDate="daySelected"
-        :noBorder="true"
-        @dayCarruselBoxed:dayClick="handleDateSelected" />
+                        :placeHolder="literals.treatmentDateComboDefault"
+                        :disablesDates="disablesDates"
+                        :initDate="initDate"
+                        :selectedDate="daySelected"
+                        :noBorder="true"
+                        @dayCarruselBoxed:dayClick="handleDateSelected" />
       <GridSelectorBoxed id="session-edit-time"
-        :placeHolder="literals.therapieTimeComboDefault"
-        :items="sessionTimeSchedule"
-        :disableItems="disablesTimes"
-        :itemSelected="timeSelected"
-        :noBorder="true"
-        @gridSelectorBoxed:onChange="handleTimeSelected" />
+                         :placeHolder="literals.treatmentTimeComboDefault"
+                         :items="sessionTimeSchedule"
+                         :disableItems="disablesTimes"
+                         :itemSelected="timeSelected"
+                         :noBorder="true"
+                         @gridSelectorBoxed:onChange="handleTimeSelected" />
     </Card>
     <Card id="session-edit-location-card"
-      :title="literals.locationTitle"
-      :icon="locationStatus.icon"
-      :iconColor="locationStatus.color">
+          :title="literals.locationTitle"
+          :icon="locationStatus.icon"
+          :iconColor="locationStatus.color">
       <LocationMap ref="locationMap"
-        :placeHolder="literals.therapieLocationDefault"
-        :zoom="mapZoom"
-        :address="addressSelected"
-        :showMap="false"
-        :readOnly="false" />
+                   :placeHolder="literals.treatmentLocationDefault"
+                   :zoom="mapZoom"
+                   :address="addressSelected"
+                   :showMap="false"
+                   :readOnly="false" />
     </Card>
   </article>
 </template>
 
 <script>
-import moment from 'moment';
-import * as consts from '../../common/constants';
+import { mapState, mapActions } from 'vuex';
+import {
+  faCheckCircle,
+  faQuestionCircle
+} from '@fortawesome/fontawesome-free-solid';
 
-import { mapGetters, mapState } from 'vuex';
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { faCheckCircle, faQuestionCircle } from '@fortawesome/fontawesome-free-solid';
-import ComboBoxed from '../../common/components/ComboBoxed.vue';
-import DayCarruselBoxed from '../../common/components/DayCarruselBoxed.vue';
-import GridSelectorBoxed from '../../common/components/GridSelectorBoxed.vue';
-import TherapistCarrusel from '../../common/components/TherapistCarrusel.vue';
-import LocationMap from '../../common/components/LocationMap.vue';
-import Card from '../../common/components/Card.vue';
+import ComboBoxed from '@/common/components/ComboBoxed';
+import DayCarruselBoxed from '@/common/components/DayCarruselBoxed';
+import GridSelectorBoxed from '@/common/components/GridSelectorBoxed';
+import LocationMap from '@/common/components/LocationMap';
+import DoctorsCarrusel from '@/common/components/DoctorsCarrusel';
+import Card from '@/common/components/Card';
 
-moment.locale(window.glob.language);
 export default {
   components: {
     Card,
+    DoctorsCarrusel,
     ComboBoxed,
     DayCarruselBoxed,
     GridSelectorBoxed,
-    TherapistCarrusel,
-    LocationMap,
+    LocationMap
   },
   computed: {
-    //DELTE?
-    ...mapGetters({
-      //session: 'session/session',
-      //therapy: 'session/therapy',
-      //therapistAddress: 'session/therapistAddress',
-      // mapZoom: 'session/mapZoom',
-      // NEW
-      allTherapiesName: 'session/allTherapiesName',
-    }),
-    ...mapState('session', {
-      therapiSelected: state => state.selected.therapi,
-      therapySelected: state => state.selected.type,
-      daySelected: state => state.selected.date,
-      timeSelected: state => state.selected.time,
-      addressSelected: state => state.selected.address,
-      sessionTimeSchedule: state => state.sessionTimeSchedule,
-      disablesDates: state => state.disablesDates,
-      disablesTimes: state => state.disablesTimes,
-      disablesTherapists: state => state.disablesTherapists,
-      initDate: state => state.initDate,
-      therapists: state => state.therapists,
-      mapZoom: state => state.mapZoom,
-    }),
+    ...mapState('appointment', [
+      'appointment',
+      'doctors',
+      'treatmentsByDoctor',
+      'schedules',
+      'mapZoom'
+    ]),
     sessionIconStatus() {
-      return this.$store.state.session.selected.type &&
-        this.$store.state.session.selected.date &&
-        this.$store.state.session.selected.time
-        ? {
-            icon: faCheckCircle,
-            color: 'green',
-          }
-        : {
-            icon: faQuestionCircle,
-            color: 'red',
-          };
+      return {
+        icon: faCheckCircle,
+        color: 'green'
+      };
     },
     therapistStatus() {
-      return this.$store.state.session.selected.therapi
-        ? {
-            icon: faCheckCircle,
-            color: 'green',
-          }
-        : {
-            icon: faQuestionCircle,
-            color: 'red',
-          };
+      return {
+        icon: faCheckCircle,
+        color: 'green'
+      };
     },
     locationStatus() {
-      return this.$store.state.session.selected.address
-        ? {
-            icon: faCheckCircle,
-            color: 'green',
-          }
-        : {
-            icon: faQuestionCircle,
-            color: 'red',
-          };
-    },
+      return {
+        icon: faCheckCircle,
+        color: 'green'
+      };
+    }
   },
   methods: {
-    handleTherapiSelected(newTherapi) {
-      this.$store.dispatch('session/setTherapi', newTherapi);
-      this.$store.dispatch('session/setAddress', newTherapi);
-      this.$store.dispatch('session/fetchAllTherapies');
-      this.$store.dispatch('session/fetchBusyDays', newTherapi);
-      this.$refs.locationMap.updateMap(this.$store.state.session.selected.address);
-    },
-    handleDateSelected(newSelectedDate) {
-      this.$store.dispatch('session/setDate', newSelectedDate);
-      this.$store.dispatch('session/fetchBusyTimes', newSelectedDate);
-    },
-    onChangeTherapies(newTherapy) {
-      this.$store.dispatch('session/setTherapyType', newTherapy);
-    },
-    handleTimeSelected(newTime) {
-      this.$store.dispatch('session/setTime', newTime);
-    },
+    ...mapActions('appointment', ['loadDoctorTreatments', 'loadDoctorSchedule'])
   },
   created() {
-    this.$store.dispatch('session/initDate');
-    this.$store.dispatch('session/fetchAllTherapies');
-    this.$store.dispatch('session/fetchAllTherapists');
-    this.$store.dispatch('session/fetchBusyTherapists');
-    this.$store.dispatch('session/fetchBusyDays');
-    this.$store.dispatch('session/fetchSessionTimeSchedule');
-    if (this.$route.params.date && this.$route.params.time) {
-      this.$store.dispatch('session/setDate', this.$route.params.date);
-      this.$store.dispatch('session/setTime', this.$route.params.time);
-    }
+    this.$store.dispatch('appointment/fetchComboDatas', this.$route.params.id);
   },
   data() {
     return {
-      //DELTE?-INIT
-      /* sessionId: consts.EMPTY_STRING,
-      date: consts.EMPTY_STRING,
-      time: consts.EMPTY_STRING,
-      selectedDate: consts.EMPTY_STRING,
-      selectTime: consts.EMPTY_STRING,*/
-      //DELTE?-END
       literals: {
-        sessionTitle: this.$i18n.t('session.title.session'),
-        therapistTitle: this.$i18n.t('session.title.therapist'),
-        locationTitle: this.$i18n.t('session.title.location'),
-        therapieTypeComboDefault: this.$i18n.t('session.therapi.type'),
-        therapieDateComboDefault: this.$i18n.t('session.therapi.date'),
-        therapieTimeComboDefault: this.$i18n.t('session.therapi.time'),
-        therapieLocationDefault: this.$i18n.t('session.therapi.address'),
-      },
+        appointmentTitle: this.$i18n.t('appointment.titles.appointment'),
+        treatmentTitle: this.$i18n.t('appointment.titles.treatment'),
+        locationTitle: this.$i18n.t('appointment.titles.location'),
+        treatmentTypeComboDefault: this.$i18n.t('appointment.treatment.type'),
+        treatmentDateComboDefault: this.$i18n.t('appointment.treatment.date'),
+        treatmentTimeComboDefault: this.$i18n.t('appointment.treatment.time'),
+        treatmentLocationDefault: this.$i18n.t('appointment.treatment.address')
+      }
     };
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import '../../common/styles/base.scss';
 .session-edit-page {
+  font-size: 6.2vw;
   overflow-y: scroll;
   position: relative;
   display: inline-flex;

@@ -1,14 +1,26 @@
 <template>
-  <span class="option" v-bind:class="className">
-    <a v-bind:href="calendarUrl" target="_self">
-      <img v-bind:src="icon" class="option-icon" />
-    </a>
+  <span class="option"
+        :class="className">
+    <router-link :to="url">
+      <img :src="icon"
+           class="option-icon" />
+    </router-link>
   </span>
 </template>
 
 <script>
 export default {
-  props: ['className', 'calendarUrl', 'icon'],
+  props: {
+    className: {
+      type: String
+    },
+    url: {
+      type: String
+    },
+    icon: {
+      type: String
+    }
+  }
 };
 </script>
 
@@ -22,7 +34,7 @@ export default {
 
 .option-icon {
   width: 50%;
-  margin: 25%;  
+  margin: 25%;
 }
 
 .pastel-orange {

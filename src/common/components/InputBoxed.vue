@@ -6,7 +6,7 @@
       class="input"
       :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
       :placeholder="placeHolder"
-      :readonly="readOnly"      
+      :readonly="readOnly"
       :value="value" />
     <div class="input-icon" v-if="!noIcon"
       :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
@@ -59,7 +59,7 @@ export default {
       this.$emit('handleInputBoxedClick', ev);
     },
     handleInputBoxedOnChange(ev) {
-      console.log('hitler');      
+      console.log('hitler');
       this.$emit('inputBoxed:onChange', ev);
     }
   },
@@ -79,7 +79,7 @@ export default {
     width: 100%;
     padding-left: 10px;
     height: 100%;
-    font-size: 1.2em;
+    font-size: 1em;
     padding-bottom: 0;
     padding-top: 0;
     &.boxed {
