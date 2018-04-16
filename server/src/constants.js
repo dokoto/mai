@@ -20,6 +20,6 @@ export const appointment = {
 }
 
 export const schedule = {
-  days: ['MON', 'TUS', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+  days: ['1', '2', '3', '4', '5', '6', '0'],
   types: [EXCEPTION, DAILY]
 }

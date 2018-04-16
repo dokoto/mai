@@ -1,4 +1,7 @@
 import _ from 'lodash/object';
+import { difference } from 'lodash/array';
+import moment from 'moment';
+
 import {
   getAppointment,
   getTreatments,
@@ -6,7 +9,7 @@ import {
   getDoctorsSchedules,
   getDoctorNextAppointments
 } from '@/common/api';
-import { notifyError, formatDateNumeric } from '@/common/utils';
+import { notifyError, calcDateAHeadFrom } from '@/common/utils';
 import {
   STATUS,
   EMPTY_ARRAY,
@@ -134,21 +137,50 @@ const actions = {
     }
   },
   loadDoctorTreatments({ commit }, doctorId) {
-    const doctor = state.doctors.filter(item => item.id === doctorId);
-    const treatments = _.get(doctor, '[0].treatments', {});
-    const treatmentsByLang = treatments
+    const doctor = state.doctors.find(item => item.id === doctorId);
+    const treatmentsByLang = doctor.treatments
       .filter(item => item.lang === window.glob.language)
       .map(item => ({ id: item._id, text: item.name }));
     commit(TREATMENTS_FILTERED, treatmentsByLang);
-    commit(SET_DOCTOR, _.get(doctor, '[0]', []));
+    commit(SET_DOCTOR, doctor);
   },
   async loadDoctorSchedule({ commit }, treatmentId) {
-    const doctorNextAppointments = await getDoctorNextAppointments(state.appointment.doctor.email);
-    // Comprobar si hay algun dia con todas las citas completas y de ser asi desabilitarlo en el
-    // dayCarruselBoxed.disablesDates. Y comitear el resultado para usarlo cuando seleccione el dia
-    // y desabilitar las horas que ya tiene comprometidas.
-    const treatmentKey = state.treatments.find(item => item.id === treatmentId).key;
-    commit(SET_TREATMENT, state.treatments.filter(item => item.key === treatmentKey));
+    const doctorNextAppointments = await getDoctorNextAppointments(
+      state.appointment.doctor.email
+    );
+    const doctorTimeSchedule = state.schedules.find(
+      item => item.doctor._id === state.appointment.doctor.id
+    );
+    const doctorBusySchedule = doctorNextAppointments.data.reduce((curr, next) => {
+      const date = moment(next.date).format('YYYY-MM-DD');
+      const times = curr[date] && curr[date].time ? curr[date].time : [];
+      return { ...curr, [date]: [...times, next.time] };
+    }, {});
+
+    // hay que mezclar los dias llenos (doctorBusySchedule) con los dias que no trabaja por
+    // por exception y genrar un disableDay com ambas cosas. Reutilizar los calculos para
+    // desabilitar horas cuando seleccione el dia
+    const exceptionDays = calcDateAHeadFrom(moment(), 3).reduce((curr, next) => {
+      const day = moment(next).day();
+      const timeScheduleByDay = doctorTimeSchedule.exceptions.find(item => item.day === day);
+      return { ...curr, [next]: timeScheduleByDay.time };
+    }, {});
+
+    const disableDays = Object.entries(doctorBusySchedule).map(item => {
+      const [date, time] = item;
+      const day = moment(date).day();
+      const timeScheduleByDay = doctorTimeSchedule.daily.find(item => item.day === day);
+      return difference(timeScheduleByDay.time, time).length ? null : date;
+    }).filter(Boolean);
+
+
+
+    const treatmentKey = state.treatments.find(item => item.id === treatmentId)
+      .key;
+    commit(
+      SET_TREATMENT,
+      state.treatments.filter(item => item.key === treatmentKey)
+    );
   }
   /*
   // OLD FOR DELETE

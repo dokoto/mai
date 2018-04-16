@@ -29,8 +29,9 @@ const timeScheduleSchema = new Schema(
     daily: [
       {
         day: {
-          type: String,
-          enum: consts.schedule.days // MON, TUS, WED, THU, FRI, SAT, SUN
+          type: Number,
+          min: 0,
+          max: 6 // MON:1, TUS:2, WED:3, THU:4, FRI:5, SAT:6, SUN:0
         },
         time: [
           {
@@ -42,9 +43,12 @@ const timeScheduleSchema = new Schema(
     ],
     exception: [
       {
-        date: {
-          type: Date
+        day: {
+          type: Number,
+          min: 0,
+          max: 6 // MON:1, TUS:2, WED:3, THU:4, FRI:5, SAT:6, SUN:0
         },
+        // Si no hay horas ese dia esta desabilitado por completo
         time: [
           {
             type: String,
@@ -61,7 +65,7 @@ const timeScheduleSchema = new Schema(
 
 timeScheduleSchema.methods = {
   view (full) {
-    let fields = ['id', 'daily']
+    let fields = ['id', 'doctor', 'daily', 'exception']
 
     if (full) {
       fields = fields.concat(['createdAt', 'updatedAt'])

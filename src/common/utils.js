@@ -2,7 +2,6 @@ import moment from 'moment';
 import _ from 'lodash';
 import { STATUS } from '@/common/api/constants';
 
-
 import * as consts from './constants';
 
 if (!window.glob || !window.glob.language) {
@@ -57,7 +56,7 @@ export function formatDateNumeric(date = new Date()) {
   return moment(date, consts.INT_DATE_FORMAT).format(consts.INT_DATE_FORMAT);
 }
 
-function createDayAHeadArray(dateString, numOfMonthsAHead) {
+export function createDayAHeadArray(dateString, numOfMonthsAHead) {
   return _.range(
     moment(dateString, consts.INT_DATE_FORMAT)
       .add(numOfMonthsAHead, 'months')
@@ -83,10 +82,17 @@ export function addMinutes(time, minutesToAdd) {
  * @param {*} numOfMonthsAHead
  * @returns {Array} A month by item with this structure: {dayNumber: '03', dayName: 'SAB', monthName: 'FEBRERO', monthNumber: '02', monthShotName:'FEB', yearNumber: '2018'}
  */
-export default function calcMonthsAHeadFrom(dateString, numOfMonthsAHead) {
+export function calcMonthsAHeadFrom(dateString, numOfMonthsAHead) {
   return _.chain(createDayAHeadArray(dateString, numOfMonthsAHead))
     .map(mapCalendar(dateString))
     .groupBy('monthName')
+    .toArray()
+    .value();
+}
+
+export function calcDateAHeadFrom(dateString, numOfMonthsAHead) {
+  return _.chain(createDayAHeadArray(dateString, numOfMonthsAHead))
+    .map(item => moment(dateString, consts.INT_DATE_FORMAT).add(item, 'day').format('YYYY-MM-DD'))
     .toArray()
     .value();
 }
