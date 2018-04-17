@@ -1,0 +1,61 @@
+[
+  {
+    "email": "belen@coolmail.com",
+    "password": "123456",
+    "name": "Belen",
+    "surname": "Acosta Medina",
+    "role": "user",
+    "funcRole": "doctor",
+    "address": [
+      {
+        "street": "Calle Río Sena, 30, Leganés",
+        "floor": "1º Puerta A",
+        "postCode": "28024",
+        "city": "Madrid",
+        "country": "España"
+      }
+    ],
+    "phone": "6385098537",
+    "picture": "https://www.online-therapy.com/files/img/slider/therapist.jpg"
+  },
+  {
+    "email": "alicia@coolmail.com",
+    "password": "123456",
+    "name": "Alicia",
+    "surname": "García Sánchez",
+    "role": "admin",
+    "funcRole": "doctor",
+    "address": [
+      {
+        "street": "Calle Nivar, 12 Madrid",
+        "floor": "1º Puerta A",
+        "postCode": "28024",
+        "city": "Madrid",
+        "country": "España"
+      }
+    ],
+    "phone": "634665123",
+    "picture":
+      "https://i1.wp.com/smileconcepts.co.uk/wp-content/uploads/2017/11/lucy-fisher-dental-therapist.jpg"
+  },
+  {
+    "email": "marta@coolmail.com",
+    "password": "123456",
+    "name": "Marta",
+    "surname": "Sosa Álvarez",
+    "role": "user",
+    "funcRole": "doctor",
+    "address": [
+      {
+        "street": "Calle de los Platillos, 10 Madrid",
+        "floor": "1º Puerta A",
+        "postCode": "28024",
+        "city": "Madrid",
+        "country": "España"
+      }
+    ],
+    "phone": "674387798",
+    "picture":
+      "https://vmtherapy.com/wp-content/uploads/2014/01/Vanessa-Marin_AB-6709-1024x682.jpg"
+  }
+]

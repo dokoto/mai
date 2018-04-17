@@ -1,0 +1,38 @@
+[
+  {
+    "key": "fisiotherapy",
+    "lang": "es",
+    "name": "Fisioterapia",
+    "description": "Tratamiento de Fisioterapia avanzado"
+  },
+  {
+    "key": "fisiotherapy",
+    "lang": "en",
+    "name": "Fisiotherapy",
+    "description": "Advanced fisiotherapy treatment"
+  },
+  {
+    "key": "osteopaty",
+    "lang": "es",
+    "name": "Osteopatia",
+    "description": "Tratamiento de Osteopatia avanzado"
+  },
+  {
+    "key": "osteopaty",
+    "lang": "en",
+    "name": "Osteopaty",
+    "description": "Advanced osteopaty treatment"
+  },
+  {
+    "key": "M.A.I.",
+    "lang": "es",
+    "name": "M.A.I.",
+    "description": "Movilización Activa Intestinal"
+  },
+  {
+    "key": "M.A.I.",
+    "lang": "en",
+    "name": "M.A.I.",
+    "description": "Active Bowel Mobilization"
+  }
+]

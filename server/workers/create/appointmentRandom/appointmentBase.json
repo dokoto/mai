@@ -1,0 +1,43 @@
+{
+    "date": "",
+    "time": "10:00",
+    "patient": {
+      "_id": "FAKE_ID",
+      "name": "Manuel",
+      "surname": "Ruiz Acosta",
+      "email": "manuel@coolmail.com"
+    },
+    "doctor": {
+      "_id": "FAKE_ID",
+      "name": "Belen",
+      "surname": "Acosta Medina",
+      "email": "belen@coolmail.com",
+      "picture": "https://www.online-therapy.com/files/img/slider/therapist.jpg"
+    },
+    "treatment": [
+      {
+        "_id": "FAKE_ID",
+        "key": "fisiotherapy",
+        "lang": "es",
+        "name": "Fisioterapia",
+        "description": "Tratamiento de Fisioterapia avanzado"
+      },
+      {
+        "_id": "FAKE_ID",
+        "key": "fisiotherapy",
+        "lang": "en",
+        "name": "Fisiotherapy",
+        "description": "Advanced fisiotherapy treatment"
+      }
+    ],
+    "address": {
+      "street": "Calle Río Sena, 30, Leganés",
+      "floor": "1º Puerta A",
+      "postCode": "28024",
+      "city": "Madrid",
+      "country": "España"
+    },
+    "status": "reserved",
+    "allowReBooking": true,
+    "createddBy": "FAKE_ID"
+  }

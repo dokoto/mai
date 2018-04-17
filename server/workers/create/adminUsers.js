@@ -1,3 +1,10 @@
-require('babel-core/register')
+require('babel-core/register');
+const path = require('path');
+const dotenv = require('dotenv-safe');
 
-exports = module.exports = require('./adminUsers/index.js')
+dotenv.load({
+  path: path.join(__dirname, '../../.env'),
+  sample: path.join(__dirname, '../../.env.example')
+});
+
+exports = module.exports = require('./adminUsers/index.js');

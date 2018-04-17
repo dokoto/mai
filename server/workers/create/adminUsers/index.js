@@ -3,8 +3,8 @@ import request from 'request-promise';
 const adminUserData = require('./adminUsers.json');
 
 const TOKEN = {
-  SUPER: 'OyalhYuKbQgUNpOQhdTQamZDKrhqOAC8',
-  MASTER: 'W0sgNBbwsfoUfe5GXNQY36p1IOHA96Gb',
+  SUPER: process.env.SUPER_USER_KEY,
+  MASTER: process.env.MASTER_KEY,
   ADMIN: '',
   USER: ''
 };
@@ -43,3 +43,5 @@ async function main() {
 }
 
 main();
+
+

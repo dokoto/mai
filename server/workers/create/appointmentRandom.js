@@ -6,4 +6,5 @@ dotenv.load({
   path: path.join(__dirname, '../../.env'),
   sample: path.join(__dirname, '../../.env.example')
 });
-exports = module.exports = require('./time/index.js')
+
+exports = module.exports = require('./appointmentRandom/index.js')
