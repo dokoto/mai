@@ -1,4 +1,4 @@
-# mai_new
+# mai_new.
 
 > M.A.I.
 
