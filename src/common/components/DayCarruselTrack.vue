@@ -1,12 +1,17 @@
 <template>
-  <div class="month" :class="colorClass">
-    <div class="month-box" v-for="(day, index) in track" :key="index" 
-      @click="handleDayClick" 
-      :data-day-id="`${day.fullDate}`"
-      :class="{ dayDisable: disablesDates.includes(`${day.fullDate}`) }" >
-      <span class="month-v-name" v-bind:class="monthColorClass" v-if="index === 0 || day.dayNumber == 1">{{ day.monthShotName.replace('.', '') }}</span>
-      <div class="day-box" 
-        :class="{ daySelected: !disablesDates.includes(`${day.fullDate}`) && selectDateFormated === `${day.fullDate}` }">
+  <div class="month"
+       :class="colorClass">
+    <div class="month-box"
+         v-for="(day, index) in track"
+         :key="index"
+         @click="handleDayClick"
+         :data-day-id="`${day.fullDate}`"
+         :class="{ dayDisable: disablesDates.includes(`${day.fullDate}`) }">
+      <span class="month-v-name"
+            v-bind:class="monthColorClass"
+            v-if="index === 0 || day.dayNumber == 1">{{ day.monthShotName.replace('.', '') }}</span>
+      <div class="day-box"
+           :class="{ daySelected: !disablesDates.includes(`${day.fullDate}`) && selectDateFormated === `${day.fullDate}` }">
         <span class="day-name">{{ day.dayName.replace('.', '') }}</span>
         <span class="day-number">{{ day.dayNumber}}</span>
       </div>
@@ -18,7 +23,7 @@
 import $ from 'jquery';
 
 const state = {
-  selectedDate: null,
+  selectedDate: null
 };
 
 export default {
@@ -33,30 +38,29 @@ export default {
             monthName: 'FEBRERO',
             monthNumber: '02',
             monthShotName: 'FEB.',
-            yearNumber: '2018',
-          },
+            yearNumber: '2018'
+          }
         ];
-      },
+      }
     },
     disablesDates: {
       type: Array,
       default: function() {
         return ['20180204', '20180220'];
-      },
+      }
     },
     colorClass: {
       type: String,
-      default: 'monthColorOne',
+      default: 'monthColorOne'
     },
     selectedDateProp: {
       type: String,
-      default: '06012018',
-    },
+      default: '06012018'
+    }
   },
   data() {
     return {
-      monthColorClass: this.colorClass,
-      //selectedDate: this.selectedDateProp
+      monthColorClass: this.colorClass
     };
   },
   computed: {
@@ -68,13 +72,13 @@ export default {
     handleDayClick(ev) {
       const newSelectedDate = $(ev.currentTarget).attr('data-day-id');
       $(
-        `[data-day-id="${state.selectedDate || this.selectedDate}"] .day-box`,
+        `[data-day-id="${state.selectedDate || this.selectedDate}"] .day-box`
       ).removeClass('daySelected');
       $(`[data-day-id="${newSelectedDate}"] .day-box`).addClass('daySelected');
       state.selectedDate = newSelectedDate;
       this.$emit('dayCarruselTrackDayClick', newSelectedDate);
-    },
-  },
+    }
+  }
 };
 </script>
 

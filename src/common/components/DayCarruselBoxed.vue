@@ -1,26 +1,26 @@
 <template>
   <div class="day-carrusel-container"
-    :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
-    :id="id">
+       :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
+       :id="id">
     <InputBoxed :id="id"
-      :placeHolder="placeHolder"
-      :value="selectDateFormated"
-      :icon="icon"
-      :readOnly="readOnly"
-      :noBorder="noBorder"
-      v-on:handleInputBoxedClick="handleShowDays"
-      class="map-autocomplete" />
+                :placeHolder="placeHolder"
+                :value="selectDateFormated"
+                :icon="icon"
+                :readOnly="readOnly"
+                :noBorder="noBorder"
+                v-on:handleInputBoxedClick="isOpen = !isOpen"
+                class="map-autocomplete" />
     <transition name="fade"
-      @before-enter="animateSlideDown"
-      @leave="animateSlideUp"
-      :css="false">
+                @before-enter="animateSlideDown"
+                @leave="animateSlideUp"
+                :css="false">
       <DayCarrusel v-show="isOpen"
-        :initDate="initDate"
-        :numberOfMonths="numberOfMonths"
-        :selectedDate="selectedDate"
-        :disablesDates="disablesDates"
-        v-on:dayCarruselDayClick="handleDayClick"
-        class="day-carrusel-wrapper" />
+                   :initDate="initDate"
+                   :numberOfMonths="numberOfMonths"
+                   :selectedDate="selectedDate"
+                   :disablesDates="disablesDates"
+                   v-on:dayCarruselDayClick="(newSelectedDate) => $emit('dayCarruselBoxed:dayClick', newSelectedDate)"
+                   class="day-carrusel-wrapper" />
     </transition>
   </div>
 </template>
@@ -30,76 +30,70 @@
 import $ from 'jquery';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { faPencilAlt } from '@fortawesome/fontawesome-free-solid';
-import InputBoxed from './InputBoxed.vue';
-import DayCarrusel from './DayCarrusel.vue';
+import InputBoxed from './InputBoxed';
+import DayCarrusel from './DayCarrusel';
 import { formatDate } from '../utils';
-import * as consts from '../constants.js';
+import * as consts from '../constants';
 
 export default {
   components: {
     FontAwesomeIcon,
     DayCarrusel,
-    InputBoxed,
+    InputBoxed
   },
   props: {
     id: {
       type: String,
-      default: 'day-carrusel-boxed',
+      default: 'day-carrusel-boxed'
     },
     placeHolder: {
       type: String,
-      default: 'Fake Date',
+      default: 'Fake Date'
     },
     icon: {
       default: function() {
         return faPencilAlt;
-      },
+      }
     },
     showOpen: {
       type: Boolean,
-      default: false,
+      default: false
     },
     initDate: {
-      type: String,
+      type: String
     },
     numberOfMonths: {
       type: Number,
-      default: 2,
+      default: 2
     },
     selectedDate: {
-      type: String,
+      type: String
     },
     disablesDates: {
       type: Array,
       default: function() {
         return ['20180204', '20180220'];
-      },
+      }
     },
     noBorder: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       readOnly: true,
-      isOpen: this.showOpen,
-      //SelectedDateData: this.selectedDate,
+      isOpen: this.showOpen
     };
   },
   computed: {
     selectDateFormated() {
-      return this.selectedDate ? formatDate(this.selectedDate) : consts.EMPTY_STRING;
-    },
+      return this.selectedDate
+        ? formatDate(this.selectedDate)
+        : consts.EMPTY_STRING;
+    }
   },
   methods: {
-    handleShowDays() {
-      this.isOpen = !this.isOpen;
-    },
-    handleDayClick(newSelectedDate) {
-      //this.SelectedDateData = newSelectedDate;
-      this.$emit('dayCarruselBoxed:dayClick', newSelectedDate);
-    },
     animateSlideDown(el) {
       $(el).slideDown('slow');
     },
@@ -107,8 +101,8 @@ export default {
       $(el).slideUp('slow', function() {
         done();
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -119,7 +113,7 @@ export default {
   font-family: Arial, Tahoma, HelveticaNeue;
   &.boxed {
     border: solid 1px;
-    border-radius: 5px;    
+    border-radius: 5px;
     border-color: $colorGrey4;
   }
   &.no-boxed {

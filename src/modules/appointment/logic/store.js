@@ -1,5 +1,5 @@
-import _ from 'lodash/object';
-import { difference } from 'lodash/array';
+import { mergeWith, get } from 'lodash/object';
+import { difference, union } from 'lodash/array';
 import moment from 'moment';
 
 import {
@@ -13,10 +13,8 @@ import { notifyError, calcDateAHeadFrom } from '@/common/utils';
 import {
   STATUS,
   EMPTY_ARRAY,
-  EMPTY_STRING,
   EMPTY_OBJECT,
-  MAP_ZOOM,
-  MONTHS_INTERVAL
+  MAP_ZOOM
 } from '@/common/api/constants';
 import {
   APPOINTMENT_RECEIVED,
@@ -25,83 +23,23 @@ import {
   DOCTORS_SCHEDULES_RECEIVED,
   TREATMENTS_FILTERED,
   SET_DOCTOR,
-  SET_TREATMENT
-  /*
-  // OLD
-  RECEIVE_SESSION,
-  RECEIVE_SESSION_THERAPISTS,
-  RECEIVE_SESSION_THERAPIES,
-  RECEIVE_ALL_THERAPIES,
-  RECEIVE_SESSION_TIME_SCHEDULE,
-  SET_THERAPY_TYPE,
-  RECEIVE_DISABLE_DAYS,
-  SET_INIT_DATE,
-  RECEIVE_DISABLE_TIMES,
-  SET_TIME,
-  SET_DATE,
-  RECEIVE_DISABLE_THERAPISTS,
-  SET_THERAPI,
-  SET_ADDRESS
-  */
+  SET_TREATMENT,
+  SET_DISABLE_DATES,
+  SET_DISABLE_DATES_TIMES
 } from './types';
 
-/*
- * TERAPIA: therapy
- * TERAPIAS: therapies
- * -----------------------
- * TERAPEUTA: therapi
- * TERAPEUTAS: therapists
- */
-
 const state = {
+  initDate: moment().add(1, 'day').format('YYYYMMDD'),
   appointment: EMPTY_OBJECT,
   doctors: EMPTY_ARRAY,
   treatments: EMPTY_ARRAY,
   treatmentsByDoctor: EMPTY_ARRAY,
   appointmentsByDoctor: EMPTY_ARRAY,
+  disableDates: EMPTY_ARRAY,
+  disableDatesTimes: EMPTY_OBJECT,
   schedules: EMPTY_ARRAY,
   schedulesByDoctor: EMPTY_ARRAY,
   mapZoom: MAP_ZOOM
-  /*
-  // OLD
-  session: EMPTY_OBJECT,
-  therapists: EMPTY_ARRAY,
-  therapies: EMPTY_ARRAY,
-  initDate: EMPTY_STRING,
-  sessionTimeSchedule: EMPTY_ARRAY,
-  disablesDates: EMPTY_ARRAY,
-  disablesTimes: EMPTY_ARRAY,
-  disablesTherapists: EMPTY_ARRAY,
-  selected: {
-    therapi: EMPTY_STRING,
-    type: EMPTY_STRING,
-    date: EMPTY_STRING,
-    time: EMPTY_STRING,
-    address: EMPTY_STRING
-  }
-  */
-};
-
-// DELTE?
-const getters = {
-  /*
-  // OLD
-  session: currState => currState.session,
-  therapists: currState => currState.therapists,
-  therapistAddress: currState => _.get(currState, 'therapists[0].address'),
-  firstTherapy: currState =>
-    _.get(
-      currState,
-      `therapies[0].texts[${window.glob.language.toUpperCase()}]`
-    ),
-  mapZoom: currState => currState.mapZoom,
-  // NEW
-
-  allTherapiesName: currState =>
-    currState.therapies.map(item =>
-      _.get(item, `texts[${window.glob.language.toUpperCase()}].name`)
-    )
-    */
 };
 
 const actions = {
@@ -151,120 +89,51 @@ const actions = {
     const doctorTimeSchedule = state.schedules.find(
       item => item.doctor._id === state.appointment.doctor.id
     );
-    const doctorBusySchedule = doctorNextAppointments.data.reduce((curr, next) => {
-      const date = moment(next.date).format('YYYY-MM-DD');
-      const times = curr[date] && curr[date].time ? curr[date].time : [];
-      return { ...curr, [date]: [...times, next.time] };
-    }, {});
+    const doctorBusySchedule = doctorNextAppointments.data.reduce(
+      (curr, next) => {
+        const date = moment(next.date).format('YYYYMMDD');
+        return { ...curr, [date]: [...(curr[date] || []), next.time] };
+      },
+      {}
+    );
 
-    // hay que mezclar los dias llenos (doctorBusySchedule) con los dias que no trabaja por
-    // por exception y genrar un disableDay com ambas cosas. Reutilizar los calculos para
-    // desabilitar horas cuando seleccione el dia
-    const exceptionDays = calcDateAHeadFrom(moment(), 3).reduce((curr, next) => {
-      const day = moment(next).day();
-      const timeScheduleByDay = doctorTimeSchedule.exceptions.find(item => item.day === day);
-      return { ...curr, [next]: timeScheduleByDay.time };
-    }, {});
+    const exceptionDays = calcDateAHeadFrom(moment(), 3).reduce(
+      (curr, next) => {
+        const day = moment(next).day();
+        const execption = doctorTimeSchedule.exception.find(
+          item => item.day === day
+        );
+        return {
+          ...curr,
+          [next]: [...(curr[next] || []), ...get(execption, 'time', [])]
+        };
+      },
+      {}
+    );
+    const disableDatesTimes = mergeWith(
+      exceptionDays,
+      doctorBusySchedule,
+      (obj, source) => union(obj, source).sort()
+    );
+    const disableDates = Object.entries(disableDatesTimes)
+      .map(item => {
+        const [date, time] = item;
+        const day = moment(date).day();
+        const timeScheduleByDay = doctorTimeSchedule.daily.find(
+          item => item.day === day
+        );
+        return difference(timeScheduleByDay.time, time).length ? null : date;
+      })
+      .filter(Boolean);
 
-    const disableDays = Object.entries(doctorBusySchedule).map(item => {
-      const [date, time] = item;
-      const day = moment(date).day();
-      const timeScheduleByDay = doctorTimeSchedule.daily.find(item => item.day === day);
-      return difference(timeScheduleByDay.time, time).length ? null : date;
-    }).filter(Boolean);
-
-
-
-    const treatmentKey = state.treatments.find(item => item.id === treatmentId)
-      .key;
+    commit(SET_DISABLE_DATES_TIMES, disableDatesTimes);
+    commit(SET_DISABLE_DATES, disableDates);
+    const treatment = state.treatments.find(item => item.id === treatmentId);
     commit(
       SET_TREATMENT,
-      state.treatments.filter(item => item.key === treatmentKey)
+      state.treatments.filter(item => item.key === treatment.key)
     );
   }
-  /*
-  // OLD FOR DELETE
-  // DELETE?
-  async getSession({ commit }, sessionId) {
-    const session = await services.getSession(sessionId);
-    const therapies = await services.getTherapies([
-      _.get(session, '[0].therapy')
-    ]);
-    const therapists = await services.getUser(
-      consts.USERS.THERAPIST,
-      _.get(session, '[0].therapist')
-    );
-    commit(RECEIVE_SESSION, { session });
-    commit(RECEIVE_SESSION_THERAPIES, { therapies });
-    commit(RECEIVE_SESSION_THERAPISTS, { therapists });
-  },
-  // DELETE?
-  async TherapyDatas({ commit }) {
-    const therapies = await services.getTherapies();
-    const therapists = await services.getUsersByType(consts.USERS.THERAPIST);
-    commit(RECEIVE_SESSION_THERAPIES, { therapies });
-    commit(RECEIVE_SESSION_THERAPISTS, { therapists });
-  },
-
-  async fetchAllTherapists({ commit }) {
-    const therapists = await services.getUsersByType(consts.USERS.THERAPIST);
-    commit(RECEIVE_SESSION_THERAPISTS, { therapists });
-  },
-  async fetchAllTherapies({ commit }) {
-    const therapi = state.therapists.filter(
-      item => item.id === state.selected.therapi
-    );
-    const therapies = await services.getTherapies(
-      _.get(therapi, '[0].therapys')
-    );
-    commit(RECEIVE_ALL_THERAPIES, { therapies });
-  },
-  async fetchSessionTimeSchedule({ commit }) {
-    const sessionTimeSchedule = await services.getSessionTimeSchedule();
-    commit(RECEIVE_SESSION_TIME_SCHEDULE, { sessionTimeSchedule });
-  },
-  async fetchBusyDays({ commit }, therapi) {
-    const disablesDates = await services.getBusyDays(
-      therapi,
-      state.initDate,
-      MONTHS_INTERVAL
-    );
-    commit(RECEIVE_DISABLE_DAYS, { disablesDates });
-  },
-  async fetchBusyTimes({ commit }, dateSelected) {
-    const disablesTimes = await services.getBusyTimes(
-      state.selected.therapi,
-      dateSelected
-    );
-    commit(RECEIVE_DISABLE_TIMES, { disablesTimes });
-  },
-  async fetchBusyTherapists({ commit }) {
-    const disablesTherapists = await services.getBusyTherapists();
-    commit(RECEIVE_DISABLE_THERAPISTS, { disablesTherapists });
-  },
-  setTherapi({ commit }, therapi) {
-    commit(SET_THERAPI, { therapi });
-    commit(SET_THERAPY_TYPE, { therapy: EMPTY_STRING });
-    commit(SET_DATE, { date: EMPTY_STRING });
-    commit(SET_TIME, { time: EMPTY_STRING });
-  },
-  setTherapyType({ commit }, therapy) {
-    commit(SET_THERAPY_TYPE, { therapy });
-  },
-  setDate({ commit }, date) {
-    commit(SET_DATE, { date });
-  },
-  setTime({ commit }, time) {
-    commit(SET_TIME, { time });
-  },
-  setAddress({ commit }, newTherapi) {
-    const therapi = state.therapists.filter(item => item.id === newTherapi);
-    commit(SET_ADDRESS, { address: _.get(therapi, '[0].address') });
-  },
-  initDate({ commit }, initDate = formatDateNumeric()) {
-    commit(SET_INIT_DATE, { initDate });
-  }
-  */
 };
 
 const mutations = {
@@ -292,58 +161,18 @@ const mutations = {
   },
   [SET_TREATMENT](currState, treatment) {
     currState.appointment.treatment = treatment;
+  },
+  [SET_DISABLE_DATES](currState, disableDates) {
+    currState.disableDates = disableDates;
+  },
+  [SET_DISABLE_DATES_TIMES](currState, disableDatesTimes) {
+    currState.disableDatesTimes = disableDatesTimes;
   }
-  /*
-  [RECEIVE_SESSION](currState, { session }) {
-    [currState.session] = session;
-  },
-  [RECEIVE_SESSION_THERAPISTS](currState, { therapists }) {
-    currState.therapists = therapists;
-  },
-  [RECEIVE_SESSION_THERAPIES](currState, { therapies }) {
-    currState.therapies = therapies;
-  },
-  // NEW
-  [RECEIVE_ALL_THERAPIES](currState, { therapies }) {
-    currState.therapies = therapies;
-  },
-  [RECEIVE_SESSION_TIME_SCHEDULE](currState, { sessionTimeSchedule }) {
-    currState.sessionTimeSchedule = sessionTimeSchedule;
-  },
-  [SET_THERAPY_TYPE](currState, { therapy }) {
-    currState.selected.type = therapy;
-  },
-  [RECEIVE_DISABLE_DAYS](currState, { disablesDates }) {
-    currState.disablesDates = disablesDates;
-  },
-  [SET_INIT_DATE](currState, { initDate }) {
-    currState.initDate = initDate;
-  },
-  [SET_DATE](currState, { date }) {
-    currState.selected.date = date;
-  },
-  [SET_TIME](currState, { time }) {
-    currState.selected.time = time;
-  },
-  [RECEIVE_DISABLE_TIMES](currState, { disablesTimes }) {
-    currState.disablesTimes = disablesTimes;
-  },
-  [RECEIVE_DISABLE_THERAPISTS](currState, { disablesTherapists }) {
-    currState.disablesTherapists = disablesTherapists;
-  },
-  [SET_THERAPI](currState, { therapi }) {
-    currState.selected.therapi = therapi;
-  },
-  [SET_ADDRESS](currState, { address }) {
-    currState.selected.address = address;
-  }
-  */
 };
 
 export default {
   namespaced: true,
   state,
-  getters,
   mutations,
   actions
 };

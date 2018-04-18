@@ -8,8 +8,8 @@ const patientsData = require('./patients.json');
 const treatmentsData = require('./treatments.json');
 
 const TOKEN = {
-  SUPER: 'xYZsKt2o035xYXvZj2hzrYoQR1MJKaR7',
-  MASTER: 'VgMXmke7Lz9KQLMhaYPNIJ5nwZKqpTGE',
+  SUPER: 'OyalhYuKbQgUNpOQhdTQamZDKrhqOAC8',
+  MASTER: 'W0sgNBbwsfoUfe5GXNQY36p1IOHA96Gb',
   ADMIN: '',
   USER: ''
 };
@@ -147,20 +147,26 @@ async function process(doctor, limit) {
   const days = limit || moment()
     .add(3, 'months')
     .diff(moment(), 'days');
-  const schedules = await getDoctorSchedule(appointmentData.doctor.email);
+  const schedules = await getDoctorSchedule(doctor.email);
 
   for (let i = 0; i < days; i += 1) {
     const date = moment().add(i, 'day');
     const day = moment(date).day();
     const times = schedules.daily.find(item => item.day === day);
-    const appointmentToday = getRandomInt(1, 7);
+    if (day === 0) debugger;
+    const exceptionTimes = schedules.exception ? schedules.exception.find(item => item.day === day) : null;
+    const appointmentToday = getRandomInt(0, 7);
     console.log(
       `appointmentToday: ${appointmentToday} day: ${day} date: ${moment(
         date
       ).format('YYYYMMDD')} times: ${JSON.stringify(times.time)}`
     );
-    for (let x = 1; x <= appointmentToday; x += 1) {
-      console.log(`day: ${x} time: ${times.time[x]}`);
+    for (let x = 0; x <= appointmentToday; x += 1) {
+      if (exceptionTimes && exceptionTimes.time.includes(times.time[x])) {
+        console.log(`EXCLUDED >> time: ${times.time[x]}`);
+        continue;
+      }
+      console.log(`time: ${times.time[x]}`);
       await processData(
         doctor,
         paths.appointments,
@@ -177,8 +183,11 @@ async function main() {
   const user = await getCommonUser();
   TOKEN.ADMIN = admin.token;
   TOKEN.USER = user.token;
+  console.log(`Generating for doctor ${doctorsData[0].name}`);
   process(doctorsData[0], 0);
+  console.log(`Generating for doctor ${doctorsData[1].name}`);
   process(doctorsData[1], 0);
+  console.log(`Generating for doctor ${doctorsData[2].name}`);
   process(doctorsData[2], 0);
 }
 

@@ -23,7 +23,7 @@
                   @comboBoxedItemHasSelected="loadDoctorSchedule" />
       <DayCarruselBoxed id="session-edit-date"
                         :placeHolder="literals.treatmentDateComboDefault"
-                        :disablesDates="disablesDates"
+                        :disablesDates="disableDates"
                         :initDate="initDate"
                         :selectedDate="daySelected"
                         :noBorder="true"
@@ -79,6 +79,8 @@ export default {
       'doctors',
       'treatmentsByDoctor',
       'schedules',
+      'disableDates',
+      'initDate',
       'mapZoom'
     ]),
     sessionIconStatus() {

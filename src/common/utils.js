@@ -92,7 +92,7 @@ export function calcMonthsAHeadFrom(dateString, numOfMonthsAHead) {
 
 export function calcDateAHeadFrom(dateString, numOfMonthsAHead) {
   return _.chain(createDayAHeadArray(dateString, numOfMonthsAHead))
-    .map(item => moment(dateString, consts.INT_DATE_FORMAT).add(item, 'day').format('YYYY-MM-DD'))
+    .map(item => moment(dateString, consts.INT_DATE_FORMAT).add(item, 'day').format('YYYYMMDD'))
     .toArray()
     .value();
 }
