@@ -48,34 +48,34 @@ const state = {
 
 const actions = {
   // NEW
-  async fetchAppointment({ commit }, id) {
+  async fetchAppointment({ commit, dispatch }, id) {
     const appointment = await getAppointment(id);
     if (appointment.status === STATUS.SUCCESS) {
       commit(APPOINTMENT_RECEIVED, appointment.data);
     } else {
-      notifyError(commit, appointment);
+      notifyError(dispatch, appointment);
     }
   },
-  async fetchComboDatas({ commit }) {
+  async fetchComboDatas({ commit, dispatch }) {
     const treatments = await getTreatments();
     if (treatments.status === STATUS.SUCCESS) {
       commit(TREATMENTS_RECEIVED, treatments.data);
     } else {
-      notifyError(commit, treatments);
+      notifyError(dispatch, treatments);
     }
 
     const doctors = await getDoctors();
     if (doctors.status === STATUS.SUCCESS) {
       commit(DOCTORS_RECEIVED, doctors.data);
     } else {
-      notifyError(commit, doctors);
+      notifyError(dispatch, doctors);
     }
 
     const schedules = await getDoctorsSchedules();
     if (schedules.status === STATUS.SUCCESS) {
       commit(DOCTORS_SCHEDULES_RECEIVED, schedules.data);
     } else {
-      notifyError(commit, schedules);
+      notifyError(dispatch, schedules);
     }
   },
   loadDoctorTreatments({ commit }, doctorId) {

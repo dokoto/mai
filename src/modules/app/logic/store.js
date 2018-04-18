@@ -7,30 +7,33 @@ import calendar from '../../calendar/logic/store';
 import * as services from '../../../common/api';
 import { RESET_NOTIFY, NOTIFY } from './types';
 
-
 Vue.use(Vuex);
 
 const state = {
   session: {},
   notify: {
     status: '',
-    message: '',
-  },
+    message: ''
+  }
 };
 
 const RECEIVE_USER = 'RECEIVE_USER';
 
 const actions = {
   tmpLogin({ commit }) {
-    return new Promise(async (resolve) => {
+    return new Promise(async resolve => {
       const session = await services.login('manuel@coolmail.com', '123456');
       commit(RECEIVE_USER, session.data);
       resolve();
     });
   },
-  resetNotify({ commit }) {
-    commit(RESET_NOTIFY);
+  show({ commit }, message) {
+    commit(NOTIFY, message);
+    setTimeout(() => commit(RESET_NOTIFY), 3000);
   },
+  resetNotify({ commit }, notify) {
+    commit(RESET_NOTIFY, notify);
+  }
 };
 
 const mutations = {
@@ -40,16 +43,16 @@ const mutations = {
   [RESET_NOTIFY](currState) {
     currState.notify.status = EMPTY_STRING;
   },
-  [NOTIFY](currState, notity) {
-    currState.notify = notity;
-  },
+  [NOTIFY](currState, notify) {
+    currState.notify = notify;
+  }
 };
 
 const app = {
   namespaced: true,
   state,
   mutations,
-  actions,
+  actions
 };
 
 const store = new Vuex.Store({
@@ -57,9 +60,9 @@ const store = new Vuex.Store({
     app,
     home,
     appointment,
-    calendar,
+    calendar
   },
-  strict: process.env.ENV !== 'prod',
+  strict: process.env.ENV !== 'prod'
 });
 
 export default store;

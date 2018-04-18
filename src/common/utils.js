@@ -13,10 +13,10 @@ if (!window.glob || !window.glob.language) {
 moment.locale(window.glob.language.toLowerCase());
 
 // NEW
-export function notifyError(commit, response) {
+export function notifyError(dispatch, response) {
   const message =
     response.status === STATUS.FAIL ? response.data.message : response.message;
-  commit('app/NOTIFY', { status: response.status, message }, { root: true });
+  dispatch('app/show', { status: response.status, message }, { root: true });
 }
 
 // OLD
@@ -92,7 +92,11 @@ export function calcMonthsAHeadFrom(dateString, numOfMonthsAHead) {
 
 export function calcDateAHeadFrom(dateString, numOfMonthsAHead) {
   return _.chain(createDayAHeadArray(dateString, numOfMonthsAHead))
-    .map(item => moment(dateString, consts.INT_DATE_FORMAT).add(item, 'day').format('YYYYMMDD'))
+    .map(item =>
+      moment(dateString, consts.INT_DATE_FORMAT)
+        .add(item, 'day')
+        .format('YYYYMMDD')
+    )
     .toArray()
     .value();
 }

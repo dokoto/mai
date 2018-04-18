@@ -1,8 +1,8 @@
 <template>
   <SlideYDownTransition :duration="duration">
     <div class="alertBox"
-      v-show="notify.status"
-      v-on:click="resetNotify">
+         v-show="notify.status"
+         v-on:click="resetNotify">
       <span class="text">{{ notify.message }}</span>
     </div>
   </SlideYDownTransition>
@@ -10,24 +10,23 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import { SlideYDownTransition } from 'vue2-transitions';
-import { EMPTY_STRING } from '@/common/constants';
 
 export default {
   components: { SlideYDownTransition },
   props: {
     duration: {
       type: Number,
-      default: 1200,
-    },
+      default: 1200
+    }
   },
   computed: {
     ...mapState('app', {
-      notify: state => state.notify,
-    }),
+      notify: state => state.notify
+    })
   },
   methods: {
-    ...mapActions('app', ['resetNotify']),
-  },
+    ...mapActions('app', ['resetNotify'])
+  }
 };
 </script>
 

@@ -8,12 +8,12 @@ const state = {
 };
 
 const actions = {
-  async nextsAppointments({ commit }) {
+  async nextsAppointments({ commit, dispatch }) {
     const nextsAppointments = await services.nextsAppointments();
     if (nextsAppointments.status === STATUS.SUCCESS) {
       commit(RECEIVE_NEXT_SESSIONS, nextsAppointments.data);
     } else {
-      notifyError(commit, nextsAppointments);
+      notifyError(dispatch, nextsAppointments);
     }
   }
 };
