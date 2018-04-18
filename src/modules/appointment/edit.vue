@@ -27,11 +27,11 @@
                         :initDate="initDate"
                         :selectedDate="daySelected"
                         :noBorder="true"
-                        @dayCarruselBoxed:dayClick="handleDateSelected" />
+                        @dayCarruselBoxed:dayClick="loadDoctorTimeSchedule" />
       <GridSelectorBoxed id="session-edit-time"
                          :placeHolder="literals.treatmentTimeComboDefault"
                          :items="sessionTimeSchedule"
-                         :disableItems="disablesTimes"
+                         :disableItems="disableTimes"
                          :itemSelected="timeSelected"
                          :noBorder="true"
                          @gridSelectorBoxed:onChange="handleTimeSelected" />
@@ -81,6 +81,7 @@ export default {
       'schedules',
       'disableDates',
       'initDate',
+      'disableTimes',
       'mapZoom'
     ]),
     sessionIconStatus() {
@@ -103,7 +104,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('appointment', ['loadDoctorTreatments', 'loadDoctorSchedule'])
+    ...mapActions('appointment', ['loadDoctorTreatments', 'loadDoctorSchedule', 'loadDoctorTimeSchedule'])
   },
   created() {
     this.$store.dispatch('appointment/fetchComboDatas', this.$route.params.id);

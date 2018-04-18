@@ -25,17 +25,21 @@ import {
   SET_DOCTOR,
   SET_TREATMENT,
   SET_DISABLE_DATES,
-  SET_DISABLE_DATES_TIMES
+  SET_DISABLE_DATES_TIMES,
+  SET_DISABLE_TIMES
 } from './types';
 
 const state = {
-  initDate: moment().add(1, 'day').format('YYYYMMDD'),
+  initDate: moment()
+    .add(1, 'day')
+    .format('YYYYMMDD'),
   appointment: EMPTY_OBJECT,
   doctors: EMPTY_ARRAY,
   treatments: EMPTY_ARRAY,
   treatmentsByDoctor: EMPTY_ARRAY,
   appointmentsByDoctor: EMPTY_ARRAY,
   disableDates: EMPTY_ARRAY,
+  disableTimes: EMPTY_ARRAY,
   disableDatesTimes: EMPTY_OBJECT,
   schedules: EMPTY_ARRAY,
   schedulesByDoctor: EMPTY_ARRAY,
@@ -133,7 +137,12 @@ const actions = {
       SET_TREATMENT,
       state.treatments.filter(item => item.key === treatment.key)
     );
+  },
+  loadDoctorTimeSchedule({ commit }, date) {
+    commit(SET_DISABLE_TIMES, state.disableDatesTimes[date]);
   }
+  // Hay que configurar la seleccion para que si despues de seleccionar todo se cambia el doctor
+  // el resto de datos cambie en consonancia
 };
 
 const mutations = {
@@ -167,6 +176,9 @@ const mutations = {
   },
   [SET_DISABLE_DATES_TIMES](currState, disableDatesTimes) {
     currState.disableDatesTimes = disableDatesTimes;
+  },
+  [SET_DISABLE_TIMES](currState, disableTimes) {
+    currState.disableTimes = disableTimes;
   }
 };
 
