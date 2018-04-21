@@ -1,16 +1,17 @@
 <template>
   <div :id="id"
-    class="input-boxed-container flex-row flex-align-first-corners flex-align-second-center">
+       class="input-boxed-container flex-row flex-align-first-corners flex-align-second-center">
     <input type="text"
-      maxlength="200"
-      class="input"
-      :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
-      :placeholder="placeHolder"
-      :readonly="readOnly"
-      :value="value" />
-    <div class="input-icon" v-if="!noIcon"
-      :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
-      @click="handleInputBoxedClick">
+           maxlength="200"
+           class="input"
+           :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
+           :placeholder="placeHolder"
+           :readonly="readOnly"
+           :value="value" />
+    <div class="input-icon"
+         v-if="!noIcon"
+         :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
+         @click="handleInputBoxedClick">
       <font-awesome-icon :icon="icon" />
     </div>
   </div>
@@ -22,47 +23,49 @@ import { faMapMarkerAlt } from '@fortawesome/fontawesome-free-solid';
 
 export default {
   components: {
-    FontAwesomeIcon,
+    FontAwesomeIcon
   },
   props: {
     id: {
       type: String,
-      default: 'input-boxed',
+      default: 'input-boxed'
     },
     placeHolder: {
       type: String,
-      default: 'Address',
+      default: 'Address'
     },
     icon: {
       default: function() {
         return faMapMarkerAlt;
-      },
+      }
     },
     readOnly: {
       type: Boolean,
-      default: true,
+      default: true
     },
     noIcon: {
       type: Boolean,
-      default: false,
+      default: false
     },
     noBorder: {
       type: Boolean,
-      default: false,
+      default: false
     },
     value: {
-      type: String,
-    },
+      type: String
+    }
   },
   methods: {
     handleInputBoxedClick(ev) {
-      this.$emit('handleInputBoxedClick', ev);
+      this.$emit(
+        'handleInputBoxedClick',
+        ev.currentTarget.parentElement.firstElementChild.value
+      );
     },
     handleInputBoxedOnChange(ev) {
-      console.log('hitler');
       this.$emit('inputBoxed:onChange', ev);
     }
-  },
+  }
 };
 </script>
 

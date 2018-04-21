@@ -13,6 +13,9 @@ const es = {
       date: 'Seleccione fecha',
       time: 'Seleccione hora',
       address: 'Seleccione direccion'
+    },
+    acctions: {
+      save: 'Crear cita'
     }
   }
 };

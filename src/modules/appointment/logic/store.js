@@ -1,6 +1,10 @@
 import { mergeWith, get } from 'lodash/object';
 import { difference, union } from 'lodash/array';
 import moment from 'moment';
+import {
+  faCheckCircle,
+  faQuestionCircle
+} from '@fortawesome/fontawesome-free-solid';
 
 import {
   getAppointment,
@@ -14,6 +18,7 @@ import {
   STATUS,
   EMPTY_ARRAY,
   EMPTY_OBJECT,
+  EMPTY_STRING,
   MAP_ZOOM
 } from '@/common/api/constants';
 import {
@@ -26,7 +31,15 @@ import {
   SET_TREATMENT,
   SET_DISABLE_DATES,
   SET_DISABLE_DATES_TIMES,
-  SET_DISABLE_TIMES
+  SET_DISABLE_TIMES,
+  SET_DATE_SELECTED,
+  SET_TIME_SELECTED,
+  SET_DOCTOR_SCHEDULE,
+  SET_ADDRESS,
+  SET_DOCTOR_ICON_STATUS,
+  SET_APPOINTMENT_ICON_STATUS,
+  SET_LOCATION_ICON_STATUS,
+  READY_TO_SAVE
 } from './types';
 
 const state = {
@@ -43,7 +56,25 @@ const state = {
   disableDatesTimes: EMPTY_OBJECT,
   schedules: EMPTY_ARRAY,
   schedulesByDoctor: EMPTY_ARRAY,
-  mapZoom: MAP_ZOOM
+  treatmentSelected: EMPTY_STRING,
+  dateSelected: EMPTY_STRING,
+  timeSelected: EMPTY_STRING,
+  treatmentsShowOpen: false,
+  addressSelected: EMPTY_STRING,
+  readyToSave: false,
+  mapZoom: MAP_ZOOM,
+  appointmentIconStatus: {
+    icon: faQuestionCircle,
+    color: 'red'
+  },
+  doctorIconStatus: {
+    icon: faQuestionCircle,
+    color: 'red'
+  },
+  localtionIconStatus: {
+    icon: faQuestionCircle,
+    color: 'red'
+  }
 };
 
 const actions = {
@@ -56,7 +87,7 @@ const actions = {
       notifyError(dispatch, appointment);
     }
   },
-  async fetchComboDatas({ commit, dispatch }) {
+  async fetchInitDatas({ commit, dispatch }) {
     const treatments = await getTreatments();
     if (treatments.status === STATUS.SUCCESS) {
       commit(TREATMENTS_RECEIVED, treatments.data);
@@ -79,14 +110,46 @@ const actions = {
     }
   },
   loadDoctorTreatments({ commit }, doctorId) {
-    const doctor = state.doctors.find(item => item.id === doctorId);
-    const treatmentsByLang = doctor.treatments
-      .filter(item => item.lang === window.glob.language)
-      .map(item => ({ id: item._id, text: item.name }));
-    commit(TREATMENTS_FILTERED, treatmentsByLang);
-    commit(SET_DOCTOR, doctor);
+    if (!state.appointment.doctor || doctorId !== state.appointment.doctor.id) {
+      const doctor = state.doctors.find(item => item.id === doctorId);
+      const treatmentsByLang = doctor.treatments
+        .filter(item => item.lang === window.glob.language)
+        .map(item => ({ id: item._id, text: item.name }));
+      commit(TREATMENTS_FILTERED, treatmentsByLang);
+      commit(SET_DOCTOR, doctor);
+      commit(SET_DOCTOR_ICON_STATUS, {
+        icon: faCheckCircle,
+        color: 'green'
+      });
+
+      commit(
+        SET_ADDRESS,
+        `${get(
+          state.appointment.doctor.address,
+          '[0].street',
+          EMPTY_STRING
+        )}, ${get(
+          state.appointment.doctor.address,
+          '[0].country',
+          EMPTY_STRING
+        )}`
+      );
+      commit(SET_LOCATION_ICON_STATUS, {
+        icon: faCheckCircle,
+        color: 'green'
+      });
+      commit(SET_DISABLE_DATES_TIMES, EMPTY_OBJECT);
+      commit(SET_DISABLE_DATES, EMPTY_ARRAY);
+      commit(SET_TREATMENT, EMPTY_ARRAY);
+      commit(SET_DISABLE_TIMES, EMPTY_ARRAY);
+      commit(READY_TO_SAVE, false);
+      commit(SET_APPOINTMENT_ICON_STATUS, {
+        icon: faQuestionCircle,
+        color: 'red'
+      });
+    }
   },
-  async loadDoctorSchedule({ commit }, treatmentId) {
+  async loadDoctorSchedule({ commit }, id) {
     const doctorNextAppointments = await getDoctorNextAppointments(
       state.appointment.doctor.email
     );
@@ -132,17 +195,52 @@ const actions = {
 
     commit(SET_DISABLE_DATES_TIMES, disableDatesTimes);
     commit(SET_DISABLE_DATES, disableDates);
-    const treatment = state.treatments.find(item => item.id === treatmentId);
-    commit(
-      SET_TREATMENT,
-      state.treatments.filter(item => item.key === treatment.key)
-    );
+    const treatment = state.treatments.find(item => item.id === id);
+    commit(SET_TREATMENT, {
+      name: treatment.name,
+      treatmentAllLangs: state.treatments.filter(
+        item => item.key === treatment.key
+      )
+    });
+    commit(SET_DISABLE_TIMES, EMPTY_ARRAY);
+    commit(SET_DATE_SELECTED, EMPTY_STRING);
+    commit(SET_TIME_SELECTED, EMPTY_STRING);
+    commit(READY_TO_SAVE, false);
+    commit(SET_APPOINTMENT_ICON_STATUS, {
+      icon: faQuestionCircle,
+      color: 'red'
+    });
   },
   loadDoctorTimeSchedule({ commit }, date) {
+    const doctorTimeSchedule = state.schedules.find(
+      item => item.doctor._id === state.appointment.doctor.id
+    );
+    const day = moment(date).day();
+    const timeScheduleByDay = doctorTimeSchedule.daily.find(
+      item => item.day === day
+    );
+    commit(SET_DOCTOR_SCHEDULE, timeScheduleByDay.time);
+    commit(SET_DATE_SELECTED, date);
+    commit(SET_TIME_SELECTED, EMPTY_STRING);
     commit(SET_DISABLE_TIMES, state.disableDatesTimes[date]);
+    commit(READY_TO_SAVE, false);
+    commit(SET_APPOINTMENT_ICON_STATUS, {
+      icon: faQuestionCircle,
+      color: 'red'
+    });
+  },
+  saveDoctorTIme({ commit }, time) {
+    commit(SET_TIME_SELECTED, time);
+    if (state.treatmentSelected && state.dateSelected && state.timeSelected) {
+      commit(SET_APPOINTMENT_ICON_STATUS, {
+        icon: faCheckCircle,
+        color: 'green'
+      });
+      if (state.addressSelected) {
+        commit(READY_TO_SAVE, true);
+      }
+    }
   }
-  // Hay que configurar la seleccion para que si despues de seleccionar todo se cambia el doctor
-  // el resto de datos cambie en consonancia
 };
 
 const mutations = {
@@ -167,9 +265,15 @@ const mutations = {
   },
   [SET_DOCTOR](currState, doctor) {
     currState.appointment.doctor = doctor;
+    currState.treatmentsShowOpen = true;
+    currState.treatmentSelected = EMPTY_STRING;
+    currState.dateSelected = EMPTY_STRING;
+    currState.timeSelected = EMPTY_STRING;
   },
-  [SET_TREATMENT](currState, treatment) {
-    currState.appointment.treatment = treatment;
+  [SET_TREATMENT](currState, { name, treatmentAllLangs }) {
+    currState.treatmentsShowOpen = name ? false : currState.treatmentsShowOpen;
+    currState.treatmentSelected = name;
+    currState.appointment.treatment = treatmentAllLangs;
   },
   [SET_DISABLE_DATES](currState, disableDates) {
     currState.disableDates = disableDates;
@@ -179,6 +283,30 @@ const mutations = {
   },
   [SET_DISABLE_TIMES](currState, disableTimes) {
     currState.disableTimes = disableTimes;
+  },
+  [SET_DATE_SELECTED](currState, date) {
+    currState.dateSelected = date;
+  },
+  [SET_TIME_SELECTED](currState, time) {
+    currState.timeSelected = time;
+  },
+  [SET_DOCTOR_SCHEDULE](currState, schedule) {
+    currState.schedulesByDoctor = schedule;
+  },
+  [SET_ADDRESS](currState, address) {
+    currState.addressSelected = address;
+  },
+  [SET_DOCTOR_ICON_STATUS](currState, iconStatus) {
+    currState.doctorIconStatus = iconStatus;
+  },
+  [SET_APPOINTMENT_ICON_STATUS](currState, iconStatus) {
+    currState.appointmentIconStatus = iconStatus;
+  },
+  [SET_LOCATION_ICON_STATUS](currState, iconStatus) {
+    currState.localtionIconStatus = iconStatus;
+  },
+  [READY_TO_SAVE](currState, ready) {
+    currState.readyToSave = ready;
   }
 };
 

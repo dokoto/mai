@@ -5,13 +5,13 @@
          v-for="(day, index) in track"
          :key="index"
          @click="handleDayClick"
-         :data-day-id="`${day.fullDate}`"
-         :class="{ dayDisable: disablesDates.includes(`${day.fullDate}`) }">
+         :data-day-id="day.fullDate">
       <span class="month-v-name"
             v-bind:class="monthColorClass"
             v-if="index === 0 || day.dayNumber == 1">{{ day.monthShotName.replace('.', '') }}</span>
       <div class="day-box"
-           :class="{ daySelected: !disablesDates.includes(`${day.fullDate}`) && selectDateFormated === `${day.fullDate}` }">
+           :class="{ daySelected: !disablesDates.includes(`${day.fullDate}`) && selectDateFormated === `${day.fullDate}`,
+           dayDisable: disablesDates.includes(day.fullDate) }">
         <span class="day-name">{{ day.dayName.replace('.', '') }}</span>
         <span class="day-number">{{ day.dayNumber}}</span>
       </div>

@@ -19,7 +19,7 @@
                    :numberOfMonths="numberOfMonths"
                    :selectedDate="selectedDate"
                    :disablesDates="disablesDates"
-                   v-on:dayCarruselDayClick="(newSelectedDate) => $emit('dayCarruselBoxed:dayClick', newSelectedDate)"
+                   v-on:dayCarruselDayClick="handleDateSelected"
                    class="day-carrusel-wrapper" />
     </transition>
   </div>
@@ -59,6 +59,10 @@ export default {
       type: Boolean,
       default: false
     },
+    autoCloseOnSelected: {
+      type: Boolean,
+      default: false
+    },
     initDate: {
       type: String
     },
@@ -94,13 +98,15 @@ export default {
     }
   },
   methods: {
+    handleDateSelected(newSelectedDate) {
+      if (this.autoCloseOnSelected) this.isOpen = false;
+      this.$emit('dayCarruselBoxed:dayClick', newSelectedDate);
+    },
     animateSlideDown(el) {
       $(el).slideDown('slow');
     },
     animateSlideUp(el, done) {
-      $(el).slideUp('slow', function() {
-        done();
-      });
+      $(el).slideUp('slow', () => done());
     }
   }
 };

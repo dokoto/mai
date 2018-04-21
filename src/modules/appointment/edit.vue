@@ -1,45 +1,52 @@
 <template>
-  <article class="session-edit-page bg-beach">
+  <article class="appointment-edit-page bg-beach">
     <div class="symbol-container">
       <img class="symbol"
            src="../../../static/img/therapy-symbol.png" />
     </div>
     <Card id="appointment-edit-doctors-carrusel-card"
-          :title="literals.treatmentTitle">
+          :title="literals.treatmentTitle"
+          :icon="doctorIconStatus.icon"
+          :iconColor="doctorIconStatus.color">
       <DoctorsCarrusel :id="`doctors-carrusel-${$route.params.id}`"
                        :doctors="doctors"
                        :doctorSelected="appointment.doctor ? appointment.doctor.id : ''"
                        @doctorHasSelected="loadDoctorTreatments"
                        v-if="doctors.length" />
     </Card>
-    <Card id="session-edit-card"
+    <Card id="appointment-edit-card"
           :title="literals.appointmentTitle"
-          :icon="sessionIconStatus.icon"
-          :iconColor="sessionIconStatus.color">
-      <ComboBoxed id="session-edit-therapies"
+          :icon="appointmentIconStatus.icon"
+          :iconColor="appointmentIconStatus.color">
+      <ComboBoxed id="appointment-edit-treatments"
                   :noBorder="true"
                   :items="treatmentsByDoctor"
                   :placeHolder="literals.treatmentTypeComboDefault"
+                  :itemSelected="treatmentSelected"
+                  :showOpen="treatmentsShowOpen"
+                  :autoCloseOnSelected="true"
                   @comboBoxedItemHasSelected="loadDoctorSchedule" />
-      <DayCarruselBoxed id="session-edit-date"
+      <DayCarruselBoxed id="appointment-edit-date"
                         :placeHolder="literals.treatmentDateComboDefault"
                         :disablesDates="disableDates"
                         :initDate="initDate"
-                        :selectedDate="daySelected"
+                        :selectedDate="dateSelected"
                         :noBorder="true"
+                        :autoCloseOnSelected="true"
                         @dayCarruselBoxed:dayClick="loadDoctorTimeSchedule" />
-      <GridSelectorBoxed id="session-edit-time"
+      <GridSelectorBoxed id="appointment-edit-time"
                          :placeHolder="literals.treatmentTimeComboDefault"
-                         :items="sessionTimeSchedule"
+                         :items="schedulesByDoctor"
                          :disableItems="disableTimes"
                          :itemSelected="timeSelected"
                          :noBorder="true"
-                         @gridSelectorBoxed:onChange="handleTimeSelected" />
+                         :autoCloseOnSelected="true"
+                         @gridSelectorBoxed:onChange="saveDoctorTIme" />
     </Card>
-    <Card id="session-edit-location-card"
+    <Card id="appointment-edit-location-card"
           :title="literals.locationTitle"
-          :icon="locationStatus.icon"
-          :iconColor="locationStatus.color">
+          :icon="localtionIconStatus.icon"
+          :iconColor="localtionIconStatus.color">
       <LocationMap ref="locationMap"
                    :placeHolder="literals.treatmentLocationDefault"
                    :zoom="mapZoom"
@@ -47,15 +54,17 @@
                    :showMap="false"
                    :readOnly="false" />
     </Card>
+    <Card id="appointment-edit-save"
+          :noTitle="true" v-show="readyToSave">
+      <div class="flex-column flex-align-first-center">
+        <button class="save">{{ literals.saveButton }}</button>
+      </div>
+    </Card>
   </article>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import {
-  faCheckCircle,
-  faQuestionCircle
-} from '@fortawesome/fontawesome-free-solid';
 
 import ComboBoxed from '@/common/components/ComboBoxed';
 import DayCarruselBoxed from '@/common/components/DayCarruselBoxed';
@@ -82,32 +91,29 @@ export default {
       'disableDates',
       'initDate',
       'disableTimes',
-      'mapZoom'
-    ]),
-    sessionIconStatus() {
-      return {
-        icon: faCheckCircle,
-        color: 'green'
-      };
-    },
-    therapistStatus() {
-      return {
-        icon: faCheckCircle,
-        color: 'green'
-      };
-    },
-    locationStatus() {
-      return {
-        icon: faCheckCircle,
-        color: 'green'
-      };
-    }
+      'treatmentSelected',
+      'dateSelected',
+      'timeSelected',
+      'treatmentsShowOpen',
+      'mapZoom',
+      'schedulesByDoctor',
+      'addressSelected',
+      'appointmentIconStatus',
+      'doctorIconStatus',
+      'localtionIconStatus',
+      'readyToSave'
+    ])
   },
   methods: {
-    ...mapActions('appointment', ['loadDoctorTreatments', 'loadDoctorSchedule', 'loadDoctorTimeSchedule'])
+    ...mapActions('appointment', [
+      'loadDoctorTreatments',
+      'loadDoctorSchedule',
+      'loadDoctorTimeSchedule',
+      'saveDoctorTIme'
+    ])
   },
   created() {
-    this.$store.dispatch('appointment/fetchComboDatas', this.$route.params.id);
+    this.$store.dispatch('appointment/fetchInitDatas', this.$route.params.id);
   },
   data() {
     return {
@@ -118,7 +124,8 @@ export default {
         treatmentTypeComboDefault: this.$i18n.t('appointment.treatment.type'),
         treatmentDateComboDefault: this.$i18n.t('appointment.treatment.date'),
         treatmentTimeComboDefault: this.$i18n.t('appointment.treatment.time'),
-        treatmentLocationDefault: this.$i18n.t('appointment.treatment.address')
+        treatmentLocationDefault: this.$i18n.t('appointment.treatment.address'),
+        saveButton: this.$i18n.t('appointment.acctions.save')
       }
     };
   }
@@ -127,7 +134,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../common/styles/base.scss';
-.session-edit-page {
+.appointment-edit-page {
   font-size: 6.2vw;
   overflow-y: scroll;
   position: relative;
@@ -137,5 +144,10 @@ export default {
   width: 100%;
   height: auto;
   margin-bottom: 2%;
+}
+.save {
+  color: $colorBlue1;
+  font-size: 1.3em;
+  font-weight: bold;
 }
 </style>

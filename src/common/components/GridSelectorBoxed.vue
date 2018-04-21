@@ -1,25 +1,25 @@
 <template>
   <div class="grid-selector-container"
-    :id="id">
+       :id="id">
     <InputBoxed :id="id"
-      :placeHolder="placeHolder"
-      :value="itenSelectedFormated"
-      :icon="icon"
-      :readOnly="readOnly"
-      :noBorder="noBorder"
-      v-on:handleInputBoxedClick="handleShowItems"
-      class="map-autocomplete" />
+                :placeHolder="placeHolder"
+                :value="itenSelectedFormated"
+                :icon="icon"
+                :readOnly="readOnly"
+                :noBorder="noBorder"
+                v-on:handleInputBoxedClick="handleShowItems"
+                class="map-autocomplete" />
     <transition name="fade"
-      @before-enter="animateSlideDown"
-      @leave="animateSlideUp"
-      :css="false">
+                @before-enter="animateSlideDown"
+                @leave="animateSlideUp"
+                :css="false">
       <ul class="grid-items"
-        v-show="isOpen">
+          v-show="isOpen">
         <li class="grid-item"
-          v-for="item in items"
-          :key="item"
-          @click="handleChangeSelected"
-          :class="{ 'grid-item-disable': disableItems.includes(item), 'grid-item-selected': item === itemSelectedValue }">{{ item }}</li>
+            v-for="item in items"
+            :key="item"
+            @click="handleChangeSelected"
+            :class="{ 'grid-item-disable': disableItems.includes(item), 'grid-item-selected': item === itemSelectedValue }">{{ item }}</li>
       </ul>
     </transition>
   </div>
@@ -29,65 +29,69 @@
 import $ from 'jquery';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { faPencilAlt } from '@fortawesome/fontawesome-free-solid';
-import InputBoxed from './InputBoxed.vue';
+import InputBoxed from './InputBoxed';
 import { addMinutes } from '../utils';
-import * as consts from '../constants.js';
+import * as consts from '../constants';
 
 export default {
   components: {
     FontAwesomeIcon,
-    InputBoxed,
+    InputBoxed
   },
   props: {
     id: {
       type: String,
-      default: 'grid-selector-boxed',
+      default: 'grid-selector-boxed'
     },
     placeHolder: {
       type: String,
-      default: 'Fake Title',
+      default: 'Fake Title'
     },
     icon: {
       default: function() {
         return faPencilAlt;
-      },
+      }
     },
     itemSelected: {
-      type: String,
+      type: String
     },
     items: {
       type: Array,
       default: function() {
         return ['10:00', '11:30', '13:00', '16:00', '17:30', '19:00', '20:30'];
-      },
+      }
     },
     disableItems: {
       type: Array,
       default: function() {
         return ['17:30', '20:30'];
-      },
+      }
     },
     showOpen: {
       type: Boolean,
-      default: false,
+      default: false
+    },
+    autoCloseOnSelected: {
+      type: Boolean,
+      default: false
     },
     multiSelect: {
       type: Boolean,
-      default: false,
+      default: false
     },
     interval: {
       type: String,
-      default: '45',
+      default: '45'
     },
     noBorder: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       isOpen: this.showOpen,
-      readOnly: true,
+      readOnly: true
     };
   },
   computed: {
@@ -95,34 +99,35 @@ export default {
       return this.itemSelected;
     },
     itenSelectedFormated() {
-      if (this.itemSelectedValue && !this.disableItems.includes(this.itemSelectedValue)) {
+      if (
+        this.itemSelectedValue &&
+        !this.disableItems.includes(this.itemSelectedValue)
+      ) {
         const finished = addMinutes(this.itemSelectedValue, this.interval);
         return `${this.itemSelectedValue} >> ${finished}`;
-      } else {
-        return consts.EMPTY_STRING;
       }
-    },
+      return consts.EMPTY_STRING;
+    }
   },
   methods: {
-    handleShowItems(ev) {
+    handleShowItems() {
       this.isOpen = !this.isOpen;
     },
     animateSlideDown(el) {
       $(el).slideDown('slow');
     },
     animateSlideUp(el, done) {
-      $(el).slideUp('slow', function() {
-        done();
-      });
+      $(el).slideUp('slow', () => done());
     },
     handleChangeSelected(ev) {
+      if (this.autoCloseOnSelected) this.isOpen = false;
       if (!this.multiSelect) {
-        $('li.grid-item').removeClass('grid-item-selected');
+        document.querySelector('li.grid-item').classList.remove('grid-item-selected');
       }
-      $(ev.currentTarget).toggleClass('grid-item-selected');
+      ev.currentTarget.classList.toggle('grid-item-selected');
       this.$emit('gridSelectorBoxed:onChange', $(ev.currentTarget).text());
-    },
-  },
+    }
+  }
 };
 </script>
 

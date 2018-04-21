@@ -1,11 +1,13 @@
 <template>
   <section :id="id"
-    class="card white-box">
-    <div class="title-section flex-row flex-align-first-corners flex-align-second-center">
-      <span class="title">{{ title }}</span>
-      <font-awesome-icon :icon="icon"
-        :color="iconColor"
-        :size="iconSize" />
+           class="card white-box">
+    <div class="flex-row flex-align-first-corners flex-align-second-center" :class="{'title-section': !noTitle}">
+      <span class="title"
+            v-if="!noTitle">{{ title }}</span>
+      <font-awesome-icon v-if="!noTitle"
+                         :icon="icon"
+                         :color="iconColor"
+                         :size="iconSize" />
     </div>
     <slot />
   </section>
@@ -17,29 +19,33 @@ import { faCheckCircle } from '@fortawesome/fontawesome-free-solid';
 
 export default {
   components: {
-    FontAwesomeIcon,
+    FontAwesomeIcon
   },
   props: {
     id: {
       type: String,
-      default: 'white-card',
+      default: 'white-card'
     },
     title: {
       type: String,
-      default: 'title',
+      default: 'title'
+    },
+    noTitle: {
+      type: Boolean,
+      default: false
     },
     icon: {
       default: function() {
         return faCheckCircle;
-      },
+      }
     },
     iconColor: {
-      default: 'green',
+      default: 'green'
     },
     iconSize: {
-      default: '2x',
-    },
-  },
+      default: '2x'
+    }
+  }
 };
 </script>
 

@@ -13,6 +13,9 @@ const en = {
       date: 'Select date',
       time: 'Select time',
       address: 'Select address'
+    },
+    acctions: {
+      save: 'Make Appointment'
     }
   }
 };

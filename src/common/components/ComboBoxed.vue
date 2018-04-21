@@ -17,7 +17,7 @@
           v-show="isOpen">
         <li class="item padding-2x"
             v-for="item in items"
-            :key="item"
+            :key="item.id"
             :id="item.id"
             v-on:click="handleChangeSelected">{{ item.text }}</li>
       </ul>
@@ -29,7 +29,7 @@
 import $ from 'jquery';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { faPencilAlt } from '@fortawesome/fontawesome-free-solid';
-import InputBoxed from './InputBoxed.vue';
+import InputBoxed from './InputBoxed';
 
 export default {
   components: {
@@ -63,6 +63,10 @@ export default {
       type: Boolean,
       default: false
     },
+    autoCloseOnSelected: {
+      type: Boolean,
+      default: false
+    },
     multiSelect: {
       type: Boolean,
       default: false
@@ -80,22 +84,21 @@ export default {
     };
   },
   methods: {
-    handleShowItems(ev) {
+    handleShowItems() {
       this.isOpen = !this.isOpen;
     },
     animateSlideDown(el) {
       $(el).slideDown('slow');
     },
     animateSlideUp(el, done) {
-      $(el).slideUp('slow', function() {
-        done();
-      });
+      $(el).slideUp('slow', () => done());
     },
     handleChangeSelected(ev) {
+      if (this.autoCloseOnSelected) this.isOpen = false;
       if (!this.multiSelect) {
-        $('li.item').removeClass('item-selected');
+        document.querySelector('li.item').classList.remove('item-selected');
       }
-      $(ev.currentTarget).toggleClass('item-selected');
+      ev.currentTarget.classList.toggle('item-selected');
       this.itemSelectedValue = $(ev.currentTarget).text();
       this.$emit('comboBoxedItemHasSelected', ev.currentTarget.id);
     }
