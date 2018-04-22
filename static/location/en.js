@@ -14,8 +14,11 @@ const en = {
       time: 'Select time',
       address: 'Select address'
     },
-    acctions: {
-      save: 'Make Appointment'
+    actions: {
+      save: 'Ask appointment'
+    },
+    errors: {
+      requiredFields: 'Please fill all required fields'
     }
   }
 };

@@ -1,6 +1,6 @@
 import * as services from '@/common/api';
 import { STATUS, EMPTY_ARRAY } from '@/common/api/constants';
-import { notifyError } from '@/common/utils';
+import { notifyRestError } from '@/common/utils';
 import { RECEIVE_NEXT_SESSIONS } from './types';
 
 const state = {
@@ -13,7 +13,7 @@ const actions = {
     if (nextsAppointments.status === STATUS.SUCCESS) {
       commit(RECEIVE_NEXT_SESSIONS, nextsAppointments.data);
     } else {
-      notifyError(dispatch, nextsAppointments);
+      notifyRestError(dispatch, nextsAppointments);
     }
   }
 };

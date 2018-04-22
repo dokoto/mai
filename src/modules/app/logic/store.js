@@ -12,9 +12,13 @@ Vue.use(Vuex);
 const state = {
   session: {},
   notify: {
-    status: '',
+    show: false,
     message: ''
   }
+};
+
+const getters = {
+  session: currState => currState.session
 };
 
 const RECEIVE_USER = 'RECEIVE_USER';
@@ -41,10 +45,11 @@ const mutations = {
     currState.session = session;
   },
   [RESET_NOTIFY](currState) {
-    currState.notify.status = EMPTY_STRING;
+    currState.notify.show = false;
   },
-  [NOTIFY](currState, notify) {
-    currState.notify = notify;
+  [NOTIFY](currState, message) {
+    currState.notify.show = true;
+    currState.notify.message = message;
   }
 };
 
@@ -52,7 +57,8 @@ const app = {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
+  getters
 };
 
 const store = new Vuex.Store({

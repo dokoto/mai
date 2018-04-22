@@ -1,12 +1,46 @@
 <template>
   <section class="location">
-    <InputBoxed :id="ids.idInput"
-                :placeHolder="placeHolder"
-                :value="address"
-                :icon="icon"
-                :readOnly="readOnly"
-                @handleInputBoxedClick="handleInputBoxedClicked"
-                class="map-autocomplete" />
+    <div class="flex-row">
+      <InputBoxed :id="ids.idInput"
+                  :placeHolder="placeHolder"
+                  :value="address"
+                  :noIcon="true"
+                  :readOnly="true"
+                  class="grow-2" />
+      <div class="flex-row">
+        <div class="input-icon"
+             @click="handleInputBoxedClicked">
+          <font-awesome-icon :icon="icon" />
+        </div>
+        <div class="input-icon"
+             @click="handleEdit">
+          <font-awesome-icon :icon="iconPencil" />
+        </div>
+      </div>
+    </div>
+    <transition name="fade"
+                @before-enter="animateSlideDown"
+                @leave="animateSlideUp"
+                :css="false">
+      <div class="flex-column flex-align-first-corners"
+           v-show="showEdit">
+        <InputBoxed id="new-address"
+                    placeHolder="New address"
+                    :noIcon="true"
+                    :readOnly="false"
+                    class="map-autocomplete edit" />
+        <InputBoxed id="new-floor"
+                    placeHolder="New Floor"
+                    :noIcon="true"
+                    :readOnly="false"
+                    class="edit" />
+        <InputBoxed id="postal-code"
+                    placeHolder="Postal Code"
+                    :noIcon="true"
+                    :readOnly="false"
+                    class="edit" />
+      </div>
+    </transition>
     <transition name="fade"
                 @before-enter="animateSlideDown"
                 @leave="animateSlideUp"
@@ -24,13 +58,12 @@
 </template>
 
 <script>
-/**
- * GEOCODING
- * https://github.com/Carrooi/Js-GoogleMapsLoader
- */
 import $ from 'jquery';
-import GoogleMapsLoader from 'google-maps';
-import { faMapMarkerAlt } from '@fortawesome/fontawesome-free-solid';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import {
+  faPencilAlt,
+  faMapMarkerAlt
+} from '@fortawesome/fontawesome-free-solid';
 import InputBoxed from './InputBoxed';
 import StaticMap from './StaticMap';
 import GeoMapper from '../GeoMapper';
@@ -66,7 +99,7 @@ export default {
       default: 'AIzaSyBnnYz5MN9EkxI-lmKNLE1GvxkqvrxPDvQ'
     }
   },
-  components: { InputBoxed, StaticMap },
+  components: { InputBoxed, StaticMap, FontAwesomeIcon },
   computed: {
     staticMapSize: function() {
       return {
@@ -88,8 +121,8 @@ export default {
   },
   async mounted() {
     if (!this.readOnly) {
-      const $map = $(`#${this.ids.idMap}`).first();
-      const $autoCompleInput = $(`#${this.ids.idInput} input`).first();
+      const $map = document.querySelector(`#${this.ids.idMap}`);
+      const $autoCompleInput = document.querySelector('#new-address input');
       await this.geoMapper.activateGoogleMaps();
       this.geoMapper.activateAutoComplete($autoCompleInput);
       this.geoMapper.renderDynamicMap(
@@ -103,18 +136,28 @@ export default {
     return {
       defaulMapImage: picDefaultStaticMap,
       icon: faMapMarkerAlt,
+      iconPencil: faPencilAlt,
       hasShowMap: this.showMap,
+      showEdit: false,
       geoMapper: new GeoMapper(this.apikey, ['places'])
     };
   },
   methods: {
-    updateMap(address) {
-      const $map = $(`#${this.ids.idMap}`).first();
-      this.geoMapper.renderDynamicMap($map, this.zoom, address);
+    async updateMap(address) {
+      const $map = document.querySelector(`#${this.ids.idMap}`);
+      this.geoMapper
+        .renderDynamicMap($map, this.zoom, address)
+        .then(() => this.$emit('newAddress', this.geoMapper.addressComponents));
     },
-    handleInputBoxedClicked(address) {
+    handleInputBoxedClicked(ev) {
       this.hasShowMap = !this.hasShowMap;
-      this.updateMap(address);
+      this.updateMap(
+        ev.currentTarget.parentElement.parentElement.querySelector('input')
+          .value
+      );
+    },
+    handleEdit() {
+      this.showEdit = !this.showEdit;
     },
     handleResizeMap() {
       this.geoMapper.resize();
@@ -150,6 +193,20 @@ export default {
     &.dynamic-height {
       height: auto;
     }
+  }
+  .edit {
+    margin-top: 0.3em;
+  }
+  .input-icon {
+    width: 3rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $colorWhite0;
+    border-bottom: 0;
+    border-top: 0;
   }
 }
 </style>

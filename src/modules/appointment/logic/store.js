@@ -1,6 +1,8 @@
 import { mergeWith, get } from 'lodash/object';
+import $ from 'jquery';
 import { difference, union } from 'lodash/array';
 import moment from 'moment';
+
 import {
   faCheckCircle,
   faQuestionCircle
@@ -13,13 +15,18 @@ import {
   getDoctorsSchedules,
   getDoctorNextAppointments
 } from '@/common/api';
-import { notifyError, calcDateAHeadFrom } from '@/common/utils';
+import {
+  notifyError,
+  notifyRestError,
+  calcDateAHeadFrom
+} from '@/common/utils';
 import {
   STATUS,
   EMPTY_ARRAY,
   EMPTY_OBJECT,
   EMPTY_STRING,
-  MAP_ZOOM
+  MAP_ZOOM,
+  RESERVED
 } from '@/common/api/constants';
 import {
   APPOINTMENT_RECEIVED,
@@ -39,7 +46,8 @@ import {
   SET_DOCTOR_ICON_STATUS,
   SET_APPOINTMENT_ICON_STATUS,
   SET_LOCATION_ICON_STATUS,
-  READY_TO_SAVE
+  READY_TO_SAVE,
+  SET_GEOLOCATED_ADDRESS
 } from './types';
 
 const state = {
@@ -61,6 +69,7 @@ const state = {
   timeSelected: EMPTY_STRING,
   treatmentsShowOpen: false,
   addressSelected: EMPTY_STRING,
+  geoLocatedAddress: EMPTY_OBJECT,
   readyToSave: false,
   mapZoom: MAP_ZOOM,
   appointmentIconStatus: {
@@ -84,7 +93,7 @@ const actions = {
     if (appointment.status === STATUS.SUCCESS) {
       commit(APPOINTMENT_RECEIVED, appointment.data);
     } else {
-      notifyError(dispatch, appointment);
+      notifyRestError(dispatch, appointment);
     }
   },
   async fetchInitDatas({ commit, dispatch }) {
@@ -92,21 +101,21 @@ const actions = {
     if (treatments.status === STATUS.SUCCESS) {
       commit(TREATMENTS_RECEIVED, treatments.data);
     } else {
-      notifyError(dispatch, treatments);
+      notifyRestError(dispatch, treatments);
     }
 
     const doctors = await getDoctors();
     if (doctors.status === STATUS.SUCCESS) {
       commit(DOCTORS_RECEIVED, doctors.data);
     } else {
-      notifyError(dispatch, doctors);
+      notifyRestError(dispatch, doctors);
     }
 
     const schedules = await getDoctorsSchedules();
     if (schedules.status === STATUS.SUCCESS) {
       commit(DOCTORS_SCHEDULES_RECEIVED, schedules.data);
     } else {
-      notifyError(dispatch, schedules);
+      notifyRestError(dispatch, schedules);
     }
   },
   loadDoctorTreatments({ commit }, doctorId) {
@@ -212,22 +221,24 @@ const actions = {
     });
   },
   loadDoctorTimeSchedule({ commit }, date) {
-    const doctorTimeSchedule = state.schedules.find(
-      item => item.doctor._id === state.appointment.doctor.id
-    );
-    const day = moment(date).day();
-    const timeScheduleByDay = doctorTimeSchedule.daily.find(
-      item => item.day === day
-    );
-    commit(SET_DOCTOR_SCHEDULE, timeScheduleByDay.time);
-    commit(SET_DATE_SELECTED, date);
-    commit(SET_TIME_SELECTED, EMPTY_STRING);
-    commit(SET_DISABLE_TIMES, state.disableDatesTimes[date]);
-    commit(READY_TO_SAVE, false);
-    commit(SET_APPOINTMENT_ICON_STATUS, {
-      icon: faQuestionCircle,
-      color: 'red'
-    });
+    if (state.appointment.doctor) {
+      const doctorTimeSchedule = state.schedules.find(
+        item => item.doctor._id === state.appointment.doctor.id
+      );
+      const day = moment(date).day();
+      const timeScheduleByDay = doctorTimeSchedule.daily.find(
+        item => item.day === day
+      );
+      commit(SET_DOCTOR_SCHEDULE, timeScheduleByDay.time);
+      commit(SET_DATE_SELECTED, date);
+      commit(SET_TIME_SELECTED, EMPTY_STRING);
+      commit(SET_DISABLE_TIMES, state.disableDatesTimes[date]);
+      commit(READY_TO_SAVE, false);
+      commit(SET_APPOINTMENT_ICON_STATUS, {
+        icon: faQuestionCircle,
+        color: 'red'
+      });
+    }
   },
   saveDoctorTIme({ commit }, time) {
     commit(SET_TIME_SELECTED, time);
@@ -238,8 +249,51 @@ const actions = {
       });
       if (state.addressSelected) {
         commit(READY_TO_SAVE, true);
+        $('html, body').animate(
+          {
+            scrollTop: document.body.scrollHeight
+          },
+          1800
+        );
       }
     }
+  },
+  async saveAppointment({ getters, dispatch }) {
+    const newAppoint = state.appointment;
+    if (
+      state.treatmentSelected &&
+      state.dateSelected &&
+      state.timeSelected &&
+      state.addressSelected &&
+      Object.keys(state.appointment.doctor).length &&
+      state.appointment.treatment.length
+    ) {
+      const session = getters('app/session', { root: true });
+      newAppoint.date = state.dateSelected;
+      newAppoint.time = state.timeSelected;
+      newAppoint.patient = {
+        _id: session.id,
+        name: session.name,
+        surname: session.surname,
+        email: session.email
+      };
+      newAppoint.doctor = {
+        _id: state.appointment.doctor.id,
+        name: state.appointment.doctor.name,
+        surname: state.appointment.doctor.surname,
+        email: state.appointment.doctor.email
+      };
+      newAppoint.treatment = state.appointment.treatment;
+      newAppoint.address = {};
+      newAppoint.status = RESERVED;
+      newAppoint.allowReBooking = true;
+      newAppoint.createddBy = session.id;
+    } else {
+      notifyError(dispatch, 'appointment.errors.requiredFields');
+    }
+  },
+  saveNewAddress({ commit }, addressComponents) {
+    commit(SET_GEOLOCATED_ADDRESS, addressComponents);
   }
 };
 
@@ -307,6 +361,9 @@ const mutations = {
   },
   [READY_TO_SAVE](currState, ready) {
     currState.readyToSave = ready;
+  },
+  [SET_GEOLOCATED_ADDRESS](currState, geoLocatedAddress) {
+    currState.geoLocatedAddress = geoLocatedAddress;
   }
 };
 

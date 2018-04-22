@@ -1,9 +1,10 @@
 <template>
   <SlideYDownTransition :duration="duration">
     <div class="alertBox"
-         v-show="notify.status"
+         v-show="notify.show"
          v-on:click="resetNotify">
-      <span class="text">{{ notify.message }}</span>
+      <span class="text"
+            v-t="notify.message" />
     </div>
   </SlideYDownTransition>
 </template>

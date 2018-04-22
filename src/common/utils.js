@@ -13,10 +13,14 @@ if (!window.glob || !window.glob.language) {
 moment.locale(window.glob.language.toLowerCase());
 
 // NEW
-export function notifyError(dispatch, response) {
+export function notifyRestError(dispatch, response) {
   const message =
     response.status === STATUS.FAIL ? response.data.message : response.message;
-  dispatch('app/show', { status: response.status, message }, { root: true });
+  dispatch('app/show', message, { root: true });
+}
+
+export function notifyError(dispatch, message) {
+  dispatch('app/show', message, { root: true });
 }
 
 // OLD

@@ -14,8 +14,11 @@ const es = {
       time: 'Seleccione hora',
       address: 'Seleccione direccion'
     },
-    acctions: {
-      save: 'Crear cita'
+    actions: {
+      save: 'Pedir cita'
+    },
+    errors: {
+      requiredFields: 'Please fill all required fields'
     }
   }
 };

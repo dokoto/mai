@@ -111,7 +111,9 @@ export default {
   },
   methods: {
     handleShowItems() {
-      this.isOpen = !this.isOpen;
+      if (this.items.length) {
+        this.isOpen = !this.isOpen;
+      }
     },
     animateSlideDown(el) {
       $(el).slideDown('slow');

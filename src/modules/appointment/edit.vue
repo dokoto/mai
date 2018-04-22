@@ -5,7 +5,7 @@
            src="../../../static/img/therapy-symbol.png" />
     </div>
     <Card id="appointment-edit-doctors-carrusel-card"
-          :title="literals.treatmentTitle"
+          title="appointment.titles.treatment"
           :icon="doctorIconStatus.icon"
           :iconColor="doctorIconStatus.color">
       <DoctorsCarrusel :id="`doctors-carrusel-${$route.params.id}`"
@@ -15,19 +15,19 @@
                        v-if="doctors.length" />
     </Card>
     <Card id="appointment-edit-card"
-          :title="literals.appointmentTitle"
+          title="appointment.titles.appointment"
           :icon="appointmentIconStatus.icon"
           :iconColor="appointmentIconStatus.color">
       <ComboBoxed id="appointment-edit-treatments"
                   :noBorder="true"
                   :items="treatmentsByDoctor"
-                  :placeHolder="literals.treatmentTypeComboDefault"
+                  placeHolder="appointment.treatment.type"
                   :itemSelected="treatmentSelected"
                   :showOpen="treatmentsShowOpen"
                   :autoCloseOnSelected="true"
                   @comboBoxedItemHasSelected="loadDoctorSchedule" />
       <DayCarruselBoxed id="appointment-edit-date"
-                        :placeHolder="literals.treatmentDateComboDefault"
+                        placeHolder="appointment.treatment.date"
                         :disablesDates="disableDates"
                         :initDate="initDate"
                         :selectedDate="dateSelected"
@@ -35,7 +35,7 @@
                         :autoCloseOnSelected="true"
                         @dayCarruselBoxed:dayClick="loadDoctorTimeSchedule" />
       <GridSelectorBoxed id="appointment-edit-time"
-                         :placeHolder="literals.treatmentTimeComboDefault"
+                         placeHolder="appointment.treatment.time"
                          :items="schedulesByDoctor"
                          :disableItems="disableTimes"
                          :itemSelected="timeSelected"
@@ -44,20 +44,21 @@
                          @gridSelectorBoxed:onChange="saveDoctorTIme" />
     </Card>
     <Card id="appointment-edit-location-card"
-          :title="literals.locationTitle"
+          title="appointment.titles.location"
           :icon="localtionIconStatus.icon"
           :iconColor="localtionIconStatus.color">
       <LocationMap ref="locationMap"
-                   :placeHolder="literals.treatmentLocationDefault"
+                   placeHolder="appointment.treatment.address"
                    :zoom="mapZoom"
                    :address="addressSelected"
                    :showMap="false"
-                   :readOnly="false" />
+                   :readOnly="false"
+                   @newAddress="saveNewAddress" />
     </Card>
     <Card id="appointment-edit-save"
           :noTitle="true" v-show="readyToSave">
       <div class="flex-column flex-align-first-center">
-        <button class="save">{{ literals.saveButton }}</button>
+        <button class="save" @click="saveAppointment">{{ $t("appointment.actions.save") }}</button>
       </div>
     </Card>
   </article>
@@ -109,25 +110,13 @@ export default {
       'loadDoctorTreatments',
       'loadDoctorSchedule',
       'loadDoctorTimeSchedule',
-      'saveDoctorTIme'
+      'saveDoctorTIme',
+      'saveAppointment',
+      'saveNewAddress'
     ])
   },
   created() {
     this.$store.dispatch('appointment/fetchInitDatas', this.$route.params.id);
-  },
-  data() {
-    return {
-      literals: {
-        appointmentTitle: this.$i18n.t('appointment.titles.appointment'),
-        treatmentTitle: this.$i18n.t('appointment.titles.treatment'),
-        locationTitle: this.$i18n.t('appointment.titles.location'),
-        treatmentTypeComboDefault: this.$i18n.t('appointment.treatment.type'),
-        treatmentDateComboDefault: this.$i18n.t('appointment.treatment.date'),
-        treatmentTimeComboDefault: this.$i18n.t('appointment.treatment.time'),
-        treatmentLocationDefault: this.$i18n.t('appointment.treatment.address'),
-        saveButton: this.$i18n.t('appointment.acctions.save')
-      }
-    };
   }
 };
 </script>

@@ -4,13 +4,13 @@
     <input type="text"
            maxlength="200"
            class="input"
-           :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
-           :placeholder="placeHolder"
+           :class="[ noBorder ? 'no-boxed' : 'boxed', noIcon ? 'no-icon' : '' ]"
+           :placeholder="$t(placeHolder)"
            :readonly="readOnly"
            :value="value" />
     <div class="input-icon"
          v-if="!noIcon"
-         :class="[ noBorder ? 'no-boxed' : 'boxed'  ]"
+         :class="[ noBorder ? 'no-boxed' : 'boxed' ]"
          @click="handleInputBoxedClick">
       <font-awesome-icon :icon="icon" />
     </div>
@@ -85,6 +85,9 @@ export default {
     font-size: 1em;
     padding-bottom: 0;
     padding-top: 0;
+    &.no-icon {
+      padding-right: 10px !important;
+    }
     &.boxed {
       border: solid 1px;
       border-color: $colorGrey3;

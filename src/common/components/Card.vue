@@ -1,9 +1,11 @@
 <template>
   <section :id="id"
            class="card white-box">
-    <div class="flex-row flex-align-first-corners flex-align-second-center" :class="{'title-section': !noTitle}">
+    <div class="flex-row flex-align-first-corners flex-align-second-center"
+         :class="{'title-section': !noTitle}">
       <span class="title"
-            v-if="!noTitle">{{ title }}</span>
+            v-if="!noTitle"
+            v-t="title" />
       <font-awesome-icon v-if="!noTitle"
                          :icon="icon"
                          :color="iconColor"
