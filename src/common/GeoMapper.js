@@ -44,7 +44,7 @@ export default class GeoMapper {
    * @public
    * @param {object} Input jquery ref
    */
-  activateAutoComplete($input) {
+  activateAutoComplete($input, handler) {
     this.$input = $input;
     this.autocomplete = new this.googleApi.maps.places.Autocomplete(
       this.$input,
@@ -54,7 +54,7 @@ export default class GeoMapper {
     );
     this.autocomplete.addListener(
       'place_changed',
-      this.autoCompleteHandler.bind(this)
+      this.autoCompleteHandler.bind(this, handler)
     );
   }
 
@@ -153,9 +153,10 @@ export default class GeoMapper {
    * @private
    * Autocomple callback handler
    */
-  async autoCompleteHandler() {
+  async autoCompleteHandler(handler) {
     const place = this.autocomplete.getPlace();
     await this.renderDynamicMap(this.$map, this.zoom, place.formatted_address);
+    if (handler) handler(place.formatted_address);
   }
 
   /**

@@ -23,18 +23,3 @@ export const CANCELED = 'canceled';
 export const RESERVED = 'reserved';
 export const EXCEPTION = 'exception';
 export const DAILY = 'daily';
-
-export const users = {
-  funcRoles: [DOCTOR, PATIENT],
-  roles: [USER, ADMIN],
-  languages: [ES, EN]
-};
-
-export const appointment = {
-  status: [RESERVED, CANCELED]
-};
-
-export const schedule = {
-  days: ['1', '2', '3', '4', '5', '6', '0'],
-  types: [EXCEPTION, DAILY]
-};

@@ -53,7 +53,8 @@
                    :address="addressSelected"
                    :showMap="false"
                    :readOnly="false"
-                   @newAddress="saveNewAddress" />
+                   @newAddress="saveNewAddress"
+                   @createNewAddress="createNewAddress" />
     </Card>
     <Card id="appointment-edit-save"
           :noTitle="true" v-show="readyToSave">
@@ -112,7 +113,8 @@ export default {
       'loadDoctorTimeSchedule',
       'saveDoctorTIme',
       'saveAppointment',
-      'saveNewAddress'
+      'saveNewAddress',
+      'createNewAddress'
     ])
   },
   created() {

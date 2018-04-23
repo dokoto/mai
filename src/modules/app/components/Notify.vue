@@ -1,19 +1,15 @@
 <template>
-  <SlideYDownTransition :duration="duration">
-    <div class="alertBox"
-         v-show="notify.show"
-         v-on:click="resetNotify">
-      <span class="text"
-            v-t="notify.message" />
-    </div>
-  </SlideYDownTransition>
+  <div class="alertBox"
+       v-show="notify.show"
+       v-on:click="resetNotify">
+    <span class="text"
+          v-t="notify.message" />
+  </div>
 </template>
 <script>
 import { mapActions, mapState } from 'vuex';
-import { SlideYDownTransition } from 'vue2-transitions';
 
 export default {
-  components: { SlideYDownTransition },
   props: {
     duration: {
       type: Number,

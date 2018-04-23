@@ -294,6 +294,9 @@ const actions = {
   },
   saveNewAddress({ commit }, addressComponents) {
     commit(SET_GEOLOCATED_ADDRESS, addressComponents);
+  },
+  createNewAddress({ commit }) {
+    commit(SET_ADDRESS, EMPTY_STRING);
   }
 };
 

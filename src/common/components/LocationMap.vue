@@ -124,7 +124,7 @@ export default {
       const $map = document.querySelector(`#${this.ids.idMap}`);
       const $autoCompleInput = document.querySelector('#new-address input');
       await this.geoMapper.activateGoogleMaps();
-      this.geoMapper.activateAutoComplete($autoCompleInput);
+      this.geoMapper.activateAutoComplete($autoCompleInput, this.handleAutoCompleteFinish);
       this.geoMapper.renderDynamicMap(
         $map,
         this.zoom,
@@ -143,6 +143,10 @@ export default {
     };
   },
   methods: {
+    handleAutoCompleteFinish(address) {
+      this.$emit('autoCompleteFinish', address);
+      this.hasShowMap = true;
+    },
     async updateMap(address) {
       const $map = document.querySelector(`#${this.ids.idMap}`);
       this.geoMapper
@@ -150,13 +154,18 @@ export default {
         .then(() => this.$emit('newAddress', this.geoMapper.addressComponents));
     },
     handleInputBoxedClicked(ev) {
-      this.hasShowMap = !this.hasShowMap;
-      this.updateMap(
-        ev.currentTarget.parentElement.parentElement.querySelector('input')
-          .value
-      );
+      const address = ev.currentTarget.parentElement.parentElement.querySelector(
+        'input'
+      ).value;
+      const newAddress = ev.currentTarget.parentElement.parentElement.parentElement.querySelector('#new-address input').value;
+      if (address || newAddress) {
+        this.hasShowMap = !this.hasShowMap;
+        this.updateMap(address || newAddress);
+      }
     },
     handleEdit() {
+      this.$emit('createNewAddress');
+      this.hasShowMap = false;
       this.showEdit = !this.showEdit;
     },
     handleResizeMap() {
