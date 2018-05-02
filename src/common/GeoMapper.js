@@ -64,9 +64,11 @@ export default class GeoMapper {
    */
   resize() {
     this.googleApi.maps.event.trigger(this.map, 'resize');
-    this.map.setCenter(
-      new this.googleApi.maps.LatLng(this.center.lat, this.center.lng)
-    );
+    if (this.center && this.center.lat && this.center.lng) {
+      this.map.setCenter(
+        new this.googleApi.maps.LatLng(this.center.lat, this.center.lng)
+      );
+    }
   }
 
   /**

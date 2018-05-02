@@ -10,10 +10,7 @@
                 :noBorder="noBorder"
                 v-on:handleInputBoxedClick="isOpen = !isOpen"
                 class="map-autocomplete" />
-    <transition name="fade"
-                @before-enter="animateSlideDown"
-                @leave="animateSlideUp"
-                :css="false">
+    <Collapsible>
       <DayCarrusel v-show="isOpen"
                    :initDate="initDate"
                    :numberOfMonths="numberOfMonths"
@@ -21,17 +18,17 @@
                    :disablesDates="disablesDates"
                    v-on:dayCarruselDayClick="handleDateSelected"
                    class="day-carrusel-wrapper" />
-    </transition>
+    </Collapsible>
   </div>
 </template>
 
 
 <script>
-import $ from 'jquery';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { faPencilAlt } from '@fortawesome/fontawesome-free-solid';
 import InputBoxed from './InputBoxed';
 import DayCarrusel from './DayCarrusel';
+import Collapsible from './Collapsible';
 import { formatDate } from '../utils';
 import * as consts from '../constants';
 
@@ -39,7 +36,8 @@ export default {
   components: {
     FontAwesomeIcon,
     DayCarrusel,
-    InputBoxed
+    InputBoxed,
+    Collapsible
   },
   props: {
     id: {
@@ -101,12 +99,6 @@ export default {
     handleDateSelected(newSelectedDate) {
       if (this.autoCloseOnSelected) this.isOpen = false;
       this.$emit('dayCarruselBoxed:dayClick', newSelectedDate);
-    },
-    animateSlideDown(el) {
-      $(el).slideDown('slow');
-    },
-    animateSlideUp(el, done) {
-      $(el).slideUp('slow', () => done());
     }
   }
 };

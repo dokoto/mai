@@ -1,4 +1,4 @@
-import { mergeWith, get } from 'lodash/object';
+import { mergeWith, get } from 'lodash';
 import $ from 'jquery';
 import { difference, union } from 'lodash/array';
 import moment from 'moment';
@@ -21,13 +21,16 @@ import {
   calcDateAHeadFrom
 } from '@/common/utils';
 import {
-  STATUS,
-  EMPTY_ARRAY,
-  EMPTY_OBJECT,
   EMPTY_STRING,
   MAP_ZOOM,
-  RESERVED
-} from '@/common/api/constants';
+  RESERVED,
+  DOCTOR,
+  USER,
+  MONTHS_AHEAD,
+  COMPLETE,
+  UNCOMPLETE
+} from '@/common/constants';
+import { STATUS } from '@/common/api/constants';
 import {
   APPOINTMENT_RECEIVED,
   TREATMENTS_RECEIVED,
@@ -43,51 +46,87 @@ import {
   SET_TIME_SELECTED,
   SET_DOCTOR_SCHEDULE,
   SET_ADDRESS,
-  SET_DOCTOR_ICON_STATUS,
-  SET_APPOINTMENT_ICON_STATUS,
-  SET_LOCATION_ICON_STATUS,
-  READY_TO_SAVE,
-  SET_GEOLOCATED_ADDRESS
+  SET_DOCTOR_ICON_STATUS_RED,
+  SET_APPOINTMENT_ICON_STATUS_RED,
+  SET_LOCATION_ICON_STATUS_RED,
+  SET_DOCTOR_ICON_STATUS_GREEN,
+  SET_APPOINTMENT_ICON_STATUS_GREEN,
+  SET_LOCATION_ICON_STATUS_GREEN,
+  SET_APPOINTMENT_ADDRESS,
+  READY_TO_SAVE
 } from './types';
 
+const redStatus = {
+  icon: faQuestionCircle,
+  color: UNCOMPLETE
+};
+const greeStatus = {
+  icon: faCheckCircle,
+  color: COMPLETE
+};
+
 const state = {
-  initDate: moment()
+  appointment: {},
+  treatments: [],
+  appointmentsByDoctor: [],
+  schedules: [],
+  disableDatesTimes: {},
+  geoLocatedAddress: {},
+  UItreatmentsShowOpen: false,
+  UIappointmentIconStatus: redStatus,
+  UIdoctorIconStatus: redStatus,
+  UIlocaltionIconStatus: redStatus,
+  UIreadyToSave: false,
+  UImapZoom: MAP_ZOOM,
+  UIaddress: [],
+  UIschedulesByDoctor: [],
+  UIinitDate: moment()
     .add(1, 'day')
     .format('YYYYMMDD'),
-  appointment: EMPTY_OBJECT,
-  doctors: EMPTY_ARRAY,
-  treatments: EMPTY_ARRAY,
-  treatmentsByDoctor: EMPTY_ARRAY,
-  appointmentsByDoctor: EMPTY_ARRAY,
-  disableDates: EMPTY_ARRAY,
-  disableTimes: EMPTY_ARRAY,
-  disableDatesTimes: EMPTY_OBJECT,
-  schedules: EMPTY_ARRAY,
-  schedulesByDoctor: EMPTY_ARRAY,
-  treatmentSelected: EMPTY_STRING,
-  dateSelected: EMPTY_STRING,
-  timeSelected: EMPTY_STRING,
-  treatmentsShowOpen: false,
-  addressSelected: EMPTY_STRING,
-  geoLocatedAddress: EMPTY_OBJECT,
-  readyToSave: false,
-  mapZoom: MAP_ZOOM,
-  appointmentIconStatus: {
-    icon: faQuestionCircle,
-    color: 'red'
-  },
-  doctorIconStatus: {
-    icon: faQuestionCircle,
-    color: 'red'
-  },
-  localtionIconStatus: {
-    icon: faQuestionCircle,
-    color: 'red'
-  }
+  UIdoctors: [],
+  UItreatmentsByDoctor: [],
+  UIdisableTimes: [],
+  UIdisableDates: [],
+  UItreatmentSelected: EMPTY_STRING,
+  UIdateSelected: EMPTY_STRING,
+  UItimeSelected: EMPTY_STRING,
+  UIdoctorSelected: {}
+};
+
+const mapSelectedDocAddress = item => ({
+  ...item,
+  type: DOCTOR,
+  selected: true
+});
+const mapUnselectedAddress = item => ({ ...item, selected: false });
+const filterByUserDoc = item => item.type !== DOCTOR;
+const filterLang = item => item.lang === window.glob.language;
+const filterTreatment = treatment => item => item.key === treatment.key;
+const filterTreatmentById = id => item => item.id === id;
+const findByDocId = item => item.doctor._id === state.UIdoctorSelected.id;
+const findByDay = day => item => item.day === day;
+const reduceExptionDays = doctorTimeSchedule => (curr, next) => {
+  const day = moment(next).day();
+  const execption = doctorTimeSchedule.exception.find(findByDay(day));
+  return {
+    ...curr,
+    [next]: [...(curr[next] || []), ...get(execption, 'time', [])]
+  };
+};
+const reduceBusyDays = (curr, next) => {
+  const date = moment(next.date).format('YYYYMMDD');
+  return { ...curr, [date]: [...(curr[date] || []), next.time] };
+};
+const mapDisableDates = doctorTimeSchedule => item => {
+  const [date, time] = item;
+  const day = moment(date).day();
+  const timeScheduleByDay = doctorTimeSchedule.daily.find(
+    schedule => schedule.day === day
+  );
+  return difference(timeScheduleByDay.time, time).length ? null : date;
 };
 
 const actions = {
-  // NEW
   async fetchAppointment({ commit, dispatch }, id) {
     const appointment = await getAppointment(id);
     if (appointment.status === STATUS.SUCCESS) {
@@ -96,7 +135,7 @@ const actions = {
       notifyRestError(dispatch, appointment);
     }
   },
-  async fetchInitDatas({ commit, dispatch }) {
+  async fetchInitDatas({ commit, rootGetters, dispatch }) {
     const treatments = await getTreatments();
     if (treatments.status === STATUS.SUCCESS) {
       commit(TREATMENTS_RECEIVED, treatments.data);
@@ -117,73 +156,53 @@ const actions = {
     } else {
       notifyRestError(dispatch, schedules);
     }
+
+    const session = rootGetters['app/session'];
+    commit(SET_ADDRESS, []);
+    commit(
+      SET_ADDRESS,
+      session.user.address.map(item => ({
+        ...item,
+        type: USER,
+        selected: true
+      }))
+    );
   },
   loadDoctorTreatments({ commit }, doctorId) {
-    if (!state.appointment.doctor || doctorId !== state.appointment.doctor.id) {
-      const doctor = state.doctors.find(item => item.id === doctorId);
+    if (!state.UIdoctorSelected || doctorId !== state.UIdoctorSelected.id) {
+      const doctor = state.UIdoctors.find(item => item.id === doctorId);
       const treatmentsByLang = doctor.treatments
-        .filter(item => item.lang === window.glob.language)
+        .filter(filterLang)
         .map(item => ({ id: item._id, text: item.name }));
+      const address = state.UIaddress
+        .map(mapUnselectedAddress)
+        .filter(filterByUserDoc)
+        .concat(doctor.address.map(mapSelectedDocAddress));
+
       commit(TREATMENTS_FILTERED, treatmentsByLang);
       commit(SET_DOCTOR, doctor);
-      commit(SET_DOCTOR_ICON_STATUS, {
-        icon: faCheckCircle,
-        color: 'green'
-      });
+      commit(SET_ADDRESS, address);
+      commit(SET_DISABLE_DATES_TIMES, {});
+      commit(SET_DISABLE_DATES, []);
+      commit(SET_TREATMENT, []);
+      commit(SET_DISABLE_TIMES, []);
+      commit(SET_APPOINTMENT_ADDRESS, {});
 
-      commit(
-        SET_ADDRESS,
-        `${get(
-          state.appointment.doctor.address,
-          '[0].street',
-          EMPTY_STRING
-        )}, ${get(
-          state.appointment.doctor.address,
-          '[0].country',
-          EMPTY_STRING
-        )}`
-      );
-      commit(SET_LOCATION_ICON_STATUS, {
-        icon: faCheckCircle,
-        color: 'green'
-      });
-      commit(SET_DISABLE_DATES_TIMES, EMPTY_OBJECT);
-      commit(SET_DISABLE_DATES, EMPTY_ARRAY);
-      commit(SET_TREATMENT, EMPTY_ARRAY);
-      commit(SET_DISABLE_TIMES, EMPTY_ARRAY);
-      commit(READY_TO_SAVE, false);
-      commit(SET_APPOINTMENT_ICON_STATUS, {
-        icon: faQuestionCircle,
-        color: 'red'
-      });
+      actions.checkReadyToSave(commit);
     }
   },
   async loadDoctorSchedule({ commit }, id) {
+    const treatment = state.treatments.find(filterTreatmentById(id));
     const doctorNextAppointments = await getDoctorNextAppointments(
-      state.appointment.doctor.email
+      state.UIdoctorSelected.email
     );
-    const doctorTimeSchedule = state.schedules.find(
-      item => item.doctor._id === state.appointment.doctor.id
-    );
+    const doctorTimeSchedule = state.schedules.find(findByDocId);
     const doctorBusySchedule = doctorNextAppointments.data.reduce(
-      (curr, next) => {
-        const date = moment(next.date).format('YYYYMMDD');
-        return { ...curr, [date]: [...(curr[date] || []), next.time] };
-      },
+      reduceBusyDays,
       {}
     );
-
-    const exceptionDays = calcDateAHeadFrom(moment(), 3).reduce(
-      (curr, next) => {
-        const day = moment(next).day();
-        const execption = doctorTimeSchedule.exception.find(
-          item => item.day === day
-        );
-        return {
-          ...curr,
-          [next]: [...(curr[next] || []), ...get(execption, 'time', [])]
-        };
-      },
+    const exceptionDays = calcDateAHeadFrom(moment(), MONTHS_AHEAD).reduce(
+      reduceExptionDays(doctorTimeSchedule),
       {}
     );
     const disableDatesTimes = mergeWith(
@@ -192,111 +211,96 @@ const actions = {
       (obj, source) => union(obj, source).sort()
     );
     const disableDates = Object.entries(disableDatesTimes)
-      .map(item => {
-        const [date, time] = item;
-        const day = moment(date).day();
-        const timeScheduleByDay = doctorTimeSchedule.daily.find(
-          item => item.day === day
-        );
-        return difference(timeScheduleByDay.time, time).length ? null : date;
-      })
+      .map(mapDisableDates(doctorTimeSchedule))
       .filter(Boolean);
 
     commit(SET_DISABLE_DATES_TIMES, disableDatesTimes);
     commit(SET_DISABLE_DATES, disableDates);
-    const treatment = state.treatments.find(item => item.id === id);
     commit(SET_TREATMENT, {
       name: treatment.name,
-      treatmentAllLangs: state.treatments.filter(
-        item => item.key === treatment.key
-      )
+      treatmentAllLangs: state.treatments.filter(filterTreatment)
     });
-    commit(SET_DISABLE_TIMES, EMPTY_ARRAY);
+    commit(SET_DISABLE_TIMES, []);
     commit(SET_DATE_SELECTED, EMPTY_STRING);
     commit(SET_TIME_SELECTED, EMPTY_STRING);
-    commit(READY_TO_SAVE, false);
-    commit(SET_APPOINTMENT_ICON_STATUS, {
-      icon: faQuestionCircle,
-      color: 'red'
-    });
+
+    actions.checkReadyToSave(commit);
   },
   loadDoctorTimeSchedule({ commit }, date) {
-    if (state.appointment.doctor) {
-      const doctorTimeSchedule = state.schedules.find(
-        item => item.doctor._id === state.appointment.doctor.id
-      );
+    if (state.UIdoctorSelected) {
+      const doctorTimeSchedule = state.schedules.find(findByDocId);
       const day = moment(date).day();
-      const timeScheduleByDay = doctorTimeSchedule.daily.find(
-        item => item.day === day
-      );
+      const timeScheduleByDay = doctorTimeSchedule.daily.find(findByDay(day));
+
       commit(SET_DOCTOR_SCHEDULE, timeScheduleByDay.time);
       commit(SET_DATE_SELECTED, date);
       commit(SET_TIME_SELECTED, EMPTY_STRING);
       commit(SET_DISABLE_TIMES, state.disableDatesTimes[date]);
-      commit(READY_TO_SAVE, false);
-      commit(SET_APPOINTMENT_ICON_STATUS, {
-        icon: faQuestionCircle,
-        color: 'red'
-      });
+
+      actions.checkReadyToSave(commit);
     }
   },
   saveDoctorTIme({ commit }, time) {
     commit(SET_TIME_SELECTED, time);
-    if (state.treatmentSelected && state.dateSelected && state.timeSelected) {
-      commit(SET_APPOINTMENT_ICON_STATUS, {
-        icon: faCheckCircle,
-        color: 'green'
-      });
-      if (state.addressSelected) {
-        commit(READY_TO_SAVE, true);
-        $('html, body').animate(
-          {
-            scrollTop: document.body.scrollHeight
-          },
-          1800
-        );
-      }
-    }
+    actions.checkReadyToSave(commit);
   },
-  async saveAppointment({ getters, dispatch }) {
-    const newAppoint = state.appointment;
-    if (
-      state.treatmentSelected &&
-      state.dateSelected &&
-      state.timeSelected &&
-      state.addressSelected &&
-      Object.keys(state.appointment.doctor).length &&
-      state.appointment.treatment.length
-    ) {
-      const session = getters('app/session', { root: true });
-      newAppoint.date = state.dateSelected;
-      newAppoint.time = state.timeSelected;
-      newAppoint.patient = {
-        _id: session.id,
-        name: session.name,
-        surname: session.surname,
-        email: session.email
-      };
-      newAppoint.doctor = {
-        _id: state.appointment.doctor.id,
-        name: state.appointment.doctor.name,
-        surname: state.appointment.doctor.surname,
-        email: state.appointment.doctor.email
-      };
-      newAppoint.treatment = state.appointment.treatment;
-      newAppoint.address = {};
-      newAppoint.status = RESERVED;
-      newAppoint.allowReBooking = true;
-      newAppoint.createddBy = session.id;
+  extractProfileAttb(profile) {
+    return {
+      _id: get(profile, 'id', EMPTY_STRING),
+      name: get(profile, 'name', EMPTY_STRING),
+      surname: get(profile, 'surname', EMPTY_STRING),
+      email: get(profile, 'email', EMPTY_STRING)
+    };
+  },
+  async saveAppointment({ rootGetters, dispatch }) {
+    const newAppointment = {};
+    if (state.UIreadyToSave) {
+      const session = rootGetters['app/session'];
+
+      newAppointment.date = get(state, 'UIdateSelected', EMPTY_STRING);
+      newAppointment.time = get(state, 'UItimeSelected', EMPTY_STRING);
+      newAppointment.patient = actions.extractProfileAttb(session.user);
+      newAppointment.doctor = actions.extractProfileAttb(
+        state.UIdoctorSelected
+      );
+      newAppointment.treatment = state.appointment.treatment;
+      newAppointment.status = RESERVED;
+      newAppointment.allowReBooking = true;
+      newAppointment.createddBy = get(session, 'user.id', EMPTY_STRING);
     } else {
       notifyError(dispatch, 'appointment.errors.requiredFields');
     }
   },
-  saveNewAddress({ commit }, addressComponents) {
-    commit(SET_GEOLOCATED_ADDRESS, addressComponents);
+  addressSelected({ commit }, { id }) {
+    const address = state.UIaddress.find(item => item._id === id);
+    commit(SET_APPOINTMENT_ADDRESS, address);
+    actions.checkReadyToSave(commit);
   },
-  createNewAddress({ commit }) {
-    commit(SET_ADDRESS, EMPTY_STRING);
+  checkReadyToSave(commit) {
+    commit(
+      state.UIdoctorSelected
+        ? SET_DOCTOR_ICON_STATUS_GREEN
+        : SET_DOCTOR_ICON_STATUS_RED
+    );
+    commit(
+      state.UItreatmentSelected && state.UIdateSelected && state.UItimeSelected
+        ? SET_APPOINTMENT_ICON_STATUS_GREEN
+        : SET_APPOINTMENT_ICON_STATUS_RED
+    );
+    commit(
+      Object.keys(state.appointment.address).length
+        ? SET_LOCATION_ICON_STATUS_GREEN
+        : SET_LOCATION_ICON_STATUS_RED
+    );
+    if (
+      state.UIappointmentIconStatus.color === COMPLETE &&
+      state.UIdoctorIconStatus.color === COMPLETE &&
+      state.UIlocaltionIconStatus.color === COMPLETE
+    ) {
+      commit(READY_TO_SAVE, true);
+    } else {
+      commit(READY_TO_SAVE, false);
+    }
   }
 };
 
@@ -312,61 +316,70 @@ const mutations = {
     currState.treatments = treatments;
   },
   [DOCTORS_RECEIVED](currState, doctors) {
-    currState.doctors = doctors;
+    currState.UIdoctors = doctors;
   },
   [DOCTORS_SCHEDULES_RECEIVED](currState, schedules) {
     currState.schedules = schedules;
   },
   [TREATMENTS_FILTERED](currState, treatmentsByLang) {
-    currState.treatmentsByDoctor = treatmentsByLang;
+    currState.UItreatmentsByDoctor = treatmentsByLang;
   },
   [SET_DOCTOR](currState, doctor) {
-    currState.appointment.doctor = doctor;
-    currState.treatmentsShowOpen = true;
-    currState.treatmentSelected = EMPTY_STRING;
-    currState.dateSelected = EMPTY_STRING;
-    currState.timeSelected = EMPTY_STRING;
+    currState.UIdoctorSelected = doctor;
+    currState.UItreatmentsShowOpen = true;
+    currState.UItreatmentSelected = EMPTY_STRING;
+    currState.UIdateSelected = EMPTY_STRING;
+    currState.UItimeSelected = EMPTY_STRING;
   },
   [SET_TREATMENT](currState, { name, treatmentAllLangs }) {
-    currState.treatmentsShowOpen = name ? false : currState.treatmentsShowOpen;
-    currState.treatmentSelected = name;
+    currState.UItreatmentsShowOpen = name ? false : currState.UItreatmentsShowOpen;
+    currState.UItreatmentSelected = name;
     currState.appointment.treatment = treatmentAllLangs;
   },
+  [SET_APPOINTMENT_ADDRESS](currState, address) {
+    currState.appointment.address = address;
+  },
   [SET_DISABLE_DATES](currState, disableDates) {
-    currState.disableDates = disableDates;
+    currState.UIdisableDates = disableDates;
   },
   [SET_DISABLE_DATES_TIMES](currState, disableDatesTimes) {
     currState.disableDatesTimes = disableDatesTimes;
   },
   [SET_DISABLE_TIMES](currState, disableTimes) {
-    currState.disableTimes = disableTimes;
+    currState.UIdisableTimes = disableTimes;
   },
   [SET_DATE_SELECTED](currState, date) {
-    currState.dateSelected = date;
+    currState.UIdateSelected = date;
   },
   [SET_TIME_SELECTED](currState, time) {
-    currState.timeSelected = time;
+    currState.UItimeSelected = time;
   },
   [SET_DOCTOR_SCHEDULE](currState, schedule) {
-    currState.schedulesByDoctor = schedule;
+    currState.UIschedulesByDoctor = schedule;
   },
-  [SET_ADDRESS](currState, address) {
-    currState.addressSelected = address;
+  [SET_ADDRESS](currState, address = []) {
+    currState.UIaddress = address;
   },
-  [SET_DOCTOR_ICON_STATUS](currState, iconStatus) {
-    currState.doctorIconStatus = iconStatus;
+  [SET_DOCTOR_ICON_STATUS_RED](currState) {
+    currState.UIdoctorIconStatus = redStatus;
   },
-  [SET_APPOINTMENT_ICON_STATUS](currState, iconStatus) {
-    currState.appointmentIconStatus = iconStatus;
+  [SET_APPOINTMENT_ICON_STATUS_RED](currState) {
+    currState.UIappointmentIconStatus = redStatus;
   },
-  [SET_LOCATION_ICON_STATUS](currState, iconStatus) {
-    currState.localtionIconStatus = iconStatus;
+  [SET_LOCATION_ICON_STATUS_RED](currState) {
+    currState.UIlocaltionIconStatus = redStatus;
   },
-  [READY_TO_SAVE](currState, ready) {
-    currState.readyToSave = ready;
+  [SET_DOCTOR_ICON_STATUS_GREEN](currState) {
+    currState.UIdoctorIconStatus = greeStatus;
   },
-  [SET_GEOLOCATED_ADDRESS](currState, geoLocatedAddress) {
-    currState.geoLocatedAddress = geoLocatedAddress;
+  [SET_APPOINTMENT_ICON_STATUS_GREEN](currState) {
+    currState.UIappointmentIconStatus = greeStatus;
+  },
+  [SET_LOCATION_ICON_STATUS_GREEN](currState) {
+    currState.UIlocaltionIconStatus = greeStatus;
+  },
+  [READY_TO_SAVE](currState, isReady) {
+    currState.UIreadyToSave = isReady;
   }
 };
 

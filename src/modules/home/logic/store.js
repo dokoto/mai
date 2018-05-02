@@ -1,5 +1,6 @@
 import * as services from '@/common/api';
-import { STATUS, EMPTY_ARRAY } from '@/common/api/constants';
+import { STATUS } from '@/common/api/constants';
+import { EMPTY_ARRAY } from '@/common/constants';
 import { notifyRestError } from '@/common/utils';
 import { RECEIVE_NEXT_SESSIONS } from './types';
 

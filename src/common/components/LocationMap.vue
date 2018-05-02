@@ -1,51 +1,25 @@
 <template>
   <section class="location">
-    <div class="flex-row">
-      <InputBoxed :id="ids.idInput"
-                  :placeHolder="placeHolder"
-                  :value="address"
-                  :noIcon="true"
-                  :readOnly="true"
-                  class="grow-2" />
-      <div class="flex-row">
-        <div class="input-icon"
-             @click="handleInputBoxedClicked">
-          <font-awesome-icon :icon="icon" />
+    <ListBoxed id="ids.idInput"
+               :items="streets"
+               placeHolder="placeHolder"
+               :showOpen="true"
+               :autoCloseOnSelected="false"
+               @listBoxedItemHasSelected="handleAddressSelected">
+      <template slot-scope="slot">
+        <div class="flex-row">
+          <i class="icon">
+            <font-awesome-icon :icon="slot.item.icon" />
+          </i>
+          <span class="street grow-2"
+                :data-type="slot.item.type"
+                :data-id="slot.item.id"
+                :data-value="slot.item.value">{{ slot.item.value }}</span>
         </div>
-        <div class="input-icon"
-             @click="handleEdit">
-          <font-awesome-icon :icon="iconPencil" />
-        </div>
-      </div>
-    </div>
-    <transition name="fade"
-                @before-enter="animateSlideDown"
-                @leave="animateSlideUp"
-                :css="false">
-      <div class="flex-column flex-align-first-corners"
-           v-show="showEdit">
-        <InputBoxed id="new-address"
-                    placeHolder="New address"
-                    :noIcon="true"
-                    :readOnly="false"
-                    class="map-autocomplete edit" />
-        <InputBoxed id="new-floor"
-                    placeHolder="New Floor"
-                    :noIcon="true"
-                    :readOnly="false"
-                    class="edit" />
-        <InputBoxed id="postal-code"
-                    placeHolder="Postal Code"
-                    :noIcon="true"
-                    :readOnly="false"
-                    class="edit" />
-      </div>
-    </transition>
-    <transition name="fade"
-                @before-enter="animateSlideDown"
-                @leave="animateSlideUp"
-                :css="false">
-      <div :id="ids.idMap"
+      </template>
+    </ListBoxed>
+    <Collapsible>
+      <div id="map-container"
            class="map"
            :class="[ readOnly ? 'dynamic-height' : 'static-height' ]"
            v-show="hasShowMap">
@@ -53,18 +27,22 @@
                    :size="staticMapSize"
                    v-if="readOnly" />
       </div>
-    </transition>
+    </Collapsible>
   </section>
 </template>
 
 <script>
-import $ from 'jquery';
+import { head } from 'lodash';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import { USER } from '@/common/constants';
 import {
-  faPencilAlt,
-  faMapMarkerAlt
+  faPlus,
+  faHome,
+  faAmbulance
 } from '@fortawesome/fontawesome-free-solid';
+import Collapsible from './Collapsible';
 import InputBoxed from './InputBoxed';
+import ListBoxed from './ListBoxed';
 import StaticMap from './StaticMap';
 import GeoMapper from '../GeoMapper';
 import picDefaultStaticMap from '../../../static/img/default-static-map.png';
@@ -76,7 +54,7 @@ export default {
       default: 'locationMap'
     },
     address: {
-      type: String
+      type: Array
     },
     zoom: {
       type: Number,
@@ -99,7 +77,13 @@ export default {
       default: 'AIzaSyBnnYz5MN9EkxI-lmKNLE1GvxkqvrxPDvQ'
     }
   },
-  components: { InputBoxed, StaticMap, FontAwesomeIcon },
+  components: {
+    InputBoxed,
+    StaticMap,
+    FontAwesomeIcon,
+    Collapsible,
+    ListBoxed
+  },
   computed: {
     staticMapSize: function() {
       return {
@@ -107,75 +91,90 @@ export default {
         height: 200
       };
     },
-    ids: function() {
-      return {
-        idInput: `${this.id}-inputboxed-map`,
-        idMap: `${this.id}-map`
-      };
-    }
-  },
-  watch: {
-    address: function() {
-      this.updateMap(this.address);
+    streets: function() {
+      const streets = this.address.map(item => ({
+        id: item._id,
+        value: item.street,
+        type: item.type,
+        icon: item.type === USER ? this.iconHome : this.iconDoctorAddress,
+        selected: item.selected
+      }));
+
+      streets.push({
+        id: 'new',
+        value: 'Add new address',
+        icon: this.iconAdd
+      });
+
+      document
+        .querySelectorAll('li.item .street')
+        .forEach(item => item.classList.remove('item-selected'));
+
+      this.hideMap();
+
+      return streets;
     }
   },
   async mounted() {
     if (!this.readOnly) {
-      const $map = document.querySelector(`#${this.ids.idMap}`);
-      const $autoCompleInput = document.querySelector('#new-address input');
       await this.geoMapper.activateGoogleMaps();
-      this.geoMapper.activateAutoComplete($autoCompleInput, this.handleAutoCompleteFinish);
-      this.geoMapper.renderDynamicMap(
-        $map,
-        this.zoom,
-        this.address || this.placeHolder
-      );
+      /* NO SE NECESITA AUTOCOMPLETADO AQUI(GUARDAR PARA NUEVA DIRECCION)
+      const $autoCompleInput = document.querySelector('#new-address input');
+      if ($autoCompleInput) {
+        this.geoMapper.activateAutoComplete(
+          $autoCompleInput,
+          this.handleAutoCompleteFinish
+        );
+      }*/
+      const $map = document.querySelector('#map-container');
+      if ($map && this.address.length) {
+        const street = head(this.address).street;
+        this.geoMapper.renderDynamicMap($map, this.zoom, street);
+      }
     }
   },
   data() {
     return {
       defaulMapImage: picDefaultStaticMap,
-      icon: faMapMarkerAlt,
-      iconPencil: faPencilAlt,
+      iconAdd: faPlus,
+      iconDoctorAddress: faAmbulance,
+      iconHome: faHome,
       hasShowMap: this.showMap,
-      showEdit: false,
       geoMapper: new GeoMapper(this.apikey, ['places'])
     };
   },
   methods: {
-    handleAutoCompleteFinish(address) {
-      this.$emit('autoCompleteFinish', address);
-      this.hasShowMap = true;
+    hideMap() {
+      this.hasShowMap = false;
     },
     async updateMap(address) {
-      const $map = document.querySelector(`#${this.ids.idMap}`);
-      this.geoMapper
-        .renderDynamicMap($map, this.zoom, address)
-        .then(() => this.$emit('newAddress', this.geoMapper.addressComponents));
-    },
-    handleInputBoxedClicked(ev) {
-      const address = ev.currentTarget.parentElement.parentElement.querySelector(
-        'input'
-      ).value;
-      const newAddress = ev.currentTarget.parentElement.parentElement.parentElement.querySelector('#new-address input').value;
-      if (address || newAddress) {
-        this.hasShowMap = !this.hasShowMap;
-        this.updateMap(address || newAddress);
+      if (address) {
+        this.hasShowMap = true;
+        const $map = document.querySelector('#map-container');
+        this.geoMapper
+          .renderDynamicMap($map, this.zoom, address)
+          .then(() =>
+            this.$emit('newAddress', this.geoMapper.addressComponents)
+          );
       }
     },
-    handleEdit() {
-      this.$emit('createNewAddress');
-      this.hasShowMap = false;
-      this.showEdit = !this.showEdit;
+    handleAddressSelected(ev) {
+      ev.currentTarget.parentElement
+        .querySelectorAll('li.item .street')
+        .forEach(item => item.classList.remove('item-selected'));
+      ev.currentTarget.querySelector('.street').classList.add('item-selected');
+      const tag = ev.currentTarget.querySelector('.street').dataset;
+      const id = tag.id;
+      const street = tag.value;
+      const type = tag.type;
+      if (id && street && type) {
+        this.hasShowMap = true;
+        this.updateMap(street);
+        this.$emit('addressSelected', { id, street, type });
+      }
     },
     handleResizeMap() {
       this.geoMapper.resize();
-    },
-    animateSlideDown(el) {
-      $(el).slideDown('slow', !this.readOnly ? this.handleResizeMap : null);
-    },
-    animateSlideUp(el, done) {
-      $(el).slideUp('slow', () => done());
     }
   },
   beforeDestroy() {
@@ -187,11 +186,15 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/base.scss';
 .location {
-  .address {
-    font-family: Arial, Tahoma, HelveticaNeue;
-    font-size: 0.8em;
-    margin-left: 2%;
-    margin-top: 2%;
+  .street {
+    margin-left: 0.4em;
+    width: 100%;
+  }
+  .icon {
+    width: 10%;
+  }
+  .item-selected {
+    font-weight: bold;
   }
   .map {
     margin-top: 1%;
@@ -202,20 +205,6 @@ export default {
     &.dynamic-height {
       height: auto;
     }
-  }
-  .edit {
-    margin-top: 0.3em;
-  }
-  .input-icon {
-    width: 3rem;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: $colorWhite0;
-    border-bottom: 0;
-    border-top: 0;
   }
 }
 </style>

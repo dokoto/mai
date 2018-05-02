@@ -3,40 +3,36 @@
        :id="id">
     <InputBoxed :id="id"
                 :placeHolder="placeHolder"
-                :value="itenSelectedFormated"
+                :value="itemSelected"
                 :icon="icon"
                 :readOnly="readOnly"
                 :noBorder="noBorder"
                 v-on:handleInputBoxedClick="handleShowItems"
                 class="map-autocomplete" />
-    <transition name="fade"
-                @before-enter="animateSlideDown"
-                @leave="animateSlideUp"
-                :css="false">
+    <Collapsible>
       <ul class="grid-items"
           v-show="isOpen">
         <li class="grid-item"
             v-for="item in items"
             :key="item"
             @click="handleChangeSelected"
-            :class="{ 'grid-item-disable': disableItems.includes(item), 'grid-item-selected': item === itemSelectedValue }">{{ item }}</li>
+            :class="{ 'grid-item-disable': disableItems.includes(item), 'grid-item-selected': item === itemSelected }">{{ item }}</li>
       </ul>
-    </transition>
+    </Collapsible>
   </div>
 </template>
 
 <script>
-import $ from 'jquery';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { faPencilAlt } from '@fortawesome/fontawesome-free-solid';
 import InputBoxed from './InputBoxed';
-import { addMinutes } from '../utils';
-import * as consts from '../constants';
+import Collapsible from './Collapsible';
 
 export default {
   components: {
     FontAwesomeIcon,
-    InputBoxed
+    InputBoxed,
+    Collapsible
   },
   props: {
     id: {
@@ -94,40 +90,21 @@ export default {
       readOnly: true
     };
   },
-  computed: {
-    itemSelectedValue() {
-      return this.itemSelected;
-    },
-    itenSelectedFormated() {
-      if (
-        this.itemSelectedValue &&
-        !this.disableItems.includes(this.itemSelectedValue)
-      ) {
-        const finished = addMinutes(this.itemSelectedValue, this.interval);
-        return `${this.itemSelectedValue} >> ${finished}`;
-      }
-      return consts.EMPTY_STRING;
-    }
-  },
   methods: {
     handleShowItems() {
       if (this.items.length) {
         this.isOpen = !this.isOpen;
       }
     },
-    animateSlideDown(el) {
-      $(el).slideDown('slow');
-    },
-    animateSlideUp(el, done) {
-      $(el).slideUp('slow', () => done());
-    },
     handleChangeSelected(ev) {
       if (this.autoCloseOnSelected) this.isOpen = false;
       if (!this.multiSelect) {
-        document.querySelector('li.grid-item').classList.remove('grid-item-selected');
+        document
+          .querySelectorAll('li.grid-item')
+          .forEach(item => item.classList.remove('grid-item-selected'));
       }
       ev.currentTarget.classList.toggle('grid-item-selected');
-      this.$emit('gridSelectorBoxed:onChange', $(ev.currentTarget).text());
+      this.$emit('gridSelectorBoxed:onChange', ev.currentTarget.innerText);
     }
   }
 };

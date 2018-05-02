@@ -9,10 +9,7 @@
                 :noBorder="noBorder"
                 @handleInputBoxedClick="handleShowItems"
                 class="map-autocomplete" />
-    <transition name="fade"
-                @before-enter="animateSlideDown"
-                @leave="animateSlideUp"
-                :css="false">
+    <Collapsible>
       <ul class="combo"
           v-show="isOpen">
         <li class="item padding-2x"
@@ -21,20 +18,21 @@
             :id="item.id"
             v-on:click="handleChangeSelected">{{ item.text }}</li>
       </ul>
-    </transition>
+    </Collapsible>
   </div>
 </template>
 
 <script>
-import $ from 'jquery';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { faPencilAlt } from '@fortawesome/fontawesome-free-solid';
 import InputBoxed from './InputBoxed';
+import Collapsible from './Collapsible';
 
 export default {
   components: {
     FontAwesomeIcon,
-    InputBoxed
+    InputBoxed,
+    Collapsible
   },
   props: {
     id: {
@@ -79,7 +77,6 @@ export default {
   data() {
     return {
       isOpen: this.showOpen,
-      itemSelectedValue: this.itemSelected,
       readOnly: true
     };
   },
@@ -89,19 +86,13 @@ export default {
         this.isOpen = !this.isOpen;
       }
     },
-    animateSlideDown(el) {
-      $(el).slideDown('slow');
-    },
-    animateSlideUp(el, done) {
-      $(el).slideUp('slow', () => done());
-    },
     handleChangeSelected(ev) {
       if (this.autoCloseOnSelected) this.isOpen = false;
       if (!this.multiSelect) {
-        document.querySelector('li.item').classList.remove('item-selected');
+        document.querySelectorAll('li-item')
+          .forEach(item => item.classList.remove('grid-item-selected'));
       }
       ev.currentTarget.classList.toggle('item-selected');
-      this.itemSelectedValue = $(ev.currentTarget).text();
       this.$emit('comboBoxedItemHasSelected', ev.currentTarget.id);
     }
   }
@@ -110,6 +101,7 @@ export default {
 
 
 <style lang="scss" scoped>
+@import 'animate.css/animate.min.css';
 @import '../styles/base.scss';
 
 .combo-container {
@@ -132,5 +124,14 @@ export default {
       background-color: $colorWhite1;
     }
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: height 0.3s ease-in;
+}
+.fade-enter,
+.fade-leave-to {
+  transition: height 0.3s ease-in;
 }
 </style>

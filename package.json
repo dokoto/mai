@@ -24,6 +24,7 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.8",
     "@fortawesome/fontawesome-free-webfonts": "^1.0.4",
     "@fortawesome/vue-fontawesome": "0.0.22",
+    "animate.css": "^3.6.1",
     "google-maps": "^3.2.1",
     "itemslide": "^1.4.0",
     "jquery": "^3.3.1",

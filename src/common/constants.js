@@ -23,3 +23,6 @@ export const CANCELED = 'canceled';
 export const RESERVED = 'reserved';
 export const EXCEPTION = 'exception';
 export const DAILY = 'daily';
+export const MONTHS_AHEAD = 3;
+export const COMPLETE = 'green';
+export const UNCOMPLETE = 'red';

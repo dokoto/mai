@@ -1,11 +1,11 @@
 <template>
   <div id="mai"
-    class="app">
+       class="app">
     <transition name="fade"
-      mode="out-in"
-      appear>
+                mode="out-in"
+                appear>
       <router-view name="container"
-        class="child-view"></router-view>
+                   class="child-view"></router-view>
     </transition>
     <Notify />
   </div>
@@ -19,10 +19,10 @@ export default {
   created: function() {
     return this.$store.dispatch('app/tmpLogin').then(() =>
       this.$router.push({
-        name: 'home',
-      }),
+        name: 'home'
+      })
     );
-  },
+  }
 };
 </script>
 

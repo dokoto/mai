@@ -2,12 +2,13 @@
   <div :id="id"
        class="input-boxed-container flex-row flex-align-first-corners flex-align-second-center">
     <input type="text"
-           maxlength="200"
+           :maxlength="maxlength"
            class="input"
            :class="[ noBorder ? 'no-boxed' : 'boxed', noIcon ? 'no-icon' : '' ]"
            :placeholder="$t(placeHolder)"
            :readonly="readOnly"
-           :value="value" />
+           :value="value"
+           @change="ev => $emit('onChange', ev)" />
     <div class="input-icon"
          v-if="!noIcon"
          :class="[ noBorder ? 'no-boxed' : 'boxed' ]"
@@ -53,6 +54,10 @@ export default {
     },
     value: {
       type: String
+    },
+    maxlength: {
+      type: Number,
+      default: 200
     }
   },
   methods: {

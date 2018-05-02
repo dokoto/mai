@@ -6,60 +6,62 @@
     </div>
     <Card id="appointment-edit-doctors-carrusel-card"
           title="appointment.titles.treatment"
-          :icon="doctorIconStatus.icon"
-          :iconColor="doctorIconStatus.color">
+          :icon="UIdoctorIconStatus.icon"
+          :iconColor="UIdoctorIconStatus.color">
       <DoctorsCarrusel :id="`doctors-carrusel-${$route.params.id}`"
-                       :doctors="doctors"
-                       :doctorSelected="appointment.doctor ? appointment.doctor.id : ''"
+                       :doctors="UIdoctors"
+                       :doctorSelected="UIdoctorSelected ? UIdoctorSelected.id : ''"
                        @doctorHasSelected="loadDoctorTreatments"
-                       v-if="doctors.length" />
+                       v-if="UIdoctors.length" />
     </Card>
     <Card id="appointment-edit-card"
           title="appointment.titles.appointment"
-          :icon="appointmentIconStatus.icon"
-          :iconColor="appointmentIconStatus.color">
+          :icon="UIappointmentIconStatus.icon"
+          :iconColor="UIappointmentIconStatus.color">
       <ComboBoxed id="appointment-edit-treatments"
                   :noBorder="true"
-                  :items="treatmentsByDoctor"
+                  :items="UItreatmentsByDoctor"
                   placeHolder="appointment.treatment.type"
-                  :itemSelected="treatmentSelected"
-                  :showOpen="treatmentsShowOpen"
+                  :itemSelected="UItreatmentSelected"
+                  :showOpen="UItreatmentsShowOpen"
                   :autoCloseOnSelected="true"
                   @comboBoxedItemHasSelected="loadDoctorSchedule" />
       <DayCarruselBoxed id="appointment-edit-date"
                         placeHolder="appointment.treatment.date"
-                        :disablesDates="disableDates"
-                        :initDate="initDate"
-                        :selectedDate="dateSelected"
+                        :disablesDates="UIdisableDates"
+                        :initDate="UIinitDate"
+                        :selectedDate="UIdateSelected"
                         :noBorder="true"
                         :autoCloseOnSelected="true"
                         @dayCarruselBoxed:dayClick="loadDoctorTimeSchedule" />
       <GridSelectorBoxed id="appointment-edit-time"
                          placeHolder="appointment.treatment.time"
-                         :items="schedulesByDoctor"
-                         :disableItems="disableTimes"
-                         :itemSelected="timeSelected"
+                         :items="UIschedulesByDoctor"
+                         :disableItems="UIdisableTimes"
+                         :itemSelected="UItimeSelected"
                          :noBorder="true"
                          :autoCloseOnSelected="true"
                          @gridSelectorBoxed:onChange="saveDoctorTIme" />
     </Card>
     <Card id="appointment-edit-location-card"
           title="appointment.titles.location"
-          :icon="localtionIconStatus.icon"
-          :iconColor="localtionIconStatus.color">
+          :icon="UIlocaltionIconStatus.icon"
+          :iconColor="UIlocaltionIconStatus.color">
+
       <LocationMap ref="locationMap"
                    placeHolder="appointment.treatment.address"
-                   :zoom="mapZoom"
-                   :address="addressSelected"
+                   :zoom="UImapZoom"
+                   :address="UIaddress"
                    :showMap="false"
                    :readOnly="false"
-                   @newAddress="saveNewAddress"
-                   @createNewAddress="createNewAddress" />
+                   @addressSelected="addressSelected" />
     </Card>
     <Card id="appointment-edit-save"
-          :noTitle="true" v-show="readyToSave">
+          :noTitle="true"
+          v-show="UIreadyToSave">
       <div class="flex-column flex-align-first-center">
-        <button class="save" @click="saveAppointment">{{ $t("appointment.actions.save") }}</button>
+        <button class="save"
+                @click="saveAppointment">{{ $t("appointment.actions.save") }}</button>
       </div>
     </Card>
   </article>
@@ -87,23 +89,23 @@ export default {
   computed: {
     ...mapState('appointment', [
       'appointment',
-      'doctors',
-      'treatmentsByDoctor',
-      'schedules',
-      'disableDates',
-      'initDate',
-      'disableTimes',
-      'treatmentSelected',
-      'dateSelected',
-      'timeSelected',
-      'treatmentsShowOpen',
-      'mapZoom',
-      'schedulesByDoctor',
-      'addressSelected',
-      'appointmentIconStatus',
-      'doctorIconStatus',
-      'localtionIconStatus',
-      'readyToSave'
+      'UIdoctorSelected',
+      'UItreatmentsShowOpen',
+      'UIappointmentIconStatus',
+      'UIdoctorIconStatus',
+      'UIlocaltionIconStatus',
+      'UIreadyToSave',
+      'UImapZoom',
+      'UIaddress',
+      'UIschedulesByDoctor',
+      'UIinitDate',
+      'UIdoctors',
+      'UItreatmentsByDoctor',
+      'UIdisableDates',
+      'UIdisableTimes',
+      'UItreatmentSelected',
+      'UIdateSelected',
+      'UItimeSelected'
     ])
   },
   methods: {
@@ -113,8 +115,7 @@ export default {
       'loadDoctorTimeSchedule',
       'saveDoctorTIme',
       'saveAppointment',
-      'saveNewAddress',
-      'createNewAddress'
+      'addressSelected'
     ])
   },
   created() {
@@ -124,6 +125,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'animate.css/animate.min.css';
 @import '../../common/styles/base.scss';
 .appointment-edit-page {
   font-size: 6.2vw;
