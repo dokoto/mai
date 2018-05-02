@@ -1,12 +1,6 @@
 import { mergeWith, get } from 'lodash';
-import $ from 'jquery';
-import { difference, union } from 'lodash/array';
+import { union } from 'lodash/array';
 import moment from 'moment';
-
-import {
-  faCheckCircle,
-  faQuestionCircle
-} from '@fortawesome/fontawesome-free-solid';
 
 import {
   getAppointment,
@@ -24,11 +18,9 @@ import {
   EMPTY_STRING,
   MAP_ZOOM,
   RESERVED,
-  DOCTOR,
   USER,
   MONTHS_AHEAD,
-  COMPLETE,
-  UNCOMPLETE
+  COMPLETE
 } from '@/common/constants';
 import { STATUS } from '@/common/api/constants';
 import {
@@ -36,7 +28,7 @@ import {
   TREATMENTS_RECEIVED,
   DOCTORS_RECEIVED,
   DOCTORS_SCHEDULES_RECEIVED,
-  TREATMENTS_FILTERED,
+  SET_TREATMENTS_FILTERED,
   SET_DOCTOR,
   SET_TREATMENT,
   SET_DISABLE_DATES,
@@ -45,29 +37,38 @@ import {
   SET_DATE_SELECTED,
   SET_TIME_SELECTED,
   SET_DOCTOR_SCHEDULE,
-  SET_ADDRESS,
+  SET_ADDRESSES,
   SET_DOCTOR_ICON_STATUS_RED,
   SET_APPOINTMENT_ICON_STATUS_RED,
   SET_LOCATION_ICON_STATUS_RED,
   SET_DOCTOR_ICON_STATUS_GREEN,
   SET_APPOINTMENT_ICON_STATUS_GREEN,
   SET_LOCATION_ICON_STATUS_GREEN,
-  SET_APPOINTMENT_ADDRESS,
+  SET_ADDRESS_SELECTED,
   READY_TO_SAVE
 } from './types';
 
-const redStatus = {
-  icon: faQuestionCircle,
-  color: UNCOMPLETE
-};
-const greeStatus = {
-  icon: faCheckCircle,
-  color: COMPLETE
-};
+import { mutations, redStatus } from './mutations';
+
+import {
+  mapSelectedDocAddress,
+  mapUnselectedAddress,
+  filterByUserDoc,
+  filterLang,
+  filterTreatment,
+  filterTreatmentById,
+  findByDocId,
+  findByDay,
+  reduceExptionDays,
+  reduceBusyDays,
+  mapDisableDates
+} from './functionals';
 
 const state = {
   appointment: {},
   treatments: [],
+  treatmentSelectedAllLangs: [],
+  addressSelected: {},
   appointmentsByDoctor: [],
   schedules: [],
   disableDatesTimes: {},
@@ -78,7 +79,7 @@ const state = {
   UIlocaltionIconStatus: redStatus,
   UIreadyToSave: false,
   UImapZoom: MAP_ZOOM,
-  UIaddress: [],
+  UIaddresses: [],
   UIschedulesByDoctor: [],
   UIinitDate: moment()
     .add(1, 'day')
@@ -91,39 +92,6 @@ const state = {
   UIdateSelected: EMPTY_STRING,
   UItimeSelected: EMPTY_STRING,
   UIdoctorSelected: {}
-};
-
-const mapSelectedDocAddress = item => ({
-  ...item,
-  type: DOCTOR,
-  selected: true
-});
-const mapUnselectedAddress = item => ({ ...item, selected: false });
-const filterByUserDoc = item => item.type !== DOCTOR;
-const filterLang = item => item.lang === window.glob.language;
-const filterTreatment = treatment => item => item.key === treatment.key;
-const filterTreatmentById = id => item => item.id === id;
-const findByDocId = item => item.doctor._id === state.UIdoctorSelected.id;
-const findByDay = day => item => item.day === day;
-const reduceExptionDays = doctorTimeSchedule => (curr, next) => {
-  const day = moment(next).day();
-  const execption = doctorTimeSchedule.exception.find(findByDay(day));
-  return {
-    ...curr,
-    [next]: [...(curr[next] || []), ...get(execption, 'time', [])]
-  };
-};
-const reduceBusyDays = (curr, next) => {
-  const date = moment(next.date).format('YYYYMMDD');
-  return { ...curr, [date]: [...(curr[date] || []), next.time] };
-};
-const mapDisableDates = doctorTimeSchedule => item => {
-  const [date, time] = item;
-  const day = moment(date).day();
-  const timeScheduleByDay = doctorTimeSchedule.daily.find(
-    schedule => schedule.day === day
-  );
-  return difference(timeScheduleByDay.time, time).length ? null : date;
 };
 
 const actions = {
@@ -158,9 +126,9 @@ const actions = {
     }
 
     const session = rootGetters['app/session'];
-    commit(SET_ADDRESS, []);
+    commit(SET_ADDRESSES, []);
     commit(
-      SET_ADDRESS,
+      SET_ADDRESSES,
       session.user.address.map(item => ({
         ...item,
         type: USER,
@@ -174,19 +142,18 @@ const actions = {
       const treatmentsByLang = doctor.treatments
         .filter(filterLang)
         .map(item => ({ id: item._id, text: item.name }));
-      const address = state.UIaddress
-        .map(mapUnselectedAddress)
+      const addresses = state.UIaddresses.map(mapUnselectedAddress)
         .filter(filterByUserDoc)
         .concat(doctor.address.map(mapSelectedDocAddress));
 
-      commit(TREATMENTS_FILTERED, treatmentsByLang);
+      commit(SET_TREATMENTS_FILTERED, treatmentsByLang);
       commit(SET_DOCTOR, doctor);
-      commit(SET_ADDRESS, address);
+      commit(SET_ADDRESSES, addresses);
       commit(SET_DISABLE_DATES_TIMES, {});
       commit(SET_DISABLE_DATES, []);
       commit(SET_TREATMENT, []);
       commit(SET_DISABLE_TIMES, []);
-      commit(SET_APPOINTMENT_ADDRESS, {});
+      commit(SET_ADDRESS_SELECTED, {});
 
       actions.checkReadyToSave(commit);
     }
@@ -196,7 +163,9 @@ const actions = {
     const doctorNextAppointments = await getDoctorNextAppointments(
       state.UIdoctorSelected.email
     );
-    const doctorTimeSchedule = state.schedules.find(findByDocId);
+    const doctorTimeSchedule = state.schedules.find(
+      findByDocId(state.UIdoctorSelected.id)
+    );
     const doctorBusySchedule = doctorNextAppointments.data.reduce(
       reduceBusyDays,
       {}
@@ -228,7 +197,9 @@ const actions = {
   },
   loadDoctorTimeSchedule({ commit }, date) {
     if (state.UIdoctorSelected) {
-      const doctorTimeSchedule = state.schedules.find(findByDocId);
+      const doctorTimeSchedule = state.schedules.find(
+        findByDocId(state.UIdoctorSelected.id)
+      );
       const day = moment(date).day();
       const timeScheduleByDay = doctorTimeSchedule.daily.find(findByDay(day));
 
@@ -259,11 +230,12 @@ const actions = {
 
       newAppointment.date = get(state, 'UIdateSelected', EMPTY_STRING);
       newAppointment.time = get(state, 'UItimeSelected', EMPTY_STRING);
+      newAppointment.address = get(state, 'addressSelected', {});
       newAppointment.patient = actions.extractProfileAttb(session.user);
       newAppointment.doctor = actions.extractProfileAttb(
         state.UIdoctorSelected
       );
-      newAppointment.treatment = state.appointment.treatment;
+      newAppointment.treatment = state.treatmentSelectedAllLangs;
       newAppointment.status = RESERVED;
       newAppointment.allowReBooking = true;
       newAppointment.createddBy = get(session, 'user.id', EMPTY_STRING);
@@ -271,9 +243,9 @@ const actions = {
       notifyError(dispatch, 'appointment.errors.requiredFields');
     }
   },
-  addressSelected({ commit }, { id }) {
-    const address = state.UIaddress.find(item => item._id === id);
-    commit(SET_APPOINTMENT_ADDRESS, address);
+  commitAddressSelected({ commit }, { id }) {
+    const address = state.UIaddresses.find(item => item._id === id);
+    commit(SET_ADDRESS_SELECTED, address);
     actions.checkReadyToSave(commit);
   },
   checkReadyToSave(commit) {
@@ -288,7 +260,7 @@ const actions = {
         : SET_APPOINTMENT_ICON_STATUS_RED
     );
     commit(
-      Object.keys(state.appointment.address).length
+      Object.keys(state.addressSelected).length
         ? SET_LOCATION_ICON_STATUS_GREEN
         : SET_LOCATION_ICON_STATUS_RED
     );
@@ -301,85 +273,6 @@ const actions = {
     } else {
       commit(READY_TO_SAVE, false);
     }
-  }
-};
-
-const mutations = {
-  [APPOINTMENT_RECEIVED](currState, appointment) {
-    currState.appointment = appointment;
-    currState.appointment.treatment = appointment.treatment.reduce(
-      (curr, next) => (next.lang === window.glob.language ? next : curr),
-      {}
-    );
-  },
-  [TREATMENTS_RECEIVED](currState, treatments) {
-    currState.treatments = treatments;
-  },
-  [DOCTORS_RECEIVED](currState, doctors) {
-    currState.UIdoctors = doctors;
-  },
-  [DOCTORS_SCHEDULES_RECEIVED](currState, schedules) {
-    currState.schedules = schedules;
-  },
-  [TREATMENTS_FILTERED](currState, treatmentsByLang) {
-    currState.UItreatmentsByDoctor = treatmentsByLang;
-  },
-  [SET_DOCTOR](currState, doctor) {
-    currState.UIdoctorSelected = doctor;
-    currState.UItreatmentsShowOpen = true;
-    currState.UItreatmentSelected = EMPTY_STRING;
-    currState.UIdateSelected = EMPTY_STRING;
-    currState.UItimeSelected = EMPTY_STRING;
-  },
-  [SET_TREATMENT](currState, { name, treatmentAllLangs }) {
-    currState.UItreatmentsShowOpen = name ? false : currState.UItreatmentsShowOpen;
-    currState.UItreatmentSelected = name;
-    currState.appointment.treatment = treatmentAllLangs;
-  },
-  [SET_APPOINTMENT_ADDRESS](currState, address) {
-    currState.appointment.address = address;
-  },
-  [SET_DISABLE_DATES](currState, disableDates) {
-    currState.UIdisableDates = disableDates;
-  },
-  [SET_DISABLE_DATES_TIMES](currState, disableDatesTimes) {
-    currState.disableDatesTimes = disableDatesTimes;
-  },
-  [SET_DISABLE_TIMES](currState, disableTimes) {
-    currState.UIdisableTimes = disableTimes;
-  },
-  [SET_DATE_SELECTED](currState, date) {
-    currState.UIdateSelected = date;
-  },
-  [SET_TIME_SELECTED](currState, time) {
-    currState.UItimeSelected = time;
-  },
-  [SET_DOCTOR_SCHEDULE](currState, schedule) {
-    currState.UIschedulesByDoctor = schedule;
-  },
-  [SET_ADDRESS](currState, address = []) {
-    currState.UIaddress = address;
-  },
-  [SET_DOCTOR_ICON_STATUS_RED](currState) {
-    currState.UIdoctorIconStatus = redStatus;
-  },
-  [SET_APPOINTMENT_ICON_STATUS_RED](currState) {
-    currState.UIappointmentIconStatus = redStatus;
-  },
-  [SET_LOCATION_ICON_STATUS_RED](currState) {
-    currState.UIlocaltionIconStatus = redStatus;
-  },
-  [SET_DOCTOR_ICON_STATUS_GREEN](currState) {
-    currState.UIdoctorIconStatus = greeStatus;
-  },
-  [SET_APPOINTMENT_ICON_STATUS_GREEN](currState) {
-    currState.UIappointmentIconStatus = greeStatus;
-  },
-  [SET_LOCATION_ICON_STATUS_GREEN](currState) {
-    currState.UIlocaltionIconStatus = greeStatus;
-  },
-  [READY_TO_SAVE](currState, isReady) {
-    currState.UIreadyToSave = isReady;
   }
 };
 

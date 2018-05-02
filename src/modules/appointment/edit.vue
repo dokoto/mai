@@ -51,10 +51,10 @@
       <LocationMap ref="locationMap"
                    placeHolder="appointment.treatment.address"
                    :zoom="UImapZoom"
-                   :address="UIaddress"
+                   :addresses="UIaddresses"
                    :showMap="false"
                    :readOnly="false"
-                   @addressSelected="addressSelected" />
+                   @addressSelected="commitAddressSelected" />
     </Card>
     <Card id="appointment-edit-save"
           :noTitle="true"
@@ -96,7 +96,7 @@ export default {
       'UIlocaltionIconStatus',
       'UIreadyToSave',
       'UImapZoom',
-      'UIaddress',
+      'UIaddresses',
       'UIschedulesByDoctor',
       'UIinitDate',
       'UIdoctors',
@@ -115,7 +115,7 @@ export default {
       'loadDoctorTimeSchedule',
       'saveDoctorTIme',
       'saveAppointment',
-      'addressSelected'
+      'commitAddressSelected'
     ])
   },
   created() {

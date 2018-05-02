@@ -53,7 +53,7 @@ export default {
       type: String,
       default: 'locationMap'
     },
-    address: {
+    addresses: {
       type: Array
     },
     zoom: {
@@ -92,7 +92,7 @@ export default {
       };
     },
     streets: function() {
-      const streets = this.address.map(item => ({
+      const streets = this.addresses.map(item => ({
         id: item._id,
         value: item.street,
         type: item.type,
@@ -127,8 +127,8 @@ export default {
         );
       }*/
       const $map = document.querySelector('#map-container');
-      if ($map && this.address.length) {
-        const street = head(this.address).street;
+      if ($map && this.addresses.length) {
+        const street = head(this.addresses).street;
         this.geoMapper.renderDynamicMap($map, this.zoom, street);
       }
     }
