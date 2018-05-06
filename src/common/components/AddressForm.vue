@@ -3,26 +3,26 @@
            :id="id">
     <div class="flex-column flex-align-first-corners">
       <InputBoxed id="new-address"
-                  :placeHolder="addressPlaceHolder"
+                  :placeHolder="$t(addressPlaceHolder)"
                   :noIcon="true"
                   :value="address"
                   :readOnly="false"
                   class="map-autocomplete edit" />
       <InputBoxed id="new-floor"
-                  placeHolder="New Floor"
+                  :placeHolder="$t(floorPlaceHolder)"
                   :noIcon="true"
                   :value="floor"
                   :readOnly="false"
                   class="edit" />
       <InputBoxed id="postal-code"
-                  placeHolder="Postal Code"
+                  :placeHolder="$t(postalCodePlaceHolder)"
                   :noIcon="true"
                   :value="postalCode"
                   :readOnly="false"
                   class="edit" />
     </div>
     <Collapsible>
-      <div id="map"
+      <div id="edit-map"
            class="map"
            :class="[ readOnly ? 'dynamic-height' : 'static-height' ]"
            v-show="hasShowMap">
@@ -35,13 +35,14 @@
 </template>
 
 <script>
+import Collapsible from './Collapsible';
 import InputBoxed from './InputBoxed';
 import StaticMap from './StaticMap';
 import GeoMapper from '../GeoMapper';
 import picDefaultStaticMap from '../../../static/img/default-static-map.png';
 
 export default {
-  components: { InputBoxed, StaticMap },
+  components: { InputBoxed, StaticMap, Collapsible },
   props: {
     id: {
       type: String,
@@ -57,9 +58,13 @@ export default {
     floor: {
       type: String
     },
+    zoom: {
+      type: Number,
+      default: 15
+    },
     floorPlaceHolder: {
       type: String,
-      default: 'Floor number with door'
+      default: 'Floor or Room number'
     },
     postalCode: {
       type: String
@@ -70,7 +75,7 @@ export default {
     },
     postalCodePlaceHolder: {
       type: String,
-      default: 'Postal code number'
+      default: '[Optional] Postal code'
     },
     showMap: {
       type: Boolean,
@@ -96,7 +101,7 @@ export default {
   },
   async mounted() {
     if (!this.readOnly) {
-      const $map = document.querySelector('#map');
+      const $map = document.querySelector('#edit-map');
       const $autoCompleInput = document.querySelector('#new-address input');
       await this.geoMapper.activateGoogleMaps();
       this.geoMapper.activateAutoComplete(
@@ -119,31 +124,17 @@ export default {
     };
   },
   methods: {
-    handleAutoCompleteFinish(address) {
-      this.$emit('autoCompleteFinish', address);
+    handleAutoCompleteFinish(street) {
+      this.$emit('autoCompleteFinish', street);
       this.hasShowMap = true;
+      this.updateMap(street);
+      this.geoMapper.resize();
     },
-    async updateMap(address) {
-      const $map = document.querySelector('#map');
+    async updateMap(street) {
+      const $map = document.querySelector('#edit-map');
       this.geoMapper
-        .renderDynamicMap($map, this.zoom, address)
+        .renderDynamicMap($map, this.zoom, street)
         .then(() => this.$emit('newAddress', this.geoMapper.addressComponents));
-    },
-    handleInputBoxedClicked(ev) {
-      const $container = ev.currentTarget.parentElement.parentElement;
-      const address = $container.querySelector('input').value;
-      const newAddress = $container.parentElement.querySelector(
-        '#new-address input'
-      ).value;
-      if (address || newAddress) {
-        this.hasShowMap = !this.hasShowMap;
-        this.updateMap(address || newAddress);
-      }
-    },
-    handleEdit() {
-      this.$emit('createNewAddress');
-      this.hasShowMap = false;
-      this.showEdit = !this.showEdit;
     },
     handleResizeMap() {
       this.geoMapper.resize();

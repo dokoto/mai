@@ -45,7 +45,8 @@ import {
   SET_APPOINTMENT_ICON_STATUS_GREEN,
   SET_LOCATION_ICON_STATUS_GREEN,
   SET_ADDRESS_SELECTED,
-  READY_TO_SAVE
+  READY_TO_SAVE,
+  TOGGLE_NEW_ADDRESS
 } from './types';
 
 import { mutations, redStatus } from './mutations';
@@ -91,7 +92,8 @@ const state = {
   UItreatmentSelected: EMPTY_STRING,
   UIdateSelected: EMPTY_STRING,
   UItimeSelected: EMPTY_STRING,
-  UIdoctorSelected: {}
+  UIdoctorSelected: {},
+  UIopenNewAddress: false
 };
 
 const actions = {
@@ -244,9 +246,13 @@ const actions = {
     }
   },
   commitAddressSelected({ commit }, { id }) {
-    const address = state.UIaddresses.find(item => item._id === id);
-    commit(SET_ADDRESS_SELECTED, address);
-    actions.checkReadyToSave(commit);
+    if (id === 'new') {
+      commit(TOGGLE_NEW_ADDRESS, true);
+    } else {
+      const address = state.UIaddresses.find(item => item._id === id);
+      commit(SET_ADDRESS_SELECTED, address);
+      actions.checkReadyToSave(commit);
+    }
   },
   checkReadyToSave(commit) {
     commit(

@@ -1,70 +1,94 @@
 <template>
-  <article class="appointment-edit-page bg-beach">
-    <div class="symbol-container">
-      <img class="symbol"
-           src="../../../static/img/therapy-symbol.png" />
-    </div>
-    <Card id="appointment-edit-doctors-carrusel-card"
-          title="appointment.titles.treatment"
-          :icon="UIdoctorIconStatus.icon"
-          :iconColor="UIdoctorIconStatus.color">
-      <DoctorsCarrusel :id="`doctors-carrusel-${$route.params.id}`"
-                       :doctors="UIdoctors"
-                       :doctorSelected="UIdoctorSelected ? UIdoctorSelected.id : ''"
-                       @doctorHasSelected="loadDoctorTreatments"
-                       v-if="UIdoctors.length" />
-    </Card>
-    <Card id="appointment-edit-card"
-          title="appointment.titles.appointment"
-          :icon="UIappointmentIconStatus.icon"
-          :iconColor="UIappointmentIconStatus.color">
-      <ComboBoxed id="appointment-edit-treatments"
-                  :noBorder="true"
-                  :items="UItreatmentsByDoctor"
-                  placeHolder="appointment.treatment.type"
-                  :itemSelected="UItreatmentSelected"
-                  :showOpen="UItreatmentsShowOpen"
-                  :autoCloseOnSelected="true"
-                  @comboBoxedItemHasSelected="loadDoctorSchedule" />
-      <DayCarruselBoxed id="appointment-edit-date"
-                        placeHolder="appointment.treatment.date"
-                        :disablesDates="UIdisableDates"
-                        :initDate="UIinitDate"
-                        :selectedDate="UIdateSelected"
-                        :noBorder="true"
-                        :autoCloseOnSelected="true"
-                        @dayCarruselBoxed:dayClick="loadDoctorTimeSchedule" />
-      <GridSelectorBoxed id="appointment-edit-time"
-                         placeHolder="appointment.treatment.time"
-                         :items="UIschedulesByDoctor"
-                         :disableItems="UIdisableTimes"
-                         :itemSelected="UItimeSelected"
-                         :noBorder="true"
-                         :autoCloseOnSelected="true"
-                         @gridSelectorBoxed:onChange="saveDoctorTIme" />
-    </Card>
-    <Card id="appointment-edit-location-card"
-          title="appointment.titles.location"
-          :icon="UIlocaltionIconStatus.icon"
-          :iconColor="UIlocaltionIconStatus.color">
-
-      <LocationMap ref="locationMap"
-                   placeHolder="appointment.treatment.address"
-                   :zoom="UImapZoom"
-                   :addresses="UIaddresses"
-                   :showMap="false"
-                   :readOnly="false"
-                   @addressSelected="commitAddressSelected" />
-    </Card>
-    <Card id="appointment-edit-save"
-          :noTitle="true"
-          v-show="UIreadyToSave">
-      <div class="flex-column flex-align-first-center">
-        <button class="save"
-                @click="saveAppointment">{{ $t("appointment.actions.save") }}</button>
+  <section>
+    <article class="appointment-edit-page font-size bg-beach"
+             :class="{blur: UIopenNewAddress}">
+      <div class="symbol-container">
+        <img class="symbol"
+             src="../../../static/img/therapy-symbol.png" />
       </div>
-    </Card>
-  </article>
+      <Card id="appointment-edit-doctors-carrusel-card"
+            title="appointment.titles.treatment"
+            :icon="UIdoctorIconStatus.icon"
+            :iconColor="UIdoctorIconStatus.color">
+        <DoctorsCarrusel :id="`doctors-carrusel-${$route.params.id}`"
+                         :doctors="UIdoctors"
+                         :doctorSelected="UIdoctorSelected ? UIdoctorSelected.id : ''"
+                         @doctorHasSelected="loadDoctorTreatments"
+                         v-if="UIdoctors.length" />
+      </Card>
+      <Card id="appointment-edit-card"
+            title="appointment.titles.appointment"
+            :icon="UIappointmentIconStatus.icon"
+            :iconColor="UIappointmentIconStatus.color">
+        <ComboBoxed id="appointment-edit-treatments"
+                    :noBorder="true"
+                    :items="UItreatmentsByDoctor"
+                    placeHolder="appointment.treatment.type"
+                    :itemSelected="UItreatmentSelected"
+                    :showOpen="UItreatmentsShowOpen"
+                    :autoCloseOnSelected="true"
+                    @comboBoxedItemHasSelected="loadDoctorSchedule" />
+        <DayCarruselBoxed id="appointment-edit-date"
+                          placeHolder="appointment.treatment.date"
+                          :disablesDates="UIdisableDates"
+                          :initDate="UIinitDate"
+                          :selectedDate="UIdateSelected"
+                          :noBorder="true"
+                          :autoCloseOnSelected="true"
+                          @dayCarruselBoxed:dayClick="loadDoctorTimeSchedule" />
+        <GridSelectorBoxed id="appointment-edit-time"
+                           placeHolder="appointment.treatment.time"
+                           :items="UIschedulesByDoctor"
+                           :disableItems="UIdisableTimes"
+                           :itemSelected="UItimeSelected"
+                           :noBorder="true"
+                           :autoCloseOnSelected="true"
+                           @gridSelectorBoxed:onChange="saveDoctorTIme" />
+      </Card>
+      <Card id="appointment-edit-location-card"
+            title="appointment.titles.location"
+            :icon="UIlocaltionIconStatus.icon"
+            :iconColor="UIlocaltionIconStatus.color">
+
+        <LocationMap ref="locationMap"
+                     placeHolder="appointment.treatment.address"
+                     :zoom="UImapZoom"
+                     :addresses="UIaddresses"
+                     :showMap="false"
+                     :readOnly="false"
+                     @addressSelected="commitAddressSelected" />
+      </Card>
+      <Card id="appointment-edit-save"
+            :noTitle="true"
+            v-show="UIreadyToSave">
+        <div class="flex-column flex-align-first-center">
+          <button class="button"
+                  @click="saveAppointment">{{ $t("appointment.actions.save") }}</button>
+        </div>
+      </Card>
+    </article>
+    <transition enter-active-class="animated bounceInDown"
+                leave-active-class="animated bounceOutUp"
+                @before-enter="setTopDistance">
+      <div id="new-address-container"
+           class="full-screen flex-column flex-align-first-center font-size"
+           v-show="UIopenNewAddress">
+        <Card id="appointment-new-address"
+              :title="$t('appointment.newAddress.title')">
+          <AddressForm :readOnly="false"
+                       addressPlaceHolder="appointment.newAddress.placeHolders.street"
+                       floorPlaceHolder="appointment.newAddress.placeHolders.floor"
+                       postalCodePlaceHolder="appointment.newAddress.placeHolders.postalCode" />
+          <div class="flex-row flex-align-first-corners padding-0-5em">
+            <button class="button"
+                    @click="saveNewAddress">{{ $t("appointment.actions.accept") }}</button>
+            <button class="button"
+                    @click="$store.commit('appointment/TOGGLE_NEW_ADDRESS', false)">{{ $t("appointment.actions.cancel") }}</button>
+          </div>
+        </Card>
+      </div>
+    </transition>
+  </section>
 </template>
 
 <script>
@@ -76,6 +100,7 @@ import GridSelectorBoxed from '@/common/components/GridSelectorBoxed';
 import LocationMap from '@/common/components/LocationMap';
 import DoctorsCarrusel from '@/common/components/DoctorsCarrusel';
 import Card from '@/common/components/Card';
+import AddressForm from '@/common/components/AddressForm';
 
 export default {
   components: {
@@ -84,7 +109,8 @@ export default {
     ComboBoxed,
     DayCarruselBoxed,
     GridSelectorBoxed,
-    LocationMap
+    LocationMap,
+    AddressForm
   },
   computed: {
     ...mapState('appointment', [
@@ -105,7 +131,8 @@ export default {
       'UIdisableTimes',
       'UItreatmentSelected',
       'UIdateSelected',
-      'UItimeSelected'
+      'UItimeSelected',
+      'UIopenNewAddress'
     ])
   },
   methods: {
@@ -115,8 +142,14 @@ export default {
       'loadDoctorTimeSchedule',
       'saveDoctorTIme',
       'saveAppointment',
-      'commitAddressSelected'
-    ])
+      'commitAddressSelected',
+      'saveNewAddress'
+    ]),
+    setTopDistance() {
+      document.querySelector('#new-address-container').style.top = `${
+        window.scrollY
+      }px`;
+    }
   },
   created() {
     this.$store.dispatch('appointment/fetchInitDatas', this.$route.params.id);
@@ -127,8 +160,10 @@ export default {
 <style lang="scss" scoped>
 @import 'animate.css/animate.min.css';
 @import '../../common/styles/base.scss';
-.appointment-edit-page {
+.font-size {
   font-size: 6.2vw;
+}
+.appointment-edit-page {
   overflow-y: scroll;
   position: relative;
   display: inline-flex;
@@ -138,9 +173,18 @@ export default {
   height: auto;
   margin-bottom: 2%;
 }
-.save {
+.button {
   color: $colorBlue1;
   font-size: 1.3em;
   font-weight: bold;
+}
+.blur {
+  filter: blur(5px);
+}
+.full-screen {
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 </style>

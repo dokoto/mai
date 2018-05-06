@@ -26,7 +26,8 @@ import {
   SET_APPOINTMENT_ICON_STATUS_GREEN,
   SET_LOCATION_ICON_STATUS_GREEN,
   SET_ADDRESS_SELECTED,
-  READY_TO_SAVE
+  READY_TO_SAVE,
+  TOGGLE_NEW_ADDRESS
 } from './types';
 
 export const greeStatus = {
@@ -113,5 +114,8 @@ export const mutations = {
   },
   [READY_TO_SAVE](currState, isReady) {
     currState.UIreadyToSave = isReady;
+  },
+  [TOGGLE_NEW_ADDRESS](currState, toggle) {
+    currState.UIopenNewAddress = toggle;
   }
 };

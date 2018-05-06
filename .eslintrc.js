@@ -51,6 +51,7 @@ module.exports = {
     'object-shorthand': 0,
     'space-before-function-paren': 0,
     'func-names': 0,
-    'no-underscore-dangle': 0
+    'no-underscore-dangle': 0,
+    'prefer-arrow-callback': 0
   }
 }

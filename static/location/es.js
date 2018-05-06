@@ -15,10 +15,21 @@ const es = {
       address: 'Seleccione direccion'
     },
     actions: {
-      save: 'Pedir cita'
+      save: 'Pedir cita',
+      accept: 'Aceptar',
+      cancel: 'Cancelar'
     },
     errors: {
       requiredFields: 'Please fill all required fields'
+    },
+    newAddress: {
+      title: 'Nueva Dirección',
+      placeHolders: {
+        street: 'Calle Nº, Ciudad, Pais',
+        floor: 'Piso ó Nº habitacion de hotel',
+        postalCode: '[Optional] Código Postal'
+      }
+
     }
   }
 };

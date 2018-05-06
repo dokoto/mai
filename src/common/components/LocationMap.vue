@@ -1,6 +1,6 @@
 <template>
   <section class="location">
-    <ListBoxed id="ids.idInput"
+    <ListBoxed id="address-list"
                :items="streets"
                placeHolder="placeHolder"
                :showOpen="true"
@@ -103,7 +103,8 @@ export default {
       streets.push({
         id: 'new',
         value: 'Add new address',
-        icon: this.iconAdd
+        icon: this.iconAdd,
+        type: USER
       });
 
       document
@@ -118,14 +119,6 @@ export default {
   async mounted() {
     if (!this.readOnly) {
       await this.geoMapper.activateGoogleMaps();
-      /* NO SE NECESITA AUTOCOMPLETADO AQUI(GUARDAR PARA NUEVA DIRECCION)
-      const $autoCompleInput = document.querySelector('#new-address input');
-      if ($autoCompleInput) {
-        this.geoMapper.activateAutoComplete(
-          $autoCompleInput,
-          this.handleAutoCompleteFinish
-        );
-      }*/
       const $map = document.querySelector('#map-container');
       if ($map && this.addresses.length) {
         const street = head(this.addresses).street;
@@ -168,8 +161,10 @@ export default {
       const street = tag.value;
       const type = tag.type;
       if (id && street && type) {
-        this.hasShowMap = true;
-        this.updateMap(street);
+        if (id !== 'new') {
+          this.hasShowMap = true;
+          this.updateMap(street);
+        }
         this.$emit('addressSelected', { id, street, type });
       }
     },
