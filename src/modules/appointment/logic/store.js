@@ -20,7 +20,8 @@ import {
   RESERVED,
   USER,
   MONTHS_AHEAD,
-  COMPLETE
+  COMPLETE,
+  NEW
 } from '@/common/constants';
 import { STATUS } from '@/common/api/constants';
 import {
@@ -62,7 +63,9 @@ import {
   findByDay,
   reduceExptionDays,
   reduceBusyDays,
-  mapDisableDates
+  mapDisableDates,
+  newAddress,
+  addressFields
 } from './functionals';
 
 const state = {
@@ -189,7 +192,7 @@ const actions = {
     commit(SET_DISABLE_DATES, disableDates);
     commit(SET_TREATMENT, {
       name: treatment.name,
-      treatmentAllLangs: state.treatments.filter(filterTreatment)
+      treatmentAllLangs: state.treatments.filter(filterTreatment(treatment))
     });
     commit(SET_DISABLE_TIMES, []);
     commit(SET_DATE_SELECTED, EMPTY_STRING);
@@ -232,7 +235,7 @@ const actions = {
 
       newAppointment.date = get(state, 'UIdateSelected', EMPTY_STRING);
       newAppointment.time = get(state, 'UItimeSelected', EMPTY_STRING);
-      newAppointment.address = get(state, 'addressSelected', {});
+      newAppointment.address = addressFields(get(state, 'addressSelected', {}));
       newAppointment.patient = actions.extractProfileAttb(session.user);
       newAppointment.doctor = actions.extractProfileAttb(
         state.UIdoctorSelected
@@ -241,6 +244,7 @@ const actions = {
       newAppointment.status = RESERVED;
       newAppointment.allowReBooking = true;
       newAppointment.createddBy = get(session, 'user.id', EMPTY_STRING);
+      console.log(newAppointment);
     } else {
       notifyError(dispatch, 'appointment.errors.requiredFields');
     }
@@ -276,9 +280,18 @@ const actions = {
       state.UIlocaltionIconStatus.color === COMPLETE
     ) {
       commit(READY_TO_SAVE, true);
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     } else {
       commit(READY_TO_SAVE, false);
     }
+  },
+  saveNewAddress({ commit }, addressComponents) {
+    commit(
+      SET_ADDRESSES,
+      state.UIaddresses.filter(item => item.type !== NEW)
+        .concat(newAddress(addressComponents))
+        .sort(item => item.type === USER || item.type === NEW)
+    );
   }
 };
 

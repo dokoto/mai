@@ -71,6 +71,7 @@
                 leave-active-class="animated bounceOutUp"
                 @before-enter="setTopDistance">
       <div id="new-address-container"
+           ref="newAddress"
            class="full-screen flex-column flex-align-first-center font-size"
            v-show="UIopenNewAddress">
         <Card id="appointment-new-address"
@@ -78,13 +79,8 @@
           <AddressForm :readOnly="false"
                        addressPlaceHolder="appointment.newAddress.placeHolders.street"
                        floorPlaceHolder="appointment.newAddress.placeHolders.floor"
-                       postalCodePlaceHolder="appointment.newAddress.placeHolders.postalCode" />
-          <div class="flex-row flex-align-first-corners padding-0-5em">
-            <button class="button"
-                    @click="saveNewAddress">{{ $t("appointment.actions.accept") }}</button>
-            <button class="button"
-                    @click="$store.commit('appointment/TOGGLE_NEW_ADDRESS', false)">{{ $t("appointment.actions.cancel") }}</button>
-          </div>
+                       postalCodePlaceHolder="appointment.newAddress.placeHolders.postalCode"
+                       @saveNewAddress="saveNewAddress" />
         </Card>
       </div>
     </transition>
@@ -100,7 +96,7 @@ import GridSelectorBoxed from '@/common/components/GridSelectorBoxed';
 import LocationMap from '@/common/components/LocationMap';
 import DoctorsCarrusel from '@/common/components/DoctorsCarrusel';
 import Card from '@/common/components/Card';
-import AddressForm from '@/common/components/AddressForm';
+import AddressForm from './components/AddressForm';
 
 export default {
   components: {
@@ -146,9 +142,7 @@ export default {
       'saveNewAddress'
     ]),
     setTopDistance() {
-      document.querySelector('#new-address-container').style.top = `${
-        window.scrollY
-      }px`;
+      this.$refs.newAddress.style.top = `${window.scrollY}px`;
     }
   },
   created() {
@@ -172,11 +166,6 @@ export default {
   width: 100%;
   height: auto;
   margin-bottom: 2%;
-}
-.button {
-  color: $colorBlue1;
-  font-size: 1.3em;
-  font-weight: bold;
 }
 .blur {
   filter: blur(5px);

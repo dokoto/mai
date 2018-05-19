@@ -1,3 +1,24 @@
+$bg: '../../../static/img/app-bg.jpeg';
+$form-font-size: 1.2em;
+$colorGrey1: #0a0909;
+$colorGrey2: #c5c4c4;
+$colorGrey3: #e4e3e3;
+$colorGrey4: #ececec;
+$colorWhite0: white;
+$colorWhite1: #f7f7f0;
+$colorWhite2: #f9f9f9;
+$colorDarkGrey1: #848181;
+$colorDarkGrey2: #828080;
+$colorDarkGrey3: #7b656d;
+$colorPastelOrange: rgb(253, 202, 162);
+$colorPastelPink: rgb(251, 182, 202);
+$colorPastelBlue: rgb(199, 236, 255);
+$colorPastelYellow: rgb(255, 237, 120);
+$colorPastelGreen0: #77dd77;
+$colorBlue1: #889296;
+$colorBlue2: #2196F3;
+$colorGreen0: #4edc0a;
+
 .box {
   margin-right: 3%;
   margin-left: 3%;
@@ -78,25 +99,33 @@
   font-size: 0.8em;
 }
 
+.margin-top-1x {
+  margin-top: 1em;
+}
+
+.slipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button {
+  color: $colorBlue2;
+  font-size: $form-font-size;
+  font-weight: bold;
+  border: solid 1px;
+  border-radius: 5px;
+  background-color: white;
+  outline: none;
+}
+
+.background-config {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
 
-$bg: '../../../static/img/app-bg.jpeg';
-$form-font-size: 1.2em;
 
-$colorGrey1: #0a0909;
-$colorGrey2: #c5c4c4;
-$colorGrey3: #e4e3e3;
-$colorGrey4: #ececec;
-$colorWhite0: white;
-$colorWhite1: #f7f7f0;
-$colorWhite2: #f9f9f9;
-$colorDarkGrey1: #848181;
-$colorDarkGrey2: #828080;
-$colorDarkGrey3: #7b656d;
-$colorPastelOrange: rgb(253, 202, 162);
-$colorPastelPink: rgb(251, 182, 202);
-$colorPastelBlue: rgb(199, 236, 255);
-$colorPastelYellow: rgb(255, 237, 120);
-$colorPastelGreen0: #77dd77;
-$colorBlue1: #6cc0e5;
-$colorGreen0: #4edc0a;

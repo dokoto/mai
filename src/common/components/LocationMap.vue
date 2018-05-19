@@ -9,9 +9,11 @@
       <template slot-scope="slot">
         <div class="flex-row">
           <i class="icon">
-            <font-awesome-icon :icon="slot.item.icon" />
+            <font-awesome-icon :icon="slot.item.icon"
+                               :color="slot.item.colorIcon" />
           </i>
-          <span class="street grow-2"
+          <span class="street grow-2 slipsis"
+                :class="{action: slot.item.id === 'new'}"
                 :data-type="slot.item.type"
                 :data-id="slot.item.id"
                 :data-value="slot.item.value">{{ slot.item.value }}</span>
@@ -34,7 +36,7 @@
 <script>
 import { head } from 'lodash';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { USER } from '@/common/constants';
+import { USER, NEW, TEXT } from '@/common/constants';
 import {
   faPlus,
   faHome,
@@ -96,15 +98,19 @@ export default {
         id: item._id,
         value: item.street,
         type: item.type,
-        icon: item.type === USER ? this.iconHome : this.iconDoctorAddress,
-        selected: item.selected
+        icon:
+          item.type === USER || item.type === NEW
+            ? this.iconHome
+            : this.iconDoctorAddress,
+        selected: item.selected,
+        colorIcon: 'black'
       }));
-
       streets.push({
         id: 'new',
         value: 'Add new address',
         icon: this.iconAdd,
-        type: USER
+        type: TEXT,
+        colorIcon: '#2196F3'
       });
 
       document
@@ -181,6 +187,9 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/base.scss';
 .location {
+  .action {
+    color: #2196f3;
+  }
   .street {
     margin-left: 0.4em;
     width: 100%;

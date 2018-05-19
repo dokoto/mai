@@ -1,8 +1,6 @@
 import { difference, get } from 'lodash';
 import moment from 'moment';
-import {
-  DOCTOR
-} from '@/common/constants';
+import { DOCTOR, NEW } from '@/common/constants';
 
 export const mapSelectedDocAddress = item => ({
   ...item,
@@ -36,3 +34,20 @@ export const mapDisableDates = doctorTimeSchedule => item => {
   );
   return difference(timeScheduleByDay.time, time).length ? null : date;
 };
+export const newAddress = addressComponents => ({
+  street: addressComponents.formatedAddress,
+  city: addressComponents.locality,
+  country: addressComponents.country,
+  floor: addressComponents.floor,
+  postCode: addressComponents.postal_code,
+  selected: false,
+  type: NEW,
+  _id: 'fake'
+});
+export const addressFields = address => ({
+  street: address.street,
+  floor: address.floor,
+  postCode: address.postCode,
+  city: address.city,
+  country: address.country
+});
