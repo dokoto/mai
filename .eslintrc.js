@@ -44,7 +44,6 @@ module.exports = {
     }],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-param-reassign': ["error", { "props": true, "ignorePropertyModificationsFor": ["currState"] }],
     'comma-dangle': ["error", "never"],
     'no-confusing-arrow': ["error", {"allowParens": true}],
     'arrow-parens': ["error", "as-needed"],
@@ -53,6 +52,8 @@ module.exports = {
     'func-names': 0,
     'no-underscore-dangle': 0,
     'prefer-arrow-callback': 0,
-    'camelcase': 0
+    'camelcase': 0,
+    'no-param-reassign': 0,
+    'no-nested-ternary': 0
   }
 }
