@@ -12,7 +12,6 @@ export const EMPTY_STRING = '';
 export const EMPTY_ARRAY = [];
 export const EMPTY_OBJECT = {};
 export const MAP_ZOOM = 15;
-export const MONTHS_INTERVAL = 3;
 export const USER = 'user';
 export const ADMIN = 'admin';
 export const DOCTOR = 'doctor';

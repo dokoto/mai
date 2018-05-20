@@ -9,50 +9,50 @@
       </span>
     </section>
     <nav class="menu">
-      <a :href="homeUrl">
-        <font-awesome-icon :icon="icon" size="2x" color="#848181"/>
-      </a>
+      <router-link to="/home">
+        <font-awesome-icon :icon="icon"
+                           size="2x"
+                           color="#848181" />
+      </router-link>
     </nav>
   </header>
 </template>
 
 <script>
 import moment from 'moment';
-import toDayIcon from '../../../../static/img/icon-today.png';
-import homeIcon from '../../../../static/img/icon-home.png';
-import * as consts from '../../../common/constants';
+import { INT_DATE_FORMAT } from '@/common/constants';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { faHome } from '@fortawesome/fontawesome-free-solid';
+import toDayIcon from '../../../../static/img/icon-today.png';
 
 moment.locale(window.glob.language);
 
 export default {
   props: ['userId', 'selectedDate'],
   components: {
-    FontAwesomeIcon,
+    FontAwesomeIcon
   },
   computed: {
     yearMonth() {
-      return `${ moment(this.selectedDate, consts.INT_DATE_FORMAT)
+      return `${moment(this.selectedDate, INT_DATE_FORMAT)
         .format('MMMM')
-        .toUpperCase().replace('.', '') } ${ moment(this.selectedDate, consts.INT_DATE_FORMAT).format('YYYY') }`;
+        .toUpperCase()
+        .replace('.', '')} ${moment(this.selectedDate, INT_DATE_FORMAT).format(
+        'YYYY'
+      )}`;
     },
     dayName() {
-      return moment(this.selectedDate, consts.INT_DATE_FORMAT)
+      return moment(this.selectedDate, INT_DATE_FORMAT)
         .format('dddd')
         .toUpperCase();
-    },
-    homeUrl() {
-      return `${ /home/ }${ this.userId }`;
-    },
+    }
   },
   data() {
     return {
       toDayIcon,
-      homeIcon,
-      icon: faHome,
+      icon: faHome
     };
-  },
+  }
 };
 </script>
 
@@ -64,7 +64,7 @@ export default {
   flex-direction: row;
   border-radius: 5px;
   flex-shrink: 0;
-  
+
   .today-view {
     display: inline-flex;
     flex-direction: column;

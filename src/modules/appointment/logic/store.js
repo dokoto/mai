@@ -1,5 +1,6 @@
-import { mergeWith, get } from 'lodash';
-import { union } from 'lodash/array';
+import get from 'lodash/get';
+import union from 'lodash/union';
+import mergeWith from 'lodash/mergeWith';
 import moment from 'moment';
 
 import {
@@ -69,7 +70,6 @@ import {
 } from './functionals';
 
 const state = {
-  appointment: {},
   treatments: [],
   treatmentSelectedAllLangs: [],
   addressSelected: {},
@@ -77,6 +77,7 @@ const state = {
   schedules: [],
   disableDatesTimes: {},
   geoLocatedAddress: {},
+  UIappointment: {},
   UItreatmentsShowOpen: false,
   UIappointmentIconStatus: redStatus,
   UIdoctorIconStatus: redStatus,
@@ -108,7 +109,7 @@ const actions = {
       notifyRestError(dispatch, appointment);
     }
   },
-  async fetchInitDatas({ commit, rootGetters, dispatch }) {
+  async init({ commit, rootGetters, dispatch }) {
     const treatments = await getTreatments();
     if (treatments.status === STATUS.SUCCESS) {
       commit(TREATMENTS_RECEIVED, treatments.data);

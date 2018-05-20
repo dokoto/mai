@@ -42,7 +42,7 @@ export const redStatus = {
 
 export const mutations = {
   [APPOINTMENT_RECEIVED](currState, appointment) {
-    currState.appointment = appointment;
+    currState.UIappointment = appointment;
   },
   [TREATMENTS_RECEIVED](currState, treatments) {
     currState.treatments = treatments;

@@ -5,12 +5,12 @@
            src="../../../static/img/therapy-symbol.png" />
     </div>
     <Card id="appointment-view-card"
-          :title="literals.appointmentTitle"
+          title="appointment.titles.appointment"
           iconColor="blue">
       <InputBoxed id="appointment-view-type"
                   placeHolder="Appointment Type"
                   :readOnly="readOnly"
-                  :value="appointment.treatment ? appointment.treatment.name : ''"
+                  :value="UIappointment.treatment ? treatmentByLang.name : ''"
                   :noBorder="noBorder"
                   :noIcon="noIcon" />
       <InputBoxed id="appointment-view-date"
@@ -22,37 +22,39 @@
       <InputBoxed id="appointment-view-time"
                   placeHolder="Appointment Time"
                   :readOnly="readOnly"
-                  :value="appointment.treatment ? appointment.time : ''"
+                  :value="UIappointment.treatment ? UIappointment.time : ''"
                   :noBorder="noBorder"
                   :noIcon="noIcon" />
     </Card>
     <Card id="appointment-doctors-carrusel-card"
-          :title="literals.treatmentTitle"
+          title="appointment.titles.treatment"
           iconColor="blue">
       <DoctorsCarrusel :id="`doctors-carrusel-${$route.params.id}`"
-                       :doctors="[appointment.doctor]"
-                       :doctorSelected="appointment.doctor._id"
-                       v-if="appointment.doctor" />
+                       :doctors="[UIappointment.doctor]"
+                       :doctorSelected="UIappointment.doctor._id"
+                       v-if="UIappointment.doctor" />
     </Card>
     <Card id="appointment-view-location-card"
-          :title="literals.locationTitle"
+          title="appointment.titles.location"
           iconColor="blue">
       <LocationMap :address="formatAddress"
                    :zoom="mapZoom"
                    :showMap="showMap"
-                   v-if="appointment.address" />
+                   v-if="UIappointment.address" />
     </Card>
   </article>
 </template>
 
 <script>
 import moment from 'moment';
+import get from 'lodash/get';
 import { mapState } from 'vuex';
-import { INT_DATE_FORMAT } from '@/common/constants';
+import { INT_DATE_FORMAT, MAP_ZOOM } from '@/common/constants';
 import InputBoxed from '@/common/components/InputBoxed';
 import DoctorsCarrusel from '@/common/components/DoctorsCarrusel';
-import LocationMap from '@/common/components/LocationMap';
 import Card from '@/common/components/Card';
+import LocationMap from './components/LocationMap';
+import { filterLang } from './logic/functionals';
 
 moment.locale(window.glob.language);
 export default {
@@ -63,18 +65,21 @@ export default {
     LocationMap
   },
   computed: {
-    ...mapState('appointment', ['appointment', 'mapZoom']),
+    ...mapState('appointment', ['UIappointment']),
     formatAddress() {
-      return `${this.appointment.address.street} ${
-        this.appointment.address.city
-      } ${this.appointment.address.postCode} ${
-        this.appointment.address.country
+      return `${this.UIappointment.address.street} ${
+        this.UIappointment.address.city
+      } ${this.UIappointment.address.postCode} ${
+        this.UIappointment.address.country
       }`;
     },
     formatDate() {
-      return moment(`${this.appointment.date}`, INT_DATE_FORMAT)
+      return moment(`${this.UIappointment.date}`, INT_DATE_FORMAT)
         .format('dddd D MMMM')
         .toUpperCase();
+    },
+    treatmentByLang() {
+      return get(this.UIappointment.treatment.filter(filterLang), '[0]', '');
     }
   },
   created() {
@@ -82,11 +87,7 @@ export default {
   },
   data() {
     return {
-      literals: {
-        appointmentTitle: this.$i18n.t('appointment.titles.appointment'),
-        treatmentTitle: this.$i18n.t('appointment.titles.treatment'),
-        locationTitle: this.$i18n.t('appointment.titles.location')
-      },
+      mapZoom: MAP_ZOOM,
       readOnly: true,
       showMap: true,
       noBorder: true,

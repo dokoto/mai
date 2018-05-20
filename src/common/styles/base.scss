@@ -40,8 +40,16 @@ $colorGreen0: #4edc0a;
   justify-content: space-between;
 }
 
+.flex-align-space-around {
+  justify-content: space-around;
+}
+
 .flex-align-first-center {
   justify-content: center;
+}
+
+.rounded {
+  border-radius: 5px;
 }
 
 .grow-2 {
@@ -58,6 +66,10 @@ $colorGreen0: #4edc0a;
 
 .flex-align-second-center {
     align-items: center;
+}
+
+.flex-align-second-baseline {
+  align-items: baseline;
 }
 
 .hide {

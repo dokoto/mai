@@ -4,7 +4,7 @@
              :class="{blur: UIopenNewAddress}">
       <div class="symbol-container">
         <img class="symbol"
-             src="../../../static/img/therapy-symbol.png" />
+             src="@/assets/img/therapy-symbol.png" />
       </div>
       <Card id="appointment-edit-doctors-carrusel-card"
             title="appointment.titles.treatment"
@@ -89,14 +89,13 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-
 import ComboBoxed from '@/common/components/ComboBoxed';
 import DayCarruselBoxed from '@/common/components/DayCarruselBoxed';
 import GridSelectorBoxed from '@/common/components/GridSelectorBoxed';
-import LocationMap from '@/common/components/LocationMap';
 import DoctorsCarrusel from '@/common/components/DoctorsCarrusel';
 import Card from '@/common/components/Card';
 import AddressForm from './components/AddressForm';
+import LocationMap from './components/LocationMap';
 
 export default {
   components: {
@@ -146,7 +145,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('appointment/fetchInitDatas', this.$route.params.id);
+    this.$store.dispatch('appointment/init', this.$route.params.id);
   }
 };
 </script>

@@ -5,6 +5,7 @@
                placeHolder="placeHolder"
                :showOpen="true"
                :autoCloseOnSelected="false"
+               v-if="!readOnly"
                @listBoxedItemHasSelected="handleAddressSelected">
       <template slot-scope="slot">
         <div class="flex-row">
@@ -20,6 +21,9 @@
         </div>
       </template>
     </ListBoxed>
+    <InputBoxed :value="address"
+                :noIcon="true"
+                v-if="readOnly" />
     <Collapsible>
       <div id="map-container"
            class="map"
@@ -27,6 +31,7 @@
            v-show="hasShowMap">
         <StaticMap :address="address"
                    :size="staticMapSize"
+                   :zoom="zoom"
                    v-if="readOnly" />
       </div>
     </Collapsible>
@@ -42,12 +47,12 @@ import {
   faHome,
   faAmbulance
 } from '@fortawesome/fontawesome-free-solid';
-import Collapsible from './Collapsible';
-import InputBoxed from './InputBoxed';
-import ListBoxed from './ListBoxed';
-import StaticMap from './StaticMap';
-import GeoMapper from '../GeoMapper';
-import picDefaultStaticMap from '../../../static/img/default-static-map.png';
+import Collapsible from '@/common/components/Collapsible';
+import InputBoxed from '@/common/components/InputBoxed';
+import ListBoxed from '@/common/components/ListBoxed';
+import StaticMap from '@/common/components/StaticMap';
+import GeoMapper from '@/common/GeoMapper';
+import picDefaultStaticMap from '../../../../static/img/default-static-map.png';
 
 export default {
   props: {
@@ -57,6 +62,9 @@ export default {
     },
     addresses: {
       type: Array
+    },
+    address: {
+      type: String
     },
     zoom: {
       type: Number,
@@ -185,7 +193,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/base.scss';
+@import '../../../common/styles/base.scss';
 .location {
   .action {
     color: #2196f3;

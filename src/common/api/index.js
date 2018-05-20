@@ -13,8 +13,8 @@ export const basicAuth = (username, password) => ({
   Authorization: `Basic ${btoa(`${username}:${password}`)}`
 });
 
-export function nextsAppointments() {
-  return Get.fetch(`${paths.appointment}/me/nexts`, {
+export function nextsAppointments(num = 3) {
+  return Get.fetch(`${paths.appointment}/me/nexts/${num}`, {
     headers: bearerAuth(_.get(store, 'state.app.session.token', EMPTY_STRING))
   });
 }

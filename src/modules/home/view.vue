@@ -6,7 +6,7 @@
            src="../../../static/img/medical.png" />
     </div>
     <AppointmentPoll :appointments="nextsAppointments"
-                     @appointmentPollClick="handleAppointmentClick" />
+                     @appointmentPollClick="(id) => $router.push({ name: 'appointmentView', params: { id } })" />
     <HomeMenu />
   </div>
 </template>
@@ -20,20 +20,10 @@ import HomeMenu from './components/menu';
 export default {
   components: { AppointmentPoll, HomeMenu },
   computed: {
-    ...mapState('home', {
-      nextsAppointments: state => state.nextsAppointments
-    })
+    ...mapState('home', ['nextsAppointments'])
   },
   created() {
     this.$store.dispatch('home/nextsAppointments');
-  },
-  methods: {
-    handleAppointmentClick(id) {
-      this.$router.push({
-        name: 'appointmentEdit',
-        params: { id }
-      });
-    }
   }
 };
 </script>

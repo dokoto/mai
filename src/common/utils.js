@@ -23,6 +23,16 @@ export function notifyError(dispatch, message) {
   dispatch('app/show', message, { root: true });
 }
 
+export function numOfDaysAHead({ date = '20180101', months = 3 }) {
+  return moment(date, consts.INT_DATE_FORMAT)
+    .add(months, 'months')
+    .diff(moment(date, consts.INT_DATE_FORMAT), 'days');
+}
+
+export function formatDateNumeric(date = new Date()) {
+  return moment(date, consts.INT_DATE_FORMAT).format(consts.INT_DATE_FORMAT);
+}
+
 // OLD
 function mapCalendar(dateString) {
   return currentDay => ({
@@ -54,10 +64,6 @@ function mapCalendar(dateString) {
       .format('YYYYMMDD')
       .toUpperCase()
   });
-}
-
-export function formatDateNumeric(date = new Date()) {
-  return moment(date, consts.INT_DATE_FORMAT).format(consts.INT_DATE_FORMAT);
 }
 
 export function createDayAHeadArray(dateString, numOfMonthsAHead) {
