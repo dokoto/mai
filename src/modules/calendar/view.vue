@@ -13,12 +13,9 @@
                  @dayCarruselDayClick="setNewDate"
                  class="box shrink-0" />
 
-    <DayAppointmentCarousel :appointments="UIappointments"/>
-    <div class="request box flex-row flex-align-second-center rounded padding-2x">
-      <font-awesome-icon :icon="iconAdd"
-                         class="action"
-                         size="2x" />
-      <span class="text">Solicitar Cita</span>
+    <DayAppointmentCarousel :appointments="UIappointments" />
+    <div class="flex-column flex-align-first-center margin-3x">
+      <button class="button">{{ $t("appointment.actions.save") }}</button>
     </div>
   </article>
 </template>

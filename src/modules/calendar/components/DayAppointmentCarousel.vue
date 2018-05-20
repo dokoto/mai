@@ -7,6 +7,7 @@
     <div class="indexes flex-row flex-align-first-center">
       <div class="circle"
            v-for="(item, index) in [1, 2, 3,]"
+           :class="{selected: isSelected(index)}"
            :key="index" />
     </div>
     <div class="track grow-2 flex-row flex-align-first-corners"
@@ -99,6 +100,13 @@ export default {
         left: $track.scrollLeft - this.$refs.item[0].offsetWidth,
         behavior: 'smooth'
       });
+    },
+    isSelected(index) {
+      if (this.$refs.track) {
+        const $track = this.$refs.track;
+        return $track.scrollWidth / this.$refs.item[0].offsetWidth === index;
+      }
+      return false;
     }
   }
 };
@@ -124,6 +132,9 @@ $image-size: 4em;
       border-radius: 100%;
       margin-right: 0.2em;
       background-color: $colorBlue2;
+      &.selected {
+        background-color: $colorGreen0;
+      }
     }
   }
   .track {

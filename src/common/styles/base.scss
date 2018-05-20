@@ -16,7 +16,7 @@ $colorPastelBlue: rgb(199, 236, 255);
 $colorPastelYellow: rgb(255, 237, 120);
 $colorPastelGreen0: #77dd77;
 $colorBlue1: #889296;
-$colorBlue2: #2196F3;
+$colorBlue2: #2196f3;
 $colorGreen0: #4edc0a;
 
 .box {
@@ -69,7 +69,7 @@ $colorGreen0: #4edc0a;
 }
 
 .flex-align-second-center {
-    align-items: center;
+  align-items: center;
 }
 
 .flex-align-second-baseline {
@@ -80,6 +80,9 @@ $colorGreen0: #4edc0a;
   display: none;
 }
 
+.margin-3x {
+  margin: 3%;
+}
 .padding-2x {
   padding: 2%;
 }
@@ -143,5 +146,3 @@ $colorGreen0: #4edc0a;
 }
 
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
-
-
