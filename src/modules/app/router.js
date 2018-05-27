@@ -27,7 +27,7 @@ export default new Router({
     },
     {
       name: 'appointmentEdit',
-      path: '/appointment/edit/:id',
+      path: '/appointment/edit/:id?',
       components: { container: AppointmentEdit }
     },
     {

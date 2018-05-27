@@ -1,0 +1,14 @@
+BACKEND
+-----------------------------------
+- Al crear nueva cita comprobar que la fecha, hora, medico. paciente no existen
+- Enviar cookies de sesion
+
+FRONTEND
+-----------------------------------
+- Solucionar problema con el mapa
+- [SOLUCIONADO] Al crear nueva cita no se esta reflejando las horas ocupadas del medico
+- Mantener estado cuando volvemos al calendario despues de pedir un cita. Es decir que nos deje donde estabamos
+- En el mapa estatico sulucionar pantalla completa
+- Cuando se salva la cita debe aparecer un popup con el resultado
+- Hacer un login
+-

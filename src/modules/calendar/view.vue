@@ -1,9 +1,4 @@
 <template>
-  <!--
-    hay que montar un carrusel con las citas que hay en el dia seleccionado. Se mueve con un swippe infinito
-    Se añaden botones para editar y cancelar
-
-  -->
   <article class="calendar-page container font-size">
     <HeaderCalendar :selectedDate="UISelectedDate" />
     <DayCarrusel id="day-carrusel"
@@ -13,17 +8,17 @@
                  @dayCarruselDayClick="setNewDate"
                  class="box shrink-0" />
 
-    <DayAppointmentCarousel :appointments="UIappointments" />
+    <DayAppointmentCarousel :appointments="UIDateappointments" />
     <div class="flex-column flex-align-first-center margin-3x">
-      <button class="button">{{ $t("appointment.actions.save") }}</button>
+      <button class="button"
+              @click="() => $router.push({ name: 'appointmentEdit' })">{{ $t("appointment.actions.save") }}
+      </button>
     </div>
   </article>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { faPlusCircle } from '@fortawesome/fontawesome-free-solid';
 import { formatDateNumeric } from '@/common/utils';
 import { MONTHS_AHEAD } from '@/common/constants';
 import DayCarrusel from '@/common/components/DayCarrusel';
@@ -34,19 +29,17 @@ export default {
   components: {
     HeaderCalendar,
     DayCarrusel,
-    FontAwesomeIcon,
     DayAppointmentCarousel
   },
   data: function() {
     return {
-      iconAdd: faPlusCircle,
       doctorMakedAsSelected: '',
       monthsAHead: MONTHS_AHEAD,
       initDate: formatDateNumeric()
     };
   },
   computed: {
-    ...mapState('calendar', ['UISelectedDate', 'UIappointments']),
+    ...mapState('calendar', ['UISelectedDate', 'UIDateappointments']),
     tmpTreatment: function() {
       return this.UIappointments[0].treatment.filter(
         item => item.lang === window.glob.language

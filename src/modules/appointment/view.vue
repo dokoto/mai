@@ -1,5 +1,11 @@
 <template>
   <article class="appointment-view-page">
+    <nav class="back"
+         @click="$router.go(-1)">
+      <font-awesome-icon :icon="iconBack"
+                         color="white"
+                         size="2x" />
+    </nav>
     <div class="symbol-container">
       <img class="symbol"
            src="../../../static/img/therapy-symbol.png" />
@@ -8,18 +14,21 @@
           title="appointment.titles.appointment"
           iconColor="blue">
       <InputBoxed id="appointment-view-type"
+                  class="font-siez-2x"
                   placeHolder="Appointment Type"
                   :readOnly="readOnly"
                   :value="UIappointment.treatment ? treatmentByLang.name : ''"
                   :noBorder="noBorder"
                   :noIcon="noIcon" />
       <InputBoxed id="appointment-view-date"
+                  class="font-siez-2x"
                   placeHolder="Appointment Date"
                   :readOnly="readOnly"
                   :value="formatDate"
                   :noBorder="noBorder"
                   :noIcon="noIcon" />
       <InputBoxed id="appointment-view-time"
+                  class="font-siez-2x"
                   placeHolder="Appointment Time"
                   :readOnly="readOnly"
                   :value="UIappointment.treatment ? UIappointment.time : ''"
@@ -48,6 +57,8 @@
 <script>
 import moment from 'moment';
 import get from 'lodash/get';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import { faArrowAltCircleLeft } from '@fortawesome/fontawesome-free-regular';
 import { mapState } from 'vuex';
 import { INT_DATE_FORMAT, MAP_ZOOM } from '@/common/constants';
 import InputBoxed from '@/common/components/InputBoxed';
@@ -59,6 +70,7 @@ import { filterLang } from './logic/functionals';
 moment.locale(window.glob.language);
 export default {
   components: {
+    FontAwesomeIcon,
     Card,
     InputBoxed,
     DoctorsCarrusel,
@@ -91,7 +103,8 @@ export default {
       readOnly: true,
       showMap: true,
       noBorder: true,
-      noIcon: true
+      noIcon: true,
+      iconBack: faArrowAltCircleLeft
     };
   }
 };
@@ -99,6 +112,16 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../common/styles/base.scss';
+
+.back {
+  padding: 0.4em 0 0 0.4em;
+}
+
+.font-siez-2x {
+  font-size: 1.4em;
+  margin-bottom: 0.1em;
+}
+
 .appointment-view-page {
   font-size: 6.2vw;
   overflow-y: scroll;

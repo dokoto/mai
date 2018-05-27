@@ -32,6 +32,10 @@ const appointmentSchema = new Schema(
         match: /^\S+@\S+\.\S+$/,
         trim: true,
         lowercase: true
+      },
+      picture: {
+        type: String,
+        trim: true
       }
     },
     doctor: {
@@ -53,6 +57,10 @@ const appointmentSchema = new Schema(
         match: /^\S+@\S+\.\S+$/,
         trim: true,
         lowercase: true
+      },
+      picture: {
+        type: String,
+        trim: true
       }
     },
     treatment: [

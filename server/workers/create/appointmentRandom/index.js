@@ -2,10 +2,10 @@ import request from 'request-promise';
 import moment from 'moment';
 import _ from 'lodash';
 
-const appointmentData = require('./appointmentBase.json');
-const doctorsData = require('./doctors.json');
-const patientsData = require('./patients.json');
-const treatmentsData = require('./treatments.json');
+const appointmentFile = require('./appointmentBase.json');
+const doctorsFile = require('./doctors.json');
+const patientsFile = require('./patients.json');
+const treatmentsFile = require('./treatments.json');
 
 const TOKEN = {
   SUPER: 'OyalhYuKbQgUNpOQhdTQamZDKrhqOAC8',
@@ -21,10 +21,6 @@ const paths = {
   timeSchedules: 'http://0.0.0.0:9000/api/v1/timeSchedules',
   appointments: 'http://0.0.0.0:9000/api/v1/appointments'
 };
-
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
 
 async function getAdminUser() {
   return request({
@@ -120,40 +116,52 @@ function getPatientFields(patient) {
   };
 }
 
-async function fillDatas(doctorBase, baseModel, date, time) {
-  const patientBase = patientsData[getRandomInt(0, patientsData.length - 1)];
-  const doctor = await getUserByEmail(doctorBase.email);
-  const user = await getUserByEmail(patientBase.email);
-  const treatment = await getTreatmentByKey(baseModel.treatment[0].key);
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+async function fillDatas(doctor, baseModel, date, time) {
+  const doctorData = await getUserByEmail(doctor.email);
+  const randPatient = patientsFile[getRandomInt(0, 3)];
+  console.log(`Generating for Patient ${randPatient.email}`);
+  const userData = await getUserByEmail(randPatient.email);
+
+  const randTreatment = treatmentsFile[getRandomInt(0, 3)];
+  console.log(`Generating for treatement ${randTreatment.key}`);
+  const treatmentData = await getTreatmentByKey(randTreatment.key);
 
   baseModel.date = date;
   baseModel.time = time;
-  baseModel.doctor = getDoctorFields(doctorBase);
-  baseModel.patient = getPatientFields(patientBase);
-  baseModel.doctor._id = doctor[0].id;
-  baseModel.patient._id = user[0].id;
-  baseModel.treatment = treatment.map(item => ({ _id: item.id, ...item }));
-  baseModel.createddBy = user[0].id;
+  baseModel.doctor = getDoctorFields(doctorData[0]);
+  baseModel.patient = getPatientFields(userData[0]);
+  baseModel.doctor._id = doctorData[0].id;
+  baseModel.patient._id = userData[0].id;
+  baseModel.treatment = treatmentData.map(item => ({ _id: item.id, ...item }));
+  baseModel.createddBy = userData[0].id;
 
   return baseModel;
 }
 
 async function processData(doctor, url, accessToken, date, time) {
-  const model = await fillDatas(doctor, appointmentData, date, time);
+  const model = await fillDatas(doctor, appointmentFile, date, time);
   return saveAppointment(url, accessToken, model);
 }
 
-async function process(doctor, limit) {
+async function process(limit) {
   const days = limit || moment()
     .add(3, 'months')
     .diff(moment(), 'days');
-  const schedules = await getDoctorSchedule(doctor.email);
-
+debugger;
   for (let i = 0; i < days; i += 1) {
+    const randDoctor = doctorsFile[getRandomInt(0, 3)];
+    console.log(`Generating for doctor ${randDoctor.name}`);
+    const schedules = await getDoctorSchedule(randDoctor.email);
     const date = moment().add(i, 'day');
     const day = moment(date).day();
     const times = schedules.daily.find(item => item.day === day);
-    if (day === 0) debugger;
+
     const exceptionTimes = schedules.exception ? schedules.exception.find(item => item.day === day) : null;
     const appointmentToday = getRandomInt(0, 7);
     console.log(
@@ -168,7 +176,7 @@ async function process(doctor, limit) {
       }
       console.log(`time: ${times.time[x]}`);
       await processData(
-        doctor,
+        randDoctor,
         paths.appointments,
         TOKEN.USER,
         date,
@@ -183,12 +191,7 @@ async function main() {
   const user = await getCommonUser();
   TOKEN.ADMIN = admin.token;
   TOKEN.USER = user.token;
-  console.log(`Generating for doctor ${doctorsData[0].name}`);
-  process(doctorsData[0], 0);
-  console.log(`Generating for doctor ${doctorsData[1].name}`);
-  process(doctorsData[1], 0);
-  console.log(`Generating for doctor ${doctorsData[2].name}`);
-  process(doctorsData[2], 0);
+  process(0);
 }
 
 main();

@@ -8,7 +8,8 @@ import {
   getTreatments,
   getDoctors,
   getDoctorsSchedules,
-  getDoctorNextAppointments
+  getDoctorNextAppointments,
+  createAppointment
 } from '@/common/api';
 import {
   notifyError,
@@ -234,18 +235,25 @@ const actions = {
     if (state.UIreadyToSave) {
       const session = rootGetters['app/session'];
 
-      newAppointment.date = get(state, 'UIdateSelected', EMPTY_STRING);
-      newAppointment.time = get(state, 'UItimeSelected', EMPTY_STRING);
+      const date = get(state, 'UIdateSelected', EMPTY_STRING);
+      const time = get(state, 'UItimeSelected', EMPTY_STRING);
+      newAppointment.date = moment.utc(
+        `${date.slice(0, 10).replace(/-/g, '')}T${time.replace(':', '')}`
+      ).format();
+      newAppointment.time = time;
       newAppointment.address = addressFields(get(state, 'addressSelected', {}));
       newAppointment.patient = actions.extractProfileAttb(session.user);
       newAppointment.doctor = actions.extractProfileAttb(
         state.UIdoctorSelected
       );
-      newAppointment.treatment = state.treatmentSelectedAllLangs;
+      newAppointment.treatment = state.treatmentSelectedAllLangs.map(i => ({
+        _id: i.id,
+        ...i
+      }));
       newAppointment.status = RESERVED;
       newAppointment.allowReBooking = true;
       newAppointment.createddBy = get(session, 'user.id', EMPTY_STRING);
-      console.log(newAppointment);
+      createAppointment(newAppointment);
     } else {
       notifyError(dispatch, 'appointment.errors.requiredFields');
     }

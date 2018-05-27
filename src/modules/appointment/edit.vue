@@ -2,7 +2,12 @@
   <section>
     <article class="appointment-edit-page font-size bg-beach"
              :class="{blur: UIopenNewAddress}">
-      <div class="symbol-container">
+      <nav class="back" @click="$router.go(-1)">
+        <font-awesome-icon :icon="iconBack"
+                           color="white"
+                           size="2x" />
+      </nav>
+      <div class="symbol-container margin-top-0x">
         <img class="symbol"
              src="@/assets/img/therapy-symbol.png" />
       </div>
@@ -54,7 +59,7 @@
                      placeHolder="appointment.treatment.address"
                      :zoom="UImapZoom"
                      :addresses="UIaddresses"
-                     :showMap="false"
+                     :showMap="true"
                      :readOnly="false"
                      @addressSelected="commitAddressSelected" />
       </Card>
@@ -89,6 +94,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import { faArrowAltCircleLeft } from '@fortawesome/fontawesome-free-regular';
 import ComboBoxed from '@/common/components/ComboBoxed';
 import DayCarruselBoxed from '@/common/components/DayCarruselBoxed';
 import GridSelectorBoxed from '@/common/components/GridSelectorBoxed';
@@ -105,7 +112,8 @@ export default {
     DayCarruselBoxed,
     GridSelectorBoxed,
     LocationMap,
-    AddressForm
+    AddressForm,
+    FontAwesomeIcon
   },
   computed: {
     ...mapState('appointment', [
@@ -130,6 +138,11 @@ export default {
       'UIopenNewAddress'
     ])
   },
+  data: function() {
+    return {
+      iconBack: faArrowAltCircleLeft
+    };
+  },
   methods: {
     ...mapActions('appointment', [
       'loadDoctorTreatments',
@@ -153,6 +166,10 @@ export default {
 <style lang="scss" scoped>
 @import 'animate.css/animate.min.css';
 @import '../../common/styles/base.scss';
+
+.back {
+  padding: 0.4em 0 0 0.4em;
+}
 .font-size {
   font-size: 6.2vw;
 }

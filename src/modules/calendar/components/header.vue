@@ -8,12 +8,11 @@
         {{ dayName }}
       </span>
     </section>
-    <nav class="menu">
-      <router-link to="/home">
-        <font-awesome-icon :icon="icon"
-                           size="2x"
-                           color="#848181" />
-      </router-link>
+    <nav class="back"
+         @click="$router.go(-1)">
+      <font-awesome-icon :icon="iconBack"
+                         color="#2196f3"
+                         size="2x" />
     </nav>
   </header>
 </template>
@@ -22,7 +21,7 @@
 import moment from 'moment';
 import { INT_DATE_FORMAT } from '@/common/constants';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { faHome } from '@fortawesome/fontawesome-free-solid';
+import { faArrowAltCircleLeft } from '@fortawesome/fontawesome-free-regular';
 import toDayIcon from '../../../../static/img/icon-today.png';
 
 moment.locale(window.glob.language);
@@ -50,7 +49,7 @@ export default {
   data() {
     return {
       toDayIcon,
-      icon: faHome
+      iconBack: faArrowAltCircleLeft
     };
   }
 };
@@ -84,7 +83,7 @@ export default {
     color: crimson;
   }
 
-  .menu {
+  .back {
     display: inline-flex;
     flex-direction: row;
     width: 100%;
